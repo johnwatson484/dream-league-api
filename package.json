@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node app/index.js",
     "start:watch": "nodemon --inspect=0.0.0.0 --ext css,js,njk --legacy-watch app/index.js"
   },
   "author": "John Watson",
@@ -14,7 +15,9 @@
     "@hapi/inert": "^6.0.1",
     "@hapi/joi": "^17.1.1",
     "@hapi/vision": "^6.0.0",
-    "blipp": "^4.0.1",
+    "blipp": "^4.0.1"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.4",
     "standard": "^14.3.4"
   }
