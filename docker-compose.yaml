@@ -1,0 +1,6 @@
+version: '3.7'
+services:
+  dream-league-identity:
+    build: .
+    image: dream-league-identity
+    container_name: dream-league-identity

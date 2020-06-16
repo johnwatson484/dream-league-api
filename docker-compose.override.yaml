@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  dream-league-identity:
+    build:
+      context: .
+      target: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app/:/home/node/app/
+      - ./package.json:/home/node/package.json

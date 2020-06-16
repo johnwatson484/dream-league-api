@@ -1,0 +1,21 @@
+{
+  "name": "dream-league-identity",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:watch": "nodemon --inspect=0.0.0.0 --ext css,js,njk --legacy-watch app/index.js"
+  },
+  "author": "John Watson",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/boom": "^9.1.0",
+    "@hapi/hapi": "^19.1.1",
+    "@hapi/inert": "^6.0.1",
+    "@hapi/joi": "^17.1.1",
+    "@hapi/vision": "^6.0.0",
+    "blipp": "^4.0.1",
+    "nodemon": "^2.0.4",
+    "standard": "^14.3.4"
+  }
+}
