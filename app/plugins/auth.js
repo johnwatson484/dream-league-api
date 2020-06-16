@@ -1,15 +1,14 @@
-const { jwt } = require('../config')
-const validate = require('../auth')
+const { jwtConfig } = require('../config')
+const { validate } = require('../auth')
 
 module.exports = {
   plugin: {
     name: 'auth',
     register: (server, options) => {
       server.auth.strategy('jwt', 'jwt', {
-        key: jwt.secret,
+        key: jwtConfig.secret,
         validate
       })
-      server.auth.default('jwt')
     }
   }
 }

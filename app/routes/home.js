@@ -1,3 +1,5 @@
+const auth = require('../auth')
+
 module.exports = [{
   method: 'GET',
   path: '/',
@@ -12,5 +14,13 @@ module.exports = [{
   config: { auth: 'jwt' },
   handler: (request, h) => {
     return h.response('hello world')
+  }
+},
+{
+  method: 'GET',
+  path: '/token',
+  handler: (request, h) => {
+    const token = auth.token.get({ userId: 1 })
+    return h.response(token)
   }
 }]
