@@ -8,6 +8,14 @@ services:
       - "3000:3000"
     environment: 
       JWT_SECRET: secret
+      POSTGRES_HOST: dream-league-identity-postgres
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+    command: >
+      sh -c "
+        scripts/wait-for/wait-for dream-league-identity-postgres:5432 --
+        npm run migrate &&
+        npm run start:watch"
     volumes:
       - ./app/:/home/node/app/
       - ./package.json:/home/node/package.json

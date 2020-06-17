@@ -5,7 +5,8 @@
   "main": "app/index.js",
   "scripts": {
     "start": "node app/index.js",
-    "start:watch": "nodemon --inspect=0.0.0.0 --ext css,js,njk --legacy-watch app/index.js"
+    "start:watch": "nodemon --inspect=0.0.0.0 --ext css,js,njk --legacy-watch app/index.js",
+    "migrate": "sequelize db:migrate"
   },
   "author": "John Watson",
   "license": "MIT",
@@ -20,7 +21,11 @@
     "@hapi/vision": "^6.0.0",
     "bcrypt": "^5.0.0",
     "blipp": "^4.0.1",
-    "hapi-auth-jwt2": "^10.1.0"
+    "hapi-auth-jwt2": "^10.1.0",
+    "pg": "^8.2.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.13",
+    "sequelize-cli": "^5.5.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4",
