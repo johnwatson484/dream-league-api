@@ -6,7 +6,7 @@ const schema = joi.object().keys({
   port: joi.number().default(3000),
   env: joi.string().valid(...envs).default(envs[0]),
   jwtConfig: joi.object({
-    secret: joi.string().default('secret'),
+    secret: joi.string(),
     expiryInMinutes: joi.number().default(60)
   })
 })
