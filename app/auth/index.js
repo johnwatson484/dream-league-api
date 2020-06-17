@@ -1,4 +1,3 @@
 module.exports = {
-  validate: require('./validate'),
-  token: require('./token')
+  login: require('./login')
 }

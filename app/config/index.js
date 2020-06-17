@@ -6,8 +6,8 @@ const schema = joi.object().keys({
   port: joi.number().default(3000),
   env: joi.string().valid(...envs).default(envs[0]),
   jwtConfig: joi.object({
-    secret: joi.string().default('NeverShareYourSecret'),
-    expiryInHours: joi.number().default(60)
+    secret: joi.string().default('secret'),
+    expiryInMinutes: joi.number().default(60)
   })
 })
 
@@ -17,7 +17,7 @@ const config = {
   env: process.env.NODE_ENV,
   jwtConfig: {
     secret: process.env.JWT_SECRET,
-    expiryInHours: process.env.JWT_EXPIRY_IN_HOURS
+    expiryInMinutes: process.env.JWT_EXPIRY_IN_MINUTES
   }
 }
 

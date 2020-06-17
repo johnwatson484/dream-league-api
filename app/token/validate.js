@@ -1,4 +1,4 @@
-const users = require('./users.json')
+const users = require('../auth/users.json')
 
 async function validate (decoded, request, h) {
   console.log(decoded)
