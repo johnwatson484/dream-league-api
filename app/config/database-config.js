@@ -28,9 +28,4 @@ if (error) {
   throw new Error(`The database config is invalid. ${error.message}`)
 }
 
-// const value = {
-//   production: databaseConfig,
-//   development: databaseConfig
-// }
-
 module.exports = value
