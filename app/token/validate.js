@@ -1,8 +1,8 @@
-const users = require('../auth/users.json')
+const db = require('../data/models')
 
 async function validate (decoded, request, h) {
-  console.log(decoded)
-  if (!users[decoded.id]) {
+  const user = await db.user.findOne({ where: { userId: decoded.userId } })
+  if (user === undefined) {
     return { isValid: false }
   }
   return { isValid: true }

@@ -8,15 +8,15 @@ module.exports = [{
   options: {
     validate: {
       payload: joi.object({
-        username: joi.string().required(),
+        email: joi.string().required(),
         password: joi.string().required()
       }),
       failAction: async (request, h, error) => {
         return boom.badRequest(error)
       }
     },
-    handler: (request, h) => {
-      return h.response(auth.login(request.payload.username, request.payload.password))
+    handler: async (request, h) => {
+      return h.response(await auth.login(request.payload.email, request.payload.password))
     }
   }
 }]
