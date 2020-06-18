@@ -15,6 +15,7 @@ services:
       sh -c "
         scripts/wait-for/wait-for dream-league-identity-postgres:5432 --
         npm run migrate &&
+        npm run seed &&
         npm run start:watch"
     volumes:
       - ./app/:/home/node/app/
