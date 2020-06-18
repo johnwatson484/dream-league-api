@@ -3,7 +3,7 @@ test-output/
 .dockerignore
 test-output
 docker-compose*
-LICENCE
+LICENSE
 README.md
 Dockerfile
 npm-debug.log
