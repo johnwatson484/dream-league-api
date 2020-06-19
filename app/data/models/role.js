@@ -1,15 +1,21 @@
 module.exports = (sequelize, DataTypes) => {
   const Role = sequelize.define('role', {
-    roleId: DataTypes.INTEGER,
+    roleId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     name: DataTypes.STRING
   }, {
     tableName: 'roles',
-    freezeTableName: true
+    freezeTableName: true,
+    timestamps: false
   })
   Role.associate = function (models) {
     Role.belongsToMany(models.user, {
       through: 'userRole',
       foreignKey: 'roleId',
+      otherKey: 'userId',
       as: 'users'
     })
   }

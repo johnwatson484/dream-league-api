@@ -6,6 +6,7 @@ services:
       target: development
     ports:
       - "3000:3000"
+      - "9229:9229"
     environment: 
       JWT_SECRET: secret
       POSTGRES_HOST: dream-league-identity-postgres
@@ -13,7 +14,7 @@ services:
       POSTGRES_PASSWORD: postgres
     command: >
       sh -c "
-        scripts/wait-for/wait-for dream-league-identity-postgres:5432 --
+        scripts/wait-for dream-league-identity-postgres:5432 --
         npm run migrate &&
         npm run seed &&
         npm run start:watch"

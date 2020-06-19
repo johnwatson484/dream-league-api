@@ -1,8 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
-    userId: DataTypes.INTEGER,
+    userId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     email: DataTypes.STRING,
-    passwordHash: DataTypes.STRING
+    passwordHash: DataTypes.STRING,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   }, {
     tableName: 'users',
     freezeTableName: true
@@ -11,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.role, {
       through: 'userRole',
       foreignKey: 'userId',
+      otherKey: 'roleId',
       as: 'roles'
     })
   }

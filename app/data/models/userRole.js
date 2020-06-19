@@ -1,10 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const UserRole = sequelize.define('userRole', {
-    userId: DataTypes.INTEGER,
-    roleId: DataTypes.INTEGER
+    userId: { type: DataTypes.INTEGER, primaryKey: true },
+    roleId: { type: DataTypes.INTEGER, primaryKey: true }
   }, {
     tableName: 'userRoles',
-    freezeTableName: true
+    freezeTableName: true,
+    timestamps: false
   })
   return UserRole
 }

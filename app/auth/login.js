@@ -1,6 +1,6 @@
 const token = require('../token')
 const boom = require('@hapi/boom')
-const db = require('../data/models')
+const { getUser } = require('../account')
 const bcrypt = require('bcrypt')
 
 async function login (email, password) {
@@ -10,20 +10,14 @@ async function login (email, password) {
     return boom.unauthorized()
   }
 
-  if (!await bcrypt.compare(password, user.password)) {
+  if (!await bcrypt.compare(password, user.passwordHash)) {
     return boom.unauthorized()
   }
 
   return {
+    success: true,
     token: token.create(user)
   }
-}
-
-async function getUser (email) {
-  return db.user.findOne({
-    where: { email },
-    include: [db.roles]
-  })
 }
 
 module.exports = login
