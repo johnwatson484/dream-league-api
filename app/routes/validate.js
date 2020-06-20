@@ -8,7 +8,7 @@ module.exports = [{
   options: {
     validate: {
       payload: joi.object({
-        token: joi.string().required()
+        token: joi.object().required()
       }),
       failAction: async (request, h, error) => {
         return boom.badRequest(error)
