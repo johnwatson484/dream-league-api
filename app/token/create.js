@@ -1,8 +1,8 @@
 const { jwtConfig } = require('../config')
 const jwt = require('jsonwebtoken')
 
-function create (obj) {
-  return jwt.sign(obj, jwtConfig.secret, {
+function create (user) {
+  return jwt.sign(user, jwtConfig.secret, {
     expiresIn: jwtConfig.expiryInMinutes
   })
 }
