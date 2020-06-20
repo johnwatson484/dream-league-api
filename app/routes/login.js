@@ -16,7 +16,11 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      return h.response(await auth.login(request.payload.email, request.payload.password))
+      const response = await auth.login(request.payload.email, request.payload.password)
+      if (boom.isBoom(response)) {
+        return response
+      }
+      return h.response(response)
     }
   }
 }]

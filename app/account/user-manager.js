@@ -12,9 +12,15 @@ async function userExists (email) {
 
 async function getUser (email) {
   return db.user.findOne({
-    raw: true,
     where: { email },
-    include: ['roles']
+    raw: true,
+    nest: true,
+    include: [{
+      model: db.role,
+      as: 'roles',
+      attributes: ['name'],
+      through: { attributes: [] }
+    }]
   })
 }
 

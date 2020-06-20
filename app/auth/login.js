@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 async function login (email, password) {
   const user = await getUser(email)
 
-  if (user === undefined) {
+  if (user === null) {
     return boom.unauthorized()
   }
 
