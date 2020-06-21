@@ -12,7 +12,7 @@ function create (user) {
 function mapUserToBody (user) {
   return {
     userId: user.userId,
-    roles: user.roles.map(x => x.role.name)
+    scope: user.roles.map(x => x.role.name)
   }
 }
 
