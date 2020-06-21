@@ -13,6 +13,7 @@ async function getUserRoles (userId) {
   return db.userRole.findAll({
     where: { userId },
     raw: true,
+    nest: true,
     attributes: [],
     include: [db.role]
   })

@@ -10,9 +10,9 @@ function create (user) {
 }
 
 function mapUserToBody (user) {
-  console.log(user)
   return {
-    userId: user.userId
+    userId: user.userId,
+    roles: user.roles.map(x => x.role.name)
   }
 }
 
