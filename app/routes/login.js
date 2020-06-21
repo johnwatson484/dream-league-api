@@ -8,7 +8,7 @@ module.exports = [{
   options: {
     validate: {
       payload: joi.object({
-        email: joi.string().required(),
+        email: joi.string().email().required(),
         password: joi.string().required()
       }),
       failAction: async (request, h, error) => {
@@ -16,11 +16,11 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      const response = await auth.login(request.payload.email, request.payload.password)
-      if (boom.isBoom(response)) {
-        return response
+      const authenticated = await auth.login(request.payload.email, request.payload.password)
+      if (!authenticated) {
+        return boom.unauthorized()
       }
-      return h.response(response)
+      return h.response(authenticated)
     }
   }
 }]

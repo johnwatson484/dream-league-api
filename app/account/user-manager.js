@@ -11,13 +11,15 @@ async function userExists (email) {
 }
 
 async function getUser (email) {
-  // sequelize bug restricts use of include on many to many to only one result
-  // pulling roles in separate query
   const user = await db.user.findOne({
     where: { email },
     raw: true
   })
-  user.roles = await getUserRoles(user.userId)
+  // sequelize bug restricts use of include on many to many to only one result
+  // therefore pulling roles in separate query
+  if (user !== null) {
+    user.roles = await getUserRoles(user.userId)
+  }
   return user
 }
 
