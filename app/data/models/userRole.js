@@ -7,5 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false
   })
+  UserRole.associate = function (models) {
+    UserRole.belongsTo(models.user, { foreignKey: 'userId' })
+    UserRole.belongsTo(models.role, { foreignKey: 'roleId' })
+  }
   return UserRole
 }

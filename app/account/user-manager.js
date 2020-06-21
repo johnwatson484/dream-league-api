@@ -1,5 +1,5 @@
 const db = require('../data/models')
-const addUserToRole = require('./role-manager')
+const { addUserToRole, getUserRoles } = require('./role-manager')
 const bcrypt = require('bcrypt')
 
 async function userExists (email) {
@@ -11,17 +11,14 @@ async function userExists (email) {
 }
 
 async function getUser (email) {
-  return db.user.findOne({
+  // sequelize bug restricts use of include on many to many to only one result
+  // pulling roles in separate query
+  const user = await db.user.findOne({
     where: { email },
-    raw: true,
-    nest: true,
-    include: [{
-      model: db.role,
-      as: 'roles',
-      attributes: ['name'],
-      through: { attributes: [] }
-    }]
+    raw: true
   })
+  user.roles = await getUserRoles(user.userId)
+  return user
 }
 
 async function createUser (email, password) {

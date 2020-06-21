@@ -9,4 +9,16 @@ async function addUserToRole (userId, roleName) {
   await db.userRole.create({ userId, roleId: role.roleId })
 }
 
-module.exports = addUserToRole
+async function getUserRoles (userId) {
+  return db.userRole.findAll({
+    where: { userId },
+    raw: true,
+    attributes: [],
+    include: [db.role]
+  })
+}
+
+module.exports = {
+  addUserToRole,
+  getUserRoles
+}
