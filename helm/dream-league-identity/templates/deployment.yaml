@@ -1,0 +1,8 @@
+{{- include "helm-library.deployment" (list . "dream-league-identity.deployment") -}}
+{{- define "dream-league-identity.deployment" -}}
+spec:
+  template:
+    spec:
+      containers:
+      - {{ include "helm-library.container" (list . "dream-league-identity.container") }}
+{{- end -}}

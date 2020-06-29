@@ -1,0 +1,12 @@
+{{- include "helm-library.configmap" (list . "dream-league-identity.configmap") -}}
+{{- define "dream-league-identity.configmap" -}}
+data:
+  NODE_ENV: {{ quote .Values.environment }}
+  PORT: {{ quote .Values.container.port }}
+  POSTGRES_USERNAME: {{ quote .Values.postgresService.postgresUsername }}
+  POSTGRES_DB: {{ quote .Values.postgresService.postgresDatabase }}
+  POSTGRES_HOST: {{ quote .Values.postgresService.postgresExternalName }}
+  POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
+  JWT_SECRET: {{ quote .Values.container.jwtSecret }}
+  JWT_EXPIRY_IN_MINUTES: {{ quote .Values.container.jwtExpiryInMinutes }}
+{{- end -}}
