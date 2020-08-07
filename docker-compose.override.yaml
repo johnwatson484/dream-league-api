@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  dream-league-identity:
+  dream-league-api:
     build:
       context: .
       target: development
@@ -9,12 +9,12 @@ services:
       - "9229:9229"
     environment: 
       JWT_SECRET: secret
-      POSTGRES_HOST: dream-league-identity-postgres
+      POSTGRES_HOST: dream-league-api-postgres
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: postgres
     command: >
       sh -c "
-        scripts/wait-for dream-league-identity-postgres:5432 --
+        scripts/wait-for dream-league-api-postgres:5432 --
         npm run migrate &&
         npm run seed &&
         npm run start:watch"
@@ -22,7 +22,7 @@ services:
       - ./app/:/home/node/app/
       - ./package.json:/home/node/package.json
 
-  dream-league-identity-postgres:
+  dream-league-api-postgres:
     image: postgres:11.4-alpine
     environment:
       POSTGRES_DB: dream_league_identity

@@ -1,5 +1,5 @@
-{{- include "helm-library.configmap" (list . "dream-league-identity.configmap") -}}
-{{- define "dream-league-identity.configmap" -}}
+{{- include "helm-library.configmap" (list . "dream-league-api.configmap") -}}
+{{- define "dream-league-api.configmap" -}}
 data:
   NODE_ENV: {{ quote .Values.environment }}
   PORT: {{ quote .Values.container.port }}

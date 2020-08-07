@@ -12,12 +12,12 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  repo: dream-league-identity
+  repo: dream-league-api
   helmRepo: helm-charts
   helmRepositoryUrl: git@github.com:johnwatson484/helm-charts.git
   version:
-  containerRepository: johnwatson484/dream-league-identity
-  helmChartPath: helm/dream-league-identity
+  containerRepository: johnwatson484/dream-league-api
+  helmChartPath: helm/dream-league-api
   releaseExists: false
 
 steps: 

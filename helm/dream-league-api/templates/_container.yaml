@@ -1,4 +1,4 @@
-{{- define "dream-league-identity.container" -}}
+{{- define "dream-league-api.container" -}}
 envFrom:
 - configMapRef:
     name: {{ .Values.name }}

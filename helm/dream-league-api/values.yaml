@@ -1,6 +1,6 @@
 environment: development
-name: dream-league-identity
-image: dream-league-identity
+name: dream-league-api
+image: dream-league-api
 
 container:
   imagePullPolicy: IfNotPresent
@@ -15,7 +15,7 @@ container:
   jwtExpiryInMinutes: 60
 
 postgresService:
-  postgresHost: dream-league-identity-postgres
+  postgresHost: dream-league-api-postgres
   postgresExternalName: host.docker.internal
   postgresPort: 5432
   postgresUsername: postgres
