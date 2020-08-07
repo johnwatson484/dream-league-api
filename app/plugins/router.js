@@ -1,6 +1,7 @@
 const routes = [].concat(
-  require('../routes/register'),
-  require('../routes/login'),
+  require('../routes/identity/login'),
+  require('../routes/identity/register'),
+  require('../routes/league/team'),
   require('../routes/validate')
 )
 

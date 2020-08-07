@@ -1,10 +1,10 @@
 const boom = require('@hapi/boom')
 const joi = require('@hapi/joi')
-const auth = require('../auth')
+const account = require('../../account')
 
 module.exports = [{
   method: 'POST',
-  path: '/login',
+  path: '/register',
   options: {
     validate: {
       payload: joi.object({
@@ -16,11 +16,7 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      const authenticated = await auth.login(request.payload.email, request.payload.password)
-      if (!authenticated) {
-        return boom.unauthorized()
-      }
-      return h.response(authenticated)
+      return h.response(await account.register(request.payload.email, request.payload.password))
     }
   }
 }]
