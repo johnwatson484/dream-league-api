@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const UserRole = sequelize.define('userRole', {
+  const UserRole = sequelize.define('UserRole', {
     userId: { type: DataTypes.INTEGER, primaryKey: true },
     roleId: { type: DataTypes.INTEGER, primaryKey: true }
   }, {
@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   })
   UserRole.associate = function (models) {
-    UserRole.belongsTo(models.user, { foreignKey: 'userId' })
-    UserRole.belongsTo(models.role, { foreignKey: 'roleId' })
+    UserRole.belongsTo(models.User, { foreignKey: 'userId' })
+    UserRole.belongsTo(models.Role, { foreignKey: 'roleId' })
   }
   return UserRole
 }

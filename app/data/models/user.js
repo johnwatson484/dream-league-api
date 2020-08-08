@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('user', {
+  const User = sequelize.define('User', {
     userId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true
   })
   User.associate = function (models) {
-    User.belongsToMany(models.role, {
+    User.belongsToMany(models.Role, {
       through: 'userRole',
       foreignKey: 'userId',
       as: 'roles',

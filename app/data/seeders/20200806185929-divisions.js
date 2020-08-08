@@ -18,7 +18,9 @@ module.exports = {
       rank: 3,
       createdAt: new Date(),
       updatedAt: new Date()
-    }])
+    }], {
+      ignoreDuplicates: true
+    })
   },
 
   down: (queryInterface, Sequelize) => {
