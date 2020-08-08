@@ -22,7 +22,7 @@ postgresService:
   postgresPort: 5432
   postgresUsername: postgres
   postgresPassword: postgres
-  postgresDatabase: dream_league_identity
+  postgresDatabase: dream_league_api
 
 deployment:
   restartPolicy: Always
