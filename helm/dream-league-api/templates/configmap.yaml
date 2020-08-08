@@ -4,6 +4,7 @@ data:
   NODE_ENV: {{ quote .Values.environment }}
   PORT: {{ quote .Values.container.port }}
   POSTGRES_USERNAME: {{ quote .Values.postgresService.postgresUsername }}
+  POSTGRES_PASSWORD: {{ quote .Values.postgresService.postgresPassword }}
   POSTGRES_DB: {{ quote .Values.postgresService.postgresDatabase }}
   POSTGRES_HOST: {{ quote .Values.postgresService.postgresExternalName }}
   POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
