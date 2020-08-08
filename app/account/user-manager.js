@@ -11,7 +11,7 @@ async function userExists (email) {
 }
 
 async function getUser (email) {
-  const user = await db.user.findOne({
+  const user = await db.User.findOne({
     where: { email },
     raw: true
   })
@@ -26,7 +26,7 @@ async function getUser (email) {
 async function createUser (email, password) {
   const passwordHash = await bcrypt.hash(password, 10)
 
-  const user = await db.user.create({
+  const user = await db.User.create({
     email,
     passwordHash
   })

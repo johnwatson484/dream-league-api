@@ -1,21 +1,21 @@
 const db = require('../data/models')
 
 async function getRole (roleName) {
-  return db.role.findOne({ where: { name: roleName } })
+  return db.Role.findOne({ where: { name: roleName } })
 }
 
 async function addUserToRole (userId, roleName) {
   const role = await getRole(roleName)
-  await db.userRole.create({ userId, roleId: role.roleId })
+  await db.UserRole.create({ userId, roleId: role.roleId })
 }
 
 async function getUserRoles (userId) {
-  return db.userRole.findAll({
+  return db.UserRole.findAll({
     where: { userId },
     raw: true,
     nest: true,
     attributes: [],
-    include: [db.role]
+    include: [db.Role]
   })
 }
 

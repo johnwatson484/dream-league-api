@@ -1,7 +1,7 @@
 const db = require('../data/models')
 
 async function validate (decoded, request, h) {
-  const user = await db.user.findOne({
+  const user = await db.User.findOne({
     raw: true,
     where: { userId: decoded.userId }
   })
