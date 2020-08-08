@@ -14,7 +14,7 @@ container:
   jwtSecret: secret
   jwtExpiryInMinutes: 60
   command: ["/bin/sh"]
-  args: ["-c", "npm run migrate && npm run seed && node index"]
+  args: ["-c", "npm run migrate && npm run seed && npm run start"]
 
 postgresService:
   postgresHost: dream-league-api-postgres
