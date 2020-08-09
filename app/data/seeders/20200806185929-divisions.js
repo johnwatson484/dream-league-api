@@ -18,6 +18,12 @@ module.exports = {
       rank: 3,
       createdAt: new Date(),
       updatedAt: new Date()
+    }, {
+      divisionId: 4,
+      name: 'None',
+      rank: 4,
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {
       ignoreDuplicates: true
     })

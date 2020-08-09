@@ -4,7 +4,7 @@ const joi = require('@hapi/joi')
 const schema = joi.object().keys({
   username: joi.string(),
   password: joi.string(),
-  database: joi.string().default('dream_league_identity'),
+  database: joi.string().default('dream_league_api'),
   host: joi.string().default('localhost'),
   port: joi.number().default(5432),
   dialect: joi.string().default('postgres')

@@ -25,7 +25,7 @@ services:
   dream-league-api-postgres:
     image: postgres:11.4-alpine
     environment:
-      POSTGRES_DB: dream_league_identity
+      POSTGRES_DB: dream_league_api
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: postgres
     ports:
