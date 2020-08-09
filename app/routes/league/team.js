@@ -7,7 +7,10 @@ module.exports = [{
   path: '/league/teams',
   options: {
     handler: async (request, h) => {
-      return h.response(await db.Team.findAll({ include: [db.Division] }))
+      return h.response(await db.Team.findAll({
+        include: [{ model: db.Division, as: 'division', attributes: ['name'] }],
+        order: [['division', 'rank'], ['name']]
+      }))
     }
   }
 }, {

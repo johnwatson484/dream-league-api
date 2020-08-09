@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
   })
   Team.associate = function (models) {
     Team.belongsTo(models.Division, {
-      foreignKey: 'divisionId'
+      foreignKey: 'divisionId',
+      as: 'division'
     })
     Team.hasMany(models.Player, {
       foreignKey: 'teamId',
