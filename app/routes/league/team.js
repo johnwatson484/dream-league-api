@@ -7,7 +7,7 @@ module.exports = [{
   path: '/league/teams',
   options: {
     handler: async (request, h) => {
-      return h.response(await db.Team.findAll())
+      return h.response(await db.Team.findAll({ include: [db.Division] }))
     }
   }
 }, {
