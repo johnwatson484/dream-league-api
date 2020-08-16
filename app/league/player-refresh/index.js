@@ -4,14 +4,14 @@ const positions = require('../../config').positions
 async function refresh (players) {
   const mappedPlayers = []
   const unmappedPlayers = []
-  players.forEach(async player => {
+  for (const player of players) {
     const mappedPlayer = await mapPlayer(player)
     if (mappedPlayer) {
       mappedPlayers.push(mappedPlayers)
     } else {
       unmappedPlayers.push(player)
     }
-  })
+  }
   if (unmappedPlayers.length) {
     return {
       success: false,
