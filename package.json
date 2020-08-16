@@ -7,7 +7,12 @@
     "start": "node app/index.js",
     "start:watch": "nodemon --inspect=0.0.0.0 --ext css,js,njk --legacy-watch app/index.js",
     "migrate": "sequelize db:migrate",
-    "seed": "sequelize db:seed:all"
+    "seed": "sequelize db:seed:all",
+    "test": "jest --runInBand",
+    "test:lint": "standard",
+    "test:integration": "jest --testPathPattern=test/integration --coverage=false",
+    "test:unit": "jest --testPathPattern=test/unit --coverage=false",
+    "test:watch": "jest --coverage=false --onlyChanged --watch --runInBand"
   },
   "author": "John Watson",
   "license": "MIT",
@@ -29,7 +34,20 @@
     "sequelize-cli": "^5.5.1"
   },
   "devDependencies": {
+    "jest": "^26.4.0",
     "nodemon": "^2.0.4",
     "standard": "^14.3.4"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "beforeEach",
+      "expect",
+      "test",
+      "afterEach",
+      "jest",
+      "beforeAll",
+      "afterAll"
+    ]
   }
 }

@@ -1,6 +1,6 @@
 const joi = require('@hapi/joi')
 const databaseConfig = require('./database-config')
-const envs = ['development', 'production']
+const envs = ['development', 'test', 'production']
 const positions = ['GK', 'DEF', 'MID', 'FWD']
 
 // Define config schema
