@@ -1,11 +1,16 @@
 const db = require('../../data/models')
 const positions = require('../../config').positions
-const mappedPlayers = []
-const unmappedPlayers = []
 
 async function refresh (players) {
+  const mappedPlayers = []
+  const unmappedPlayers = []
   players.forEach(async player => {
-    await mapPlayer(player)
+    const mappedPlayer = await mapPlayer(player)
+    if (mappedPlayer) {
+      mappedPlayers.push(mappedPlayers)
+    } else {
+      unmappedPlayers.push(player)
+    }
   })
   if (unmappedPlayers.length) {
     return {
@@ -13,7 +18,9 @@ async function refresh (players) {
       unmappedPlayers
     }
   } else {
-    // TODO: add save to database
+    await db.Player.truncate()
+    await db.Player.bulkCreate(mappedPlayers)
+    return { success: true }
   }
 }
 
@@ -23,23 +30,20 @@ async function mapPlayer (player) {
   if (teamId && position) {
     const firstName = mapFirstName(player)
     const lastName = mapLastName(player)
-    mappedPlayers.push({
+    return {
       firstName,
       lastName,
       position,
       teamId
-    })
-  } else {
-    if (position) {
-      unmappedPlayers.push({
-        player
-      })
     }
   }
+  return undefined
 }
 
 function mapPosition (position) {
   switch (position) {
+    case 'GK':
+      return 'Goalkeeper'
     case 'DEF':
       return 'Defender'
     case 'MID':
