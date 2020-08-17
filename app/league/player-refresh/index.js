@@ -25,7 +25,7 @@ async function refresh (players) {
 }
 
 async function mapPlayer (player) {
-  const teamId = await db.Team.findOne({ where: { alias: player.team } })
+  const teamId = await db.Team.findOne({ attributes: ['teamId'], where: { alias: player.team } })
   const position = mapPosition(player.position)
   if (teamId && position) {
     const firstName = mapFirstName(player)
