@@ -4,26 +4,16 @@ services:
     build:
       context: .
       target: development
-    ports:
-      - "3000:3000"
-      - "9229:9229"
+    depends_on:
+      - dream-league-api-postgres
     command: >
       sh -c "
         scripts/wait-for dream-league-api-postgres:5432 --
         npm run migrate &&
         npm run seed &&
-        npm run start:watch"
+        npm run test"
     volumes:
       - ./app/:/home/node/app/
       - ./package.json:/home/node/package.json
       - ./test/:/home/node/test/
-      - ./test-output/:/home/node/test-output/
-
-  dream-league-api-postgres:
-    ports:
-      - "6000:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-volumes:
-  postgres_data: {}
+      - ./test-output/:/home/node/test-output/      
