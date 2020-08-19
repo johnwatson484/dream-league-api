@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     alias: DataTypes.STRING
   }, {
     tableName: 'teams',
-    freezeTableName: true
+    freezeTableName: true,
+    timestamps: false
   })
   Team.associate = function (models) {
     Team.belongsTo(models.Division, {

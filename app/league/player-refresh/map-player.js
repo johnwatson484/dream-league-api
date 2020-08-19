@@ -2,16 +2,16 @@ const positions = require('../../config').positions
 const db = require('../../data/models')
 
 async function mapPlayer (player) {
-  const teamId = await db.Team.findOne({ attributes: ['teamId'], where: { alias: player.team } })
+  const team = await db.Team.findOne({ attributes: ['teamId'], where: { alias: player.team }, raw: true })
   const position = mapPosition(player.position)
-  if (teamId && position) {
+  if (team && position) {
     const firstName = mapFirstName(player)
     const lastName = mapLastName(player)
     return {
       firstName,
       lastName,
       position,
-      teamId
+      teamId: team.teamId
     }
   }
   return undefined

@@ -15,7 +15,7 @@ const players = [{
   team: 'Wycombe'
 }]
 
-describe('refreshing player list', () => {
+describe('refreshing player list unit', () => {
   test('should return success if list valid', async () => {
     db.Team.findOne.mockResolvedValue(1)
 

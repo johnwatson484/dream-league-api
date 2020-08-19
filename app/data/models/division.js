@@ -6,12 +6,11 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     name: DataTypes.STRING,
-    rank: DataTypes.INTEGER,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    rank: DataTypes.INTEGER
   }, {
     tableName: 'divisions',
-    freezeTableName: true
+    freezeTableName: true,
+    timestamps: false
   })
   Division.associate = function (models) {
     Division.hasMany(models.Team, {

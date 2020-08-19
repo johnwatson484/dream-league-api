@@ -1,5 +1,5 @@
 const mapPlayer = require('./map-player')
-const runRefresh = require('./run-refresh')
+const run = require('./run')
 
 async function refresh (players) {
   const mappedPlayers = []
@@ -7,7 +7,7 @@ async function refresh (players) {
   for (const player of players) {
     const mappedPlayer = await mapPlayer(player)
     if (mappedPlayer) {
-      mappedPlayers.push(mappedPlayers)
+      mappedPlayers.push(mappedPlayer)
     } else {
       unmappedPlayers.push(player)
     }
@@ -18,7 +18,7 @@ async function refresh (players) {
       unmappedPlayers
     }
   } else {
-    await runRefresh(mappedPlayers)
+    await run(mappedPlayers)
     return { success: true }
   }
 }

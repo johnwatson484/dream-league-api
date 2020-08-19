@@ -12,15 +12,7 @@ module.exports = {
       firstName: Sequelize.STRING,
       lastName: Sequelize.STRING,
       alias: Sequelize.STRING,
-      position: Sequelize.STRING,
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      position: Sequelize.STRING
     })
   },
   down: (queryInterface, Sequelize) => {

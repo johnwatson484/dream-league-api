@@ -10,15 +10,7 @@ module.exports = {
       },
       divisionId: Sequelize.INTEGER,
       name: Sequelize.STRING,
-      alias: Sequelize.STRING,
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      alias: Sequelize.STRING
     })
   },
   down: (queryInterface, Sequelize) => {

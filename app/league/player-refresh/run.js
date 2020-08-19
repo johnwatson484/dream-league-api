@@ -1,8 +1,8 @@
 const db = require('../../data/models')
 
-async function refresh (players) {
+async function run (players) {
   await db.Player.truncate()
   await db.Player.bulkCreate(players)
 }
 
-module.exports = refresh
+module.exports = run

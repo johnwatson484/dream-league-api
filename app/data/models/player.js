@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     teamId: DataTypes.INTEGER,
+    position: DataTypes.STRING,
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     alias: DataTypes.STRING,
@@ -39,11 +40,11 @@ module.exports = (sequelize, DataTypes) => {
       get () {
         return this.firstName === undefined
       }
-    },
-    position: DataTypes.STRING
+    }
   }, {
     tableName: 'players',
-    freezeTableName: true
+    freezeTableName: true,
+    timestamps: false
   })
   Player.associate = function (models) {
     Player.belongsTo(models.Team, {
