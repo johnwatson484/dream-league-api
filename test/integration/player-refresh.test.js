@@ -45,6 +45,25 @@ describe('refreshing player list', () => {
     expect(result.unmappedPlayers).toBeUndefined()
   })
 
+  test('should not be case sensitive', async () => {
+    const players = [{
+      firstName: 'Ian',
+      lastName: 'Henderson',
+      position: 'FWD',
+      team: 'rochdale'
+    }, {
+      firstName: 'Adebayo',
+      lastName: 'Akinfenwa',
+      position: 'FWD',
+      team: 'WycoMbe'
+    }]
+
+    const result = await refresh(players)
+
+    expect(result.success).toBeTruthy()
+    expect(result.unmappedPlayers).toBeUndefined()
+  })
+
   test('should return failure if all teams invalid', async () => {
     const players = [{
       firstName: 'Ian',

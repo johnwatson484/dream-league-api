@@ -16,6 +16,10 @@ const players = [{
 }]
 
 describe('refreshing player list unit', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('should return success if list valid', async () => {
     db.Team.findOne.mockResolvedValue(1)
 
@@ -66,12 +70,5 @@ describe('refreshing player list unit', () => {
 
     expect(result.success).toBeFalsy()
     expect(result.unmappedPlayers.length).toBe(1)
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-  afterAll(() => {
-    jest.resetAllMocks()
   })
 })
