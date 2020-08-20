@@ -70,5 +70,7 @@ describe('refreshing player list unit', () => {
 
     expect(result.success).toBeFalsy()
     expect(result.unmappedPlayers.length).toBe(1)
+    expect(result.unmappedPlayers[0].firstName).toBe('Ian')
+    expect(result.unmappedPlayers[0].lastName).toBe('Henderson')
   })
 })

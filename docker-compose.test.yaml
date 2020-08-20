@@ -11,7 +11,7 @@ services:
         scripts/wait-for dream-league-api-postgres:5432 --
         npm run migrate &&
         npm run seed &&
-        npm run test"
+        npm run test:watch"
     volumes:
       - ./app/:/home/node/app/
       - ./package.json:/home/node/package.json
