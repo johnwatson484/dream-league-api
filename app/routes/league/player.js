@@ -1,5 +1,5 @@
 const db = require('../../data/models')
-const joi = require('@hapi/joi')
+const joi = require('joi')
 const boom = require('@hapi/boom')
 const refresh = require('../../league/player-refresh')
 const positions = require('../../config').positions
