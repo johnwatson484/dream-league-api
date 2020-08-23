@@ -5,10 +5,12 @@ services:
       context: .
       target: development
     depends_on:
-      - dream-league-api-postgres
+      - dream-league-api-postgres-test
+    environment:
+      POSTGRES_HOST: dream-league-api-postgres-test
     command: >
       sh -c "
-        scripts/wait-for dream-league-api-postgres:5432 --
+        scripts/wait-for dream-league-api-postgres-test:5432 --
         npm run migrate &&
         npm run seed &&
         npm run test"
@@ -16,4 +18,11 @@ services:
       - ./app/:/home/node/app/
       - ./package.json:/home/node/package.json
       - ./test/:/home/node/test/
-      - ./test-output/:/home/node/test-output/      
+      - ./test-output/:/home/node/test-output/
+
+  dream-league-api-postgres-test:
+    image: postgres:11.4-alpine
+    environment:
+      POSTGRES_DB: dream_league_api
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres   
