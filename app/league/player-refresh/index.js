@@ -12,14 +12,14 @@ async function refresh (players) {
       unmappedPlayers.push(player)
     }
   }
-  if (unmappedPlayers.length) {
-    return {
-      success: false,
-      unmappedPlayers
-    }
-  } else {
+
+  if (!unmappedPlayers.length) {
     await run(mappedPlayers)
-    return { success: true }
+  }
+
+  return {
+    success: unmappedPlayers.length > 0,
+    unmappedPlayers
   }
 }
 

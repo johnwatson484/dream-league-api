@@ -2,7 +2,6 @@ const db = require('../../data/models')
 const joi = require('joi')
 const boom = require('@hapi/boom')
 const refresh = require('../../league/player-refresh')
-const positions = require('../../config').positions
 
 module.exports = [{
   method: 'GET',
@@ -22,18 +21,19 @@ module.exports = [{
     validate: {
       payload: joi.object({
         players: joi.array().items(joi.object({
-          firstName: joi.string().valid('').optional(),
-          lastName: joi.string().required(),
-          position: joi.string().valid(...positions),
-          team: joi.string().required()
-        })).required()
+          firstName: joi.string().allow(''),
+          lastName: joi.string().allow(''),
+          position: joi.string().allow(''),
+          team: joi.string().allow('')
+        }))
       }),
       failAction: async (request, h, error) => {
         return boom.badRequest(error)
       }
     },
     handler: async (request, h) => {
-      return h.response(await refresh(request.payload))
+      console.log(request.payload)
+      return h.response(await refresh(request.payload.players))
     }
   }
 }]
