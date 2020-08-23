@@ -1,7 +1,6 @@
 const joi = require('joi')
 const databaseConfig = require('./database-config')
 const envs = ['development', 'test', 'production']
-const positions = ['GK', 'DEF', 'MID', 'FWD']
 
 // Define config schema
 const schema = joi.object().keys({
@@ -10,8 +9,7 @@ const schema = joi.object().keys({
   jwtConfig: joi.object({
     secret: joi.string(),
     expiryInMinutes: joi.number().default(60)
-  }),
-  positions: joi.array().items(joi.string()).default(positions)
+  })
 })
 
 // Build config
