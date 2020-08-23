@@ -11,5 +11,19 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false
   })
+  Manager.associate = function (models) {
+    Manager.belongsToMany(models.Player, {
+      through: 'managerPlayers',
+      foreignKey: 'managerId',
+      as: 'players',
+      onDelete: 'CASCADE'
+    })
+    Manager.belongsToMany(models.Team, {
+      through: 'managerKeepers',
+      foreignKey: 'managerId',
+      as: 'keepers',
+      onDelete: 'CASCADE'
+    })
+  }
   return Manager
 }
