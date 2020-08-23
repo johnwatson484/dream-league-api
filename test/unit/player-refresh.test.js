@@ -26,7 +26,6 @@ describe('refreshing player list unit', () => {
     const result = await refresh(players)
 
     expect(result.success).toBeTruthy()
-    expect(result.unmappedPlayers).toBeUndefined()
   })
 
   test('should return failure if all teams invalid', async () => {
