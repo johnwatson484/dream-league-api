@@ -18,7 +18,7 @@ async function refresh (players) {
   }
 
   return {
-    success: unmappedPlayers.length > 0,
+    success: !unmappedPlayers.length,
     unmappedPlayers
   }
 }

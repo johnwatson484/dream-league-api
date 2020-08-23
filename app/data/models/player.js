@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     hasFirstName: {
       type: DataTypes.VIRTUAL,
       get () {
-        return this.firstName === undefined
+        return this.firstName != null
       }
     }
   }, {
