@@ -1,0 +1,12 @@
+INSERT INTO "managers" ("managerId", "name") VALUES (1, 'John Watson');
+INSERT INTO "managers" ("managerId", "name") VALUES (2, 'Lee Gordon');
+INSERT INTO "managers" ("managerId", "name") VALUES (3, 'Scott Dormand');
+INSERT INTO "managers" ("managerId", "name") VALUES (4, 'Billy Gordon');
+INSERT INTO "managers" ("managerId", "name") VALUES (5, 'Tommy Gordon');
+INSERT INTO "managers" ("managerId", "name") VALUES (6, 'David Brown');
+INSERT INTO "managers" ("managerId", "name") VALUES (7, 'Bob Brown');
+INSERT INTO "managers" ("managerId", "name") VALUES (8, 'Darren Brown');
+INSERT INTO "managers" ("managerId", "name") VALUES (9, 'Michael Richardson');
+INSERT INTO "managers" ("managerId", "name") VALUES (10, 'Rob Doloughan');
+INSERT INTO "managers" ("managerId", "name") VALUES (11, 'Ben Scott');
+INSERT INTO "managers" ("managerId", "name") VALUES (12, 'Tucker Brazier');
