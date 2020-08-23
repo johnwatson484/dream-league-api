@@ -7,9 +7,8 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING
-      }
+      name: Sequelize.STRING,
+      alias: Sequelize.STRING
     })
   },
   down: (queryInterface, Sequelize) => {
