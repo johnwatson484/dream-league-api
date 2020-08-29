@@ -9,10 +9,12 @@ module.exports = [{
     validate: {
       payload: joi.object({
         teams: joi.array().items(joi.object({
-          firstName: joi.string().allow(''),
-          lastName: joi.string().allow(''),
-          position: joi.string().allow(''),
-          team: joi.string().allow('')
+          manager: joi.string(),
+          players: joi.array().items(joi.object({
+            player: joi.string(),
+            position: joi.string(),
+            substitute: joi.bool()
+          }))
         }))
       }),
       failAction: async (request, h, error) => {
@@ -20,7 +22,6 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      console.log(request.payload)
       return h.response(await refresh(request.payload.teams))
     }
   }

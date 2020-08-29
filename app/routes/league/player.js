@@ -32,7 +32,6 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      console.log(request.payload)
       return h.response(await refresh(request.payload.players))
     }
   }
