@@ -10,7 +10,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false
-      }
+      },
+      substitute: Sequelize.BOOLEAN
     })
   },
   down: (queryInterface, Sequelize) => {

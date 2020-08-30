@@ -1,5 +1,6 @@
 const positions = ['GK', 'DEF', 'MID', 'FWD']
 const db = require('../../data/models')
+const mapPosition = require('../../position')
 
 async function mapPlayer (player) {
   const team = await db.Team.findOne({ attributes: ['teamId'], where: { alias: { [db.Sequelize.Op.iLike]: player.team } }, raw: true })
@@ -15,21 +16,6 @@ async function mapPlayer (player) {
     }
   }
   return undefined
-}
-
-function mapPosition (position) {
-  switch (position) {
-    case 'GK':
-      return 'Goalkeeper'
-    case 'DEF':
-      return 'Defender'
-    case 'MID':
-      return 'Midfielder'
-    case 'FWD':
-      return 'Forward'
-    default:
-      return undefined
-  }
 }
 
 function mapFirstName (player) {
