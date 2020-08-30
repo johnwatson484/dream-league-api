@@ -1,20 +1,11 @@
 const db = require('../../app/data/models')
 const refresh = require('../../app/league/player-refresh')
+const testData = require('../data')
 
 describe('refreshing player list', () => {
   beforeAll(async () => {
     await db.Team.destroy({ truncate: true })
-    await db.Team.bulkCreate([{
-      teamId: 1,
-      divisionId: 1,
-      name: 'Rochdale',
-      alias: 'Rochdale'
-    }, {
-      teamId: 2,
-      divisionId: 1,
-      name: 'Wycombe Wanderers',
-      alias: 'Wycombe'
-    }])
+    await db.Team.bulkCreate(testData.teams)
   })
 
   beforeEach(async () => {

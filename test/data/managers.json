@@ -1,0 +1,13 @@
+[{"managerId":1,"name":"John Watson","alias":"John"},
+  {"managerId":2,"name":"Lee Gordon","alias":"Lee"},
+  {"managerId":3,"name":"Scott Dormand","alias":"Scott"},
+  {"managerId":4,"name":"Billy Gordon","alias":"Billy"},
+  {"managerId":5,"name":"Tommy Gordon/Pete Nyland","alias":"Tommy/Pete"},
+  {"managerId":6,"name":"Robert Doloughan","alias":"Rob"},
+  {"managerId":7,"name":"David Brown","alias":"David"},
+  {"managerId":8,"name":"Bob Brown","alias":"Bob"},
+  {"managerId":9,"name":"Darren Brown","alias":"Daz"},
+  {"managerId":10,"name":"Michael Richardson","alias":"Michael"},
+  {"managerId":11,"name":"Ben Scott","alias":"Ben"},
+  {"managerId":12,"name":"Connor Wake","alias":"Conor"},
+  {"managerId":13,"name":"Tucker Brazier","alias":"Tucker"}]

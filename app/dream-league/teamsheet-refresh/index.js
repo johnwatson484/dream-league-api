@@ -4,7 +4,7 @@ const calculateDistance = require('../../levenshtein')
 
 async function refresh (teams) {
   for (const team in teams) {
-    const manager = await db.Manager.findOne({ attributes: ['manager'], where: { alias: { [db.Sequelize.Op.iLike]: team.manager } }, raw: true })
+    const manager = await db.Manager.findOne({ attributes: ['managerId'], where: { alias: { [db.Sequelize.Op.iLike]: team.manager } }, raw: true })
     if (manager) {
       await db.ManagerKeeper.destroy({ where: { managerId: manager.managerId } })
       await db.ManagerPlayer.destroy({ where: { managerId: manager.managerId } })
@@ -33,6 +33,9 @@ async function refresh (teams) {
         }
       }
     }
+  }
+  return {
+    success: true
   }
 }
 
