@@ -43,25 +43,21 @@ describe('refreshing teamsheet', () => {
     expect(result.success).toBeTruthy()
   })
 
-  // test('should save players if list valid', async () => {
-  //   const players = [{
-  //     firstName: 'Ian',
-  //     lastName: 'Henderson',
-  //     position: 'FWD',
-  //     team: 'Rochdale'
-  //   }, {
-  //     firstName: 'Adebayo',
-  //     lastName: 'Akinfenwa',
-  //     position: 'FWD',
-  //     team: 'Wycombe'
-  //   }]
+  test('should save players if list valid', async () => {
+    const teams = [{
+      manager: 'John',
+      players: [{
+        player: 'Henderson - Rochdale',
+        position: 'FWD',
+        substitute: false
+      }]
+    }]
 
-  //   await refresh(players)
-  //   const savedPlayers = await db.Player.findAll()
-
-  //   expect(savedPlayers.filter(x => x.firstName === players[0].firstName && x.lastName === players[0].lastName).length).toBe(1)
-  //   expect(savedPlayers.filter(x => x.firstName === players[1].firstName && x.lastName === players[1].lastName).length).toBe(1)
-  // })
+    await refresh(teams)
+    const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
+    console.log(savedPlayers)
+    expect(savedPlayers.filter(x => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(1)
+  })
 
   // test('should replace existing players if list valid', async () => {
   //   const originalPlayer = {
