@@ -373,4 +373,81 @@ describe('refreshing teamsheet', () => {
 
     expect(savedPlayers.filter(x => x.Player.firstName === 'Daniel' && x.Player.lastName === 'Sanchez Ayala' && x.Player.team.name === 'Middlesbrough').length).toBe(1)
   })
+
+  test('should match Sarpeng-Wiredu', async () => {
+    const teams = [{
+      manager: 'John',
+      players: [{
+        player: 'Sarpeng-Wiredu - Charlton',
+        position: 'MID',
+        substitute: false
+      }]
+    }]
+
+    await refresh(teams)
+    const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
+
+    expect(savedPlayers.filter(x => x.Player.firstName === 'Brendan' && x.Player.lastName === 'Sarpeng-Wiredu' && x.Player.team.name === 'Charlton Athletic').length).toBe(1)
+  })
+
+  test('should match Segbe Azankpo as duplicate on player list', async () => {
+    const teams = [{
+      manager: 'John',
+      players: [{
+        player: 'Segbe Azankpo - Oldham',
+        position: 'FWD',
+        substitute: false
+      }]
+    }]
+
+    await refresh(teams)
+    const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
+    expect(savedPlayers.filter(x => x.Player.firstName === 'Desire' && x.Player.lastName === 'Segbe Azankpo' && x.Player.team.name === 'Oldham Athletic').length).toBe(1)
+  })
+
+  test('should match Segbe Azankpo as partial name', async () => {
+    const teams = [{
+      manager: 'John',
+      players: [{
+        player: 'Azankpo - Oldham',
+        position: 'FWD',
+        substitute: false
+      }]
+    }]
+
+    await refresh(teams)
+    const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
+    expect(savedPlayers.filter(x => x.Player.firstName === 'Desire' && x.Player.lastName === 'Segbe Azankpo' && x.Player.team.name === 'Oldham Athletic').length).toBe(1)
+  })
+
+  test('should match Segbe Azankpo as second partial name', async () => {
+    const teams = [{
+      manager: 'John',
+      players: [{
+        player: 'Segbe - Oldham',
+        position: 'FWD',
+        substitute: false
+      }]
+    }]
+
+    await refresh(teams)
+    const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
+    expect(savedPlayers.filter(x => x.Player.firstName === 'Desire' && x.Player.lastName === 'Segbe Azankpo' && x.Player.team.name === 'Oldham Athletic').length).toBe(1)
+  })
+
+  test('should match West Bromich Albion alias', async () => {
+    const teams = [{
+      manager: 'John',
+      players: [{
+        player: 'Phillips - West Brom',
+        position: 'MID',
+        substitute: false
+      }]
+    }]
+
+    await refresh(teams)
+    const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
+    console.log(JSON.stringify(savedPlayers))
+    expect(savedPlayers.filter(x => x.Player.firstName === 'Matt' && x.Player.lastName === 'Phillips' && x.Player.team.name === 'West Bromich Albion').length).toBe(1)
+  })
 })

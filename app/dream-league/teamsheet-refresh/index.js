@@ -65,12 +65,12 @@ async function refresh (teams) {
 }
 
 function mapTeam (teams, matchTeam) {
-  const matchText = matchTeam.replace(' ', '').toUpperCase()
+  const matchText = matchTeam.replace(/' '/g, '').toUpperCase()
   let bestDistance = -1
   let bestTeamId = -1
 
   for (const team of teams) {
-    const distance = calculateDistance(matchText, team.alias.replace(' ', '').toUpperCase())
+    const distance = calculateDistance(matchText, team.alias.replace(/' '/g, '').toUpperCase())
     if (bestDistance === -1 || distance < bestDistance) {
       bestDistance = distance
       bestTeamId = team.teamId
@@ -84,7 +84,7 @@ function mapTeam (teams, matchTeam) {
 }
 
 function mapPlayer (players, matchPlayer, position) {
-  const matchText = matchPlayer.replace(' ', '').toUpperCase()
+  const matchText = matchPlayer.replace(/' '/g, '').toUpperCase()
   let bestDistance = -1
   let bestPlayerId = -1
 
@@ -95,7 +95,7 @@ function mapPlayer (players, matchPlayer, position) {
   for (const player of players) {
     const lastNames = player.lastName.split(' ')
     for (const lastName of lastNames) {
-      const playerMatchText = `${lastName}-${player.team.alias}`.replace(' ', '').toUpperCase()
+      const playerMatchText = `${lastName}-${player.team.alias}`.replace(/' '/g, '').toUpperCase()
       const distance = calculateDistance(matchText, playerMatchText)
       if ((bestDistance === -1 || distance < bestDistance)) {
         bestDistance = distance
