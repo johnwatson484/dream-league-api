@@ -59,35 +59,30 @@ describe('refreshing teamsheet', () => {
     expect(savedPlayers.filter(x => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(1)
   })
 
-  // test('should replace existing players if list valid', async () => {
-  //   const originalPlayer = {
-  //     firstName: 'Lee',
-  //     lastName: 'Gregory',
-  //     position: 'Forward',
-  //     teamId: 1
-  //   }
+  test('should replace existing players if list valid', async () => {
+    const originalPlayer = {
+      managerId: 1,
+      playerId: 1,
+      substitute: false
+    }
 
-  //   await db.Player.create(originalPlayer)
+    await db.ManagerPlayer.create(originalPlayer)
 
-  //   const players = [{
-  //     firstName: 'Ian',
-  //     lastName: 'Henderson',
-  //     position: 'FWD',
-  //     team: 'Rochdale'
-  //   }, {
-  //     firstName: 'Adebayo',
-  //     lastName: 'Akinfenwa',
-  //     position: 'FWD',
-  //     team: 'Wycombe'
-  //   }]
+    const teams = [{
+      manager: 'John',
+      players: [{
+        player: 'Henderson - Rochdale',
+        position: 'FWD',
+        substitute: false
+      }]
+    }]
 
-  //   await refresh(players)
-  //   const savedPlayers = await db.Player.findAll()
+    await refresh(teams)
+    const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
-  //   expect(savedPlayers.filter(x => x.firstName === players[0].firstName && x.lastName === players[0].lastName).length).toBe(1)
-  //   expect(savedPlayers.filter(x => x.firstName === players[1].firstName && x.lastName === players[1].lastName).length).toBe(1)
-  //   expect(savedPlayers.filter(x => x.firstName === originalPlayer.firstName && x.lastName === originalPlayer.lastName).length).toBe(0)
-  // })
+    expect(savedPlayers.filter(x => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(1)
+    expect(savedPlayers.length).toBe(1)
+  })
 
   // test('should not be case sensitive', async () => {
   //   const players = [{
