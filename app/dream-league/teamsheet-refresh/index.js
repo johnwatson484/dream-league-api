@@ -26,6 +26,7 @@ async function refresh (teams) {
                 managerId: manager.managerId,
                 player: player.player,
                 position: position,
+                substitute: player.substitute,
                 bestMatchId,
                 distance
               })
@@ -46,6 +47,7 @@ async function refresh (teams) {
                 managerId: manager.managerId,
                 player: player.player,
                 position: position,
+                substitute: player.substitute,
                 bestMatchId,
                 distance
               })

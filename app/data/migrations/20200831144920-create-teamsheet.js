@@ -10,6 +10,7 @@ module.exports = {
       managerId: Sequelize.INTEGER,
       player: Sequelize.STRING,
       position: Sequelize.STRING,
+      substitute: Sequelize.BOOLEAN,
       bestMatchId: Sequelize.INTEGER,
       distance: Sequelize.INTEGER
     })

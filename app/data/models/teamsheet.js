@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     managerId: DataTypes.INTEGER,
     player: DataTypes.STRING,
     position: DataTypes.STRING,
+    substitute: DataTypes.BOOLEAN,
     bestMatchId: DataTypes.INTEGER,
     distance: DataTypes.INTEGER
   }, {

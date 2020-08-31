@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   })
   ManagerKeeper.associate = function (models) {
     ManagerKeeper.belongsTo(models.Manager, { foreignKey: 'managerId' })
-    ManagerKeeper.belongsTo(models.Player, { foreignKey: 'teamId' })
+    ManagerKeeper.belongsTo(models.Team, { foreignKey: 'teamId' })
   }
   return ManagerKeeper
 }
