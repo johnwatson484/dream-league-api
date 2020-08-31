@@ -321,4 +321,56 @@ describe('refreshing teamsheet', () => {
     expect(savedPlayers.filter(x => x.substitute).length).toBe(1)
     expect(savedPlayers.filter(x => !x.substitute).length).toBe(1)
   })
+
+  test('should match team when duplicate in position', async () => {
+    const teams = [{
+      manager: 'John',
+      players: [{
+        player: 'Adams - Forest Green',
+        position: 'MID',
+        substitute: false
+      }]
+    }]
+
+    await refresh(teams)
+    const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
+    expect(savedPlayers.filter(x => x.Player.firstName === 'Ebou' && x.Player.lastName === 'Adams' && x.Player.team.name === 'Forest Green Rovers').length).toBe(1)
+    expect(savedPlayers.filter(x => x.Player.firstName === 'Joe' && x.Player.lastName === 'Adams' && x.Player.team.name === 'Bury').length).toBe(0)
+  })
+
+  test('should not insert duplicates', async () => {
+    const teams = [{
+      manager: 'John',
+      players: [{
+        player: 'Adams - Forest Green',
+        position: 'MID',
+        substitute: false
+      }, {
+        player: 'Adams - Forest Green',
+        position: 'MID',
+        substitute: false
+      }]
+    }]
+
+    await refresh(teams)
+    const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
+
+    expect(savedPlayers.filter(x => x.Player.firstName === 'Ebou' && x.Player.lastName === 'Adams' && x.Player.team.name === 'Forest Green Rovers').length).toBe(1)
+  })
+
+  test('should match Daniel Ayala', async () => {
+    const teams = [{
+      manager: 'John',
+      players: [{
+        player: 'Ayala - Middlesbrough',
+        position: 'DEF',
+        substitute: false
+      }]
+    }]
+
+    await refresh(teams)
+    const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
+
+    expect(savedPlayers.filter(x => x.Player.firstName === 'Daniel' && x.Player.lastName === 'Sanchez Ayala' && x.Player.team.name === 'Middlesbrough').length).toBe(1)
+  })
 })

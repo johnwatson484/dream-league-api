@@ -93,11 +93,14 @@ function mapPlayer (players, matchPlayer, position) {
   }
 
   for (const player of players) {
-    const playerMatchText = `${player.lastName}-${player.team.alias}`.replace(' ', '').toUpperCase()
-    const distance = calculateDistance(matchText, playerMatchText)
-    if ((bestDistance === -1 || distance < bestDistance) || (distance === bestDistance && player.lastName.includes(matchText))) {
-      bestDistance = distance
-      bestPlayerId = player.playerId
+    const lastNames = player.lastName.split(' ')
+    for (const lastName of lastNames) {
+      const playerMatchText = `${lastName}-${player.team.alias}`.replace(' ', '').toUpperCase()
+      const distance = calculateDistance(matchText, playerMatchText)
+      if ((bestDistance === -1 || distance < bestDistance)) {
+        bestDistance = distance
+        bestPlayerId = player.playerId
+      }
     }
   }
 
