@@ -1,14 +1,13 @@
 const mapPosition = require('../../position')
 const db = require('../../data/models')
-const calculateDistance = require('../../levenshtein')
+const mapPlayer = require('./map-player')
+const mapTeam = require('./map-team')
 
 async function refresh (teams) {
   for (const team of teams) {
     const manager = await db.Manager.findOne({ attributes: ['managerId'], where: { alias: { [db.Sequelize.Op.iLike]: team.manager } }, raw: true })
     if (manager) {
-      await db.ManagerKeeper.destroy({ where: { managerId: manager.managerId } })
-      await db.ManagerPlayer.destroy({ where: { managerId: manager.managerId } })
-      await db.Teamsheet.destroy({ where: { managerId: manager.managerId } })
+      await deleteCurrentTeam(manager.managerId)
       const leagueTeams = await db.Team.findAll({ raw: true })
       const leaguePlayers = await db.Player.findAll({ include: [{ model: db.Team, as: 'team', attributes: ['alias'] }], raw: true, nest: true })
       for (const player of team.players) {
@@ -64,50 +63,10 @@ async function refresh (teams) {
   }
 }
 
-function mapTeam (teams, matchTeam) {
-  const matchText = matchTeam.replace(/' '/g, '').toUpperCase()
-  let bestDistance = -1
-  let bestTeamId = -1
-
-  for (const team of teams) {
-    const distance = calculateDistance(matchText, team.alias.replace(/' '/g, '').toUpperCase())
-    if (bestDistance === -1 || distance < bestDistance) {
-      bestDistance = distance
-      bestTeamId = team.teamId
-    }
-  }
-
-  return {
-    bestMatchId: bestTeamId,
-    distance: bestDistance
-  }
-}
-
-function mapPlayer (players, matchPlayer, position) {
-  const matchText = matchPlayer.replace(/' '/g, '').toUpperCase()
-  let bestDistance = -1
-  let bestPlayerId = -1
-
-  if (position) {
-    players = players.filter(x => x.position === position)
-  }
-
-  for (const player of players) {
-    const lastNames = player.lastName.split(' ')
-    for (const lastName of lastNames) {
-      const playerMatchText = `${lastName}-${player.team.alias}`.replace(/' '/g, '').toUpperCase()
-      const distance = calculateDistance(matchText, playerMatchText)
-      if ((bestDistance === -1 || distance < bestDistance)) {
-        bestDistance = distance
-        bestPlayerId = player.playerId
-      }
-    }
-  }
-
-  return {
-    bestMatchId: bestPlayerId,
-    distance: bestDistance
-  }
+async function deleteCurrentTeam (managerId) {
+  await db.ManagerKeeper.destroy({ where: { managerId } })
+  await db.ManagerPlayer.destroy({ where: { managerId } })
+  await db.Teamsheet.destroy({ where: { managerId } })
 }
 
 module.exports = refresh
