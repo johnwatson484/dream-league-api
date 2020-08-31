@@ -8,31 +8,46 @@ async function refresh (teams) {
     if (manager) {
       await db.ManagerKeeper.destroy({ where: { managerId: manager.managerId } })
       await db.ManagerPlayer.destroy({ where: { managerId: manager.managerId } })
+      await db.Teamsheet.destroy({ where: { managerId: manager.managerId } })
       const leagueTeams = await db.Team.findAll({ raw: true })
       const leaguePlayers = await db.Player.findAll({ include: [{ model: db.Team, as: 'team', attributes: ['alias'] }], raw: true, nest: true })
       for (const player of team.players) {
         const position = mapPosition(player.position)
         if (position === 'Goalkeeper') {
-          const { bestMatch } = mapTeam(leagueTeams, player.player)
-          if (bestMatch !== -1) {
+          const { bestMatchId, distance } = mapTeam(leagueTeams, player.player)
+          if (bestMatchId !== -1) {
             try {
               await db.ManagerKeeper.create({
                 managerId: manager.managerId,
-                teamId: bestMatch,
+                teamId: bestMatchId,
                 substitute: player.substitute
+              })
+              await db.Teamsheet.create({
+                managerId: manager.managerId,
+                player: player.player,
+                position: position,
+                bestMatchId,
+                distance
               })
             } catch (err) {
               console.error(err)
             }
           }
         } else {
-          const { bestMatch } = mapPlayer(leaguePlayers, player.player, position)
-          if (bestMatch !== -1) {
+          const { bestMatchId, distance } = mapPlayer(leaguePlayers, player.player, position)
+          if (bestMatchId !== -1) {
             try {
               await db.ManagerPlayer.create({
                 managerId: manager.managerId,
-                playerId: bestMatch,
+                playerId: bestMatchId,
                 substitute: player.substitute
+              })
+              await db.Teamsheet.create({
+                managerId: manager.managerId,
+                player: player.player,
+                position: position,
+                bestMatchId,
+                distance
               })
             } catch (err) {
               console.error(err)
@@ -61,7 +76,7 @@ function mapTeam (teams, matchTeam) {
   }
 
   return {
-    bestMatch: bestTeamId,
+    bestMatchId: bestTeamId,
     distance: bestDistance
   }
 }
@@ -85,7 +100,7 @@ function mapPlayer (players, matchPlayer, position) {
   }
 
   return {
-    bestMatch: bestPlayerId,
+    bestMatchId: bestPlayerId,
     distance: bestDistance
   }
 }
