@@ -1,4 +1,4 @@
-const calculateDistance = require('../../levenshtein')
+const calculateDistance = require('../../../levenshtein')
 
 function mapPlayer (players, matchPlayer, position) {
   const matchText = matchPlayer.replace(/' '/g, '').toUpperCase()

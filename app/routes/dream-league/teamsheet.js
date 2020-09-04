@@ -1,8 +1,16 @@
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const refresh = require('../../dream-league/teamsheet-refresh')
+const refresh = require('../../dream-league/teamsheet/refresh')
 
 module.exports = [{
+  method: 'GET',
+  path: '/dream-league/teamsheet',
+  options: {
+    handler: async (request, h) => {
+      return h.response(await refresh(request.payload.teams))
+    }
+  }
+}, {
   method: 'POST',
   path: '/dream-league/teamsheet/refresh',
   options: {
