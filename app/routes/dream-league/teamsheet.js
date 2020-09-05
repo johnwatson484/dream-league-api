@@ -1,6 +1,6 @@
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const refresh = require('../../dream-league/teamsheet/refresh')
+const { refresh } = require('../../dream-league/teamsheet')
 
 module.exports = [{
   method: 'GET',

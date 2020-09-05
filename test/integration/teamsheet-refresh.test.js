@@ -1,5 +1,5 @@
 const db = require('../../app/data/models')
-const refresh = require('../../app/dream-league/teamsheet/refresh')
+const { refresh } = require('../../app/dream-league/teamsheet')
 const testData = require('../data')
 
 describe('refreshing teamsheet', () => {
