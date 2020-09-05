@@ -1,0 +1,1042 @@
+[
+  {
+    "manager": "Ben",
+    "players": [
+      {
+        "player": "Exeter",
+        "position": "GK",
+        "substitute": false
+      },
+      {
+        "player": "Stoke",
+        "position": "GK",
+        "substitute": true
+      },
+      {
+        "player": "Perch - Scunthorpe",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Patersen - Cardiff",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Mulgrew - Blackburn",
+        "position": "DEF",
+        "substitute": true
+      },
+      {
+        "player": "Powell - Crewe",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Gallagher - Preston",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Reid - Fulham",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Fraser - Burton",
+        "position": "MID",
+        "substitute": true
+      },
+      {
+        "player": "Maynard - Mansfield",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Bowman - Exeter",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Watkins - Brentford",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Hugill - QPR",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Clarke Harris - Bristol Rovers",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Norris - Colchester",
+        "position": "FWD",
+        "substitute": true
+      }
+    ]
+  },
+  {
+    "manager": "Lee",
+    "players": [
+      {
+        "player": "WBA",
+        "position": "GK",
+        "substitute": false
+      },
+      {
+        "player": "Coventry",
+        "position": "GK",
+        "substitute": true
+      },
+      {
+        "player": "Wheater - Oldham",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Smith - Port Vale",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Piergianni - Oldham",
+        "position": "DEF",
+        "substitute": true
+      },
+      {
+        "player": "Crooks - Rotherham",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Broom - Cheltenham",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Wallace - Millwall",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Eisa - Scunthorpe",
+        "position": "MID",
+        "substitute": true
+      },
+      {
+        "player": "Toney - Peterborough",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Hardie - Plymouth",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Doyle - Swindon",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Gordon - Walsall",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Grant - Huddersfield",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Sotiriou - Leyton Orient",
+        "position": "FWD",
+        "substitute": true
+      }
+    ]
+  },
+  {
+    "manager": "Billy",
+    "players": [
+      {
+        "player": "Fulham",
+        "position": "GK",
+        "substitute": false
+      },
+      {
+        "player": "Wycombe",
+        "position": "GK",
+        "substitute": true
+      },
+      {
+        "player": "Burgess - Portsmouth",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Pedersen - Birmingham",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Mills - Forest Green",
+        "position": "DEF",
+        "substitute": true
+      },
+      {
+        "player": "Templeton - Burton",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Hernandez - Leeds",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Kirk - Crewe",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Osadebe - Macclesfield",
+        "position": "MID",
+        "substitute": true
+      },
+      {
+        "player": "Fletcher - Sheff Wed",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Henry - Oxford",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Amond - Newport",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Lawrence - Derby",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Smith - Rotherham",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Akins - Burton",
+        "position": "FWD",
+        "substitute": true
+      }
+    ]
+  },
+  {
+    "manager": "Michael",
+    "players": [
+      {
+        "player": "Derby",
+        "position": "GK",
+        "substitute": false
+      },
+      {
+        "player": "Lincoln",
+        "position": "GK",
+        "substitute": true
+      },
+      {
+        "player": "Shackell - Lincoln",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Potts - Luton",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Clarke-Salter - Birmingham",
+        "position": "DEF",
+        "substitute": true
+      },
+      {
+        "player": "Adomah - Cardiff",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Morris - Fleetwood",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Johnson - Preston",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Chair - QPR",
+        "position": "MID",
+        "substitute": true
+      },
+      {
+        "player": "Sinclair - Preston",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Semenyo - Sunderland",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Evans - Fleetwood",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Jackson - Ipswich",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Bamford - Leeds",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Adams - Southampton",
+        "position": "FWD",
+        "substitute": true
+      }
+    ]
+  },
+  {
+    "manager": "Bob",
+    "players": [
+      {
+        "player": "Sunderland",
+        "position": "GK",
+        "substitute": false
+      },
+      {
+        "player": "Nottm Forest",
+        "position": "GK",
+        "substitute": true
+      },
+      {
+        "player": "A O'Connor - Bradford",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Ajayi - WBA",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Ayala - Middlesbrough",
+        "position": "DEF",
+        "substitute": true
+      },
+      {
+        "player": "Clucas - Stoke",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Weimann - Bristol City",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Andrade - Lincoln",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "McGeady - Charlton",
+        "position": "MID",
+        "substitute": true
+      },
+      {
+        "player": "Granduillet - Blackpool",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Wyke - Sunderland",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Morton - Northampton",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Brewster - Swansea",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Wilson - Salford",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Vaughan - Tranmere",
+        "position": "FWD",
+        "substitute": true
+      }
+    ]
+  },
+  {
+    "manager": "Rob",
+    "players": [
+      {
+        "player": "Cheltenham",
+        "position": "GK",
+        "substitute": false
+      },
+      {
+        "player": "Colchester",
+        "position": "GK",
+        "substitute": true
+      },
+      {
+        "player": "Ream - Fulham",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Hare - Bristol Rovers",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Hadergionaj - Huddersfield",
+        "position": "DEF",
+        "substitute": true
+      },
+      {
+        "player": "Harrop - Preston",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "KaiKai - Blackpool",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Alioski - Leeds",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Coppinger - Doncaster",
+        "position": "MID",
+        "substitute": true
+      },
+      {
+        "player": "Robinson - WBA",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Waghorn - Derby",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Diedhiou - Bristol City",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Rooney - Derby",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Hogan - Birmingham",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Moore - Wigan",
+        "position": "FWD",
+        "substitute": true
+      }
+    ]
+  },
+  {
+    "manager": "Conor",
+    "players": [
+      {
+        "player": "Rotherham",
+        "position": "GK",
+        "substitute": false
+      },
+      {
+        "player": "Forest Green",
+        "position": "GK",
+        "substitute": true
+      },
+      {
+        "player": "Ayling - Leeds",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Clarke - Walsall",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Mawson - Fulham",
+        "position": "DEF",
+        "substitute": true
+      },
+      {
+        "player": "Maguire - Sunderland",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Dembele - Peterborough",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Camps - Rochdale",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Cairney - Fulham",
+        "position": "MID",
+        "substitute": true
+      },
+      {
+        "player": "Puscas - Reading",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Jutkiewicz - Birmingham",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "May - Cheltenham",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Mbuemo - Brentford",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Robinson - Colchester",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Palmer - Crawley",
+        "position": "FWD",
+        "substitute": true
+      }
+    ]
+  },
+  {
+    "manager": "Scott",
+    "players": [
+      {
+        "player": "Swindon",
+        "position": "GK",
+        "substitute": false
+      },
+      {
+        "player": "Brentford",
+        "position": "GK",
+        "substitute": true
+      },
+      {
+        "player": "Gibbs - WBA",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Andrew - Fleetwood",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Flint - Cardiff",
+        "position": "DEF",
+        "substitute": true
+      },
+      {
+        "player": "Gooch - Sunderland",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Towell - Salford",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Szmodics - Peterborough",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Fosu Henry - Brentford",
+        "position": "MID",
+        "substitute": true
+      },
+      {
+        "player": "Ladapo - Rotherham",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Armstrong - Blackburn",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Wells - Bristol City",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Madine - Blackpool",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Pigott - AFC Wimbledon",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Murphy - Bolton",
+        "position": "FWD",
+        "substitute": true
+      }
+    ]
+  },
+  {
+    "manager": "David",
+    "players": [
+      {
+        "player": "Fleetwood",
+        "position": "GK",
+        "substitute": false
+      },
+      {
+        "player": "Fleetwood",
+        "position": "GK",
+        "substitute": true
+      },
+      {
+        "player": "Hutchinson - Millwall",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Wharton - Northampton",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Morrison - Reading",
+        "position": "DEF",
+        "substitute": true
+      },
+      {
+        "player": "McGeehan - Portsmouth",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Wing - Middlesbrough",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Sadlier - Doncaster",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Wright - Leyton Orient",
+        "position": "MID",
+        "substitute": true
+      },
+      {
+        "player": "Taylor - Oxford",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Ayew - Swansea",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Collins - Luton",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Eisa - Peterborough",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Porter - Crewe",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Norwood - Ipswich",
+        "position": "FWD",
+        "substitute": true
+      }
+    ]
+  },
+  {
+    "manager": "Tommy/Pete",
+    "players": [
+      {
+        "player": "Leeds",
+        "position": "GK",
+        "substitute": false
+      },
+      {
+        "player": "Doncaster",
+        "position": "GK",
+        "substitute": true
+      },
+      {
+        "player": "Pearson - Luton",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Turnbull - Northampton",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "White - Southend",
+        "position": "DEF",
+        "substitute": true
+      },
+      {
+        "player": "Lubula - Crawley",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Sarcevic - Plymouth",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Browne - Oxford",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Pell - Colchester",
+        "position": "MID",
+        "substitute": true
+      },
+      {
+        "player": "Mitrovic - Fulham",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Healey - MK Dons",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Hunter - Salford",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Smith - Oldham",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Murphy - Burton",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Akinde - Gillingham",
+        "position": "FWD",
+        "substitute": true
+      }
+    ]
+  },
+  {
+    "manager": "Daz",
+    "players": [
+      {
+        "player": "Oxford",
+        "position": "GK",
+        "substitute": false
+      },
+      {
+        "player": "Sheff Wed",
+        "position": "GK",
+        "substitute": true
+      },
+      {
+        "player": "Roberts - Swansea",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Jacobson - Wycombe",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Brayford - Burton",
+        "position": "DEF",
+        "substitute": true
+      },
+      {
+        "player": "Curtis - Portsmouth",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Khan - Newport",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "DaSilva - Brentford",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Law - Exeter",
+        "position": "MID",
+        "substitute": true
+      },
+      {
+        "player": "Marquis - Portsmouth",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Benrahma - Brentford",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Whickham - Sheff Wed",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Yates - Swindon",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Grabban - Nottm Forest",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Fletcher - Middlesboro",
+        "position": "FWD",
+        "substitute": true
+      }
+    ]
+  },
+  {
+    "manager": "Tucker",
+    "players": [
+      {
+        "player": "Portsmouth",
+        "position": "GK",
+        "substitute": false
+      },
+      {
+        "player": "Burton",
+        "position": "GK",
+        "substitute": true
+      },
+      {
+        "player": "Pierre - Shrewsbury",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Garbutt - Ipswich",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Sarr - Charlton",
+        "position": "DEF",
+        "substitute": true
+      },
+      {
+        "player": "Clark - Accrington",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Jephcott - Plymouth",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Windass - Sheff Wed",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Samuel - QPR",
+        "position": "MID",
+        "substitute": true
+      },
+      {
+        "player": "Van Veen - Scunthorpe",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Taylor - Charlton",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Walker - Nottm Forest",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Chaplin - Barnsley",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Rowe - Oldham",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Bishop - Accrington",
+        "position": "FWD",
+        "substitute": true
+      }
+    ]
+  },
+  {
+    "manager": "John",
+    "players": [
+      {
+        "player": "Gillingham",
+        "position": "GK",
+        "substitute": false
+      },
+      {
+        "player": "Ipswich",
+        "position": "GK",
+        "substitute": true
+      },
+      {
+        "player": "Toffolo - Huddersfield",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Sweeney - Exeter",
+        "position": "DEF",
+        "substitute": false
+      },
+      {
+        "player": "Morrison - Cardiff",
+        "position": "DEF",
+        "substitute": true
+      },
+      {
+        "player": "Lowe - Wigan",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "McConville - Accrington",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Phillips - WBA",
+        "position": "MID",
+        "substitute": false
+      },
+      {
+        "player": "Ismail - Bradford",
+        "position": "MID",
+        "substitute": true
+      },
+      {
+        "player": "Henderson - Rochdale",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Madden - Fleetwood",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Akinfenwa - Wycombe",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Godden - Coventry",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Woodrow - Barnsley",
+        "position": "FWD",
+        "substitute": false
+      },
+      {
+        "player": "Robson-Kanu - WBA",
+        "position": "FWD",
+        "substitute": true
+      }
+    ]
+  }
+]

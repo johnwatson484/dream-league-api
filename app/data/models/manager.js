@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       as: 'keepers',
       onDelete: 'CASCADE'
     })
+    Manager.hasMany(models.Teamsheet, {
+      foreignKey: 'managerId',
+      as: 'teamsheet'
+    })
   }
   return Manager
 }

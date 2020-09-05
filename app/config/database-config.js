@@ -7,7 +7,10 @@ const schema = joi.object().keys({
   database: joi.string().default('dream_league_api'),
   host: joi.string().default('localhost'),
   port: joi.number().default(5432),
-  dialect: joi.string().default('postgres')
+  dialect: joi.string().default('postgres'),
+  define: joi.object().keys({
+    timestamps: joi.bool().valid(false)
+  })
 })
 
 // Build config
@@ -17,7 +20,10 @@ const config = {
   database: process.env.POSTGRES_DB,
   host: process.env.POSTGRES_HOST,
   port: process.env.POSTGRES_PORT,
-  dialect: process.env.POSTGRES_DIALECT
+  dialect: process.env.POSTGRES_DIALECT,
+  define: {
+    timestamps: false
+  }
 }
 
 // Validate config

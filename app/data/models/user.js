@@ -6,12 +6,11 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     email: DataTypes.STRING,
-    passwordHash: DataTypes.STRING,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    passwordHash: DataTypes.STRING
   }, {
     tableName: 'users',
-    freezeTableName: true
+    freezeTableName: true,
+    timestamps: false
   })
   User.associate = function (models) {
     User.belongsToMany(models.Role, {
