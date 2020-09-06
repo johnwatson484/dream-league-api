@@ -34,10 +34,22 @@ describe('get teamsheet', () => {
     expect(result.length).toBe(13)
   })
 
-  test('should return all players', async () => {
+  test('should return all defenders', async () => {
     const result = await get()
     const manager = result.find(x => x.managerId === 1)
-    expect(manager.players.length).toBe(13)
+    expect(manager.defenders.length).toBe(3)
+  })
+
+  test('should return all midfielders', async () => {
+    const result = await get()
+    const manager = result.find(x => x.managerId === 1)
+    expect(manager.midfielders.length).toBe(4)
+  })
+
+  test('should return all forwards', async () => {
+    const result = await get()
+    const manager = result.find(x => x.managerId === 1)
+    expect(manager.forwards.length).toBe(6)
   })
 
   test('should return all keepers', async () => {
@@ -46,10 +58,22 @@ describe('get teamsheet', () => {
     expect(manager.keepers.length).toBe(2)
   })
 
-  test('should return empty array if no players', async () => {
+  test('should return empty array if no defenders', async () => {
     const result = await get()
     const manager = result.find(x => x.managerId === 13)
-    expect(manager.players.length).toBe(0)
+    expect(manager.defenders.length).toBe(0)
+  })
+
+  test('should return empty array if no midfielders', async () => {
+    const result = await get()
+    const manager = result.find(x => x.managerId === 13)
+    expect(manager.midfielders.length).toBe(0)
+  })
+
+  test('should return empty array if no forwards', async () => {
+    const result = await get()
+    const manager = result.find(x => x.managerId === 13)
+    expect(manager.forwards.length).toBe(0)
   })
 
   test('should return empty array if no keepers', async () => {

@@ -25,7 +25,9 @@ function mapTeams (team) {
     managerId: team.managerId,
     name: team.name,
     keepers: team.keepers.map(x => mapKeeper(x.dataValues, team.teamsheet)),
-    players: team.players.map(x => mapPlayer(x.dataValues, team.teamsheet))
+    defenders: getPlayers(team.players, team.teamsheet, 'Defender'),
+    midfielders: getPlayers(team.players, team.teamsheet, 'Midfielder'),
+    forwards: getPlayers(team.players, team.teamsheet, 'Forward')
   }
 }
 
@@ -40,17 +42,21 @@ function mapKeeper (keeper, teamsheet) {
   }
 }
 
+function getPlayers (players, teamsheet, position) {
+  const validPlayers = players.filter(x => x.dataValues.position === position)
+  return validPlayers.map(x => mapPlayer(x, teamsheet))
+}
+
 function mapPlayer (player, teamsheet) {
-  const teamsheetEntry = teamsheet.find(x => x.dataValues.bestMatchId === player.playerId && x.dataValues.position === player.position)
+  const teamsheetEntry = teamsheet.find(x => x.dataValues.bestMatchId === player.dataValues.playerId && x.dataValues.position === player.dataValues.position)
   return {
-    playerId: player.teamId,
-    firstName: player.firstName,
-    lastName: player.lastName,
-    position: player.position,
-    team: player.team.dataValues.name,
+    playerId: player.dataValues.teamId,
+    fullName: player.fullName,
+    position: player.dataValues.position,
+    team: player.dataValues.team.dataValues.name,
     sourceName: teamsheetEntry.player,
     matchDistance: teamsheetEntry.distance,
-    substitute: player.substitute
+    substitute: player.dataValues.substitute
   }
 }
 
