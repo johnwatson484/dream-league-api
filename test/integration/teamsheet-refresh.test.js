@@ -447,7 +447,6 @@ describe('refreshing teamsheet', () => {
 
     await refresh(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
-    console.log(JSON.stringify(savedPlayers))
     expect(savedPlayers.filter(x => x.Player.firstName === 'Matt' && x.Player.lastName === 'Phillips' && x.Player.team.name === 'West Bromich Albion').length).toBe(1)
   })
 })

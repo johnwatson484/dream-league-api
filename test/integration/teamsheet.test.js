@@ -30,7 +30,31 @@ describe('get teamsheet', () => {
 
   test('should return all managers', async () => {
     const result = await get()
-    console.log(result)
+    console.log(JSON.stringify(result))
     expect(result.length).toBe(13)
+  })
+
+  test('should return all players', async () => {
+    const result = await get()
+    const manager = result.find(x => x.managerId === 1)
+    expect(manager.players.length).toBe(13)
+  })
+
+  test('should return all keepers', async () => {
+    const result = await get()
+    const manager = result.find(x => x.managerId === 1)
+    expect(manager.keepers.length).toBe(2)
+  })
+
+  test('should return empty array if no players', async () => {
+    const result = await get()
+    const manager = result.find(x => x.managerId === 13)
+    expect(manager.players.length).toBe(0)
+  })
+
+  test('should return empty array if no keepers', async () => {
+    const result = await get()
+    const manager = result.find(x => x.managerId === 13)
+    expect(manager.keepers.length).toBe(0)
   })
 })
