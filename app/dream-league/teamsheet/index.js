@@ -36,7 +36,7 @@ function mapKeeper (keeper, teamsheet) {
     name: keeper.name,
     sourceName: teamsheetEntry.player,
     matchDistance: teamsheetEntry.distance,
-    substitute: keeper.substitute
+    substitute: keeper.managerKeepers.dataValues.substitute
   }
 }
 
@@ -50,7 +50,7 @@ function mapPlayer (player, teamsheet) {
     team: player.dataValues.team.dataValues.name,
     sourceName: teamsheetEntry.player,
     matchDistance: teamsheetEntry.distance,
-    substitute: player.dataValues.substitute
+    substitute: player.managerPlayers.dataValues.substitute
   }
 }
 
