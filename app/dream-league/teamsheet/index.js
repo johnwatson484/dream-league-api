@@ -52,6 +52,7 @@ function mapPlayer (player, teamsheet) {
   return {
     playerId: player.dataValues.teamId,
     fullName: player.fullName,
+    lastNameFirstName: player.lastNameFirstName,
     position: player.dataValues.position,
     team: player.dataValues.team.dataValues.name,
     sourceName: teamsheetEntry.player,
