@@ -25,9 +25,7 @@ function mapTeams (team) {
     managerId: team.managerId,
     name: team.name,
     keepers: team.keepers.map(x => mapKeeper(x.dataValues, team.teamsheet)),
-    defenders: getPlayers(team.players, team.teamsheet, 'Defender'),
-    midfielders: getPlayers(team.players, team.teamsheet, 'Midfielder'),
-    forwards: getPlayers(team.players, team.teamsheet, 'Forward')
+    players: team.players.map(x => mapPlayer(x, team.teamsheet))
   }
 }
 
@@ -40,11 +38,6 @@ function mapKeeper (keeper, teamsheet) {
     matchDistance: teamsheetEntry.distance,
     substitute: keeper.substitute
   }
-}
-
-function getPlayers (players, teamsheet, position) {
-  const validPlayers = players.filter(x => x.dataValues.position === position)
-  return validPlayers.map(x => mapPlayer(x, teamsheet))
 }
 
 function mapPlayer (player, teamsheet) {
