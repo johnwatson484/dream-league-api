@@ -12,7 +12,7 @@ module.exports = [{
   }
 }, {
   method: 'POST',
-  path: '//dream-league/teamsheet/edit/player',
+  path: '/dream-league/teamsheet/edit/player',
   options: {
     validate: {
       payload: joi.object({

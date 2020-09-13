@@ -1,5 +1,6 @@
 const refresh = require('./refresh')
 const db = require('../../data/models')
+const { updatePlayer, updateKeeper } = require('./update')
 
 async function get () {
   const managers = await db.Manager.findAll({
@@ -56,5 +57,7 @@ function mapPlayer (player, teamsheet) {
 
 module.exports = {
   get,
-  refresh
+  refresh,
+  updatePlayer,
+  updateKeeper
 }
