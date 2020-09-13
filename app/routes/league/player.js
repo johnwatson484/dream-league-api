@@ -16,6 +16,26 @@ module.exports = [{
   }
 }, {
   method: 'POST',
+  path: '/league/players/autocomplete',
+  options: {
+    validate: {
+      payload: joi.object({
+        prefix: joi.string()
+      }),
+      failAction: async (request, h, error) => {
+        return boom.badRequest(error)
+      }
+    },
+    handler: async (request, h) => {
+      return h.response(await db.Player.findAll({
+        where: { lastName: { $ilike: request.payload.prefix + '%' } },
+        include: [{ model: db.Team, as: 'team', attributes: ['name'] }],
+        order: [['lastName'], ['firstName']]
+      }))
+    }
+  }
+}, {
+  method: 'POST',
   path: '/league/players/refresh',
   options: {
     validate: {
