@@ -1,6 +1,6 @@
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const { get, refresh } = require('../../dream-league/teamsheet')
+const { get, refresh, updatePlayer, updateKeeper } = require('../../dream-league/teamsheet')
 
 module.exports = [{
   method: 'GET',
@@ -25,7 +25,7 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-
+      await updatePlayer(request.payload)
     }
   }
 }, {
@@ -43,6 +43,7 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
+      await updateKeeper(request.payload)
     }
   }
 }, {
