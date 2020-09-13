@@ -27,7 +27,7 @@ module.exports = [{
     },
     handler: async (request, h) => {
       return h.response(await db.Team.findAll({
-        where: { name: { $ilike: request.payload.prefix + '%' } },
+        where: { name: { [db.Sequelize.Op.iLike]: request.payload.prefix + '%' } },
         order: [['name']]
       }))
     }

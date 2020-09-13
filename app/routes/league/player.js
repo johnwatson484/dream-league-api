@@ -28,7 +28,7 @@ module.exports = [{
     },
     handler: async (request, h) => {
       return h.response(await db.Player.findAll({
-        where: { lastName: { $ilike: request.payload.prefix + '%' } },
+        where: { lastName: { [db.Sequelize.Op.iLike]: request.payload.prefix + '%' } },
         include: [{ model: db.Team, as: 'team', attributes: ['name'] }],
         order: [['lastName'], ['firstName']]
       }))
