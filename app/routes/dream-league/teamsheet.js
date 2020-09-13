@@ -12,6 +12,41 @@ module.exports = [{
   }
 }, {
   method: 'POST',
+  path: '//dream-league/teamsheet/edit/player',
+  options: {
+    validate: {
+      payload: joi.object({
+        managerId: joi.number(),
+        playerIds: joi.array(),
+        playerSubs: joi.array()
+      }),
+      failAction: async (request, h, error) => {
+        return boom.badRequest(error)
+      }
+    },
+    handler: async (request, h) => {
+
+    }
+  }
+}, {
+  method: 'POST',
+  path: '/dream-league/teamsheet/edit/keeper',
+  options: {
+    validate: {
+      payload: joi.object({
+        managerId: joi.number(),
+        teamIds: joi.array(),
+        teamSubs: joi.array()
+      }),
+      failAction: async (request, h, error) => {
+        return boom.badRequest(error)
+      }
+    },
+    handler: async (request, h) => {
+    }
+  }
+}, {
+  method: 'POST',
   path: '/dream-league/teamsheet/refresh',
   options: {
     validate: {
