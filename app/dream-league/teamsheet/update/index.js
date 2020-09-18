@@ -1,5 +1,5 @@
-const updatePlayer = require('./player')
-const updateKeeper = require('./player')
+const updatePlayer = require('./update-player')
+const updateKeeper = require('./update-keeper')
 
 module.exports = {
   updatePlayer,

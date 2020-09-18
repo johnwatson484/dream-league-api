@@ -2,7 +2,7 @@ const db = require('../../../data/models')
 
 async function update (payload) {
   const manager = await getManager(payload.managerId)
-  await updatePlayers(payload.playerIds, manager, payload.managerId)
+  await updatePlayers(payload.playerIds, manager)
   await updateSubs(payload.playerSubs, payload.managerId)
 }
 
@@ -14,18 +14,18 @@ async function updateSubs (playerSubs, managerId) {
   await addNewSubs(selectedSubIds, currentSubs, managerId)
 }
 
-async function updatePlayers (playerIds, manager, managerId) {
+async function updatePlayers (playerIds, manager) {
   const selectedPlayerIds = getSelectedPlayerIds(playerIds)
   const currentPlayerIds = getCurrentPlayerIds(manager.dataValues.players)
 
-  await deleteOldPlayers(currentPlayerIds, selectedPlayerIds)
-  await addNewPlayers(selectedPlayerIds, currentPlayerIds, managerId)
+  await deleteOldPlayers(currentPlayerIds, selectedPlayerIds, manager.managerId)
+  await addNewPlayers(selectedPlayerIds, currentPlayerIds, manager.managerId)
 }
 
 async function addNewSubs (selectedSubIds, currentSubs, managerId) {
-  for (const selectedSub of selectedSubIds) {
-    if (!currentSubs.includes(selectedSub)) {
-      const managerPlayer = await db.ManagerPlayer.findOne({ where: { managerId, playerId: selectedSub } })
+  for (const selectedSubId of selectedSubIds) {
+    if (!currentSubs.includes(selectedSubId)) {
+      const managerPlayer = await db.ManagerPlayer.findOne({ where: { managerId, playerId: selectedSubId } })
       managerPlayer.substitute = true
       await managerPlayer.save()
     }
@@ -57,14 +57,14 @@ async function addNewPlayers (selectedPlayerIds, currentPlayerIds, managerId) {
   }
 }
 
-async function deleteOldPlayers (currentPlayerIds, selectedPlayerIds) {
+async function deleteOldPlayers (currentPlayerIds, selectedPlayerIds, managerId) {
   for (const currentPlayerId of currentPlayerIds) {
     const currentCount = currentPlayerIds.filter(x => x.playerId === currentPlayerId).length
     const selectedCount = selectedPlayerIds.filter(x => x === currentPlayerId).length
 
     if (!selectedPlayerIds.includes(currentPlayerId) ||
       currentCount > selectedCount) {
-      await db.ManagerPlayer.destroy({ where: { playerId: currentPlayerId }, limit: 1 })
+      await db.ManagerPlayer.destroy({ where: { playerId: currentPlayerId, managerId }, limit: 1 })
     }
   }
 }
