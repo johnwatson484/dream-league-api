@@ -1,8 +1,8 @@
 const db = require('../../app/data/models')
-const { get } = require('../../app/dream-league/teamsheet')
+const { updatePlayer } = require('../../app/dream-league/teamsheet')
 const testData = require('../data')
 
-describe('get teamsheet', () => {
+describe('update teamsheet', () => {
   beforeAll(async () => {
     await db.Teamsheet.destroy({ truncate: true })
     await db.ManagerKeeper.destroy({ truncate: true })
@@ -18,6 +18,13 @@ describe('get teamsheet', () => {
     await db.Teamsheet.bulkCreate(testData.teamsheet)
   })
 
+  beforeEach(async () => {
+    await db.ManagerKeeper.destroy({ truncate: true })
+    await db.ManagerPlayer.destroy({ truncate: true })
+    await db.ManagerKeeper.bulkCreate(testData.managerKeepers)
+    await db.ManagerPlayer.bulkCreate(testData.managerPlayers)
+  })
+
   afterAll(async () => {
     await db.Teamsheet.destroy({ truncate: true })
     await db.ManagerKeeper.destroy({ truncate: true })
@@ -28,32 +35,28 @@ describe('get teamsheet', () => {
     await db.sequelize.close()
   })
 
-  test('should return all managers', async () => {
-    const result = await get()
-    expect(result.length).toBe(13)
+  // payload replaces 574 with 278 for managerId 10
+  const payload = {
+    managerId: '10',
+    playerIds: [
+      '260', '562', '278',
+      '1067', '1194', '1500',
+      '1509', '1868', '1911',
+      '1916', '1994', '2047',
+      '2129'
+    ],
+    playerSubs: ['260', '1509', '1994']
+  }
+
+  test('should add new player', async () => {
+    await updatePlayer(payload)
+    const { count } = await db.ManagerPlayer.findAndCountAll({ where: { managerId: 10, playerId: 278 } })
+    expect(count).toBe(1)
   })
 
-  test('should return all players', async () => {
-    const result = await get()
-    const manager = result.find(x => x.managerId === 1)
-    expect(manager.players.length).toBe(13)
-  })
-
-  test('should return all keepers', async () => {
-    const result = await get()
-    const manager = result.find(x => x.managerId === 1)
-    expect(manager.keepers.length).toBe(2)
-  })
-
-  test('should return empty array if no players', async () => {
-    const result = await get()
-    const manager = result.find(x => x.managerId === 13)
-    expect(manager.players.length).toBe(0)
-  })
-
-  test('should return empty array if no keepers', async () => {
-    const result = await get()
-    const manager = result.find(x => x.managerId === 13)
-    expect(manager.keepers.length).toBe(0)
+  test('should remove old player', async () => {
+    await updatePlayer(payload)
+    const { count } = await db.ManagerPlayer.findAndCountAll({ where: { managerId: 10, playerId: 574 } })
+    expect(count).toBe(0)
   })
 })

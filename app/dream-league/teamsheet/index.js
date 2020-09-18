@@ -44,7 +44,7 @@ function mapKeeper (keeper, teamsheet) {
 function mapPlayer (player, teamsheet) {
   const teamsheetEntry = teamsheet.find(x => x.dataValues.bestMatchId === player.dataValues.playerId && x.dataValues.position === player.dataValues.position)
   return {
-    playerId: player.dataValues.teamId,
+    playerId: player.dataValues.playerId,
     fullName: player.fullName,
     lastNameFirstName: player.lastNameFirstName,
     position: player.dataValues.position,
