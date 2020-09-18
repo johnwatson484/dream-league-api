@@ -36,6 +36,7 @@ describe('update teamsheet', () => {
   })
 
   // payload replaces 574 with 278 for managerId 10
+  // sub 260 replaced with 562
   const payload = {
     managerId: '10',
     playerIds: [
@@ -45,7 +46,7 @@ describe('update teamsheet', () => {
       '1916', '1994', '2047',
       '2129'
     ],
-    playerSubs: ['260', '1509', '1994']
+    playerSubs: ['562', '1509', '1994']
   }
 
   test('should add new player', async () => {
@@ -57,6 +58,18 @@ describe('update teamsheet', () => {
   test('should remove old player', async () => {
     await updatePlayer(payload)
     const { count } = await db.ManagerPlayer.findAndCountAll({ where: { managerId: 10, playerId: 574 } })
+    expect(count).toBe(0)
+  })
+
+  test('should add new player sub', async () => {
+    await updatePlayer(payload)
+    const { count } = await db.ManagerPlayer.findAndCountAll({ where: { managerId: 10, playerId: 562, substitute: true } })
+    expect(count).toBe(1)
+  })
+
+  test('should remove old player sub', async () => {
+    await updatePlayer(payload)
+    const { count } = await db.ManagerPlayer.findAndCountAll({ where: { managerId: 10, playerId: 260, substitute: false } })
     expect(count).toBe(0)
   })
 })
