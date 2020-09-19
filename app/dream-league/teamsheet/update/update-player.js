@@ -4,6 +4,9 @@ async function update (payload) {
   const manager = await getManager(payload.managerId)
   await updatePlayers(payload.playerIds, manager)
   await updateSubs(payload.playerSubs, payload.managerId)
+  return {
+    success: true
+  }
 }
 
 async function updateSubs (playerSubs, managerId) {
@@ -46,13 +49,14 @@ async function getCurrentSubs (managerId) {
 }
 
 function getSelectedSubIds (playerSubs) {
-  return playerSubs.filter(x => x !== 0)
+  playerSubs = Array.isArray(playerSubs) ? playerSubs : [playerSubs]
+  return playerSubs.filter(x => x !== 0 && x !== undefined)
 }
 
 async function addNewPlayers (selectedPlayerIds, currentPlayerIds, managerId) {
   for (const selectedPlayer of selectedPlayerIds) {
     if (!currentPlayerIds.includes(selectedPlayer)) {
-      await db.ManagerPlayer.create({ managerId, playerId: selectedPlayer })
+      await db.ManagerPlayer.create({ managerId, playerId: selectedPlayer, substitute: false })
     }
   }
 }
@@ -74,7 +78,8 @@ function getCurrentPlayerIds (players) {
 }
 
 function getSelectedPlayerIds (playerIds) {
-  return playerIds.filter(x => x !== 0)
+  playerIds = Array.isArray(playerIds) ? playerIds : [playerIds]
+  return playerIds.filter(x => x !== 0 && x !== undefined)
 }
 
 async function getManager (managerId) {

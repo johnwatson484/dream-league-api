@@ -35,8 +35,8 @@ function mapKeeper (keeper, teamsheet) {
   return {
     teamId: keeper.teamId,
     name: keeper.name,
-    sourceName: teamsheetEntry.player,
-    matchDistance: teamsheetEntry.distance,
+    sourceName: teamsheetEntry ? teamsheetEntry.player : '',
+    matchDistance: teamsheetEntry ? teamsheetEntry.distance : '',
     substitute: keeper.managerKeepers.dataValues.substitute
   }
 }
@@ -49,8 +49,8 @@ function mapPlayer (player, teamsheet) {
     lastNameFirstName: player.lastNameFirstName,
     position: player.dataValues.position,
     team: player.dataValues.team.dataValues.name,
-    sourceName: teamsheetEntry.player,
-    matchDistance: teamsheetEntry.distance,
+    sourceName: teamsheetEntry ? teamsheetEntry.player : '',
+    matchDistance: teamsheetEntry ? teamsheetEntry.distance : '',
     substitute: player.managerPlayers.dataValues.substitute
   }
 }

@@ -4,6 +4,9 @@ async function update (payload) {
   const manager = await getManager(payload.managerId)
   await updateTeams(payload.teamIds, manager)
   await updateSubs(payload.teamSubs, payload.managerId)
+  return {
+    success: true
+  }
 }
 
 async function updateSubs (teamSubs, managerId) {
@@ -46,13 +49,14 @@ async function getCurrentSubs (managerId) {
 }
 
 function getSelectedSubIds (teamSubs) {
-  return teamSubs.filter(x => x !== 0)
+  teamSubs = Array.isArray(teamSubs) ? teamSubs : [teamSubs]
+  return teamSubs.filter(x => x !== 0 && x !== undefined)
 }
 
 async function addNewKeepers (selectedTeamIds, currentTeamIds, managerId) {
   for (const selectedTeam of selectedTeamIds) {
     if (!currentTeamIds.includes(selectedTeam)) {
-      await db.ManagerKeeper.create({ managerId, teamId: selectedTeam })
+      await db.ManagerKeeper.create({ managerId, teamId: selectedTeam, substitute: false })
     }
   }
 }
@@ -74,7 +78,8 @@ function getCurrentTeamIds (teams) {
 }
 
 function getSelectedTeamIds (teamIds) {
-  return teamIds.filter(x => x !== 0)
+  teamIds = Array.isArray(teamIds) ? teamIds : [teamIds]
+  return teamIds.filter(x => x !== 0 && x !== undefined)
 }
 
 async function getManager (managerId) {

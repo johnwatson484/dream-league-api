@@ -26,10 +26,11 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      return h.response(await db.Team.findAll({
+      const teams = await db.Team.findAll({
         where: { name: { [db.Sequelize.Op.iLike]: request.payload.prefix + '%' } },
         order: [['name']]
-      }))
+      })
+      return h.response(teams || [])
     }
   }
 }]
