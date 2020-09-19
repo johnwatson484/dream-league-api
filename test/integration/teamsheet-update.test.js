@@ -69,7 +69,7 @@ describe('update teamsheet', () => {
 
   test('should remove old player sub', async () => {
     await updatePlayer(playerPayload)
-    const { count } = await db.ManagerPlayer.findAndCountAll({ where: { managerId: 10, playerId: 260, substitute: false } })
+    const { count } = await db.ManagerPlayer.findAndCountAll({ where: { managerId: 10, playerId: 260, substitute: true } })
     expect(count).toBe(0)
   })
 
@@ -102,7 +102,7 @@ describe('update teamsheet', () => {
 
   test('should remove old keeper sub', async () => {
     await updateKeeper(keeperPayload)
-    const { count } = await db.ManagerKeeper.findAndCountAll({ where: { managerId: 10, teamId: 56, substitute: false } })
+    const { count } = await db.ManagerKeeper.findAndCountAll({ where: { managerId: 10, teamId: 56, substitute: true } })
     expect(count).toBe(0)
   })
 })
