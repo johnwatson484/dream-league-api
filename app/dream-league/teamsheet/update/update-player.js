@@ -54,9 +54,9 @@ function getSelectedSubIds (playerSubs) {
 }
 
 async function addNewPlayers (selectedPlayerIds, currentPlayerIds, managerId) {
-  for (const selectedPlayer of selectedPlayerIds) {
-    if (!currentPlayerIds.includes(selectedPlayer)) {
-      await db.ManagerPlayer.create({ managerId, playerId: selectedPlayer, substitute: false })
+  for (const selectedPlayerId of selectedPlayerIds) {
+    if (!currentPlayerIds.includes(selectedPlayerId)) {
+      await db.ManagerPlayer.create({ managerId, playerId: selectedPlayerId, substitute: false })
     }
   }
 }
