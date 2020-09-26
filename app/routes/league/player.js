@@ -2,7 +2,6 @@ const db = require('../../data/models')
 const joi = require('joi')
 const boom = require('@hapi/boom')
 const refresh = require('../../league/player-refresh')
-const player = require('../../data/models/player')
 
 module.exports = [{
   method: 'GET',
@@ -27,7 +26,7 @@ module.exports = [{
   }
 }, {
   method: 'POST',
-  path: '/league/players/create',
+  path: '/league/player/create',
   options: {
     validate: {
       payload: joi.object({
@@ -41,7 +40,7 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      return h.response(await db.Player.create(player))
+      return h.response(await db.Player.create(request.payload))
     }
   }
 }, {
