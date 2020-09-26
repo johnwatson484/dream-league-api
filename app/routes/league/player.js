@@ -2,6 +2,7 @@ const db = require('../../data/models')
 const joi = require('joi')
 const boom = require('@hapi/boom')
 const refresh = require('../../league/player-refresh')
+const player = require('../../data/models/player')
 
 module.exports = [{
   method: 'GET',
@@ -22,6 +23,25 @@ module.exports = [{
         include: [{ model: db.Team, as: 'team', attributes: ['name'] }],
         order: [['team', 'name'], ['lastName'], ['firstName']]
       }))
+    }
+  }
+}, {
+  method: 'POST',
+  path: '/league/players/create',
+  options: {
+    validate: {
+      payload: joi.object({
+        firstName: joi.string().allow(''),
+        lastName: joi.string(),
+        position: joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
+        teamId: joi.number()
+      }),
+      failAction: async (request, h, error) => {
+        return boom.badRequest(error)
+      }
+    },
+    handler: async (request, h) => {
+      return h.response(await db.Player.create(player))
     }
   }
 }, {
