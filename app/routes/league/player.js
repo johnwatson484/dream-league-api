@@ -8,7 +8,17 @@ module.exports = [{
   path: '/league/players',
   options: {
     handler: async (request, h) => {
+      const search = request.query.search !== 'undefined' ? `${request.query.search}%` : '%'
       return h.response(await db.Player.findAll({
+        where: {
+          [db.Sequelize.Op.or]: [{
+            lastName: { [db.Sequelize.Op.iLike]: search }
+          }, {
+            firstName: { [db.Sequelize.Op.iLike]: search }
+          }, {
+            '$team.name$': { [db.Sequelize.Op.iLike]: search }
+          }]
+        },
         include: [{ model: db.Team, as: 'team', attributes: ['name'] }],
         order: [['team', 'name'], ['lastName'], ['firstName']]
       }))
