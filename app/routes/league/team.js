@@ -14,6 +14,49 @@ module.exports = [{
     }
   }
 }, {
+  method: 'GET',
+  path: '/league/team',
+  handler: async (request, h) => {
+    return h.response(await db.Team.findOne({ where: { teamId: request.query.teamId } }))
+  }
+}, {
+  method: 'POST',
+  path: '/league/team/create',
+  options: {
+    validate: {
+      payload: joi.object({
+        name: joi.string(),
+        alias: joi.string(),
+        divisionId: joi.number()
+      }),
+      failAction: async (request, h, error) => {
+        return boom.badRequest(error)
+      }
+    },
+    handler: async (request, h) => {
+      return h.response(await db.Team.create(request.payload))
+    }
+  }
+}, {
+  method: 'POST',
+  path: '/league/team/edit',
+  options: {
+    validate: {
+      payload: joi.object({
+        teamId: joi.number(),
+        name: joi.string(),
+        alias: joi.string(),
+        divisionId: joi.number()
+      }),
+      failAction: async (request, h, error) => {
+        return boom.badRequest(error)
+      }
+    },
+    handler: async (request, h) => {
+      return h.response(await db.Team.upsert(request.payload))
+    }
+  }
+}, {
   method: 'POST',
   path: '/league/teams/autocomplete',
   options: {
