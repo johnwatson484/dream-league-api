@@ -25,6 +25,12 @@ module.exports = [{
     }
   }
 }, {
+  method: 'GET',
+  path: '/league/player',
+  handler: async (request, h) => {
+    return h.response(await db.Player.findOne({ where: { playerId: request.query.playerId } }))
+  }
+}, {
   method: 'POST',
   path: '/league/player/create',
   options: {
@@ -41,6 +47,26 @@ module.exports = [{
     },
     handler: async (request, h) => {
       return h.response(await db.Player.create(request.payload))
+    }
+  }
+}, {
+  method: 'POST',
+  path: '/league/player/edit',
+  options: {
+    validate: {
+      payload: joi.object({
+        playerId: joi.number(),
+        firstName: joi.string().allow(''),
+        lastName: joi.string(),
+        position: joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
+        teamId: joi.number()
+      }),
+      failAction: async (request, h, error) => {
+        return boom.badRequest(error)
+      }
+    },
+    handler: async (request, h) => {
+      return h.response(await db.Player.upsert(request.payload))
     }
   }
 }, {
