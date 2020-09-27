@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
       as: 'managers',
       onDelete: 'CASCADE'
     })
+    Team.hasMany(models.Concede, {
+      foreignKey: 'teamId',
+      as: 'conceded'
+    })
   }
   return Team
 }

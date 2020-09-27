@@ -29,6 +29,14 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'managerId',
       as: 'teamsheet'
     })
+    Manager.hasMany(models.Goal, {
+      foreignKey: 'managerId',
+      as: 'goals'
+    })
+    Manager.hasMany(models.Concede, {
+      foreignKey: 'managerId',
+      as: 'conceded'
+    })
   }
   return Manager
 }
