@@ -4,7 +4,9 @@ async function get () {
   const gameweeks = await db.Gameweek.findAll()
   const keepers = await db.ManagerKeeper.findAll({
     where: { substitute: false },
-    include: [{ model: db.Team }]
+    include: [{ model: db.Team, attributes: [] }],
+    attributes: ['managerId', 'teamId', 'substitute', [db.Sequelize.col('Team.name'), 'team']],
+    raw: true
   })
   const players = await db.ManagerPlayer.findAll({
     where: { substitute: false },
