@@ -8,3 +8,11 @@ services:
       JWT_SECRET: secret      
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: postgres
+
+  dream-league-api-postgres:
+    image: postgres:11.4-alpine
+    container_name: dream-league-api-postgres
+    environment:
+      POSTGRES_DB: dream_league_api
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
