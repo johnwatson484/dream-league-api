@@ -5,7 +5,21 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    startDate: DataTypes.DATE
+    startDate: DataTypes.DATE,
+    endDate: {
+      type: DataTypes.VIRTUAL,
+      get () {
+        const endDate = this.startDate
+        endDate.setDate(endDate.getDate() + 6)
+        return endDate
+      }
+    },
+    isCurrent: {
+      get () {
+        const currentDate = new Date()
+        return currentDate >= this.setDate && currentDate <= this.endDate
+      }
+    }
   }, {
     tableName: 'gameweeks',
     freezeTableName: true,
