@@ -9,12 +9,13 @@ module.exports = (sequelize, DataTypes) => {
     endDate: {
       type: DataTypes.VIRTUAL,
       get () {
-        const endDate = this.startDate
+        const endDate = new Date(this.startDate)
         endDate.setDate(endDate.getDate() + 6)
         return endDate
       }
     },
     isCurrent: {
+      type: DataTypes.VIRTUAL,
       get () {
         const currentDate = new Date()
         return currentDate >= this.setDate && currentDate <= this.endDate
