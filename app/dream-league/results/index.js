@@ -1,35 +1,12 @@
 const db = require('../../data/models')
+const getKeepers = require('./get-keepers')
+const getPlayers = require('./get-players')
 
 async function get () {
   const gameweeks = await db.Gameweek.findAll()
   const keepers = await getKeepers()
   const players = await getPlayers()
   return { gameweeks, keepers, players }
-}
-
-async function getKeepers () {
-  return await db.ManagerKeeper.findAll({
-    where: { substitute: false },
-    include: [{ model: db.Team, attributes: [], include: { model: db.Division, as: 'division', attributes: [] } }, {
-      model: db.Manager, attributes: [], include: [{ model: db.Team, as: 'keepers', attributes: [], through: { attributes: [], where: { substitute: true } } }]
-    }],
-    attributes: ['managerId', 'teamId', [db.Sequelize.col('Manager.keepers.name'), 'substitute'], [db.Sequelize.col('Team.name'), 'team'], [db.Sequelize.col('Team.division.name'), 'division'], [db.Sequelize.col('Manager.name'), 'manager']],
-    raw: true
-  })
-}
-
-async function getPlayers () {
-  return await db.ManagerPlayer.findAll({
-    where: { substitute: false },
-    include: [{
-      model: db.Player,
-      include: [{ model: db.Team, as: 'team', attributes: [], include: { model: db.Division, as: 'division', attributes: [] } }],
-      attributes: []
-    }, {
-      model: db.Manager, attributes: []
-    }],
-    attributes: ['managerId', 'playerId', [db.Sequelize.col('Player.firstName'), 'firstName'], [db.Sequelize.col('Player.lastName'), 'lastName'], [db.Sequelize.col('Player.team.name'), 'team'], [db.Sequelize.col('Player.team.division.name'), 'division'], [db.Sequelize.col('Manager.name'), 'manager']]
-  })
 }
 
 module.exports = {
