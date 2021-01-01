@@ -1,4 +1,4 @@
-const { get, update } = require('../../dream-league/results')
+const { getInput, update } = require('../../dream-league/results')
 const joi = require('joi')
 const boom = require('@hapi/boom')
 
@@ -7,7 +7,7 @@ module.exports = [{
   path: '/dream-league/results-edit',
   options: {
     handler: async (request, h) => {
-      return h.response(await get())
+      return h.response(await getInput())
     }
   }
 }, {
