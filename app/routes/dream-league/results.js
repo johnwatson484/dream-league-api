@@ -1,7 +1,6 @@
-const { get } = require('../../dream-league/results')
+const { get, update } = require('../../dream-league/results')
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const update = require('../../dream-league/teamsheet/update/update-player')
 
 module.exports = [{
   method: 'GET',
@@ -26,7 +25,8 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      return h.response(await update(request.payload))
+      await update(request.payload)
+      return h.response(true)
     }
   }
 }]
