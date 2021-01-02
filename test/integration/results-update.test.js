@@ -4,6 +4,7 @@ const testData = require('../data')
 
 describe('get results input', () => {
   beforeAll(async () => {
+    await db.Summary.destroy({ truncate: true })
     await db.Concede.destroy({ truncate: true })
     await db.Goal.destroy({ truncate: true })
     await db.ManagerKeeper.destroy({ truncate: true })
@@ -19,6 +20,7 @@ describe('get results input', () => {
   })
 
   afterAll(async () => {
+    await db.Summary.destroy({ truncate: true })
     await db.Concede.destroy({ truncate: true })
     await db.Goal.destroy({ truncate: true })
     await db.ManagerKeeper.destroy({ truncate: true })
@@ -30,11 +32,13 @@ describe('get results input', () => {
   })
 
   beforeEach(async () => {
+    await db.Summary.destroy({ truncate: true })
     await db.Concede.destroy({ truncate: true })
     await db.Goal.destroy({ truncate: true })
   })
 
   afterEach(async () => {
+    await db.Summary.destroy({ truncate: true })
     await db.Concede.destroy({ truncate: true })
     await db.Goal.destroy({ truncate: true })
   })
