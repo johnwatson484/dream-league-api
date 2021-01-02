@@ -36,6 +36,7 @@ async function getScorers (goals) {
     const player = await db.Player.findOne({ where: { playerId: scorer.playerId } })
     scorer.name = player.lastNameInitial
   }
+  return scorers
 }
 
 module.exports = getScores
