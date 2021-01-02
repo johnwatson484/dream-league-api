@@ -4,11 +4,12 @@ async function createSummary (gameweekId) {
   const managers = await db.Manager.findAll()
   const scores = await getScores(gameweekId, managers)
   const table = await getTable(gameweekId, managers)
-  return {
+  const summary = {
     gameweekId,
     scores,
     table
   }
+  await db.Summary.upsert({ gameweekId, summary })
 }
 
 async function getScores (gameweekId, managers) {
@@ -26,8 +27,7 @@ async function getScores (gameweekId, managers) {
       x[y.playerId].goals += 1
       return x
     }, {})
-
-    for (const scorer in scorers) {
+    for (const scorer of scorers) {
       const player = await db.Player.findOne({ where: { playerId: scorer.playerId } })
       scorer.name = player.lastNameInitial
     }
@@ -112,6 +112,7 @@ async function getGameweekResults (gameweekId, managerId) {
     const points = getPoints(result)
     gameweekResults.push({ result, points, goals: goals.length, conceded: conceded.length })
   }
+  return gameweekResults
 }
 
 function sortFn (a, b) {
