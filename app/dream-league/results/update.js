@@ -1,9 +1,11 @@
 const db = require('../../data/models')
+const createSummary = require('./create-summary')
 
 async function update (results) {
   const resultsDate = new Date()
   await updateConceded(results, resultsDate)
   await updateGoals(results, resultsDate)
+  await createSummary(results.gameweekId)
 }
 
 async function updateConceded (results, resultsDate) {
