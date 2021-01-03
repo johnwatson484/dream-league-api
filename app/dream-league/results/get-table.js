@@ -27,7 +27,7 @@ async function getTable (gameweekId, managers) {
       points
     })
   }
-  return rows.sort((a, b) => { return sortFn(a.points, b.points) || sortFn(a.gd, b.gd) || sortFn(a.gf, b.gf) || sortFn(a.manager, b.manager) })
+  return orderTable(rows)
 }
 
 async function getGameweekResults (gameweekId, managerId) {
@@ -41,6 +41,10 @@ async function getGameweekResults (gameweekId, managerId) {
     gameweekResults.push({ result, points, goals: goals.length, conceded: conceded.length })
   }
   return gameweekResults
+}
+
+function orderTable (rows) {
+  return rows.sort((a, b) => { return sortFn(b.points, a.points) || sortFn(b.gd, a.gd) || sortFn(b.gf, a.gf) || sortFn(a.manager, b.manager) })
 }
 
 function sortFn (a, b) {

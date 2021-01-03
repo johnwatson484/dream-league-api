@@ -221,4 +221,39 @@ describe('get table', () => {
     const result = await getTable(4, managers)
     expect(result.find(x => x.managerId === 11).points).toBe(7)
   })
+
+  test('should order most points at top', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    const result = await getTable(1, managers)
+    expect(result[0].managerId).toBe(11)
+  })
+
+  test('should order least points at bottom', async () => {
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
+    const result = await getTable(1, managers)
+    console.log(result)
+    expect(result[result.length - 1].managerId).toBe(11)
+  })
+
+  test('should order by goal difference if points even', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    await db.Goal.create({ playerId: 295, managerId: 2, gameweekId: 1, cup: false })
+    const result = await getTable(1, managers)
+    expect(result[0].managerId).toBe(11)
+  })
+
+  test('should order by goals for if difference even', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
+    await db.Goal.create({ playerId: 295, managerId: 2, gameweekId: 1, cup: false })
+    const result = await getTable(1, managers)
+    expect(result[0].managerId).toBe(11)
+  })
+
+  test('should order alphabetically if all even', async () => {
+    const result = await getTable(1, managers)
+    expect(result[0].managerId).toBe(11)
+  })
 })
