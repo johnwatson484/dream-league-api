@@ -98,6 +98,6 @@ describe('get table', () => {
     await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
     await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
     const result = await getTable(1, managers)
-    expect(result.find(x => x.managerId === 11).gd).toBe(1)
+    expect(result.find(x => x.managerId === 11).gd).toBe(-1)
   })
 })
