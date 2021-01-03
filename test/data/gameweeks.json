@@ -1,0 +1,142 @@
+[
+  {
+    "gameweekId": 1,
+    "startDate": "2020-09-11"
+  },
+  {
+    "gameweekId": 2,
+    "startDate": "2020-09-18"
+  },
+  {
+    "gameweekId": 3,
+    "startDate": "2020-09-25"
+  },
+  {
+    "gameweekId": 4,
+    "startDate": "2020-10-02"
+  },
+  {
+    "gameweekId": 5,
+    "startDate": "2020-10-09"
+  },
+  {
+    "gameweekId": 6,
+    "startDate": "2020-10-16"
+  },
+  {
+    "gameweekId": 7,
+    "startDate": "2020-10-23"
+  },
+  {
+    "gameweekId": 8,
+    "startDate": "2020-10-30"
+  },
+  {
+    "gameweekId": 9,
+    "startDate": "2020-11-06"
+  },
+  {
+    "gameweekId": 10,
+    "startDate": "2020-11-13"
+  },
+  {
+    "gameweekId": 11,
+    "startDate": "2020-11-20"
+  },
+  {
+    "gameweekId": 12,
+    "startDate": "2020-11-27"
+  },
+  {
+    "gameweekId": 13,
+    "startDate": "2020-12-04"
+  },
+  {
+    "gameweekId": 14,
+    "startDate": "2020-12-11"
+  },
+  {
+    "gameweekId": 15,
+    "startDate": "2020-12-18"
+  },
+  {
+    "gameweekId": 16,
+    "startDate": "2020-12-25"
+  },
+  {
+    "gameweekId": 17,
+    "startDate": "2021-01-01"
+  },
+  {
+    "gameweekId": 18,
+    "startDate": "2021-01-08"
+  },
+  {
+    "gameweekId": 19,
+    "startDate": "2021-01-15"
+  },
+  {
+    "gameweekId": 20,
+    "startDate": "2021-01-22"
+  },
+  {
+    "gameweekId": 21,
+    "startDate": "2021-01-29"
+  },
+  {
+    "gameweekId": 22,
+    "startDate": "2021-02-05"
+  },
+  {
+    "gameweekId": 23,
+    "startDate": "2021-02-12"
+  },
+  {
+    "gameweekId": 24,
+    "startDate": "2021-02-19"
+  },
+  {
+    "gameweekId": 25,
+    "startDate": "2021-02-26"
+  },
+  {
+    "gameweekId": 26,
+    "startDate": "2021-03-05"
+  },
+  {
+    "gameweekId": 27,
+    "startDate": "2021-03-12"
+  },
+  {
+    "gameweekId": 28,
+    "startDate": "2021-03-19"
+  },
+  {
+    "gameweekId": 29,
+    "startDate": "2021-03-26"
+  },
+  {
+    "gameweekId": 30,
+    "startDate": "2021-04-02"
+  },
+  {
+    "gameweekId": 31,
+    "startDate": "2021-04-09"
+  },
+  {
+    "gameweekId": 32,
+    "startDate": "2021-04-16"
+  },
+  {
+    "gameweekId": 33,
+    "startDate": "2021-04-23"
+  },
+  {
+    "gameweekId": 34,
+    "startDate": "2021-04-30"
+  },
+  {
+    "gameweekId": 35,
+    "startDate": "2021-05-07"
+  }
+]

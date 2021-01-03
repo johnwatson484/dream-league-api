@@ -10,10 +10,10 @@ async function getTable (gameweekId, managers) {
     const won = gameweekResults.filter(x => x.result === 'W').length
     const drawn = gameweekResults.filter(x => x.result === 'D').length
     const lost = gameweekResults.filter(x => x.result === 'L').length
-    const gf = gameweekResults.reduce((x, y) => x.goals + y.goals, 0)
-    const ga = gameweekResults.reduce((x, y) => x.conceded + y.conceded, 0)
+    const gf = gameweekResults.reduce((x, y) => x + y.goals, 0)
+    const ga = gameweekResults.reduce((x, y) => x + y.conceded, 0)
     const gd = gf - ga
-    const points = gameweekResults.reduce((x, y) => x.points + y.points, 0)
+    const points = gameweekResults.reduce((x, y) => x + y.points, 0)
     rows.push({
       managerId: manager.managerId,
       manager: manager.name,
@@ -34,8 +34,8 @@ async function getGameweekResults (gameweekId, managerId) {
   const gameweeks = await db.Gameweek.findAll({ where: { gameweekId: { [db.Sequelize.Op.lte]: gameweekId } } })
   const gameweekResults = []
   for (const gameweek of gameweeks) {
-    const goals = await getGoals(gameweek.gameweekId, managerId)
-    const conceded = await getConceded(gameweek.gameweekId, managerId)
+    const goals = await getGoals(gameweek.gameweekId, managerId) || []
+    const conceded = await getConceded(gameweek.gameweekId, managerId) || []
     const result = getResult(goals.length, conceded.length)
     const points = getPoints(result)
     gameweekResults.push({ result, points, goals: goals.length, conceded: conceded.length })

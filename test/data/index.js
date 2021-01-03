@@ -5,5 +5,6 @@ module.exports = {
   managerPlayers: require('./manager-players.json'),
   managerKeepers: require('./manager-keepers.json'),
   teamsheet: require('./teamsheet.json'),
-  teamsheetPayload: require('./teamsheet-payload.json')
+  teamsheetPayload: require('./teamsheet-payload.json'),
+  gameweeks: require('./gameweeks.json')
 }
