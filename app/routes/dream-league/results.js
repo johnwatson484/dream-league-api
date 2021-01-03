@@ -1,8 +1,20 @@
-const { getInput, update } = require('../../dream-league/results')
+const { getSummary, getInput, update } = require('../../dream-league/results')
 const joi = require('joi')
 const boom = require('@hapi/boom')
 
 module.exports = [{
+  method: 'GET',
+  path: '/dream-league/results',
+  options: {
+    handler: async (request, h) => {
+      const summary = await getSummary(request.query.gameweekId)
+      if (!summary) {
+        return boom.notFound()
+      }
+      return h.response(summary)
+    }
+  }
+}, {
   method: 'GET',
   path: '/dream-league/results-edit',
   options: {

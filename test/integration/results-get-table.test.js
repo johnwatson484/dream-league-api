@@ -231,7 +231,6 @@ describe('get table', () => {
   test('should order least points at bottom', async () => {
     await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
     const result = await getTable(1, managers)
-    console.log(result)
     expect(result[result.length - 1].managerId).toBe(11)
   })
 
