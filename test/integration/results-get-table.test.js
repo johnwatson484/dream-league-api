@@ -73,6 +73,15 @@ describe('get table', () => {
     expect(result.find(x => x.managerId === 11).gd).toBe(0)
   })
 
+  test('should calculate goal difference with equal goals and conceded multiple goals', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
+    const result = await getTable(1, managers)
+    expect(result.find(x => x.managerId === 11).gd).toBe(0)
+  })
+
   test('should calculate positive goal difference to none conceded', async () => {
     await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
     const result = await getTable(1, managers)
@@ -99,5 +108,117 @@ describe('get table', () => {
     await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
     const result = await getTable(1, managers)
     expect(result.find(x => x.managerId === 11).gd).toBe(-1)
+  })
+
+  test('should calculate negative goal difference over multiple gameweeks', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 2, cup: false })
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
+    const result = await getTable(2, managers)
+    expect(result.find(x => x.managerId === 11).gd).toBe(-1)
+  })
+
+  test('should calculate positive goal difference over multiple gameweeks', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 2, cup: false })
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
+    const result = await getTable(2, managers)
+    expect(result.find(x => x.managerId === 11).gd).toBe(1)
+  })
+
+  test('should ignore goals for later gameweeks', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 2, cup: false })
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
+    const result = await getTable(1, managers)
+    expect(result.find(x => x.managerId === 11).gd).toBe(0)
+  })
+
+  test('should ignore conceded for later gameweeks', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 2, cup: false })
+    const result = await getTable(1, managers)
+    expect(result.find(x => x.managerId === 11).gd).toBe(0)
+  })
+
+  test('should return matches played for first gameweek without goals', async () => {
+    const result = await getTable(1, managers)
+    expect(result.find(x => x.managerId === 11).played).toBe(1)
+  })
+
+  test('should return matches played for first gameweek with goals', async () => {
+    const result = await getTable(1, managers)
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    expect(result.find(x => x.managerId === 11).played).toBe(1)
+  })
+
+  test('should return matches played for first gameweek with conceded', async () => {
+    const result = await getTable(1, managers)
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 2, cup: false })
+    expect(result.find(x => x.managerId === 11).played).toBe(1)
+  })
+
+  test('should return matches played for first gameweek with conceded', async () => {
+    const result = await getTable(1, managers)
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 2, cup: false })
+    expect(result.find(x => x.managerId === 11).played).toBe(1)
+  })
+
+  test('should return matches played for later gameweek', async () => {
+    const result = await getTable(4, managers)
+    expect(result.find(x => x.managerId === 11).played).toBe(4)
+  })
+
+  test('should return 3 points for a win', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    const result = await getTable(1, managers)
+    expect(result.find(x => x.managerId === 11).points).toBe(3)
+  })
+
+  test('should return 1 point for a 0-0 draw', async () => {
+    const result = await getTable(1, managers)
+    expect(result.find(x => x.managerId === 11).points).toBe(1)
+  })
+
+  test('should return 1 point for a score draw', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
+    const result = await getTable(1, managers)
+    expect(result.find(x => x.managerId === 11).points).toBe(1)
+  })
+
+  test('should return 0 points for a defeat', async () => {
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 1, cup: false })
+    const result = await getTable(1, managers)
+    expect(result.find(x => x.managerId === 11).points).toBe(0)
+  })
+
+  test('should return 4 points for a win and then score draw', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    const result = await getTable(2, managers)
+    expect(result.find(x => x.managerId === 11).points).toBe(4)
+  })
+
+  test('should return 4 points for a win and then 0-0 draw', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    const result = await getTable(2, managers)
+    expect(result.find(x => x.managerId === 11).points).toBe(4)
+  })
+
+  test('should return 6 points for two wins', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 2, cup: false })
+    const result = await getTable(2, managers)
+    expect(result.find(x => x.managerId === 11).points).toBe(6)
+  })
+
+  test('should return 7 points for two wins, a draw and a defeat', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 2, cup: false })
+    await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 4, cup: false })
+    const result = await getTable(4, managers)
+    expect(result.find(x => x.managerId === 11).points).toBe(7)
   })
 })
