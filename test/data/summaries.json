@@ -1,0 +1,18 @@
+[
+  {
+    "gameweekId": 1,
+    "summary": {
+      "gameweekId": 1,
+      "scores": [],
+      "table": []
+    }
+  },
+  {
+    "gameweekId": 2,
+    "summary": {
+      "gameweekId": 2,
+      "scores": [],
+      "table": []
+    }
+  }
+]

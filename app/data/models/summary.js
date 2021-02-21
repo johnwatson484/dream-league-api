@@ -10,5 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false
   })
+  Summary.associate = function (models) {
+    Summary.belongsTo(models.Gameweek, {
+      foreignKey: 'gameweekId',
+      as: 'gameweek'
+    })
+  }
   return Summary
 }

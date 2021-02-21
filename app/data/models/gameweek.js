@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'gameweekId',
       as: 'conceded'
     })
+    Gameweek.hasOne(models.Summary, {
+      foreignKey: 'gameweekId',
+      as: 'summary'
+    })
   }
   return Gameweek
 }
