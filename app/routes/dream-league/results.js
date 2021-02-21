@@ -8,9 +8,6 @@ module.exports = [{
   options: {
     handler: async (request, h) => {
       const summary = await getSummary(request.query.gameweekId)
-      if (!summary) {
-        return boom.notFound()
-      }
       return h.response(summary)
     }
   }
