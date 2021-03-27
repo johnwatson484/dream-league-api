@@ -255,4 +255,13 @@ describe('get table', () => {
     const result = await getTable(1, managers)
     expect(result[0].managerId).toBe(11)
   })
+
+  test('should set position', async () => {
+    const result = await getTable(1, managers)
+    expect(result[0].position).toBe(1)
+    expect(result[1].position).toBe(2)
+    expect(result[2].position).toBe(3)
+    expect(result[3].position).toBe(4)
+    expect(result[4].position).toBe(5)
+  })
 })

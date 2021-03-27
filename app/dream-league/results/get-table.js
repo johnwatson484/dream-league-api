@@ -45,6 +45,7 @@ async function getGameweekResults (gameweekId, managerId) {
 
 function orderTable (rows) {
   return rows.sort((a, b) => { return sortFn(b.points, a.points) || sortFn(b.gd, a.gd) || sortFn(b.gf, a.gf) || sortFn(a.manager, b.manager) })
+    .map((x, i) => ({ position: i + 1, ...x }))
 }
 
 function sortFn (a, b) {

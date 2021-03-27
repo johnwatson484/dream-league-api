@@ -5,7 +5,7 @@ services:
     image: dream-league-api
     container_name: dream-league-api
     environment: 
-      JWT_SECRET: secret      
+      JWT_SECRET: secret
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: postgres
 
