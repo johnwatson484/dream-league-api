@@ -6,6 +6,14 @@ module.exports = [{
   method: 'GET',
   path: '/dream-league/results',
   options: {
+    validate: {
+      query: joi.object({
+        gameweekId: joi.number().optional()
+      }),
+      failAction: async (request, h, error) => {
+        return boom.badRequest(error)
+      }
+    },
     handler: async (request, h) => {
       const summary = await getSummary(request.query.gameweekId)
       return h.response(summary)
