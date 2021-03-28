@@ -3,4 +3,4 @@ services:
   dream-league-api:
     command: npm run test:debug
     ports:
-      - "9229:9229"
+      - "9230:9229"
