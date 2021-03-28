@@ -2,7 +2,7 @@ const db = require('../../app/data/models')
 const getSummary = require('../../app/dream-league/results/get-summary')
 const testData = require('../data')
 
-describe('get table', () => {
+describe('get summary', () => {
   beforeAll(async () => {
     await db.Summary.destroy({ truncate: true })
     await db.Gameweek.destroy({ truncate: true })

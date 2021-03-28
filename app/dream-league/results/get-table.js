@@ -1,4 +1,5 @@
 const db = require('../../data/models')
+const sortArray = require('../../utils/sort-array')
 const { getConceded, getGoals } = require('./get-goals')
 const getResult = require('./get-result')
 const getPoints = require('./get-points')
@@ -44,12 +45,8 @@ async function getGameweekResults (gameweekId, managerId) {
 }
 
 function orderTable (rows) {
-  return rows.sort((a, b) => { return sortFn(b.points, a.points) || sortFn(b.gd, a.gd) || sortFn(b.gf, a.gf) || sortFn(a.manager, b.manager) })
+  return rows.sort((a, b) => { return sortArray(b.points, a.points) || sortArray(b.gd, a.gd) || sortArray(b.gf, a.gf) || sortArray(a.manager, b.manager) })
     .map((x, i) => ({ position: i + 1, ...x }))
-}
-
-function sortFn (a, b) {
-  return a === b ? 0 : a < b ? -1 : 1
 }
 
 module.exports = getTable
