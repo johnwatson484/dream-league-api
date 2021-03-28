@@ -1,5 +1,5 @@
 const db = require('../../app/data/models')
-const { getTopGoalScorers } = require('../../app/dream-league/statistics')
+const { getTopScorers } = require('../../app/dream-league/statistics')
 const testData = require('../data')
 
 describe('get top goalscorers', () => {
@@ -38,18 +38,18 @@ describe('get top goalscorers', () => {
   })
 
   test('should return all scorers', async () => {
-    const result = await getTopGoalScorers()
+    const result = await getTopScorers()
     expect(result.length).toBe(2)
   })
 
   test('should calculate goals', async () => {
-    const result = await getTopGoalScorers()
+    const result = await getTopScorers()
     expect(result.find(x => x.playerId === 773).goals).toBe(2)
     expect(result.find(x => x.playerId === 295).goals).toBe(1)
   })
 
   test('should order scorers', async () => {
-    const result = await getTopGoalScorers()
+    const result = await getTopScorers()
     expect(result[0].goals).toBe(2)
     expect(result[1].goals).toBe(1)
   })

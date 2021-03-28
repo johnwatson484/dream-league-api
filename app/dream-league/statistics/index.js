@@ -1,7 +1,7 @@
 const getForm = require('./get-form')
-const getTopGoalScorers = require('./get-top-goal-scorers')
+const getTopScorers = require('./get-top-scorers')
 
 module.exports = {
   getForm,
-  getTopGoalScorers
+  getTopScorers
 }

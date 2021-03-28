@@ -1,7 +1,7 @@
 const db = require('../../data/models')
 const sortArray = require('../../utils/sort-array')
 
-async function getTopGoalScorers () {
+async function getTopScorers () {
   const playersToInclude = await db.Manager.count()
   let goals = await db.Goal.findAll({
     raw: true,
@@ -28,4 +28,4 @@ async function getTopGoalScorers () {
   return scorers
 }
 
-module.exports = getTopGoalScorers
+module.exports = getTopScorers
