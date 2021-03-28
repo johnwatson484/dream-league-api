@@ -47,4 +47,10 @@ describe('get top goalscorers', () => {
     expect(result.find(x => x.playerId === 773).goals).toBe(2)
     expect(result.find(x => x.playerId === 295).goals).toBe(1)
   })
+
+  test('should order scorers', async () => {
+    const result = await getTopGoalScorers()
+    expect(result[0].goals).toBe(2)
+    expect(result[1].goals).toBe(1)
+  })
 })
