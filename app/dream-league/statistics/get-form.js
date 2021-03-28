@@ -1,9 +1,8 @@
 const db = require('../../data/models')
 const getPoints = require('../results/get-points')
 const sortArray = require('../../utils/sort-array')
-const weeksToInclude = 6
 
-async function getForm () {
+async function getForm (weeksToInclude = 6) {
   const managers = await db.Manager.findAll({ raw: true })
   let summaries = await db.Summary.findAll({ raw: true, order: [['gameweekId', 'DESC']], limit: weeksToInclude })
   summaries = summaries.reverse()
