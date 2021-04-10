@@ -1,6 +1,7 @@
 const refresh = require('./refresh')
 const db = require('../../data/models')
 const { updatePlayer, updateKeeper } = require('./update')
+const sortArray = require('../../utils/sort-array')
 
 async function get () {
   const managers = await db.Manager.findAll({
@@ -25,8 +26,8 @@ function mapTeams (team) {
   return {
     managerId: team.managerId,
     name: team.name,
-    keepers: team.keepers.map(x => mapKeeper(x.dataValues, team.teamsheet)),
-    players: team.players.map(x => mapPlayer(x, team.teamsheet))
+    keepers: orderKeepers(team.keepers.map(x => mapKeeper(x.dataValues, team.teamsheet))),
+    players: orderPlayers(team.players.map(x => mapPlayer(x, team.teamsheet)))
   }
 }
 
@@ -52,6 +53,25 @@ function mapPlayer (player, teamsheet) {
     sourceName: teamsheetEntry ? teamsheetEntry.player : '',
     matchDistance: teamsheetEntry ? teamsheetEntry.distance : '',
     substitute: player.managerPlayers.dataValues.substitute
+  }
+}
+
+function orderKeepers (keepers) {
+  return keepers.sort((a, b) => { return sortArray(a.substitute, b.substitute) || sortArray(a.name, b.name) })
+}
+
+function orderPlayers (players) {
+  return players.sort((a, b) => { return sortArray(rankPosition(a.position), rankPosition(b.position)) || sortArray(a.substitute, b.substitute) || sortArray(a.lastNameFirstName, b.lastNameFirstName) })
+}
+
+function rankPosition (position) {
+  switch (position) {
+    case 'Defender':
+      return 0
+    case 'Midfielder':
+      return 1
+    default:
+      return 2
   }
 }
 
