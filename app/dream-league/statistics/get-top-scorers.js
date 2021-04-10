@@ -16,8 +16,11 @@ async function getTopScorers () {
     const player = await db.Player.findOne({
       raw: true,
       where: { playerId: goal.playerId },
-      include: [{ model: db.Manager, as: 'managers', attributes: [], through: { attributes: [] } }],
-      attributes: ['playerId', 'firstName', 'lastName', [db.Sequelize.col('managers.name'), 'manager'], [db.Sequelize.col('managers.managerId'), 'managerId']]
+      include: [
+        { model: db.Manager, as: 'managers', attributes: [], through: { attributes: [] } },
+        { model: db.Team, as: 'team', attributes: [] }
+      ],
+      attributes: ['playerId', 'firstName', 'lastName', [db.Sequelize.col('team.name'), 'team'], [db.Sequelize.col('managers.name'), 'manager'], [db.Sequelize.col('managers.managerId'), 'managerId']]
     })
     scorers.push({
       ...player,
@@ -25,7 +28,12 @@ async function getTopScorers () {
     })
   }
 
-  return scorers
+  return orderScorers(scorers)
+}
+
+function orderScorers (scorers) {
+  return scorers.sort((a, b) => { return sortArray(b.goals, a.goals) || sortArray(a.lastName, b.lastName) || sortArray(a.firstName, b.firstName) })
+    .map((x, i) => ({ position: i + 1, ...x }))
 }
 
 module.exports = getTopScorers
