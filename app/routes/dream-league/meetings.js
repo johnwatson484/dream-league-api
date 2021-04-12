@@ -18,8 +18,14 @@ module.exports = [{
     return h.response(await db.Meeting.findOne({ where: { meetingId: request.query.meetingId } }))
   }
 }, {
+  method: 'GET',
+  path: '/dream-league/meetings/next',
+  handler: async (request, h) => {
+    return h.response(await db.Meeting.findOne({ where: { date: { [db.Sequelize.Op.gt]: new Date() } }, raw: true }))
+  }
+}, {
   method: 'POST',
-  path: '/dream-league/meeting',
+  path: '/dream-league/meeting/create',
   options: {
     validate: {
       payload: joi.object({
