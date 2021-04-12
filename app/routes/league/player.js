@@ -71,6 +71,22 @@ module.exports = [{
   }
 }, {
   method: 'POST',
+  path: '/league/player/delete',
+  options: {
+    validate: {
+      payload: joi.object({
+        playerId: joi.number()
+      }),
+      failAction: async (request, h, error) => {
+        return boom.badRequest(error)
+      }
+    },
+    handler: async (request, h) => {
+      return h.response(await db.Player.destroy({ where: { playerId: request.payload.playerId } }))
+    }
+  }
+}, {
+  method: 'POST',
   path: '/league/players/autocomplete',
   options: {
     validate: {

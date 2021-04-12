@@ -8,6 +8,7 @@ const routes = [].concat(
   require('../routes/dream-league/results'),
   require('../routes/dream-league/gameweeks'),
   require('../routes/dream-league/statistics'),
+  require('../routes/dream-league/meetings'),
   require('../routes/validate')
 )
 
