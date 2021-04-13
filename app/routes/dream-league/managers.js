@@ -4,10 +4,10 @@ const boom = require('@hapi/boom')
 
 module.exports = [{
   method: 'GET',
-  path: '/dream-league/meetings',
+  path: '/dream-league/managers',
   options: {
     handler: async (request, h) => {
-      return h.response(await db.Manager.findAll({ order: ['date'] }))
+      return h.response(await db.Manager.findAll({ order: ['name'] }))
     }
   }
 }, {
