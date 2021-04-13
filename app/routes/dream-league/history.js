@@ -7,14 +7,11 @@ module.exports = [{
   path: '/dream-league/history',
   options: {
     handler: async (request, h) => {
+      if (request.query.historyId) {
+        return h.response(await db.History.findOne({ where: { historyId: request.query.historyId } }))
+      }
       return h.response(await db.History.findAll({ order: ['year', 'DESC'] }))
     }
-  }
-}, {
-  method: 'GET',
-  path: '/dream-league/history',
-  handler: async (request, h) => {
-    return h.response(await db.History.findOne({ where: { historyId: request.query.historyId } }))
   }
 }, {
   method: 'POST',
