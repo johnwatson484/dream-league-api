@@ -10,7 +10,7 @@ module.exports = [{
       if (request.query.historyId) {
         return h.response(await db.History.findOne({ where: { historyId: request.query.historyId } }))
       }
-      return h.response(await db.History.findAll({ order: ['year', 'DESC'] }))
+      return h.response(await db.History.findAll({ order: [['year', 'DESC']] }))
     }
   }
 }, {
@@ -19,7 +19,7 @@ module.exports = [{
   options: {
     validate: {
       payload: joi.object({
-        year: joi.number(),
+        year: joi.number().required(),
         teams: joi.number(),
         league1: joi.string().allow(''),
         league2: joi.string().allow(''),
@@ -42,7 +42,7 @@ module.exports = [{
     validate: {
       payload: joi.object({
         historyId: joi.number(),
-        year: joi.number(),
+        year: joi.number().required(),
         teams: joi.number(),
         league1: joi.string().allow(''),
         league2: joi.string().allow(''),
