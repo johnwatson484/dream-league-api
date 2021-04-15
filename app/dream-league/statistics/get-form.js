@@ -9,11 +9,11 @@ async function getForm (weeksToInclude = 6) {
   const form = []
   managers.forEach(manager => {
     let points = 0
-    let results = ''
+    const results = []
     summaries.forEach(gameweek => {
       const result = gameweek.summary.scores.find(x => x.managerId === manager.managerId)?.result || 'X'
       points += getPoints(result)
-      results += result
+      results.push(result)
     })
     form.push({
       managerId: manager.managerId,
