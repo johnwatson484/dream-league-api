@@ -14,5 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false
   })
+  Group.associate = function (models) {
+    Group.belongsTo(models.Cup, { foreignKey: 'cupId' })
+    Group.belongsToMany(models.Manager, {
+      through: 'managerGroups',
+      foreignKey: 'groupId',
+      as: 'managers'
+    })
+  }
   return Group
 }

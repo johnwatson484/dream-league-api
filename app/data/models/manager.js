@@ -37,6 +37,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'managerId',
       as: 'conceded'
     })
+    Manager.belongsToMany(models.Group, {
+      through: 'managerGroups',
+      foreignKey: 'managerId',
+      as: 'groups',
+      onDelete: 'CASCADE'
+    })
   }
   return Manager
 }

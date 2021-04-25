@@ -14,5 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false
   })
+  Cup.associate = function (models) {
+    Cup.hasMany(models.Group, {
+      foreignKey: 'cupId',
+      as: 'groups'
+    })
+  }
   return Cup
 }
