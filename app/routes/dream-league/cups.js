@@ -25,9 +25,8 @@ module.exports = [{
     validate: {
       payload: joi.object({
         name: joi.string(),
-        hasGroupStage: joi.boolean(),
-        knockoutLegs: joi.number(),
-        finalLegs: joi.number()
+        hasGroupStage: joi.boolean().default(false),
+        knockoutLegs: joi.number().default(1)
       }),
       failAction: async (request, h, error) => {
         return boom.badRequest(error)
@@ -43,11 +42,10 @@ module.exports = [{
   options: {
     validate: {
       payload: joi.object({
-        cupId: joi.number(),
+        cupId: joi.number().required(),
         name: joi.string(),
         hasGroupStage: joi.boolean(),
-        knockoutLegs: joi.number(),
-        finalLegs: joi.number()
+        knockoutLegs: joi.number().required()
       }),
       failAction: async (request, h, error) => {
         return boom.badRequest(error)

@@ -9,8 +9,7 @@ module.exports = {
       },
       name: Sequelize.STRING,
       hasGroupStage: Sequelize.BOOLEAN,
-      knockoutLegs: Sequelize.INTEGER,
-      finalLegs: Sequelize.INTEGER
+      knockoutLegs: Sequelize.INTEGER
     })
   },
   down: async (queryInterface, Sequelize) => {

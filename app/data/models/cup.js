@@ -7,8 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: DataTypes.STRING,
     hasGroupStage: DataTypes.BOOLEAN,
-    knockoutLegs: DataTypes.INTEGER,
-    finalLegs: DataTypes.INTEGER
+    knockoutLegs: DataTypes.INTEGER
   }, {
     tableName: 'cups',
     freezeTableName: true,
