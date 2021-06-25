@@ -23,7 +23,7 @@ services:
 
   dream-league-api-postgres:
     ports:
-      - "6000:5432"
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
