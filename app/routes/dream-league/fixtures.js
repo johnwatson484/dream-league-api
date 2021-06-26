@@ -7,7 +7,14 @@ module.exports = [{
   path: '/dream-league/fixtures',
   options: {
     handler: async (request, h) => {
-      return h.response(await db.Fixture.findAll({ order: [['gameweekId']] }))
+      return h.response(await db.Fixture.findAll({
+        include: [
+          { model: db.Cup, as: 'cup' },
+          { model: db.Gameweek, as: 'gameweek' },
+          { model: db.Manager, as: 'homeManager' },
+          { model: db.Manager, as: 'awayManager' }],
+        order: [['gameweekId']]
+      }))
     }
   }
 }, {
