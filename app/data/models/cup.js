@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'cupId',
       as: 'groups'
     })
+    Cup.hasMany(models.Fixture, {
+      foreignKey: 'cupId',
+      as: 'fixtures'
+    })
   }
   return Cup
 }
