@@ -4,4 +4,11 @@ async function getCompleted () {
   return await db.Gameweek.findAll({ include: { model: db.Summary, as: 'summary', attributes: [], required: true } })
 }
 
-module.exports = getCompleted
+async function getAll () {
+  return await db.Gameweek.findAll()
+}
+
+module.exports = {
+  getCompleted,
+  getAll
+}

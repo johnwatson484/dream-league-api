@@ -1,12 +1,14 @@
-const getCompleted = require('../../dream-league/gameweeks')
+const { getCompleted, getAll } = require('../../dream-league/gameweeks')
 
 module.exports = [{
   method: 'GET',
   path: '/dream-league/gameweeks',
   options: {
     handler: async (request, h) => {
-      const gameweeks = await getCompleted()
-      return h.response(gameweeks)
+      if (request.query.completed) {
+        return h.response(await getCompleted())
+      }
+      return h.response(await getAll())
     }
   }
 }]
