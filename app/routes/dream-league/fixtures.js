@@ -9,10 +9,10 @@ module.exports = [{
     handler: async (request, h) => {
       return h.response(await db.Fixture.findAll({
         include: [
-          { model: db.Cup, as: 'cup' },
-          { model: db.Gameweek, as: 'gameweek' },
-          { model: db.Manager, as: 'homeManager' },
-          { model: db.Manager, as: 'awayManager' }],
+          { model: db.Cup, as: 'cup', attributes: [] },
+          { model: db.Manager, as: 'homeManager', attributes: [] },
+          { model: db.Manager, as: 'awayManager', attributes: [] }],
+        attributes: ['fixtureId', 'gameweekId', 'cupId', 'round', [db.Sequelize.col('cup.name'), 'cupName'], [db.Sequelize.col('homeManager.name'), 'homeManagerName'], [db.Sequelize.col('awayManager.name'), 'awayManagerName']],
         order: [['gameweekId']]
       }))
     }
