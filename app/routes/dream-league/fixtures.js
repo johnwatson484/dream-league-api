@@ -1,7 +1,6 @@
 const db = require('../../data/models')
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const { getManagerCupWeeks } = require('../../dream-league/fixtures')
 
 module.exports = [{
   method: 'GET',
@@ -16,14 +15,6 @@ module.exports = [{
         attributes: ['fixtureId', 'gameweekId', 'cupId', 'round', [db.Sequelize.col('cup.name'), 'cupName'], [db.Sequelize.col('homeManager.name'), 'homeManagerName'], [db.Sequelize.col('awayManager.name'), 'awayManagerName']],
         order: [['gameweekId']]
       }))
-    }
-  }
-}, {
-  method: 'GET',
-  path: '/dream-league/fixtures/managers',
-  options: {
-    handler: async (request, h) => {
-      return h.response(await getManagerCupWeeks())
     }
   }
 }, {

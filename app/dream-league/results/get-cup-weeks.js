@@ -1,6 +1,6 @@
 const db = require('../../data/models')
 
-async function getManagerCupWeeks () {
+async function getCupWeeks () {
   const managers = await db.Manager.findAll()
   const fixtures = await db.Fixture.findAll()
   const managerCupWeeks = []
@@ -16,6 +16,4 @@ async function getManagerCupWeeks () {
   return managerCupWeeks
 }
 
-module.exports = {
-  getManagerCupWeeks
-}
+module.exports = getCupWeeks
