@@ -2,11 +2,11 @@ const db = require('../../data/models')
 const { getConceded, getGoals } = require('./get-goals')
 const getResult = require('./get-result')
 
-async function getScores (gameweekId, managers) {
+async function getScores (gameweekId, managers, cup = false) {
   const scores = []
   for (const manager of managers) {
-    const goals = await getGoals(gameweekId, manager.managerId)
-    const conceded = await getConceded(gameweekId, manager.managerId)
+    const goals = await getGoals(gameweekId, manager.managerId, cup)
+    const conceded = await getConceded(gameweekId, manager.managerId, cup)
     const scorers = await getScorers(goals)
     const result = getResult(goals.length, conceded.length)
 

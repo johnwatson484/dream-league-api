@@ -1,11 +1,11 @@
 const db = require('../../data/models')
 
-async function getGoals (gameweekId, managerId) {
-  return await db.Goal.findAll({ where: { managerId, gameweekId, cup: false } })
+async function getGoals (gameweekId, managerId, cup = false) {
+  return await db.Goal.findAll({ where: { managerId, gameweekId, cup } })
 }
 
-async function getConceded (gameweekId, managerId) {
-  return await db.Concede.findAll({ where: { managerId, gameweekId, cup: false } })
+async function getConceded (gameweekId, managerId, cup = false) {
+  return await db.Concede.findAll({ where: { managerId, gameweekId, cup } })
 }
 
 module.exports = {
