@@ -11,7 +11,7 @@ async function update (results) {
 }
 
 async function updateConceded (results, resultsDate) {
-  const conceded = results.conceded.filter(x => x.conceded > 0)
+  const conceded = results.conceded?.filter(x => x.conceded > 0) || []
   for (const concede of conceded) {
     const manager = await db.ManagerKeeper.findOne({ where: { teamId: concede.teamId } })
     if (manager) {
@@ -30,7 +30,7 @@ async function updateConceded (results, resultsDate) {
 }
 
 async function updateGoals (results, resultsDate) {
-  const goals = results.goals.filter(x => x.goals > 0)
+  const goals = results.goals?.filter(x => x.goals > 0) || []
   for (const goal of goals) {
     const manager = await db.ManagerPlayer.findOne({ where: { playerId: goal.playerId } })
     if (manager) {
@@ -49,7 +49,7 @@ async function updateGoals (results, resultsDate) {
 }
 
 async function updateConcededCup (results, resultsDate) {
-  const conceded = results.concededCup.filter(x => x.conceded > 0)
+  const conceded = results.concededCup?.filter(x => x.conceded > 0) || []
   for (const concede of conceded) {
     const manager = await db.ManagerKeeper.findOne({ where: { teamId: concede.teamId } })
     if (manager) {
@@ -68,7 +68,7 @@ async function updateConcededCup (results, resultsDate) {
 }
 
 async function updateGoalsCup (results, resultsDate) {
-  const goals = results.goalsCup.filter(x => x.goals > 0)
+  const goals = results.goalsCup?.filter(x => x.goals > 0) || []
   for (const goal of goals) {
     const manager = await db.ManagerPlayer.findOne({ where: { playerId: goal.playerId } })
     if (manager) {
