@@ -8,7 +8,7 @@ async function getCupWeeks () {
   managers.forEach(manager => {
     fixtures.forEach(fixture => {
       if (fixture.homeManagerId === manager.managerId || fixture.awayManagerId === manager.managerId) {
-        managerCupWeeks.push({ managerId: manager.managerId, fixtureId: fixture.fixtureId })
+        managerCupWeeks.push({ managerId: manager.managerId, gameweekId: fixture.gameweekId, fixtureId: fixture.fixtureId })
       }
     })
   })
