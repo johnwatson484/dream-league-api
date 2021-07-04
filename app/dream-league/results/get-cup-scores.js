@@ -3,9 +3,9 @@ const getScores = require('./get-scores')
 
 async function getCupScores (gameweekId, managers) {
   const cupScores = []
-  const scores = getScores(gameweekId, managers, true)
+  const scores = await getScores(gameweekId, managers, true)
 
-  const fixtures = await db.Fixture.findAll({ where: { gameweekId }, include: [[{ model: db.Cup, as: 'cup', attributes: ['name'] }]] })
+  const fixtures = await db.Fixture.findAll({ where: { gameweekId }, include: [{ model: db.Cup, as: 'cup', attributes: ['name'] }] })
 
   for (const fixture of fixtures) {
     const homeScore = scores.find(x => x.managerId === fixture.homeManagerId)
