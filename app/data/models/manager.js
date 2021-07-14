@@ -43,6 +43,11 @@ module.exports = (sequelize, DataTypes) => {
       as: 'groups',
       onDelete: 'CASCADE'
     })
+    Manager.hasMany(models.Email, {
+      foreignKey: 'managerId',
+      as: 'emails',
+      onDelete: 'CASCADE'
+    })
   }
   return Manager
 }

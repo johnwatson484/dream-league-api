@@ -1,20 +1,21 @@
 const db = require('../../data/models')
 const joi = require('joi')
 const boom = require('@hapi/boom')
+const { getManager, getManagers, createManager, editManager, deleteManager } = require('../../dream-league/managers')
 
 module.exports = [{
   method: 'GET',
   path: '/dream-league/managers',
   options: {
     handler: async (request, h) => {
-      return h.response(await db.Manager.findAll({ order: ['name'] }))
+      return h.response(await getManagers())
     }
   }
 }, {
   method: 'GET',
   path: '/dream-league/manager',
   handler: async (request, h) => {
-    return h.response(await db.Manager.findOne({ where: { managerId: request.query.managerId } }))
+    return h.response(await getManager(request.query.managerId))
   }
 }, {
   method: 'POST',
@@ -23,14 +24,15 @@ module.exports = [{
     validate: {
       payload: joi.object({
         name: joi.string(),
-        alias: joi.string()
+        alias: joi.string(),
+        emails: joi.array().items(joi.string().email().allow('')).single()
       }),
       failAction: async (request, h, error) => {
         return boom.badRequest(error)
       }
     },
     handler: async (request, h) => {
-      return h.response(await db.Manager.create(request.payload))
+      return h.response(await createManager(request.payload))
     }
   }
 }, {
@@ -41,14 +43,15 @@ module.exports = [{
       payload: joi.object({
         managerId: joi.number(),
         name: joi.string(),
-        alias: joi.string()
+        alias: joi.string(),
+        emails: joi.array().items(joi.string().email().allow('')).single()
       }),
       failAction: async (request, h, error) => {
         return boom.badRequest(error)
       }
     },
     handler: async (request, h) => {
-      return h.response(await db.Manager.upsert(request.payload))
+      return h.response(await editManager(request.payload))
     }
   }
 }, {
@@ -64,7 +67,7 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      return h.response(await db.Manager.destroy({ where: { managerId: request.payload.managerId } }))
+      return h.response(await deleteManager(request.payload.managerId))
     }
   }
 }, {
