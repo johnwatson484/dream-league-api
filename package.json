@@ -30,6 +30,8 @@
     "blipp": "^4.0.1",
     "hapi-auth-jwt2": "^10.1.0",
     "joi": "^17.1.1",
+    "nodemailer": "^6.6.3",
+    "nunjucks": "^3.2.3",
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.13",

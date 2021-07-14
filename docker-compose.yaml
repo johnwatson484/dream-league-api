@@ -8,6 +8,9 @@ services:
       JWT_SECRET: secret
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: postgres
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
 
   dream-league-api-postgres:
     image: postgres:11.4-alpine

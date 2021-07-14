@@ -10,4 +10,7 @@ data:
   POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
   JWT_SECRET: {{ quote .Values.container.jwtSecret }}
   JWT_EXPIRY_IN_MINUTES: {{ quote .Values.container.jwtExpiryInMinutes }}
+  SMTP_HOST: {{ quote .Values.container.smtpHost }}
+  SMTP_USER: {{ quote .Values.container.smtpUser }}
+  SMTP_PASSWORD: {{ quote .Values.container.smtpPassword }}
 {{- end -}}
