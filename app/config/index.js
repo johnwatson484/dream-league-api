@@ -9,6 +9,15 @@ const schema = joi.object().keys({
   jwtConfig: joi.object({
     secret: joi.string(),
     expiryInMinutes: joi.number().default(60)
+  }),
+  smtp: joi.object({
+    host: joi.string().required(),
+    port: joi.number().default(587),
+    secure: joi.boolean().default(false),
+    auth: joi.object({
+      user: joi.string(),
+      pass: joi.string()
+    })
   })
 })
 
@@ -19,6 +28,15 @@ const config = {
   jwtConfig: {
     secret: process.env.JWT_SECRET,
     expiryInMinutes: process.env.JWT_EXPIRY_IN_MINUTES
+  },
+  smtp: {
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    secure: process.env.SMTP_SECURE,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASSWORD
+    }
   }
 }
 

@@ -1,6 +1,7 @@
 const { getSummary, getInput, update } = require('../../dream-league/results')
 const joi = require('joi')
 const boom = require('@hapi/boom')
+const { sendResults } = require('../../notifications')
 
 module.exports = [{
   method: 'GET',
@@ -45,6 +46,23 @@ module.exports = [{
     },
     handler: async (request, h) => {
       await update(request.payload)
+      return h.response(true)
+    }
+  }
+}, {
+  method: 'POST',
+  path: '/dream-league/results-send',
+  options: {
+    validate: {
+      payload: joi.object({
+        gameweekId: joi.number().required()
+      }),
+      failAction: async (request, h, error) => {
+        return boom.badRequest(error)
+      }
+    },
+    handler: async (request, h) => {
+      await sendResults(request.payload.gameweekId)
       return h.response(true)
     }
   }
