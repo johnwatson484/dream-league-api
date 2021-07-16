@@ -11,12 +11,12 @@ const schema = joi.object().keys({
     expiryInMinutes: joi.number().default(60)
   }),
   smtp: joi.object({
-    host: joi.string().required(),
+    host: joi.string().allow(''),
     port: joi.number().default(587),
     secure: joi.boolean().default(false),
     auth: joi.object({
-      user: joi.string(),
-      pass: joi.string()
+      user: joi.string().allow(''),
+      pass: joi.string().allow('')
     })
   })
 })
