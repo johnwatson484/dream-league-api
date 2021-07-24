@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta name="viewport" content="width=device-width" />
   <title>Dream League</title>
 
   <style type="text/css">
-    body, table, td, h3, h4, h5, h6, p {
+    body,
+    table,
+    td,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
       font-family: Arial, Helvetica, sans-serif !important;
     }
   </style>
 </head>
+
 <body>
   <div class="container body-content">
     <h3>Dream League Results - Game Week {{ gameweekId }}</h3>
@@ -17,32 +26,32 @@
 
     <h4>Scores</h4>
 
-    <table class="table-email small">
+    <table class="table-email small" style="background-color: #dcdcdc;">
       {% for score in scores %}
-        <tr>
-          <td>{{ score.manager }}</td>
-          <td>
-              <strong>{{ score.goals }} - {{ score.conceded }}</strong>
+      <tr>
+        <td>{{ score.manager }}</td>
+        <td>
+          <strong>{{ score.goals }} - {{ score.conceded }}</strong>
 
-              {% for scorer  in score.scorers %}
-                <p style="margin:0">
-                  <em>
-                    {{ scorer.name }}
+          {% for scorer in score.scorers %}
+          <p style="margin:0">
+            <em>
+              {{ scorer.name }}
 
-                    {% if scorer.goals > 1 %}
-                        {{ scorer.goals }}
-                    {% endif %}
-                  </em>
-                </p>
-              {% endfor %}
-          </td>
-        </tr>
+              {% if scorer.goals > 1 %}
+              {{ scorer.goals }}
+              {% endif %}
+            </em>
+          </p>
+          {% endfor %}
+        </td>
+      </tr>
       {% endfor %}
     </table>
 
     <h4>Table</h4>
 
-    <table class="table-email small" style="background-color: #dcdcdc;">
+    <table class="table-email small">
       <tr>
         <th>Pos</th>
         <th>Manager</th>
@@ -56,28 +65,45 @@
         <th>Pts</th>
       </tr>
       {% for row in table %}
-        <tr>
-          <td>{{ row.position }}</td>
-          <td>{{ row.manager }}</td>
-          <td>{{ row.played }}</td>
-          <td>{{ row.won }}</td>
-          <td>{{ row.drawn }}</td>
-          <td>{{ row.lost }}</td>
-          <td>{{ row.gf }}</td>
-          <td>{{ row.ga }}</td>
-          <td>{{ row.gd }}</td>
-          <td>{{ row.points }}</td>
-        </tr>
+      <tr>
+        <td>{{ row.position }}</td>
+        <td>{{ row.manager }}</td>
+        <td>{{ row.played }}</td>
+        <td>{{ row.won }}</td>
+        <td>{{ row.drawn }}</td>
+        <td>{{ row.lost }}</td>
+        <td>{{ row.gf }}</td>
+        <td>{{ row.ga }}</td>
+        <td>{{ row.gd }}</td>
+        <td>{{ row.points }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <h4>Winners</h4>
+
+    <table class="table-email small" style="background-color: #dcdcdc;">
+      {% for winner in winners %}
+      <tr>
+        <td>
+          {{ winner.manager }}
+          {% if winner.goals >= 9 %}
+          - JACKPOT!
+          {% endif %}
+        </td>
+      </tr>
       {% endfor %}
     </table>
 
     <hr />
 
-    <p>For more league statistics and information, visit the Dream League website at <a href="https://dreamleaguefantasyfootball.co.uk/">dreamleaguefantasyfootball.co.uk</a>.</p>
+    <p>For more league statistics and information, visit the Dream League website at <a
+        href="https://dreamleaguefantasyfootball.co.uk/">dreamleaguefantasyfootball.co.uk</a>.</p>
 
     <footer>
       <p>Copyright 2021 John Watson</p>
     </footer>
   </div>
 </body>
+
 </html>

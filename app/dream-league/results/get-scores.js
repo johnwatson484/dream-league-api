@@ -15,6 +15,7 @@ async function getScores (gameweekId, managers, cup = false) {
       manager: manager.name,
       goals: goals.length,
       conceded: conceded.length,
+      margin: goals.length - conceded.length,
       result,
       scorers
     })
