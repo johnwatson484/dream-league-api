@@ -1,4 +1,4 @@
-const db = require('../../data/models')
+const db = require('../../data')
 
 async function run (players) {
   await db.Player.truncate()

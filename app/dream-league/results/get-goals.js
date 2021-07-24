@@ -1,4 +1,4 @@
-const db = require('../../data/models')
+const db = require('../../data')
 
 async function getGoals (gameweekId, managerId, cup = false) {
   return await db.Goal.findAll({ where: { managerId, gameweekId, cup } })

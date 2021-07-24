@@ -1,4 +1,4 @@
-const db = require('../../../data/models')
+const db = require('../../../data')
 
 async function deleteCurrentTeam (managerId) {
   await db.ManagerKeeper.destroy({ where: { managerId } })

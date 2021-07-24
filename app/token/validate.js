@@ -1,4 +1,4 @@
-const db = require('../data/models')
+const db = require('../data')
 
 async function validate (decoded, request, h) {
   const user = await db.User.findOne({

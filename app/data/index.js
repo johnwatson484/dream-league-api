@@ -1,19 +1,18 @@
 const fs = require('fs')
 const path = require('path')
-const Sequelize = require('sequelize')
-const basename = path.basename(__filename)
-const config = require('../../config').database
+const { Sequelize, DataTypes } = require('sequelize')
+const modelPath = path.join(__dirname, 'models')
+const config = require('../config').database
 const db = {}
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config)
 
-fs
-  .readdirSync(__dirname)
+fs.readdirSync(modelPath)
   .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js')
+    return (file.indexOf('.') !== 0) && (file !== 'index.js') && (file.slice(-3) === '.js')
   })
   .forEach(file => {
-    const model = sequelize.import(path.join(__dirname, file))
+    const model = require(path.join(modelPath, file))(sequelize, DataTypes)
     db[model.name] = model
   })
 

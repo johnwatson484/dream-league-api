@@ -1,4 +1,4 @@
-const db = require('../../app/data/models')
+const db = require('../../app/data')
 const getScores = require('../../app/dream-league/results/get-scores')
 const testData = require('../data')
 let managers

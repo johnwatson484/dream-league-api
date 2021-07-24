@@ -1,4 +1,4 @@
-const db = require('../../data/models')
+const db = require('../../data')
 const getPoints = require('../results/get-points')
 const sortArray = require('../../utils/sort-array')
 

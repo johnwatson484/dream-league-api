@@ -1,4 +1,4 @@
-const db = require('../data/models')
+const db = require('../data')
 const { addUserToRole, getUserRoles } = require('./role-manager')
 const bcrypt = require('bcrypt')
 

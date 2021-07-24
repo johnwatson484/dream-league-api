@@ -1,4 +1,4 @@
-const db = require('../../../data/models')
+const db = require('../../../data')
 
 async function getManager (manager) {
   return await db.Manager.findOne({ attributes: ['managerId'], where: { alias: { [db.Sequelize.Op.iLike]: manager } }, raw: true })

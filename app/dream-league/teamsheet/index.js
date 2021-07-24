@@ -1,5 +1,5 @@
 const refresh = require('./refresh')
-const db = require('../../data/models')
+const db = require('../../data')
 const { updatePlayer, updateKeeper } = require('./update')
 const sortArray = require('../../utils/sort-array')
 

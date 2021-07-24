@@ -1,4 +1,4 @@
-const db = require('../../data/models')
+const db = require('../../data')
 const joi = require('joi')
 const boom = require('@hapi/boom')
 const refresh = require('../../dream-league/meeting-refresh')

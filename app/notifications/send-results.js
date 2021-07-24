@@ -1,4 +1,4 @@
-const db = require('../data/models')
+const db = require('../data')
 const { getSummary } = require('../dream-league/results')
 const { getHtmlStringFromFile } = require('./get-html-string')
 const sendEmail = require('./send-email')

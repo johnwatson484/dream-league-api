@@ -1,4 +1,4 @@
-const db = require('../../data/models')
+const db = require('../../data')
 const getScores = require('./get-scores')
 const getCupScores = require('./get-cup-scores')
 const getTable = require('./get-table')

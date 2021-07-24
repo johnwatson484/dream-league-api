@@ -1,4 +1,4 @@
-const db = require('../../data/models')
+const db = require('../../data')
 const createSummary = require('./create-summary')
 
 async function update (results) {

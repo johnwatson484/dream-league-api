@@ -1,4 +1,4 @@
-const db = require('../../../data/models')
+const db = require('../../../data')
 
 async function addTeamsheetMatch (managerId, player, position, bestMatchId, distance) {
   await db.Teamsheet.create({

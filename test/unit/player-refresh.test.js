@@ -1,5 +1,5 @@
 
-const db = require('../../app/data/models')
+const db = require('../../app/data')
 jest.mock('../../app/data/models')
 const refresh = require('../../app/league/player-refresh')
 

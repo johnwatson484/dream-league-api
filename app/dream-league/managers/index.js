@@ -1,4 +1,4 @@
-const db = require('../../data/models')
+const db = require('../../data')
 
 async function getManagers () {
   return await db.Manager.findAll({ order: ['name'] })

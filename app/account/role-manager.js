@@ -1,4 +1,4 @@
-const db = require('../data/models')
+const db = require('../data')
 
 async function getRole (roleName) {
   return db.Role.findOne({ where: { name: roleName } })

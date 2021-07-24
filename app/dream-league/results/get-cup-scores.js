@@ -1,4 +1,4 @@
-const db = require('../../data/models')
+const db = require('../../data')
 const getScores = require('./get-scores')
 
 async function getCupScores (gameweekId, managers) {

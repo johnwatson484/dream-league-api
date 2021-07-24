@@ -1,4 +1,4 @@
-const db = require('../../data/models')
+const db = require('../../data')
 
 async function getCupWeeks () {
   const managers = await db.Manager.findAll()

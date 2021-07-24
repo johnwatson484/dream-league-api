@@ -1,4 +1,4 @@
-const db = require('../../data/models')
+const db = require('../../data')
 const { getConceded, getGoals } = require('./get-goals')
 const getResult = require('./get-result')
 

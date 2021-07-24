@@ -1,5 +1,5 @@
 const positions = ['GK', 'DEF', 'MID', 'FWD']
-const db = require('../../data/models')
+const db = require('../../data')
 const mapPosition = require('../../position')
 
 async function mapPlayer (player) {
