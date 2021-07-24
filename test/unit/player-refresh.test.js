@@ -1,6 +1,6 @@
 
 const db = require('../../app/data')
-jest.mock('../../app/data/models')
+jest.mock('../../app/data')
 const refresh = require('../../app/league/player-refresh')
 
 const players = [{
