@@ -1,8 +1,6 @@
-const db = require('../../data')
-const sortArray = require('../../utils/sort-array')
-const { getConceded, getGoals } = require('./get-goals')
-const getResult = require('./get-result')
-const getPoints = require('./get-points')
+
+const getGameweekResults = require('./get-gameweek-results')
+const orderTable = require('./order-table')
 
 async function getTable (gameweekId, managers) {
   const rows = []
@@ -29,24 +27,6 @@ async function getTable (gameweekId, managers) {
     })
   }
   return orderTable(rows)
-}
-
-async function getGameweekResults (gameweekId, managerId) {
-  const gameweeks = await db.Gameweek.findAll({ where: { gameweekId: { [db.Sequelize.Op.lte]: gameweekId } } })
-  const gameweekResults = []
-  for (const gameweek of gameweeks) {
-    const goals = await getGoals(gameweek.gameweekId, managerId) || []
-    const conceded = await getConceded(gameweek.gameweekId, managerId) || []
-    const result = getResult(goals.length, conceded.length)
-    const points = getPoints(result)
-    gameweekResults.push({ result, points, goals: goals.length, conceded: conceded.length })
-  }
-  return gameweekResults
-}
-
-function orderTable (rows) {
-  return rows.sort((a, b) => { return sortArray(b.points, a.points) || sortArray(b.gd, a.gd) || sortArray(b.gf, a.gf) || sortArray(a.manager, b.manager) })
-    .map((x, i) => ({ position: i + 1, ...x }))
 }
 
 module.exports = getTable

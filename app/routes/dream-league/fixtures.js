@@ -72,7 +72,7 @@ module.exports = [{
   options: {
     validate: {
       payload: joi.object({
-        cupId: joi.number()
+        fixtureId: joi.number()
       }),
       failAction: async (request, h, error) => {
         return boom.badRequest(error)

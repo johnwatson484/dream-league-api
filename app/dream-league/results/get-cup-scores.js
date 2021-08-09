@@ -8,24 +8,26 @@ async function getCupScores (gameweekId, managers) {
   const fixtures = await db.Fixture.findAll({ where: { gameweekId }, include: [{ model: db.Cup, as: 'cup', attributes: ['name'] }] })
 
   for (const fixture of fixtures) {
-    const homeScore = scores.find(x => x.managerId === fixture.homeManagerId)
-    const homeMargin = homeScore.goals - homeScore.conceded
-    const awayScore = scores.find(x => x.managerId === fixture.awayManagerId)
-    const awayMargin = awayScore.goals - awayScore.conceded
-    const result = getCupResult(homeMargin, awayMargin)
+    if (scores.some(x => x.managerId === fixture.homeManagerId || x.managerId === fixture.awayManagerId)) {
+      const homeScore = scores.find(x => x.managerId === fixture.homeManagerId)
+      const homeMargin = homeScore.goals - homeScore.conceded
+      const awayScore = scores.find(x => x.managerId === fixture.awayManagerId)
+      const awayMargin = awayScore.goals - awayScore.conceded
+      const result = getCupResult(homeMargin, awayMargin)
 
-    cupScores.push({
-      cupId: fixture.cupId,
-      cupName: fixture.cup.name,
-      round: fixture.round,
-      homeManagerId: fixture.homeManagerId,
-      awayManagerId: fixture.awayManagerId,
-      homeScore,
-      homeMargin,
-      awayScore,
-      awayMargin,
-      result
-    })
+      cupScores.push({
+        cupId: fixture.cupId,
+        cupName: fixture.cup.name,
+        round: fixture.round,
+        homeManagerId: fixture.homeManagerId,
+        awayManagerId: fixture.awayManagerId,
+        homeScore,
+        homeMargin,
+        awayScore,
+        awayMargin,
+        result
+      })
+    }
   }
 
   return cupScores
@@ -33,12 +35,12 @@ async function getCupScores (gameweekId, managers) {
 
 function getCupResult (homeMargin, awayMargin) {
   if (homeMargin > awayMargin) {
-    return 'home'
+    return 'H'
   }
   if (awayMargin > homeMargin) {
-    return 'away'
+    return 'A'
   }
-  return 'draw'
+  return 'D'
 }
 
 module.exports = getCupScores
