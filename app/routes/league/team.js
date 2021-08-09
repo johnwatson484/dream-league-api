@@ -23,6 +23,7 @@ module.exports = [{
   method: 'POST',
   path: '/league/team/create',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         name: joi.string(),
@@ -41,6 +42,7 @@ module.exports = [{
   method: 'POST',
   path: '/league/team/edit',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         teamId: joi.number(),

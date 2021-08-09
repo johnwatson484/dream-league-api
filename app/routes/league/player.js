@@ -34,6 +34,7 @@ module.exports = [{
   method: 'POST',
   path: '/league/player/create',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         firstName: joi.string().allow(''),
@@ -53,6 +54,7 @@ module.exports = [{
   method: 'POST',
   path: '/league/player/edit',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         playerId: joi.number(),
@@ -73,6 +75,7 @@ module.exports = [{
   method: 'POST',
   path: '/league/player/delete',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         playerId: joi.number()

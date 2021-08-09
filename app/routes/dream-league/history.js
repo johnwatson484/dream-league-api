@@ -17,6 +17,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/history/create',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         year: joi.number().required(),
@@ -39,6 +40,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/history/edit',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         historyId: joi.number(),
@@ -62,6 +64,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/history/delete',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         historyId: joi.number()

@@ -27,6 +27,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/meeting/create',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         date: joi.date()
@@ -43,6 +44,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/meeting/edit',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         meetingId: joi.number(),
@@ -60,6 +62,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/meeting/delete',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         meetingId: joi.number()
@@ -76,6 +79,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/meeting/refresh',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         startDate: joi.date(),

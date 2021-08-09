@@ -14,6 +14,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/teamsheet/edit/player',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         managerId: joi.number(),
@@ -32,6 +33,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/teamsheet/edit/keeper',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         managerId: joi.number(),
@@ -50,6 +52,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/teamsheet/refresh',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         teams: joi.array().items(joi.object({

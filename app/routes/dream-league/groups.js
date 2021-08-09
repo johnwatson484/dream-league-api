@@ -35,6 +35,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/group/create',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         cupId: joi.number().required(),
@@ -61,6 +62,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/group/edit',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         groupId: joi.number(),
@@ -99,6 +101,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/group/delete',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         groupId: joi.number()

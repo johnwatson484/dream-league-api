@@ -21,6 +21,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/manager/create',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         name: joi.string(),
@@ -39,6 +40,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/manager/edit',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         managerId: joi.number(),
@@ -58,6 +60,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/manager/delete',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         managerId: joi.number()

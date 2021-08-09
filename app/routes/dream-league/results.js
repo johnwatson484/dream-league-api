@@ -24,6 +24,7 @@ module.exports = [{
   method: 'GET',
   path: '/dream-league/results-edit',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     handler: async (request, h) => {
       return h.response(await getInput())
     }
@@ -32,6 +33,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/results-edit',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         gameweekId: joi.number(),
@@ -53,6 +55,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/results-send',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         gameweekId: joi.number().required()

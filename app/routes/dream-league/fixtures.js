@@ -29,6 +29,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/fixture/create',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         cupId: joi.number().integer().required(),
@@ -49,6 +50,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/fixture/edit',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         fixtureId: joi.number().integer().required(),
@@ -70,6 +72,7 @@ module.exports = [{
   method: 'POST',
   path: '/dream-league/fixture/delete',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         fixtureId: joi.number()
