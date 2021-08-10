@@ -3,7 +3,7 @@ name: dream-league-api
 image: dream-league-api
 
 container:
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
   requestMemory: 60Mi
   requestCpu: 60m
   limitMemory: 60Mi
