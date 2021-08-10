@@ -1,7 +1,7 @@
 const hapi = require('@hapi/hapi')
 const config = require('./config')
 
-async function createServer() {
+async function createServer () {
   // Create the hapi server
   const server = hapi.server({
     port: config.port,
