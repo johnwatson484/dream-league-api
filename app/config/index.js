@@ -8,7 +8,7 @@ const schema = joi.object().keys({
   env: joi.string().valid(...envs).default(envs[0]),
   jwtConfig: joi.object({
     secret: joi.string(),
-    expiryInMinutes: joi.number().default(60)
+    expiryInMinutes: joi.number().default(43800)
   }),
   smtp: joi.object({
     host: joi.string().allow(''),
