@@ -1,7 +1,7 @@
 const hapi = require('@hapi/hapi')
 const config = require('./config')
 
-async function createServer () {
+async function createServer() {
   // Create the hapi server
   const server = hapi.server({
     port: config.port,
@@ -24,7 +24,9 @@ async function createServer () {
   await server.register(require('./plugins/logging'))
   await server.register(require('./plugins/errors'))
   await server.register(require('./plugins/router'))
-  await server.register(require('blipp'))
+  if (config.isDev) {
+    await server.register(require('blipp'))
+  }
 
   return server
 }

@@ -53,5 +53,6 @@ const value = {
   ...result.value,
   database: databaseConfig
 }
+value.isDev = value.env === 'development'
 
 module.exports = value
