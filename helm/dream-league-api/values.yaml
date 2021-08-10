@@ -14,7 +14,7 @@ container:
   jwtSecret: secret
   jwtExpiryInMinutes: 60
   command: ["/bin/sh"]
-  args: ["-c", "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all && node app"]
+  args: ["-c", "npx sequelize-cli db:migrate && node app"]
   smtpHost:
   smtpUser:
   smtpPassword:
