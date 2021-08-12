@@ -3,6 +3,8 @@
 
 <head>
   <meta name="viewport" content="width=device-width" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <title>Dream League</title>
 
   <style type="text/css">
@@ -39,7 +41,7 @@
               {{ scorer.name }}
 
               {% if scorer.goals > 1 %}
-              {{ scorer.goals }}
+              ({{ scorer.goals }})
               {% endif %}
             </em>
           </p>
@@ -51,7 +53,7 @@
 
     <h4>Table</h4>
 
-    <table class="table-email small">
+    <table class="table-email small" style="background-color: #dcdcdc;">
       <tr>
         <th>Pos</th>
         <th>Manager</th>
@@ -94,6 +96,58 @@
       </tr>
       {% endfor %}
     </table>
+
+    {% if cupScores.length %}
+    <h4>Cup scores</h4>
+
+    <table class="table-email small" style="background-color: #dcdcdc;">
+      {% for score in cupScores %}
+      <tr>
+        <td>{{ score.round }}</td>
+        <td>{{ score.homeManager }}</td>
+        <td>{{ score.homeMargin }}</td>
+        <td>
+          v
+        </td>
+        <td>{{ score.awayMargin }}</td>
+        <td>{{ score.awayManager }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    {% if groups %}
+    {% for group in groups %}
+    <table class="table-email small" style="background-color: #dcdcdc;">
+      <tr>
+        <th>Pos</th>
+        <th>Manager</th>
+        <th>Pld</th>
+        <th>W</th>
+        <th>D</th>
+        <th>L</th>
+        <th>GF</th>
+        <th>GA</th>
+        <th>GD</th>
+        <th>Pts</th>
+      </tr>
+      {% for row in group %}
+      <tr>
+        <td>{{ row.position }}</td>
+        <td>{{ row.manager }}</td>
+        <td>{{ row.played }}</td>
+        <td>{{ row.won }}</td>
+        <td>{{ row.drawn }}</td>
+        <td>{{ row.lost }}</td>
+        <td>{{ row.gf }}</td>
+        <td>{{ row.ga }}</td>
+        <td>{{ row.gd }}</td>
+        <td>{{ row.points }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% endfor %}
+    {% endif %}
+    {% endif %}
 
     <hr />
 
