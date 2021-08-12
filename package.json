@@ -26,9 +26,10 @@
     "@hapi/hapi": "^20.1.5",
     "@hapi/inert": "^6.0.3",
     "@hapi/vision": "^6.1.0",
-    "bcrypt": "^5.0.1",    
+    "bcrypt": "^5.0.1",
     "hapi-auth-jwt2": "^10.2.0",
     "joi": "^17.4.1",
+    "moment": "^2.29.1",
     "nodemailer": "^6.6.3",
     "nunjucks": "^3.2.3",
     "pg": "^8.6.0",
@@ -37,10 +38,10 @@
     "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
+    "blipp": "^4.0.2",
     "jest": "^27.0.6",
     "nodemon": "^2.0.12",
-    "standard": "^16.0.3",
-    "blipp": "^4.0.2"
+    "standard": "^16.0.3"
   },
   "standard": {
     "globals": [

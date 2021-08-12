@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 module.exports = (sequelize, DataTypes) => {
   const Meeting = sequelize.define('Meeting', {
     meetingId: {
@@ -5,7 +7,13 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    date: DataTypes.DATE
+    date: DataTypes.DATE,
+    shortDate: {
+      type: DataTypes.VIRTUAL,
+      get () {
+        return moment(this.startDate).format('DD[/]MM[/]YYYY HH:mm')
+      }
+    }
   }, {
     tableName: 'meetings',
     freezeTableName: true,

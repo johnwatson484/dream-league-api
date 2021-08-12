@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 module.exports = (sequelize, DataTypes) => {
   const Gameweek = sequelize.define('Gameweek', {
     gameweekId: {
@@ -19,6 +21,12 @@ module.exports = (sequelize, DataTypes) => {
       get () {
         const currentDate = new Date()
         return currentDate >= this.setDate && currentDate <= this.endDate
+      }
+    },
+    shortDate: {
+      type: DataTypes.VIRTUAL,
+      get () {
+        return moment(this.startDate).format('DD[/]MM[/]YYYY')
       }
     }
   }, {
