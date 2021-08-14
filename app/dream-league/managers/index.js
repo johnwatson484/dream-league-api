@@ -1,11 +1,11 @@
 const db = require('../../data')
 
 async function getManagers () {
-  return await db.Manager.findAll({ order: ['name'] })
+  return db.Manager.findAll({ order: ['name'] })
 }
 
 async function getManager (managerId) {
-  return await db.Manager.findOne({ where: { managerId: managerId }, include: [{ model: db.Email, as: 'emails' }] })
+  return db.Manager.findOne({ where: { managerId: managerId }, include: [{ model: db.Email, as: 'emails' }] })
 }
 
 async function createManager (manager) {

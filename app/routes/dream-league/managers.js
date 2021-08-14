@@ -2,6 +2,7 @@ const db = require('../../data')
 const joi = require('joi')
 const boom = require('@hapi/boom')
 const { getManager, getManagers, createManager, editManager, deleteManager } = require('../../dream-league/managers')
+const { get } = require('../../dream-league/teamsheet')
 
 module.exports = [{
   method: 'GET',
@@ -16,6 +17,24 @@ module.exports = [{
   path: '/dream-league/manager',
   handler: async (request, h) => {
     return h.response(await getManager(request.query.managerId))
+  }
+}, {
+  method: 'GET',
+  path: '/dream-league/manager/detail',
+  options: {
+    validate: {
+      query: joi.object({
+        managerId: joi.number().required()
+      }),
+      failAction: async (request, h, error) => {
+        return boom.badRequest(error)
+      }
+    },
+    handler: async (request, h) => {
+      const teamsheet = await get()
+      const managerTeam = teamsheet.find(x => x.managerId === request.query.managerId)
+      return h.response(managerTeam)
+    }
   }
 }, {
   method: 'POST',
