@@ -16,11 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         return endDate
       }
     },
-    isCurrent: {
+    isActive: {
       type: DataTypes.VIRTUAL,
       get () {
         const currentDate = new Date()
-        return currentDate >= this.setDate && currentDate <= this.endDate
+        return currentDate >= this.startDate
       }
     },
     shortDate: {
