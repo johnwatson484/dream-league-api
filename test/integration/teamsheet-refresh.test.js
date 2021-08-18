@@ -1,5 +1,5 @@
 const db = require('../../app/data')
-const { refresh } = require('../../app/teamsheet')
+const { refreshTeamsheet } = require('../../app/refresh')
 const testData = require('../data')
 
 describe('refreshing teamsheet', () => {
@@ -41,7 +41,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    const result = await refresh(teams)
+    const result = await refreshTeamsheet(teams)
 
     expect(result.success).toBeTruthy()
   })
@@ -56,7 +56,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
     expect(savedPlayers.filter(x => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(1)
@@ -72,7 +72,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerKeeper.findAll({ include: [{ model: db.Team }], raw: true, nest: true })
 
     expect(savedPlayers.filter(x => x.Team.name === 'Rochdale').length).toBe(1)
@@ -96,7 +96,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
     expect(savedPlayers.filter(x => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(1)
@@ -113,7 +113,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
     expect(savedPlayers.filter(x => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(1)
@@ -129,7 +129,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
     expect(savedPlayers.filter(x => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(0)
@@ -145,7 +145,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const teamsheet = await db.Teamsheet.findAll({ raw: true })
     expect(teamsheet.filter(x => x.managerId === 1 && x.player === teams[0].players[0].player && x.position === 'Forward').length).toBe(1)
     expect(teamsheet.length).toBe(1)
@@ -161,7 +161,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const teamsheet = await db.Teamsheet.findAll({ raw: true })
     expect(teamsheet.filter(x => x.managerId === 1 && x.player === teams[0].players[0].player && x.position === 'Goalkeeper').length).toBe(1)
     expect(teamsheet.length).toBe(1)
@@ -185,7 +185,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ raw: true })
     const savedKeepers = await db.ManagerKeeper.findAll({ raw: true })
 
@@ -226,7 +226,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ raw: true })
     const savedKeepers = await db.ManagerKeeper.findAll({ raw: true })
 
@@ -248,7 +248,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player }], raw: true, nest: true })
 
     expect(savedPlayers.length).toBe(2)
@@ -270,7 +270,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerKeeper.findAll({ include: [{ model: db.Team }], raw: true, nest: true })
 
     expect(savedPlayers.length).toBe(2)
@@ -292,7 +292,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.Teamsheet.findAll({ raw: true })
 
     expect(savedPlayers.length).toBe(2)
@@ -314,7 +314,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.Teamsheet.findAll({ raw: true })
 
     expect(savedPlayers.length).toBe(2)
@@ -332,7 +332,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
     expect(savedPlayers.filter(x => x.Player.firstName === 'Ebou' && x.Player.lastName === 'Adams' && x.Player.team.name === 'Forest Green Rovers').length).toBe(1)
     expect(savedPlayers.filter(x => x.Player.firstName === 'Joe' && x.Player.lastName === 'Adams' && x.Player.team.name === 'Bury').length).toBe(0)
@@ -352,7 +352,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
     expect(savedPlayers.filter(x => x.Player.firstName === 'Ebou' && x.Player.lastName === 'Adams' && x.Player.team.name === 'Forest Green Rovers').length).toBe(1)
@@ -368,7 +368,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
     expect(savedPlayers.filter(x => x.Player.firstName === 'Daniel' && x.Player.lastName === 'Sanchez Ayala' && x.Player.team.name === 'Middlesbrough').length).toBe(1)
@@ -384,7 +384,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
     expect(savedPlayers.filter(x => x.Player.firstName === 'Brendan' && x.Player.lastName === 'Sarpeng-Wiredu' && x.Player.team.name === 'Charlton Athletic').length).toBe(1)
@@ -400,7 +400,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
     expect(savedPlayers.filter(x => x.Player.firstName === 'Desire' && x.Player.lastName === 'Segbe Azankpo' && x.Player.team.name === 'Oldham Athletic').length).toBe(1)
   })
@@ -415,7 +415,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
     expect(savedPlayers.filter(x => x.Player.firstName === 'Desire' && x.Player.lastName === 'Segbe Azankpo' && x.Player.team.name === 'Oldham Athletic').length).toBe(1)
   })
@@ -430,7 +430,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
     expect(savedPlayers.filter(x => x.Player.firstName === 'Desire' && x.Player.lastName === 'Segbe Azankpo' && x.Player.team.name === 'Oldham Athletic').length).toBe(1)
   })
@@ -445,7 +445,7 @@ describe('refreshing teamsheet', () => {
       }]
     }]
 
-    await refresh(teams)
+    await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
     expect(savedPlayers.filter(x => x.Player.firstName === 'Matt' && x.Player.lastName === 'Phillips' && x.Player.team.name === 'West Bromich Albion').length).toBe(1)
   })
