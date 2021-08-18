@@ -2,7 +2,7 @@ const db = require('../data')
 const { getConceded, getGoals } = require('./get-goals')
 const getResult = require('./get-result')
 
-async function getScores (gameweekId, managers, cup = false) {
+const getScores = async (gameweekId, managers, cup = false) => {
   const scores = []
   for (const manager of managers) {
     const goals = await getGoals(gameweekId, manager.managerId, cup)
@@ -23,7 +23,7 @@ async function getScores (gameweekId, managers, cup = false) {
   return scores
 }
 
-async function getScorers (goals) {
+const getScorers = async (goals) => {
   const scorers = []
   goals.reduce((x, y) => {
     if (!x[y.playerId]) {

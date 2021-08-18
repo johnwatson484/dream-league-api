@@ -1,4 +1,4 @@
-function getResult (goals, conceded) {
+const getResult = (goals, conceded) => {
   if (goals > conceded) {
     return 'W'
   }

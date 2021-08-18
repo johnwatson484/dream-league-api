@@ -1,15 +1,15 @@
 const db = require('../data')
 
-async function getRole (roleName) {
+const getRole = async (roleName) => {
   return db.Role.findOne({ where: { name: roleName } })
 }
 
-async function addUserToRole (userId, roleName) {
+const addUserToRole = async (userId, roleName) => {
   const role = await getRole(roleName)
   await db.UserRole.create({ userId, roleId: role.roleId })
 }
 
-async function getUserRoles (userId) {
+const getUserRoles = async (userId) => {
   return db.UserRole.findAll({
     where: { userId },
     raw: true,

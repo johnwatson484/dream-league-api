@@ -1,7 +1,7 @@
 const db = require('../data')
 
-async function getPlayers () {
-  return await db.ManagerPlayer.findAll({
+const getPlayers = async () => {
+  return db.ManagerPlayer.findAll({
     where: { substitute: false },
     include: [{
       model: db.Player,

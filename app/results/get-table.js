@@ -2,7 +2,7 @@
 const getGameweekResults = require('./get-gameweek-results')
 const orderTable = require('./order-table')
 
-async function getTable (gameweekId, managers) {
+const getTable = async (gameweekId, managers) => {
   const rows = []
   for (const manager of managers) {
     const gameweekResults = await getGameweekResults(gameweekId, manager.managerId)

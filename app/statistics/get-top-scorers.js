@@ -1,7 +1,7 @@
 const db = require('../data')
 const sortArray = require('../utils/sort-array')
 
-async function getTopScorers () {
+const getTopScorers = async () => {
   const playersToInclude = await db.Manager.count()
   let goals = await db.Goal.findAll({
     raw: true,
@@ -31,7 +31,7 @@ async function getTopScorers () {
   return orderScorers(scorers)
 }
 
-function orderScorers (scorers) {
+const orderScorers = (scorers) => {
   return scorers.sort((a, b) => { return sortArray(b.goals, a.goals) || sortArray(a.lastName, b.lastName) || sortArray(a.firstName, b.firstName) })
     .map((x, i) => ({ position: i + 1, ...x }))
 }

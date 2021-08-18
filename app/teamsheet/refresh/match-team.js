@@ -4,14 +4,14 @@ const mapPosition = require('../../position')
 const { addTeamsheetMatch, addPlayer, addKeeper } = require('./add-team')
 const { getLeagueTeams, getLeaguePlayers } = require('./get-league-data')
 
-async function matchTeam (managerId, players) {
+const matchTeam = async (managerId, players) => {
   for (const player of players) {
     const position = mapPosition(player.position)
     await matchPlayers(player, position, managerId)
   }
 }
 
-async function matchPlayers (player, position, managerId) {
+const matchPlayers = async (player, position, managerId) => {
   const leagueTeams = await getLeagueTeams()
   const leaguePlayers = await getLeaguePlayers()
 
@@ -26,7 +26,7 @@ async function matchPlayers (player, position, managerId) {
   }
 }
 
-function isKeeper (position) {
+const isKeeper = (position) => {
   return position === 'Goalkeeper'
 }
 

@@ -1,4 +1,4 @@
-function getPoints (result) {
+const getPoints = (result) => {
   switch (result) {
     case 'W':
       return 3

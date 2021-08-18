@@ -3,7 +3,7 @@ const getKeepers = require('./get-keepers')
 const getPlayers = require('./get-players')
 const getCupWeeks = require('./get-cup-weeks')
 
-async function getInput () {
+const getInput = async () => {
   const gameweeks = await db.Gameweek.findAll()
   const cupWeeks = await getCupWeeks()
   const keepers = await getKeepers()

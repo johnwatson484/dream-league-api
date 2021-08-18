@@ -1,7 +1,7 @@
 const db = require('../data')
 const getScores = require('./get-scores')
 
-async function getCupScores (gameweekId, managers) {
+const getCupScores = async (gameweekId, managers) => {
   const cupScores = []
   const scores = await getScores(gameweekId, managers, true)
 
@@ -35,7 +35,7 @@ async function getCupScores (gameweekId, managers) {
   return cupScores
 }
 
-function getCupResult (homeMargin, awayMargin) {
+const getCupResult = (homeMargin, awayMargin) => {
   if (homeMargin > awayMargin) {
     return 'H'
   }

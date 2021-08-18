@@ -1,6 +1,6 @@
 const db = require('../../data')
 
-async function run (players) {
+const run = async (players) => {
   await db.Player.truncate()
   await db.Player.bulkCreate(players)
 }

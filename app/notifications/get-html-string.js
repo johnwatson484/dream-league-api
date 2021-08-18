@@ -1,6 +1,6 @@
 const nunjucks = require('nunjucks')
 
-function getHtmlStringFromFile (file, context) {
+const getHtmlStringFromFile = async (file, context) => {
   nunjucks.configure('app/notifications/views', { autoescape: true })
   return nunjucks.render(file, context)
 }

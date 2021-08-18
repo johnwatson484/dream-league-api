@@ -2,15 +2,14 @@ const db = require('../data')
 const { addUserToRole, getUserRoles } = require('./role-manager')
 const bcrypt = require('bcrypt')
 
-async function userExists (email) {
+const userExists = async (email) => {
   if (await getUser(email) !== null) {
-    console.log(await getUser(email))
     return true
   }
   return false
 }
 
-async function getUser (email) {
+const getUser = async (email) => {
   const user = await db.User.findOne({
     where: { email },
     raw: true
@@ -23,7 +22,7 @@ async function getUser (email) {
   return user
 }
 
-async function createUser (email, password) {
+const createUser = async (email, password) => {
   const passwordHash = await bcrypt.hash(password, 10)
 
   const user = await db.User.create({

@@ -2,7 +2,7 @@ const db = require('../data')
 const getCupScores = require('./get-cup-scores')
 const orderTable = require('./order-table')
 
-async function getGroups (gameweekId, managers) {
+const getGroups = async (gameweekId, managers) => {
   const cups = await db.Cup.findAll({ where: { hasGroupStage: true } })
 
   const groupTables = []

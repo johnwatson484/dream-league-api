@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer')
 const config = require('../config').smtp
 
-async function sendEmail (recipients, subject, body) {
+const sendEmail = async (recipients, subject, body) => {
   if (config.host) {
     const transporter = nodemailer.createTransport(config)
 

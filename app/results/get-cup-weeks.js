@@ -1,6 +1,6 @@
 const db = require('../data')
 
-async function getCupWeeks () {
+const getCupWeeks = async () => {
   const managers = await db.Manager.findAll()
   const fixtures = await db.Fixture.findAll()
   const managerCupWeeks = []

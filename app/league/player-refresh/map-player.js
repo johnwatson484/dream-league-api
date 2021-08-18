@@ -2,7 +2,7 @@ const positions = ['GK', 'DEF', 'MID', 'FWD']
 const db = require('../../data')
 const mapPosition = require('../../position')
 
-async function mapPlayer (player) {
+const mapPlayer = async (player) => {
   const team = await db.Team.findOne({ attributes: ['teamId'], where: { alias: { [db.Sequelize.Op.iLike]: player.team } }, raw: true })
   const position = mapPosition(player.position)
   if (team && position) {
@@ -18,14 +18,14 @@ async function mapPlayer (player) {
   return undefined
 }
 
-function mapFirstName (player) {
+const mapFirstName = (player) => {
   if (!player.firstName || positions.includes(player.lastName) || !player.lastName) {
     return undefined
   }
   return player.firstName
 }
 
-function mapLastName (player) {
+const mapLastName = (player) => {
   if (player.firstName && (!player.lastName || positions.includes(player.lastName))) {
     return player.firstName
   }

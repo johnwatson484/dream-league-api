@@ -1,7 +1,7 @@
 const token = require('../token')
 const { userExists, createUser } = require('./user-manager')
 
-async function register (email, password) {
+const register = async (email, password) => {
   if (await userExists(email)) {
     return false
   }

@@ -1,6 +1,6 @@
 const db = require('../../data')
 
-async function update (payload) {
+const update = async (payload) => {
   const manager = await getManager(payload.managerId)
   await updatePlayers(payload.playerIds, manager)
   await updateSubs(payload.playerSubs, payload.managerId)
@@ -9,7 +9,7 @@ async function update (payload) {
   }
 }
 
-async function updateSubs (playerSubs, managerId) {
+const updateSubs = async (playerSubs, managerId) => {
   const selectedSubIds = getSelectedSubIds(playerSubs)
   const currentSubs = await getCurrentSubs(managerId)
 
@@ -17,7 +17,7 @@ async function updateSubs (playerSubs, managerId) {
   await addNewSubs(selectedSubIds, currentSubs, managerId)
 }
 
-async function updatePlayers (playerIds, manager) {
+const updatePlayers = async (playerIds, manager) => {
   const selectedPlayerIds = getSelectedPlayerIds(playerIds)
   const currentPlayerIds = getCurrentPlayerIds(manager.dataValues.players)
 
@@ -25,7 +25,7 @@ async function updatePlayers (playerIds, manager) {
   await addNewPlayers(selectedPlayerIds, currentPlayerIds, manager.managerId)
 }
 
-async function addNewSubs (selectedSubIds, currentSubs, managerId) {
+const addNewSubs = async (selectedSubIds, currentSubs, managerId) => {
   for (const selectedSubId of selectedSubIds) {
     if (!currentSubs.includes(selectedSubId)) {
       const managerPlayer = await db.ManagerPlayer.findOne({ where: { managerId, playerId: selectedSubId } })
@@ -35,7 +35,7 @@ async function addNewSubs (selectedSubIds, currentSubs, managerId) {
   }
 }
 
-async function deleteOldSubs (currentSubs, selectedSubIds) {
+const deleteOldSubs = async (currentSubs, selectedSubIds) => {
   for (const currentSub of currentSubs) {
     if (!selectedSubIds.includes(currentSub.playerId)) {
       currentSub.substitute = false
@@ -44,16 +44,16 @@ async function deleteOldSubs (currentSubs, selectedSubIds) {
   }
 }
 
-async function getCurrentSubs (managerId) {
-  return await db.ManagerPlayer.findAll({ where: { managerId, substitute: true } })
+const getCurrentSubs = async (managerId) => {
+  return db.ManagerPlayer.findAll({ where: { managerId, substitute: true } })
 }
 
-function getSelectedSubIds (playerSubs) {
+const getSelectedSubIds = (playerSubs) => {
   playerSubs = Array.isArray(playerSubs) ? playerSubs : [playerSubs]
   return playerSubs.filter(x => x !== 0 && x !== undefined)
 }
 
-async function addNewPlayers (selectedPlayerIds, currentPlayerIds, managerId) {
+const addNewPlayers = async (selectedPlayerIds, currentPlayerIds, managerId) => {
   for (const selectedPlayerId of selectedPlayerIds) {
     if (!currentPlayerIds.includes(selectedPlayerId)) {
       await db.ManagerPlayer.create({ managerId, playerId: selectedPlayerId, substitute: false })
@@ -61,7 +61,7 @@ async function addNewPlayers (selectedPlayerIds, currentPlayerIds, managerId) {
   }
 }
 
-async function deleteOldPlayers (currentPlayerIds, selectedPlayerIds, managerId) {
+const deleteOldPlayers = async (currentPlayerIds, selectedPlayerIds, managerId) => {
   for (const currentPlayerId of currentPlayerIds) {
     const currentCount = currentPlayerIds.filter(x => x.playerId === currentPlayerId).length
     const selectedCount = selectedPlayerIds.filter(x => x === currentPlayerId).length
@@ -73,17 +73,17 @@ async function deleteOldPlayers (currentPlayerIds, selectedPlayerIds, managerId)
   }
 }
 
-function getCurrentPlayerIds (players) {
+const getCurrentPlayerIds = (players) => {
   return players.map(x => x.playerId)
 }
 
-function getSelectedPlayerIds (playerIds) {
+const getSelectedPlayerIds = (playerIds) => {
   playerIds = Array.isArray(playerIds) ? playerIds : [playerIds]
   return playerIds.filter(x => x !== 0 && x !== undefined)
 }
 
-async function getManager (managerId) {
-  return await db.Manager.findOne({
+const getManager = async (managerId) => {
+  return db.Manager.findOne({
     where: { managerId },
     include: [
       {

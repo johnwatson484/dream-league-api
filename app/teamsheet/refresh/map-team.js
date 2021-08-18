@@ -1,6 +1,6 @@
 const calculateDistance = require('../../levenshtein')
 
-function mapTeam (teams, matchTeam) {
+const mapTeam = (teams, matchTeam) => {
   const matchText = matchTeam.replace(/' '/g, '').toUpperCase()
   let bestDistance = -1
   let bestTeamId = -1

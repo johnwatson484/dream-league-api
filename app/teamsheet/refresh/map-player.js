@@ -1,6 +1,6 @@
 const calculateDistance = require('../../levenshtein')
 
-function mapPlayer (players, matchPlayer, position) {
+const mapPlayer = (players, matchPlayer, position) => {
   const matchText = matchPlayer.replace(/' '/g, '').toUpperCase()
   let bestDistance = -1
   let bestPlayerId = -1

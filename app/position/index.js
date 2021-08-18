@@ -1,4 +1,4 @@
-function mapPosition (position) {
+const mapPosition = (position) => {
   switch (position) {
     case 'GK':
       return 'Goalkeeper'

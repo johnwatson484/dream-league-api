@@ -1,7 +1,7 @@
 const mapPlayer = require('./map-player')
 const run = require('./run')
 
-async function refresh (players) {
+const refresh = async (players) => {
   const mappedPlayers = []
   const unmappedPlayers = []
   for (const player of players) {

@@ -3,7 +3,7 @@ const db = require('../data')
 const { updatePlayer, updateKeeper } = require('./update')
 const sortArray = require('../utils/sort-array')
 
-async function get () {
+const get = async () => {
   const managers = await db.Manager.findAll({
     include: [
       {
@@ -22,7 +22,7 @@ async function get () {
   return managers.map(x => mapTeams(x.dataValues))
 }
 
-function mapTeams (team) {
+const mapTeams = (team) => {
   return {
     managerId: team.managerId,
     name: team.name,
@@ -31,7 +31,7 @@ function mapTeams (team) {
   }
 }
 
-function mapKeeper (keeper, teamsheet) {
+const mapKeeper = (keeper, teamsheet) => {
   const teamsheetEntry = teamsheet.find(x => x.bestMatchId === keeper.teamId && x.position === 'Goalkeeper')
   return {
     teamId: keeper.teamId,
@@ -42,7 +42,7 @@ function mapKeeper (keeper, teamsheet) {
   }
 }
 
-function mapPlayer (player, teamsheet) {
+const mapPlayer = (player, teamsheet) => {
   const teamsheetEntry = teamsheet.find(x => x.dataValues.bestMatchId === player.dataValues.playerId && x.dataValues.position === player.dataValues.position)
   return {
     playerId: player.dataValues.playerId,
@@ -56,15 +56,15 @@ function mapPlayer (player, teamsheet) {
   }
 }
 
-function orderKeepers (keepers) {
+const orderKeepers = (keepers) => {
   return keepers.sort((a, b) => { return sortArray(a.substitute, b.substitute) || sortArray(a.name, b.name) })
 }
 
-function orderPlayers (players) {
+const orderPlayers = (players) => {
   return players.sort((a, b) => { return sortArray(rankPosition(a.position), rankPosition(b.position)) || sortArray(a.substitute, b.substitute) || sortArray(a.lastNameFirstName, b.lastNameFirstName) })
 }
 
-function rankPosition (position) {
+const rankPosition = (position) => {
   switch (position) {
     case 'Defender':
       return 0

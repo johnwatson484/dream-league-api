@@ -5,12 +5,12 @@ const getTable = require('./get-table')
 const getWinners = require('./get-winners')
 const getGroups = require('./get-groups')
 
-async function createSummary (gameweekId) {
+const createSummary = async (gameweekId) => {
   const summary = await getSummary(gameweekId)
   await db.Summary.upsert({ gameweekId, summary })
 }
 
-async function getSummary (gameweekId) {
+const getSummary = async (gameweekId) => {
   const managers = await db.Manager.findAll()
   const scores = await getScores(gameweekId, managers)
   const winners = getWinners(scores)

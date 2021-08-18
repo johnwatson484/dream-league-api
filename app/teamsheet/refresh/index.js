@@ -2,7 +2,7 @@ const { getManager } = require('./get-league-data')
 const deleteCurrentTeam = require('./delete-team')
 const matchTeam = require('./match-team')
 
-async function refresh (teams) {
+const refresh = async (teams) => {
   for (const team of teams) {
     const manager = await getManager(team.manager)
     if (manager) {
@@ -14,7 +14,7 @@ async function refresh (teams) {
   }
 }
 
-async function updateTeam (managerId, players) {
+const updateTeam = async (managerId, players) => {
   await deleteCurrentTeam(managerId)
   await matchTeam(managerId, players)
 }

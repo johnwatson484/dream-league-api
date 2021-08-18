@@ -1,4 +1,4 @@
-function sortArray (a, b) {
+const sortArray = (a, b) => {
   return a === b ? 0 : a < b ? -1 : 1
 }
 

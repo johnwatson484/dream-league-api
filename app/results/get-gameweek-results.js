@@ -3,7 +3,7 @@ const { getConceded, getGoals } = require('./get-goals')
 const getPoints = require('./get-points')
 const getResult = require('./get-result')
 
-async function getGameweekResults (gameweekId, managerId) {
+const getGameweekResults = async (gameweekId, managerId) => {
   const gameweeks = await db.Gameweek.findAll({ where: { gameweekId: { [db.Sequelize.Op.lte]: gameweekId } } })
   const gameweekResults = []
   for (const gameweek of gameweeks) {

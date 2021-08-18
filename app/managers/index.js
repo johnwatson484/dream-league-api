@@ -1,14 +1,14 @@
 const db = require('../data')
 
-async function getManagers () {
+const getManagers = async () => {
   return db.Manager.findAll({ order: ['name'] })
 }
 
-async function getManager (managerId) {
+const getManager = async (managerId) => {
   return db.Manager.findOne({ where: { managerId: managerId }, include: [{ model: db.Email, as: 'emails' }] })
 }
 
-async function createManager (manager) {
+const createManager = async (manager) => {
   const createdManager = await db.Manager.create(manager)
   for (const email of manager.emails) {
     if (email.length) {
@@ -18,7 +18,7 @@ async function createManager (manager) {
   return createdManager
 }
 
-async function editManager (manager) {
+const editManager = async (manager) => {
   const updatedManager = await db.Manager.upsert(manager)
   const currentEmails = await db.Email.findAll({ where: { managerId: manager.managerId } })
   for (const email of manager.emails) {
@@ -36,7 +36,7 @@ async function editManager (manager) {
   return updatedManager
 }
 
-async function deleteManager (managerId) {
+const deleteManager = async (managerId) => {
   await db.Email.destroy({ where: { managerId } })
   await db.Manager.destroy({ where: { managerId } })
 }

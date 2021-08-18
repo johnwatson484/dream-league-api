@@ -1,15 +1,15 @@
 const db = require('../../data')
 
-async function getManager (manager) {
-  return await db.Manager.findOne({ attributes: ['managerId'], where: { alias: { [db.Sequelize.Op.iLike]: manager } }, raw: true })
+const getManager = async (manager) => {
+  return db.Manager.findOne({ attributes: ['managerId'], where: { alias: { [db.Sequelize.Op.iLike]: manager } }, raw: true })
 }
 
-async function getLeaguePlayers () {
-  return await db.Player.findAll({ include: [{ model: db.Team, as: 'team', attributes: ['alias'] }], raw: true, nest: true })
+const getLeaguePlayers = async () => {
+  return db.Player.findAll({ include: [{ model: db.Team, as: 'team', attributes: ['alias'] }], raw: true, nest: true })
 }
 
-async function getLeagueTeams () {
-  return await db.Team.findAll({ raw: true })
+const getLeagueTeams = async () => {
+  return db.Team.findAll({ raw: true })
 }
 
 module.exports = {

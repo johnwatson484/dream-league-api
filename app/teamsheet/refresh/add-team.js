@@ -1,6 +1,6 @@
 const db = require('../../data')
 
-async function addTeamsheetMatch (managerId, player, position, bestMatchId, distance) {
+const addTeamsheetMatch = async (managerId, player, position, bestMatchId, distance) => {
   await db.Teamsheet.create({
     managerId,
     player: player.player,
@@ -11,16 +11,16 @@ async function addTeamsheetMatch (managerId, player, position, bestMatchId, dist
   })
 }
 
-async function addPlayer (managerId, playerId, substitute) {
-  return await db.ManagerPlayer.create({
+const addPlayer = async (managerId, playerId, substitute) => {
+  return db.ManagerPlayer.create({
     managerId,
     playerId,
     substitute
   })
 }
 
-async function addKeeper (managerId, teamId, substitute) {
-  return await db.ManagerKeeper.create({
+const addKeeper = async (managerId, teamId, substitute) => {
+  return db.ManagerKeeper.create({
     managerId,
     teamId,
     substitute
