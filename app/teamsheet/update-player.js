@@ -1,4 +1,4 @@
-const db = require('../../data')
+const db = require('../data')
 
 const update = async (payload) => {
   const manager = await getManager(payload.managerId)

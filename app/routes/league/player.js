@@ -1,7 +1,7 @@
 const db = require('../../data')
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const refresh = require('../../league/player-refresh')
+const refresh = require('../../refresh/players')
 
 module.exports = [{
   method: 'GET',

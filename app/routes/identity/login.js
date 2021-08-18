@@ -1,6 +1,6 @@
 const boom = require('@hapi/boom')
 const joi = require('joi')
-const auth = require('../../auth')
+const { login } = require('../../account')
 
 module.exports = [{
   method: 'POST',
@@ -16,7 +16,7 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      const authenticated = await auth.login(request.payload.email, request.payload.password)
+      const authenticated = await login(request.payload.email, request.payload.password)
       if (!authenticated) {
         return boom.unauthorized()
       }

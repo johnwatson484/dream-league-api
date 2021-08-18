@@ -1,6 +1,6 @@
 const mapPlayer = require('./map-player')
 const mapTeam = require('./map-team')
-const mapPosition = require('../../position')
+const mapPosition = require('../map-position')
 const { addTeamsheetMatch, addPlayer, addKeeper } = require('./add-team')
 const { getLeagueTeams, getLeaguePlayers } = require('./get-league-data')
 

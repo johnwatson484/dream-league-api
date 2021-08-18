@@ -1,13 +1,14 @@
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const { get, refresh, updatePlayer, updateKeeper } = require('../teamsheet')
+const { getTeamsheet, updatePlayer, updateKeeper } = require('../teamsheet')
+const { refreshTeamsheet } = require('../refresh')
 
 module.exports = [{
   method: 'GET',
   path: '/teamsheet',
   options: {
     handler: async (request, h) => {
-      return h.response(await get())
+      return h.response(await getTeamsheet())
     }
   }
 }, {
@@ -69,7 +70,7 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      return h.response(await refresh(request.payload.teams))
+      return h.response(await refreshTeamsheet(request.payload.teams))
     }
   }
 }]

@@ -1,8 +1,8 @@
-const { getCompleted } = require('../gameweeks')
+const db = require('../data')
 const getSummary = require('./get-summary')
 
 const getAllWinners = async () => {
-  const gameweeks = await getCompleted()
+  const gameweeks = await db.Gameweek.findAll({ include: { model: db.Summary, as: 'summary', attributes: [], required: true } })
   const winners = []
   for (const gameweek of gameweeks) {
     const summary = await getSummary(gameweek.gameweekId)

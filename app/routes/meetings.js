@@ -1,7 +1,6 @@
 const db = require('../data')
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const refresh = require('../meeting-refresh')
 
 module.exports = [{
   method: 'GET',
@@ -90,7 +89,7 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      return h.response(await refresh(request.payload))
+      return h.response()
     }
   }
 }]

@@ -1,6 +1,6 @@
 const positions = ['GK', 'DEF', 'MID', 'FWD']
 const db = require('../../data')
-const mapPosition = require('../../position')
+const mapPosition = require('../map-position')
 
 const mapPlayer = async (player) => {
   const team = await db.Team.findOne({ attributes: ['teamId'], where: { alias: { [db.Sequelize.Op.iLike]: player.team } }, raw: true })
