@@ -1,5 +1,5 @@
 const db = require('../../app/data')
-const { updatePlayer, updateKeeper } = require('../../app/dream-league/teamsheet')
+const { updatePlayer, updateKeeper } = require('../../app/teamsheet')
 const testData = require('../data')
 
 describe('update teamsheet', () => {

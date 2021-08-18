@@ -1,5 +1,5 @@
 const db = require('../data')
-const { getSummary } = require('../dream-league/results')
+const { getSummary } = require('../results')
 const { getHtmlStringFromFile } = require('./get-html-string')
 const sendEmail = require('./send-email')
 

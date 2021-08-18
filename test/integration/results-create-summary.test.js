@@ -1,5 +1,5 @@
 const db = require('../../app/data')
-const createSummary = require('../../app/dream-league/results/create-summary')
+const createSummary = require('../../app/results/create-summary')
 const testData = require('../data')
 
 describe('get table', () => {

@@ -1,4 +1,4 @@
-const getResult = require('../../app/dream-league/results/get-result')
+const getResult = require('../../app/results/get-result')
 
 describe('get points', () => {
   test('returns W for a win to nil', () => {

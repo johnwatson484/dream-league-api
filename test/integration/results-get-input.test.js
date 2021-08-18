@@ -1,5 +1,5 @@
 const db = require('../../app/data')
-const { getInput } = require('../../app/dream-league/results')
+const { getInput } = require('../../app/results')
 const testData = require('../data')
 
 describe('get results input', () => {

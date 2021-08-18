@@ -1,5 +1,5 @@
 const db = require('../../app/data')
-const { getTopScorers } = require('../../app/dream-league/statistics')
+const { getTopScorers } = require('../../app/statistics')
 const testData = require('../data')
 
 describe('get top goalscorers', () => {
