@@ -2,7 +2,7 @@ const db = require('../data')
 const joi = require('joi')
 const boom = require('@hapi/boom')
 const { getManager, getManagers, createManager, editManager, deleteManager } = require('../managers')
-const { get } = require('../teamsheet')
+const { getTeamsheet } = require('../teamsheet')
 
 module.exports = [{
   method: 'GET',
@@ -31,7 +31,7 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      const teamsheet = await get()
+      const teamsheet = await getTeamsheet()
       const managerTeam = teamsheet.find(x => x.managerId === request.query.managerId)
       return h.response(managerTeam)
     }
