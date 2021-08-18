@@ -1,5 +1,5 @@
 const token = require('../token')
-const { getUser } = require('.')
+const { getUser } = require('./user-manager')
 const bcrypt = require('bcrypt')
 
 const login = async (email, password) => {
