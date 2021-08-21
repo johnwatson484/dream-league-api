@@ -27,7 +27,7 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      return await updatePlayer(request.payload)
+      return updatePlayer(request.payload)
     }
   }
 }, {
@@ -46,7 +46,7 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      return await updateKeeper(request.payload)
+      return updateKeeper(request.payload)
     }
   }
 }, {

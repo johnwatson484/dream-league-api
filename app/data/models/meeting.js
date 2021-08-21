@@ -1,7 +1,7 @@
 const moment = require('moment')
 
 module.exports = (sequelize, DataTypes) => {
-  const Meeting = sequelize.define('Meeting', {
+  return sequelize.define('Meeting', {
     meetingId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -19,5 +19,4 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false
   })
-  return Meeting
 }

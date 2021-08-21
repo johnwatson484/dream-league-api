@@ -19,8 +19,8 @@ const getGroups = async (gameweekId, managers) => {
     for (const group of groups) {
       if (group.managers.length) {
         const scores = []
-        for (const gameweekId of gameweekIds) {
-          const cupScores = await getCupScores(gameweekId, group.managers)
+        for (const gameweek of gameweekIds) {
+          const cupScores = await getCupScores(gameweek, group.managers)
           Array.prototype.push.apply(scores, cupScores)
         }
         let table = []

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const History = sequelize.define('History', {
+  return sequelize.define('History', {
     historyId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -17,5 +17,4 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false
   })
-  return History
 }
