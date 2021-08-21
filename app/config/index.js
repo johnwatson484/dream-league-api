@@ -14,6 +14,7 @@ const schema = joi.object().keys({
     host: joi.string().allow(''),
     port: joi.number().default(587),
     secure: joi.boolean().default(false),
+    requireTLS: joi.boolean().default(true),
     auth: joi.object({
       user: joi.string().allow(''),
       pass: joi.string().allow('')
@@ -33,6 +34,7 @@ const config = {
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
     secure: process.env.SMTP_SECURE,
+    requireTLS: process.env.SMTP_TLS,
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASSWORD
