@@ -19,7 +19,11 @@ module.exports = [{
             '$team.name$': { [db.Sequelize.Op.iLike]: search }
           }]
         },
-        include: [{ model: db.Team, as: 'team', attributes: ['name'] }],
+        include: [{
+          model: db.Team, as: 'team', attributes: ['name']
+        }, {
+          model: db.Manager, as: 'managers', attributes: ['managerId', 'name'], through: { attributes: [] }
+        }],
         order: [['team', 'name'], ['lastName'], ['firstName']]
       }))
     }
