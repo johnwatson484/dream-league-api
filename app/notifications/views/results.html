@@ -50,6 +50,11 @@
       padding-left: 15px;
       padding-right: 15px;
     }
+
+    td.numeric,
+    th.numeric {
+      text-align: right;
+    }
   </style>
 </head>
 
@@ -87,29 +92,29 @@
 
     <table class="table-email small" style="background-color: #dcdcdc;">
       <tr>
-        <th>Pos</th>
+        <th class="numeric">Pos</th>
         <th>Manager</th>
-        <th>Pld</th>
-        <th>W</th>
-        <th>D</th>
-        <th>L</th>
-        <th>GF</th>
-        <th>GA</th>
-        <th>GD</th>
-        <th>Pts</th>
+        <th class="numeric">Pld</th>
+        <th class="numeric">W</th>
+        <th class="numeric">D</th>
+        <th class="numeric">L</th>
+        <th class="numeric">GF</th>
+        <th class="numeric">GA</th>
+        <th class="numeric">GD</th>
+        <th class="numeric">Pts</th>
       </tr>
       {% for row in table %}
       <tr>
-        <td>{{ row.position }}</td>
+        <td class="numeric">{{ row.position }}</td>
         <td>{{ row.manager }}</td>
-        <td>{{ row.played }}</td>
-        <td>{{ row.won }}</td>
-        <td>{{ row.drawn }}</td>
-        <td>{{ row.lost }}</td>
-        <td>{{ row.gf }}</td>
-        <td>{{ row.ga }}</td>
-        <td>{{ row.gd }}</td>
-        <td>{{ row.points }}</td>
+        <td class="numeric">{{ row.played }}</td>
+        <td class="numeric">{{ row.won }}</td>
+        <td class="numeric">{{ row.drawn }}</td>
+        <td class="numeric">{{ row.lost }}</td>
+        <td class="numeric">{{ row.gf }}</td>
+        <td class="numeric">{{ row.ga }}</td>
+        <td class="numeric">{{ row.gd }}</td>
+        <td class="numeric">{{ row.points }}</td>
       </tr>
       {% endfor %}
     </table>
@@ -135,7 +140,7 @@
     <table class="table-email small" style="background-color: #dcdcdc;">
       {% for score in cupScores %}
       <tr>
-        <td>{{ score.round }}</td>
+        <td class="numeric">{{ score.round }}</td>
         <td>{{ score.homeManager }}</td>
         <td>{{ score.homeMargin }}</td>
         <td>
@@ -151,29 +156,29 @@
     {% for group in groups %}
     <table class="table-email small" style="background-color: #dcdcdc;">
       <tr>
-        <th>Pos</th>
+        <th class="numeric">Pos</th>
         <th>Manager</th>
-        <th>Pld</th>
-        <th>W</th>
-        <th>D</th>
-        <th>L</th>
-        <th>GF</th>
-        <th>GA</th>
-        <th>GD</th>
-        <th>Pts</th>
+        <th class="numeric">Pld</th>
+        <th class="numeric">W</th>
+        <th class="numeric">D</th>
+        <th class="numeric">L</th>
+        <th class="numeric">GF</th>
+        <th class="numeric">GA</th>
+        <th class="numeric">GD</th>
+        <th class="numeric">Pts</th>
       </tr>
       {% for row in group %}
       <tr>
-        <td>{{ row.position }}</td>
+        <td class="numeric">{{ row.position }}</td>
         <td>{{ row.manager }}</td>
-        <td>{{ row.played }}</td>
-        <td>{{ row.won }}</td>
-        <td>{{ row.drawn }}</td>
-        <td>{{ row.lost }}</td>
-        <td>{{ row.gf }}</td>
-        <td>{{ row.ga }}</td>
-        <td>{{ row.gd }}</td>
-        <td>{{ row.points }}</td>
+        <td class="numeric">{{ row.played }}</td>
+        <td class="numeric">{{ row.won }}</td>
+        <td class="numeric">{{ row.drawn }}</td>
+        <td class="numeric">{{ row.lost }}</td>
+        <td class="numeric">{{ row.gf }}</td>
+        <td class="numeric">{{ row.ga }}</td>
+        <td class="numeric">{{ row.gd }}</td>
+        <td class="numeric">{{ row.points }}</td>
       </tr>
       {% endfor %}
     </table>
