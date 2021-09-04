@@ -13,7 +13,7 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD}
 
   dream-league-api-postgres:
-    image: postgres:11.4-alpine
+    image: postgres:12.8-alpine
     container_name: dream-league-api-postgres
     environment:
       POSTGRES_DB: dream_league_api
