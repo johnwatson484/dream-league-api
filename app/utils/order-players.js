@@ -1,4 +1,4 @@
-const sortArray = require('../utils/sort-array')
+const sortArray = require('./sort-array')
 const rankPosition = require('./rank-position')
 
 const orderPlayers = (players) => {
