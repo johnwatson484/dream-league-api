@@ -2,6 +2,7 @@ const db = require('../data')
 const joi = require('joi')
 const boom = require('@hapi/boom')
 const { getManager, getManagers, createManager, editManager, deleteManager, getTeam } = require('../managers')
+const { getSummary } = require('../results')
 
 module.exports = [{
   method: 'GET',
@@ -30,8 +31,10 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      const managerTeam = await getTeam(request.query.managerId)
-      return h.response(managerTeam)
+      const manager = await getManager(request.query.managerId)
+      const team = await getTeam(request.query.managerId)
+      const results = await getSummary()
+      return h.response({ manager, team, results })
     }
   }
 }, {
