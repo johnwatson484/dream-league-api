@@ -7,3 +7,5 @@ services:
         npm run migrate &&
         npm run seed &&
         npm run test:watch"
+    volumes:
+      - ./.git:/home/node/.git
