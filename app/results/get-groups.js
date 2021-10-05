@@ -43,9 +43,11 @@ const getGroups = async (gameweekId, managers) => {
           const ga = homeGA + awayGA
           const gd = gf - ga
           const points = (won * 3) + drawn
+          const played = won + drawn + lost
           table.push({
             managerId: manager.managerId,
             manager: manager.name,
+            played,
             won,
             drawn,
             lost,
