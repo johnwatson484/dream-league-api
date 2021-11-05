@@ -6,10 +6,11 @@ const getTopScorers = async () => {
   let goals = await db.Goal.findAll({
     raw: true,
     group: ['playerId'],
-    attributes: ['playerId', [db.sequelize.fn('COUNT', db.sequelize.col('goalId')), 'goals']]
+    attributes: ['playerId', [db.sequelize.fn('COUNT', db.sequelize.col('goalId')), 'goals']],
+    order: [[db.sequelize.col('goals'), 'DESC']]
   })
 
-  goals = goals.sort((a, b) => { return sortArray(Number(b.goals), Number(a.goals)) }).slice(0, playersToInclude)
+  goals = goals.slice(0, playersToInclude)
 
   const scorers = []
   for (const goal of goals) {
