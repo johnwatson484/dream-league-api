@@ -7,12 +7,12 @@ container:
   requestMemory: 120Mi
   requestCpu: 120m
   limitMemory: 300Mi
-  limitCpu: 500m
+  limitCpu: 1000m
   port: 3001
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   jwtSecret: secret
-  jwtExpiryInMinutes: 60
+  jwtExpiryInMinutes: 43800
   command: ["/bin/sh"]
   args: ["-c", "npx sequelize-cli db:migrate && node app"]
   smtpHost:
