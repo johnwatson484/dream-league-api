@@ -9,6 +9,14 @@ const userExists = async (email) => {
   return false
 }
 
+const isMember = async (email) => {
+  const memberEmail = await db.Email.findOne({ where: { address: email } })
+  if (memberEmail !== null) {
+    return true
+  }
+  return false
+}
+
 const getUser = async (email) => {
   const user = await db.User.findOne({
     where: { email },
@@ -37,5 +45,6 @@ const createUser = async (email, password) => {
 module.exports = {
   userExists,
   getUser,
-  createUser
+  createUser,
+  isMember
 }
