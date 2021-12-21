@@ -1,5 +1,5 @@
 const joi = require('joi')
-const databaseConfig = require('./database-config')
+const databaseConfig = require('./database')
 const envs = ['development', 'test', 'production']
 
 // Define config schema
@@ -19,7 +19,8 @@ const schema = joi.object().keys({
       user: joi.string().allow(''),
       pass: joi.string().allow('')
     })
-  })
+  }),
+  webUrl: joi.string().uri().default('http://localhost:3000')
 })
 
 // Build config
@@ -39,7 +40,8 @@ const config = {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASSWORD
     }
-  }
+  },
+  webUrl: process.env.WEB_URL
 }
 
 // Validate config

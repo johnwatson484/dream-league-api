@@ -11,6 +11,7 @@ services:
       SMTP_HOST: ${SMTP_HOST}
       SMTP_USER: ${SMTP_USER}
       SMTP_PASSWORD: ${SMTP_PASSWORD}
+      WEB_URL: http://localhost:3000
 
   dream-league-api-postgres:
     image: postgres:12.8-alpine

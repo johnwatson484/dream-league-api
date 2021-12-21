@@ -13,4 +13,5 @@ data:
   SMTP_HOST: {{ quote .Values.container.smtpHost }}
   SMTP_USER: {{ quote .Values.container.smtpUser }}
   SMTP_PASSWORD: {{ quote .Values.container.smtpPassword }}
+  WEB_URL: {{ quote .Values.container.webUrl }}
 {{- end -}}

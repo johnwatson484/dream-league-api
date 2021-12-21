@@ -18,6 +18,7 @@ container:
   smtpHost:
   smtpUser:
   smtpPassword:
+  webUrl: https://www.dreamleaguefantasyfootball.co.uk
 
 postgresService:
   postgresHost: dream-league-api-postgres

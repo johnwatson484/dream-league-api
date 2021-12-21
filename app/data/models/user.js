@@ -6,7 +6,9 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     email: DataTypes.STRING,
-    passwordHash: DataTypes.STRING
+    passwordHash: DataTypes.STRING,
+    resetToken: DataTypes.STRING,
+    resetExpiresAt: DataTypes.DATE
   }, {
     tableName: 'users',
     freezeTableName: true,
