@@ -14,6 +14,12 @@ const getGroups = async (gameweekId, managers) => {
         round: 1
       }
     })
+
+    // if no fixtures this gameweek no need to add groups
+    if (!fixtures.some(x => x.gameweekId === gameweekId)) {
+      continue
+    }
+
     const gameweekIds = [...new Set(fixtures.map(x => x.gameweekId))]
     const groups = await db.Group.findAll({ where: { cupId: cup.cupId }, include: { model: db.Manager, as: 'managers' } })
     for (const group of groups) {
