@@ -22,3 +22,8 @@ services:
 
   dream-league-api-postgres:
     container_name: dream-league-api-postgres-test
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
