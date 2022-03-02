@@ -53,4 +53,10 @@ describe('get top goalscorers', () => {
     expect(result[0].goals).toBe(2)
     expect(result[1].goals).toBe(1)
   })
+
+  test('should not include cup goals', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: true })
+    const result = await getTopScorers()
+    expect(result[0].goals).toBe(2)
+  })
 })
