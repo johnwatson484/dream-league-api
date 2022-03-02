@@ -7,7 +7,8 @@ const getTopScorers = async () => {
     raw: true,
     group: ['playerId'],
     attributes: ['playerId', [db.sequelize.fn('COUNT', db.sequelize.col('goalId')), 'goals']],
-    order: [[db.sequelize.col('goals'), 'DESC']]
+    order: [[db.sequelize.col('goals'), 'DESC']],
+    where: { cup: false }
   })
 
   goals = goals.slice(0, playersToInclude)
