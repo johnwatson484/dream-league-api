@@ -27,7 +27,7 @@
     "hapi-auth-jwt2": "^10.2.0",
     "hapi-pino": "^8.3.0",
     "joi": "^17.4.1",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "nodemailer": "^6.6.3",
     "nunjucks": "^3.2.3",
     "pg": "^8.6.0",
