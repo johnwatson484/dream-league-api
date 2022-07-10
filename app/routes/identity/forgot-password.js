@@ -10,7 +10,7 @@ module.exports = [{
       payload: joi.object({
         email: joi.string().email().required()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },

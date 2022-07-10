@@ -6,7 +6,7 @@ module.exports = [{
   method: 'GET',
   path: '/league/teams',
   options: {
-    handler: async (request, h) => {
+    handler: async (_request, h) => {
       return h.response(await db.Team.findAll({
         include: [{ model: db.Division, as: 'division', attributes: ['name'] }],
         order: [['division', 'rank'], ['name']]
@@ -30,7 +30,7 @@ module.exports = [{
         alias: joi.string(),
         divisionId: joi.number()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -50,7 +50,7 @@ module.exports = [{
         alias: joi.string(),
         divisionId: joi.number()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -66,7 +66,7 @@ module.exports = [{
       payload: joi.object({
         prefix: joi.string()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -75,7 +75,7 @@ module.exports = [{
         where: { name: { [db.Sequelize.Op.iLike]: request.payload.prefix + '%' } },
         order: [['name']]
       })
-      return h.response(teams || [])
+      return h.response(teams ?? [])
     }
   }
 }]

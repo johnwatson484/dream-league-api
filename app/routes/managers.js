@@ -8,7 +8,7 @@ module.exports = [{
   method: 'GET',
   path: '/managers',
   options: {
-    handler: async (request, h) => {
+    handler: async (_request, h) => {
       return h.response(await getManagers())
     }
   }
@@ -26,7 +26,7 @@ module.exports = [{
       query: joi.object({
         managerId: joi.number().required()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -48,7 +48,7 @@ module.exports = [{
         alias: joi.string(),
         emails: joi.array().items(joi.string().email().allow('')).single()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -68,7 +68,7 @@ module.exports = [{
         alias: joi.string(),
         emails: joi.array().items(joi.string().email().allow('')).single()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -85,7 +85,7 @@ module.exports = [{
       payload: joi.object({
         managerId: joi.number()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -101,7 +101,7 @@ module.exports = [{
       payload: joi.object({
         prefix: joi.string()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },

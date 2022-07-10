@@ -46,7 +46,7 @@ module.exports = [{
         position: joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
         teamId: joi.number()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -67,7 +67,7 @@ module.exports = [{
         position: joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
         teamId: joi.number()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -84,7 +84,7 @@ module.exports = [{
       payload: joi.object({
         playerId: joi.number()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -100,7 +100,7 @@ module.exports = [{
       payload: joi.object({
         prefix: joi.string()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -126,7 +126,7 @@ module.exports = [{
           team: joi.string().allow('')
         }))
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },

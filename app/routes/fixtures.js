@@ -6,7 +6,7 @@ module.exports = [{
   method: 'GET',
   path: '/fixtures',
   options: {
-    handler: async (request, h) => {
+    handler: async (_request, h) => {
       return h.response(await db.Fixture.findAll({
         include: [
           { model: db.Cup, as: 'cup', attributes: [] },
@@ -38,7 +38,7 @@ module.exports = [{
         awayManagerId: joi.number().integer().required(),
         round: joi.number().integer().required()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -60,7 +60,7 @@ module.exports = [{
         awayManagerId: joi.number().integer().required(),
         round: joi.number().integer().required()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -77,7 +77,7 @@ module.exports = [{
       payload: joi.object({
         fixtureId: joi.number()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },

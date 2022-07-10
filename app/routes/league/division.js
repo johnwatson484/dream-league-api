@@ -6,7 +6,7 @@ module.exports = [{
   method: 'GET',
   path: '/league/divisions',
   options: {
-    handler: async (request, h) => {
+    handler: async (_request, h) => {
       return h.response(await db.Division.findAll({
         order: [['rank']]
       }))
@@ -20,7 +20,7 @@ module.exports = [{
       payload: joi.object({
         prefix: joi.string()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },

@@ -11,7 +11,7 @@ module.exports = [{
         email: joi.string().email().required(),
         password: joi.string().required()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },

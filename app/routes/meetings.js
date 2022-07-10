@@ -6,7 +6,7 @@ module.exports = [{
   method: 'GET',
   path: '/meetings',
   options: {
-    handler: async (request, h) => {
+    handler: async (_request, h) => {
       return h.response(await db.Meeting.findAll({ order: ['date'] }))
     }
   }
@@ -19,7 +19,7 @@ module.exports = [{
 }, {
   method: 'GET',
   path: '/meetings/next',
-  handler: async (request, h) => {
+  handler: async (_request, h) => {
     return h.response(await db.Meeting.findOne({ where: { date: { [db.Sequelize.Op.gt]: new Date() } }, raw: true }))
   }
 }, {
@@ -31,7 +31,7 @@ module.exports = [{
       payload: joi.object({
         date: joi.date()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -49,7 +49,7 @@ module.exports = [{
         meetingId: joi.number(),
         date: joi.date()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -66,7 +66,7 @@ module.exports = [{
       payload: joi.object({
         meetingId: joi.number()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -84,11 +84,11 @@ module.exports = [{
         startDate: joi.date(),
         meetings: joi.number()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
-    handler: async (request, h) => {
+    handler: async (_request, h) => {
       return h.response()
     }
   }

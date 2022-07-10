@@ -7,7 +7,7 @@ module.exports = [{
   method: 'GET',
   path: '/teamsheet',
   options: {
-    handler: async (request, h) => {
+    handler: async (_request, h) => {
       return h.response(await getTeamsheet())
     }
   }
@@ -22,11 +22,11 @@ module.exports = [{
         playerIds: joi.alternatives().try(joi.array().items(joi.number()), joi.number()),
         playerSubs: joi.alternatives().try(joi.array().items(joi.number()), joi.number())
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
-    handler: async (request, h) => {
+    handler: async (request, _h) => {
       return updatePlayer(request.payload)
     }
   }
@@ -41,11 +41,11 @@ module.exports = [{
         teamIds: joi.alternatives().try(joi.array().items(joi.string()), joi.string()),
         teamSubs: joi.alternatives().try(joi.array().items(joi.string()), joi.string())
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
-    handler: async (request, h) => {
+    handler: async (request, _h) => {
       return updateKeeper(request.payload)
     }
   }
@@ -65,7 +65,7 @@ module.exports = [{
           }))
         }))
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },

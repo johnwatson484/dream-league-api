@@ -10,7 +10,7 @@ module.exports = [{
       query: joi.object({
         weeksToInclude: joi.number().optional()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -24,7 +24,7 @@ module.exports = [{
   method: 'GET',
   path: '/statistics/top-scorers',
   options: {
-    handler: async (request, h) => {
+    handler: async (_request, h) => {
       const scorers = await getTopScorers()
       return h.response(scorers)
     }

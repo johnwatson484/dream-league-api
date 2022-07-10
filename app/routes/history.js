@@ -28,7 +28,7 @@ module.exports = [{
         leagueCup: joi.string().allow(''),
         plate: joi.string().allow('')
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -52,7 +52,7 @@ module.exports = [{
         leagueCup: joi.string().allow(''),
         plate: joi.string().allow('')
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -69,7 +69,7 @@ module.exports = [{
       payload: joi.object({
         historyId: joi.number()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },

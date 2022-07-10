@@ -6,7 +6,7 @@ module.exports = [{
   method: 'GET',
   path: '/cups',
   options: {
-    handler: async (request, h) => {
+    handler: async (_request, h) => {
       return h.response(await db.Cup.findAll({ order: [['name']] }))
     }
   }
@@ -29,7 +29,7 @@ module.exports = [{
         hasGroupStage: joi.boolean().default(false),
         knockoutLegs: joi.number().default(1)
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -49,7 +49,7 @@ module.exports = [{
         hasGroupStage: joi.boolean(),
         knockoutLegs: joi.number().required()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -66,7 +66,7 @@ module.exports = [{
       payload: joi.object({
         cupId: joi.number()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },

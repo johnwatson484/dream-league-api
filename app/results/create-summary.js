@@ -16,7 +16,7 @@ const getSummary = async (gameweekId) => {
   const winners = getWinners(scores)
   const table = await getTable(gameweekId, managers)
   const cupScores = await getCupScores(gameweekId, managers)
-  const groups = await getGroups(gameweekId, managers)
+  const groups = await getGroups(gameweekId)
 
   return {
     gameweekId,

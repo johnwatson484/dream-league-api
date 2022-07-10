@@ -6,7 +6,7 @@ module.exports = [{
   method: 'GET',
   path: '/groups',
   options: {
-    handler: async (request, h) => {
+    handler: async (_request, h) => {
       return h.response(await db.Group.findAll({
         include: [
           { model: db.Cup, as: 'cup' },
@@ -44,7 +44,7 @@ module.exports = [{
         teamsAdvancing: joi.number(),
         managers: joi.array().items(joi.number()).single()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -72,7 +72,7 @@ module.exports = [{
         teamsAdvancing: joi.number(),
         managers: joi.array().items(joi.number()).single()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
@@ -106,7 +106,7 @@ module.exports = [{
       payload: joi.object({
         groupId: joi.number()
       }),
-      failAction: async (request, h, error) => {
+      failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
