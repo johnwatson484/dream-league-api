@@ -14,7 +14,8 @@ const getTeamsheet = async () => {
       { model: db.Team, as: 'keepers', attributes: ['teamId', 'name'], through: { attributes: ['substitute'] } },
       { model: db.Teamsheet, as: 'teamsheet' }
     ],
-    nest: true
+    nest: true,
+    order: [['name']]
   })
 
   return managers.map(x => mapTeams(x.dataValues))
