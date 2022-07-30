@@ -1,7 +1,7 @@
 const calculateDistance = require('../../levenshtein')
 
 const mapPlayer = (players, matchPlayer, position) => {
-  const matchText = matchPlayer.replace(/' '/g, '').toUpperCase()
+  const matchText = matchPlayer.replace(/\s/g, '').toUpperCase()
   let bestDistance = -1
   let bestPlayerId = -1
 
@@ -12,7 +12,7 @@ const mapPlayer = (players, matchPlayer, position) => {
   for (const player of players) {
     const lastNames = player.lastName.split(' ')
     for (const lastName of lastNames) {
-      const playerMatchText = `${lastName}-${player.team.alias}`.replace(/' '/g, '').toUpperCase()
+      const playerMatchText = `${lastName}-${player.team.alias}`.replace(/\s/g, '').toUpperCase()
       const distance = calculateDistance(matchText, playerMatchText)
       if ((bestDistance === -1 || distance < bestDistance)) {
         bestDistance = distance
