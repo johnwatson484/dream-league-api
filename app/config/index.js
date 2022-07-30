@@ -20,7 +20,8 @@ const schema = joi.object().keys({
       pass: joi.string().allow('')
     })
   }),
-  webUrl: joi.string().uri().default('http://localhost:3000')
+  webUrl: joi.string().uri().default('http://localhost:3000'),
+  allowNonMemberRegistration: joi.boolean().default(false)
 })
 
 // Build config
@@ -41,7 +42,8 @@ const config = {
       pass: process.env.SMTP_PASSWORD
     }
   },
-  webUrl: process.env.WEB_URL
+  webUrl: process.env.WEB_URL,
+  allowNonMemberRegistration: process.env.ALLOW_NON_MEMBER_REGISTRATION
 }
 
 // Validate config
