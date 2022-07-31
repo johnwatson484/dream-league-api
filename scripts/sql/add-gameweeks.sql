@@ -1,40 +1,10 @@
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (1,'2021-08-06');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (2,'2021-08-13');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (3,'2021-08-20');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (4,'2021-08-27');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (5,'2021-09-03');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (6,'2021-09-10');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (7,'2021-09-17');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (8,'2021-09-24');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (9,'2021-10-01');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (10,'2021-10-08');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (11,'2021-10-15');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (12,'2021-10-22');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (13,'2021-10-29');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (14,'2021-11-05');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (15,'2021-11-12');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (16,'2021-11-19');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (17,'2021-11-26');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (18,'2021-12-03');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (19,'2021-12-10');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (20,'2021-12-17');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (21,'2021-12-24');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (22,'2021-12-31');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (23,'2022-01-07');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (24,'2022-01-14');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (25,'2022-01-21');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (26,'2022-01-28');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (27,'2022-02-04');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (28,'2022-02-11');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (29,'2022-02-18');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (30,'2022-02-25');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (31,'2022-03-04');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (32,'2022-03-11');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (33,'2022-03-18');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (34,'2022-03-25');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (35,'2022-04-01');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (36,'2022-04-08');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (37,'2022-04-15');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (38,'2022-04-22');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (39,'2022-04-29');
-INSERT INTO "gameweeks" ("gameweekId", "startDate") VALUES (40,'2022-05-06');
+
+TRUNCATE TABLE gameweeks RESTART IDENTITY;
+
+INSERT INTO gameweeks ("startDate")
+SELECT date::date 
+FROM generate_series(
+  '2022-07-29'::date,
+  '2023-05-05'::date,
+  '1 week'::interval
+) date;
