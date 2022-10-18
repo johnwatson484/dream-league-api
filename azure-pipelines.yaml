@@ -1,5 +1,5 @@
 trigger:
-  - master
+  - main
 
 pr: none
 
@@ -9,6 +9,7 @@ resources:
     type: github
     endpoint: John D Watson
     name: johnwatson484/azure-devops-templates
+    ref: refs/tags/1
 
 extends:
   template: build.yaml@templates
