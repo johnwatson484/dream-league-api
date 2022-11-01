@@ -1,16 +1,13 @@
-environment: development
+environment: production
 name: dream-league-api
 image: dream-league-api
 
 container:
-  imagePullPolicy: Always
   requestMemory: 120Mi
   requestCpu: 120m
   limitMemory: 300Mi
   limitCpu: 1000m
   port: 3001
-  readOnlyRootFilesystem: true
-  allowPrivilegeEscalation: false
   jwtSecret: secret
   jwtExpiryInMinutes: 43800
   command: ["/bin/sh"]
@@ -22,20 +19,9 @@ container:
 
 postgresService:
   postgresHost: dream-league-api-postgres
-  postgresExternalName: host.docker.internal
   postgresPort: 5432
   postgresUsername: postgres
   postgresPassword: postgres
   postgresDatabase: dream_league_api
 
-deployment:
-  restartPolicy: Always
-  replicas: 1
-  minReadySeconds: 5
-  redeployOnChange: update this field to force a change
-  imagePullSecret:
-  runAsNonRoot: true
-  runAsUser: 1000
-
-service:
-  port: 80
+deployment: {}

@@ -1,5 +1,0 @@
-{{- if .Values.postgresService.postgresExternalName }}
-{{- include "helm-library.postgres-service" (list . "dream-league-api.postgres-service") -}}
-{{- end }}
-{{- define "dream-league-api.postgres-service" -}}
-{{- end -}}
