@@ -17,7 +17,8 @@ USER node
 WORKDIR /home/node
 COPY --chown=node:node package*.json ./
 RUN npm install --production=false
-COPY --chown=node:node . .
+COPY --chown=node:node ./app ./app
+COPY --chown=node:node ./test ./test
 CMD [ "npm", "run", "start:watch" ]
 
 # Production
