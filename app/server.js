@@ -23,8 +23,8 @@ async function createServer () {
   await server.register(require('./plugins/auth'))
   await server.register(require('./plugins/errors'))
   await server.register(require('./plugins/router'))
+  await server.register(require('./plugins/logging'))
   if (config.isDev) {
-    await server.register(require('./plugins/logging'))
     await server.register(require('blipp'))
   }
 
