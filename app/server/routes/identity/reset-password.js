@@ -1,22 +1,24 @@
 const boom = require('@hapi/boom')
 const joi = require('joi')
-const { resetPassword } = require('../../account')
+const { setNewPassword } = require('../../../account')
 
 module.exports = [{
   method: 'POST',
-  path: '/forgot-password',
+  path: '/reset-password',
   options: {
     validate: {
       payload: joi.object({
-        email: joi.string().email().required()
+        userId: joi.number().required(),
+        token: joi.string().required(),
+        password: joi.string().required()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
     handler: async (request, h) => {
-      const { email, password } = request.payload
-      await resetPassword(email, password)
+      const { userId, password, token } = request.payload
+      await setNewPassword(userId, password, token)
       return h.response('ok')
     }
   }

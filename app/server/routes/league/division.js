@@ -1,4 +1,4 @@
-const db = require('../../data')
+const db = require('../../../data')
 const joi = require('joi')
 const boom = require('@hapi/boom')
 

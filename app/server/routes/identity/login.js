@@ -1,6 +1,6 @@
 const boom = require('@hapi/boom')
 const joi = require('joi')
-const { login } = require('../../account')
+const { login } = require('../../../account')
 
 module.exports = [{
   method: 'POST',

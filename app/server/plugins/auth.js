@@ -1,5 +1,5 @@
-const { jwtConfig } = require('../config')
-const { validate } = require('../token')
+const { jwtConfig } = require('../../config')
+const { validate } = require('../../token')
 
 module.exports = {
   plugin: {

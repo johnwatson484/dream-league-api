@@ -1,7 +1,7 @@
-const { getSummary, getInput, update } = require('../results')
+const { getSummary, getInput, update } = require('../../results')
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const { sendResults } = require('../notifications')
+const { sendResults } = require('../../notifications')
 
 module.exports = [{
   method: 'GET',

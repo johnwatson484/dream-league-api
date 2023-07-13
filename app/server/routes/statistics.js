@@ -1,6 +1,6 @@
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const { getForm, getTopScorers } = require('../statistics')
+const { getForm, getTopScorers } = require('../../statistics')
 
 module.exports = [{
   method: 'GET',

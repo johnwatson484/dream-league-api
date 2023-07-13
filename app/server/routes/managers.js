@@ -1,8 +1,8 @@
-const db = require('../data')
+const db = require('../../data')
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const { getManager, getManagers, createManager, editManager, deleteManager, getTeam } = require('../managers')
-const { getSummary } = require('../results')
+const { getManager, getManagers, createManager, editManager, deleteManager, getTeam } = require('../../managers')
+const { getSummary } = require('../../results')
 
 module.exports = [{
   method: 'GET',

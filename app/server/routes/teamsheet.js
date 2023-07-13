@@ -1,7 +1,7 @@
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const { getTeamsheet, updatePlayer, updateKeeper } = require('../teamsheet')
-const { refreshTeamsheet } = require('../refresh')
+const { getTeamsheet, updatePlayer, updateKeeper } = require('../../teamsheet')
+const { refreshTeamsheet } = require('../../refresh')
 
 module.exports = [{
   method: 'GET',

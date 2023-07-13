@@ -1,77 +1,81 @@
-const db = require('../data')
+const db = require('../../../data')
 const joi = require('joi')
 const boom = require('@hapi/boom')
 
 module.exports = [{
   method: 'GET',
-  path: '/cups',
+  path: '/league/teams',
   options: {
     handler: async (_request, h) => {
-      return h.response(await db.Cup.findAll({ order: [['name']] }))
+      return h.response(await db.Team.findAll({
+        include: [{ model: db.Division, as: 'division', attributes: ['name'] }],
+        order: [['division', 'rank'], ['name']]
+      }))
     }
   }
 }, {
   method: 'GET',
-  path: '/cup',
-  options: {
-    handler: async (request, h) => {
-      return h.response(await db.Cup.findOne({ where: { cupId: request.query.cupId } }))
-    }
+  path: '/league/team',
+  handler: async (request, h) => {
+    return h.response(await db.Team.findOne({ where: { teamId: request.query.teamId } }))
   }
 }, {
   method: 'POST',
-  path: '/cup/create',
+  path: '/league/team/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
         name: joi.string(),
-        hasGroupStage: joi.boolean().default(false),
-        knockoutLegs: joi.number().default(1)
+        alias: joi.string(),
+        divisionId: joi.number()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
     handler: async (request, h) => {
-      return h.response(await db.Cup.create(request.payload))
+      return h.response(await db.Team.create(request.payload))
     }
   }
 }, {
   method: 'POST',
-  path: '/cup/edit',
+  path: '/league/team/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
-        cupId: joi.number().required(),
+        teamId: joi.number(),
         name: joi.string(),
-        hasGroupStage: joi.boolean(),
-        knockoutLegs: joi.number().required()
+        alias: joi.string(),
+        divisionId: joi.number()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
     handler: async (request, h) => {
-      return h.response(await db.Cup.upsert(request.payload))
+      return h.response(await db.Team.upsert(request.payload))
     }
   }
 }, {
   method: 'POST',
-  path: '/cup/delete',
+  path: '/league/teams/autocomplete',
   options: {
-    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: joi.object({
-        cupId: joi.number()
+        prefix: joi.string()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
     handler: async (request, h) => {
-      return h.response(await db.Cup.destroy({ where: { cupId: request.payload.cupId } }))
+      const teams = await db.Team.findAll({
+        where: { name: { [db.Sequelize.Op.iLike]: request.payload.prefix + '%' } },
+        order: [['name']]
+      })
+      return h.response(teams ?? [])
     }
   }
 }]

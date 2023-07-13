@@ -1,4 +1,4 @@
-const { getAllWinners } = require('../results')
+const { getAllWinners } = require('../../results')
 
 module.exports = [{
   method: 'GET',
