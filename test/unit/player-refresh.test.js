@@ -1,7 +1,7 @@
 
 const db = require('../../app/data')
 jest.mock('../../app/data')
-const refresh = require('../../app/refresh/players')
+const { refresh } = require('../../app/refresh/players')
 
 const players = [{
   firstName: 'Ian',

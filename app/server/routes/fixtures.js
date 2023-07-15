@@ -1,9 +1,10 @@
-const db = require('../../data')
-const joi = require('joi')
+const Joi = require('joi')
 const boom = require('@hapi/boom')
+const db = require('../../data')
+const { GET, POST } = require('../../constants/verbs')
 
 module.exports = [{
-  method: 'GET',
+  method: GET,
   path: '/fixtures',
   options: {
     handler: async (_request, h) => {
@@ -18,7 +19,7 @@ module.exports = [{
     }
   }
 }, {
-  method: 'GET',
+  method: GET,
   path: '/fixture',
   options: {
     handler: async (request, h) => {
@@ -26,17 +27,17 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/fixture/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        cupId: joi.number().integer().required(),
-        gameweekId: joi.number().integer().required(),
-        homeManagerId: joi.number().integer().required(),
-        awayManagerId: joi.number().integer().required(),
-        round: joi.number().integer().required()
+      payload: Joi.object({
+        cupId: Joi.number().integer().required(),
+        gameweekId: Joi.number().integer().required(),
+        homeManagerId: Joi.number().integer().required(),
+        awayManagerId: Joi.number().integer().required(),
+        round: Joi.number().integer().required()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -47,18 +48,18 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/fixture/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        fixtureId: joi.number().integer().required(),
-        cupId: joi.number().integer().required(),
-        gameweekId: joi.number().integer().required(),
-        homeManagerId: joi.number().integer().required(),
-        awayManagerId: joi.number().integer().required(),
-        round: joi.number().integer().required()
+      payload: Joi.object({
+        fixtureId: Joi.number().integer().required(),
+        cupId: Joi.number().integer().required(),
+        gameweekId: Joi.number().integer().required(),
+        homeManagerId: Joi.number().integer().required(),
+        awayManagerId: Joi.number().integer().required(),
+        round: Joi.number().integer().required()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -69,13 +70,13 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/fixture/delete',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        fixtureId: joi.number()
+      payload: Joi.object({
+        fixtureId: Joi.number()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)

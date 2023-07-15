@@ -1,5 +1,5 @@
 const db = require('../data')
-const mapTeams = require('./map-teams')
+const { mapTeams } = require('./map-teams')
 
 const getTeamsheet = async () => {
   const managers = await db.Manager.findAll({
@@ -21,4 +21,6 @@ const getTeamsheet = async () => {
   return managers.map(x => mapTeams(x.dataValues))
 }
 
-module.exports = getTeamsheet
+module.exports = {
+  getTeamsheet
+}

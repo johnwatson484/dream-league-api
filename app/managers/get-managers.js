@@ -4,4 +4,6 @@ const getManagers = async () => {
   return db.Manager.findAll({ order: ['name'] })
 }
 
-module.exports = getManagers
+module.exports = {
+  getManagers
+}

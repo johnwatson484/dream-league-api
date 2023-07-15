@@ -1,5 +1,5 @@
 const db = require('../../app/data')
-const getSummary = require('../../app/results/get-summary')
+const { getSummary } = require('../../app/results/get-summary')
 const testData = require('../data')
 
 describe('get summary', () => {

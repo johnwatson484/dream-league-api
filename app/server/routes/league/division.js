@@ -1,9 +1,10 @@
-const db = require('../../../data')
-const joi = require('joi')
+const Joi = require('joi')
 const boom = require('@hapi/boom')
+const db = require('../../../data')
+const { GET, POST } = require('../../../constants/verbs')
 
 module.exports = [{
-  method: 'GET',
+  method: GET,
   path: '/league/divisions',
   options: {
     handler: async (_request, h) => {
@@ -13,12 +14,12 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/league/divisions/autocomplete',
   options: {
     validate: {
-      payload: joi.object({
-        prefix: joi.string()
+      payload: Joi.object({
+        prefix: Joi.string()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)

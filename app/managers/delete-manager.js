@@ -5,4 +5,6 @@ const deleteManager = async (managerId) => {
   await db.Manager.destroy({ where: { managerId } })
 }
 
-module.exports = deleteManager
+module.exports = {
+  deleteManager
+}

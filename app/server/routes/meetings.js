@@ -1,9 +1,10 @@
-const db = require('../../data')
-const joi = require('joi')
+const Joi = require('joi')
 const boom = require('@hapi/boom')
+const db = require('../../data')
+const { GET, POST } = require('../../constants/verbs')
 
 module.exports = [{
-  method: 'GET',
+  method: GET,
   path: '/meetings',
   options: {
     handler: async (_request, h) => {
@@ -11,25 +12,25 @@ module.exports = [{
     }
   }
 }, {
-  method: 'GET',
+  method: GET,
   path: '/meeting',
   handler: async (request, h) => {
     return h.response(await db.Meeting.findOne({ where: { meetingId: request.query.meetingId } }))
   }
 }, {
-  method: 'GET',
+  method: GET,
   path: '/meetings/next',
   handler: async (_request, h) => {
     return h.response(await db.Meeting.findOne({ where: { date: { [db.Sequelize.Op.gt]: new Date() } }, raw: true }))
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/meeting/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        date: joi.date()
+      payload: Joi.object({
+        date: Joi.date()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -40,14 +41,14 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/meeting/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        meetingId: joi.number(),
-        date: joi.date()
+      payload: Joi.object({
+        meetingId: Joi.number(),
+        date: Joi.date()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -58,13 +59,13 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/meeting/delete',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        meetingId: joi.number()
+      payload: Joi.object({
+        meetingId: Joi.number()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -75,14 +76,14 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/meeting/refresh',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        startDate: joi.date(),
-        meetings: joi.number()
+      payload: Joi.object({
+        startDate: Joi.date(),
+        meetings: Joi.number()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)

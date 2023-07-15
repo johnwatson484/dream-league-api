@@ -1,6 +1,6 @@
-const token = require('../token')
-const { getUser } = require('./user-manager')
 const bcrypt = require('bcrypt')
+const { getUser } = require('./user-manager')
+const { create } = require('../token')
 
 const login = async (email, password) => {
   const user = await getUser(email)
@@ -10,8 +10,10 @@ const login = async (email, password) => {
   }
 
   return {
-    token: token.create(user)
+    token: create(user)
   }
 }
 
-module.exports = login
+module.exports = {
+  login
+}

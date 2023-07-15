@@ -10,4 +10,6 @@ const createManager = async (manager) => {
   return createdManager
 }
 
-module.exports = createManager
+module.exports = {
+  createManager
+}

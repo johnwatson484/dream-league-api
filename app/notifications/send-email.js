@@ -14,4 +14,6 @@ const sendEmail = async (recipients, subject, body) => {
   }
 }
 
-module.exports = sendEmail
+module.exports = {
+  sendEmail
+}

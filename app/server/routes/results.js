@@ -1,15 +1,16 @@
-const { getSummary, getInput, update } = require('../../results')
-const joi = require('joi')
+const Joi = require('joi')
 const boom = require('@hapi/boom')
+const { getSummary, getInput, update } = require('../../results')
 const { sendResults } = require('../../notifications')
+const { GET, POST } = require('../../constants/verbs')
 
 module.exports = [{
-  method: 'GET',
+  method: GET,
   path: '/results',
   options: {
     validate: {
-      query: joi.object({
-        gameweekId: joi.number().optional()
+      query: Joi.object({
+        gameweekId: Joi.number().optional()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -21,7 +22,7 @@ module.exports = [{
     }
   }
 }, {
-  method: 'GET',
+  method: GET,
   path: '/results-edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -30,17 +31,17 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/results-edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        gameweekId: joi.number(),
-        conceded: joi.array().items(joi.object({ teamId: joi.number(), conceded: joi.number() })).single(),
-        concededCup: joi.array().items(joi.object({ teamId: joi.number(), conceded: joi.number() })).single(),
-        goals: joi.array().items(joi.object({ playerId: joi.number(), goals: joi.number() })).single(),
-        goalsCup: joi.array().items(joi.object({ playerId: joi.number(), goals: joi.number() })).single()
+      payload: Joi.object({
+        gameweekId: Joi.number(),
+        conceded: Joi.array().items(Joi.object({ teamId: Joi.number(), conceded: Joi.number() })).single(),
+        concededCup: Joi.array().items(Joi.object({ teamId: Joi.number(), conceded: Joi.number() })).single(),
+        goals: Joi.array().items(Joi.object({ playerId: Joi.number(), goals: Joi.number() })).single(),
+        goalsCup: Joi.array().items(Joi.object({ playerId: Joi.number(), goals: Joi.number() })).single()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -52,13 +53,13 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/results-send',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        gameweekId: joi.number().required()
+      payload: Joi.object({
+        gameweekId: Joi.number().required()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)

@@ -1,5 +1,5 @@
 const db = require('../../app/data')
-const getScores = require('../../app/results/get-scores')
+const { getScores } = require('../../app/results/get-scores')
 const testData = require('../data')
 let managers
 

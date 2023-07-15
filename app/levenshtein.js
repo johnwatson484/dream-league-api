@@ -32,4 +32,6 @@ const calculateDistance = (a, b) => {
   return matrix[b.length][a.length]
 }
 
-module.exports = calculateDistance
+module.exports = {
+  calculateDistance
+}

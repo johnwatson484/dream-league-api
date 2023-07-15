@@ -1,7 +1,8 @@
 const db = require('../../data')
+const { GET } = require('../../constants/verbs')
 
 module.exports = [{
-  method: 'GET',
+  method: GET,
   path: '/gameweeks',
   options: {
     handler: async (request, h) => {

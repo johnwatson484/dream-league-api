@@ -1,6 +1,6 @@
 const { getManager } = require('./get-league-data')
-const deleteCurrentTeam = require('./delete-team')
-const matchTeam = require('./match-team')
+const { deleteCurrentTeam } = require('./delete-team')
+const { matchTeam } = require('./match-team')
 
 const refresh = async (teams) => {
   for (const team of teams) {
@@ -19,4 +19,6 @@ const updateTeam = async (managerId, players) => {
   await matchTeam(managerId, players)
 }
 
-module.exports = refresh
+module.exports = {
+  refresh
+}

@@ -1,10 +1,11 @@
-const db = require('../../../data')
-const joi = require('joi')
+const Joi = require('joi')
 const boom = require('@hapi/boom')
-const refresh = require('../../../refresh/players')
+const db = require('../../../data')
+const { refresh } = require('../../../refresh/players')
+const { GET, POST } = require('../../../constants/verbs')
 
 module.exports = [{
-  method: 'GET',
+  method: GET,
   path: '/league/players',
   options: {
     handler: async (request, h) => {
@@ -29,22 +30,22 @@ module.exports = [{
     }
   }
 }, {
-  method: 'GET',
+  method: GET,
   path: '/league/player',
   handler: async (request, h) => {
     return h.response(await db.Player.findOne({ where: { playerId: request.query.playerId } }))
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/league/player/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        firstName: joi.string().allow(''),
-        lastName: joi.string(),
-        position: joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
-        teamId: joi.number()
+      payload: Joi.object({
+        firstName: Joi.string().allow(''),
+        lastName: Joi.string(),
+        position: Joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
+        teamId: Joi.number()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -55,17 +56,17 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/league/player/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        playerId: joi.number(),
-        firstName: joi.string().allow(''),
-        lastName: joi.string(),
-        position: joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
-        teamId: joi.number()
+      payload: Joi.object({
+        playerId: Joi.number(),
+        firstName: Joi.string().allow(''),
+        lastName: Joi.string(),
+        position: Joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
+        teamId: Joi.number()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -76,13 +77,13 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/league/player/delete',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        playerId: joi.number()
+      payload: Joi.object({
+        playerId: Joi.number()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -93,12 +94,12 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/league/players/autocomplete',
   options: {
     validate: {
-      payload: joi.object({
-        prefix: joi.string()
+      payload: Joi.object({
+        prefix: Joi.string()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -114,16 +115,16 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/league/players/refresh',
   options: {
     validate: {
-      payload: joi.object({
-        players: joi.array().items(joi.object({
-          firstName: joi.string().allow(''),
-          lastName: joi.string().allow(''),
-          position: joi.string().allow(''),
-          team: joi.string().allow('')
+      payload: Joi.object({
+        players: Joi.array().items(Joi.object({
+          firstName: Joi.string().allow(''),
+          lastName: Joi.string().allow(''),
+          position: Joi.string().allow(''),
+          team: Joi.string().allow('')
         }))
       }),
       failAction: async (_request, _h, error) => {

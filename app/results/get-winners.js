@@ -3,4 +3,6 @@ const getWinners = (scores) => {
   return scores.filter(x => x.margin === winningMargin).map(x => { return { managerId: x.managerId, manager: x.manager, goals: x.goals } })
 }
 
-module.exports = getWinners
+module.exports = {
+  getWinners
+}

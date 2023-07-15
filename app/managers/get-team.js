@@ -1,8 +1,8 @@
 const db = require('../data')
-const mapKeeper = require('./map-keeper')
-const mapPlayer = require('./map-player')
-const orderKeepers = require('../utils/order-keepers')
-const orderPlayers = require('../utils/order-players')
+const { mapKeeper } = require('./map-keeper')
+const { mapPlayer } = require('./map-player')
+const { orderKeepers } = require('../utils/order-keepers')
+const { orderPlayers } = require('../utils/order-players')
 
 const getTeam = async (managerId) => {
   const manager = await db.Manager.findOne({
@@ -38,4 +38,6 @@ const getTeam = async (managerId) => {
   }
 }
 
-module.exports = getTeam
+module.exports = {
+  getTeam
+}

@@ -1,14 +1,15 @@
-const joi = require('joi')
+const Joi = require('joi')
 const boom = require('@hapi/boom')
 const { getForm, getTopScorers } = require('../../statistics')
+const { GET } = require('../../constants/verbs')
 
 module.exports = [{
-  method: 'GET',
+  method: GET,
   path: '/statistics/form',
   options: {
     validate: {
-      query: joi.object({
-        weeksToInclude: joi.number().optional()
+      query: Joi.object({
+        weeksToInclude: Joi.number().optional()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -21,7 +22,7 @@ module.exports = [{
     }
   }
 }, {
-  method: 'GET',
+  method: GET,
   path: '/statistics/top-scorers',
   options: {
     handler: async (_request, h) => {

@@ -11,4 +11,6 @@ const getKeepers = async () => {
   })
 }
 
-module.exports = getKeepers
+module.exports = {
+  getKeepers
+}

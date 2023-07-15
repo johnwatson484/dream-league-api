@@ -1,11 +1,12 @@
-const db = require('../../data')
-const joi = require('joi')
+const Joi = require('joi')
 const boom = require('@hapi/boom')
+const db = require('../../data')
 const { getManager, getManagers, createManager, editManager, deleteManager, getTeam } = require('../../managers')
 const { getSummary } = require('../../results')
+const { GET, POST } = require('../../constants/verbs')
 
 module.exports = [{
-  method: 'GET',
+  method: GET,
   path: '/managers',
   options: {
     handler: async (_request, h) => {
@@ -13,18 +14,18 @@ module.exports = [{
     }
   }
 }, {
-  method: 'GET',
+  method: GET,
   path: '/manager',
   handler: async (request, h) => {
     return h.response(await getManager(request.query.managerId))
   }
 }, {
-  method: 'GET',
+  method: GET,
   path: '/manager/detail',
   options: {
     validate: {
-      query: joi.object({
-        managerId: joi.number().required()
+      query: Joi.object({
+        managerId: Joi.number().required()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -38,15 +39,15 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/manager/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        name: joi.string(),
-        alias: joi.string(),
-        emails: joi.array().items(joi.string().email().allow('')).single()
+      payload: Joi.object({
+        name: Joi.string(),
+        alias: Joi.string(),
+        emails: Joi.array().items(Joi.string().email().allow('')).single()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -57,16 +58,16 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/manager/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        managerId: joi.number(),
-        name: joi.string(),
-        alias: joi.string(),
-        emails: joi.array().items(joi.string().email().allow('')).single()
+      payload: Joi.object({
+        managerId: Joi.number(),
+        name: Joi.string(),
+        alias: Joi.string(),
+        emails: Joi.array().items(Joi.string().email().allow('')).single()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -77,13 +78,13 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/manager/delete',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        managerId: joi.number()
+      payload: Joi.object({
+        managerId: Joi.number()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -94,12 +95,12 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/manager/autocomplete',
   options: {
     validate: {
-      payload: joi.object({
-        prefix: joi.string()
+      payload: Joi.object({
+        prefix: Joi.string()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)

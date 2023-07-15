@@ -1,6 +1,6 @@
-const mapPlayer = require('./map-player')
-const mapTeam = require('./map-team')
-const mapPosition = require('../map-position')
+const { mapPlayer } = require('./map-player')
+const { mapTeam } = require('./map-team')
+const { mapPosition } = require('../map-position')
 const { addTeamsheetMatch, addPlayer, addKeeper } = require('./add-team')
 const { getLeagueTeams, getLeaguePlayers } = require('./get-league-data')
 
@@ -30,4 +30,6 @@ const isKeeper = (position) => {
   return position === 'Goalkeeper'
 }
 
-module.exports = matchTeam
+module.exports = {
+  matchTeam
+}

@@ -1,10 +1,11 @@
-const joi = require('joi')
+const Joi = require('joi')
 const boom = require('@hapi/boom')
 const { getTeamsheet, updatePlayer, updateKeeper } = require('../../teamsheet')
 const { refreshTeamsheet } = require('../../refresh')
+const { GET, POST } = require('../../constants/verbs')
 
 module.exports = [{
-  method: 'GET',
+  method: GET,
   path: '/teamsheet',
   options: {
     handler: async (_request, h) => {
@@ -12,15 +13,15 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/teamsheet/edit/player',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        managerId: joi.number(),
-        playerIds: joi.alternatives().try(joi.array().items(joi.number()), joi.number()),
-        playerSubs: joi.alternatives().try(joi.array().items(joi.number()), joi.number())
+      payload: Joi.object({
+        managerId: Joi.number(),
+        playerIds: Joi.alternatives().try(Joi.array().items(Joi.number()), Joi.number()),
+        playerSubs: Joi.alternatives().try(Joi.array().items(Joi.number()), Joi.number())
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -31,15 +32,15 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/teamsheet/edit/keeper',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        managerId: joi.number(),
-        teamIds: joi.alternatives().try(joi.array().items(joi.string()), joi.string()),
-        teamSubs: joi.alternatives().try(joi.array().items(joi.string()), joi.string())
+      payload: Joi.object({
+        managerId: Joi.number(),
+        teamIds: Joi.alternatives().try(Joi.array().items(Joi.string()), Joi.string()),
+        teamSubs: Joi.alternatives().try(Joi.array().items(Joi.string()), Joi.string())
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -50,18 +51,18 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/teamsheet/refresh',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        teams: joi.array().items(joi.object({
-          manager: joi.string(),
-          players: joi.array().items(joi.object({
-            player: joi.string(),
-            position: joi.string(),
-            substitute: joi.bool()
+      payload: Joi.object({
+        teams: Joi.array().items(Joi.object({
+          manager: Joi.string(),
+          players: Joi.array().items(Joi.object({
+            player: Joi.string(),
+            position: Joi.string(),
+            substitute: Joi.bool()
           }))
         }))
       }),

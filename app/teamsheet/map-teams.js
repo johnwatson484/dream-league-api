@@ -1,7 +1,7 @@
-const mapPlayer = require('./map-player')
-const mapKeeper = require('./map-keeper')
-const orderKeepers = require('../utils/order-keepers')
-const orderPlayers = require('../utils/order-players')
+const { mapPlayer } = require('./map-player')
+const { mapKeeper } = require('./map-keeper')
+const { orderKeepers } = require('../utils/order-keepers')
+const { orderPlayers } = require('../utils/order-players')
 
 const mapTeams = (team) => {
   return {
@@ -12,4 +12,6 @@ const mapTeams = (team) => {
   }
 }
 
-module.exports = mapTeams
+module.exports = {
+  mapTeams
+}

@@ -9,4 +9,6 @@ const getPoints = (result) => {
   }
 }
 
-module.exports = getPoints
+module.exports = {
+  getPoints
+}

@@ -98,4 +98,6 @@ const getManager = async (managerId) => {
   })
 }
 
-module.exports = update
+module.exports = {
+  update
+}

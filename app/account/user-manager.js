@@ -1,6 +1,6 @@
 const db = require('../data')
-const { addUserToRole, getUserRoles } = require('./role-manager')
 const bcrypt = require('bcrypt')
+const { addUserToRole, getUserRoles } = require('./role-manager')
 
 const userExists = async (email) => {
   if (await getUser(email) !== null) {

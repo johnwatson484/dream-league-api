@@ -11,4 +11,6 @@ const validate = async (decoded, _request, _h) => {
   return { isValid: true }
 }
 
-module.exports = validate
+module.exports = {
+  validate
+}

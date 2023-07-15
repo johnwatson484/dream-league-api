@@ -1,5 +1,5 @@
 const db = require('../../app/data')
-const getTable = require('../../app/results/get-table')
+const { getTable } = require('../../app/results/get-table')
 const testData = require('../data')
 let managers
 

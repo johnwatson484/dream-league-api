@@ -1,9 +1,10 @@
-const db = require('../../data')
-const joi = require('joi')
+const Joi = require('joi')
 const boom = require('@hapi/boom')
+const db = require('../../data')
+const { GET, POST } = require('../../constants/verbs')
 
 module.exports = [{
-  method: 'GET',
+  method: GET,
   path: '/groups',
   options: {
     handler: async (_request, h) => {
@@ -17,7 +18,7 @@ module.exports = [{
     }
   }
 }, {
-  method: 'GET',
+  method: GET,
   path: '/group',
   options: {
     handler: async (request, h) => {
@@ -32,17 +33,17 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/group/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        cupId: joi.number().required(),
-        name: joi.string(),
-        groupLegs: joi.number(),
-        teamsAdvancing: joi.number(),
-        managers: joi.array().items(joi.number()).single()
+      payload: Joi.object({
+        cupId: Joi.number().required(),
+        name: Joi.string(),
+        groupLegs: Joi.number(),
+        teamsAdvancing: Joi.number(),
+        managers: Joi.array().items(Joi.number()).single()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -59,18 +60,18 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/group/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        groupId: joi.number(),
-        cupId: joi.number().required(),
-        name: joi.string(),
-        groupLegs: joi.number(),
-        teamsAdvancing: joi.number(),
-        managers: joi.array().items(joi.number()).single()
+      payload: Joi.object({
+        groupId: Joi.number(),
+        cupId: Joi.number().required(),
+        name: Joi.string(),
+        groupLegs: Joi.number(),
+        teamsAdvancing: Joi.number(),
+        managers: Joi.array().items(Joi.number()).single()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -98,13 +99,13 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/group/delete',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        groupId: joi.number()
+      payload: Joi.object({
+        groupId: Joi.number()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)

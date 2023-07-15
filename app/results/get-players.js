@@ -14,4 +14,6 @@ const getPlayers = async () => {
   })
 }
 
-module.exports = getPlayers
+module.exports = {
+  getPlayers
+}

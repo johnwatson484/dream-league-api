@@ -1,7 +1,7 @@
 const db = require('../data')
 const { getSummary } = require('../results')
 const { getHtmlStringFromFile } = require('./get-html-string')
-const sendEmail = require('./send-email')
+const { sendEmail } = require('./send-email')
 
 const sendResults = async (gameweekId) => {
   const summary = await getSummary(gameweekId)
@@ -13,4 +13,6 @@ const sendResults = async (gameweekId) => {
   }
 }
 
-module.exports = sendResults
+module.exports = {
+  sendResults
+}

@@ -9,4 +9,6 @@ const mapKeeper = (keeper, teamsheet) => {
   }
 }
 
-module.exports = mapKeeper
+module.exports = {
+  mapKeeper
+}

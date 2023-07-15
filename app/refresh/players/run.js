@@ -5,4 +5,6 @@ const run = async (players) => {
   await db.Player.bulkCreate(players)
 }
 
-module.exports = run
+module.exports = {
+  run
+}

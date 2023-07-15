@@ -1,22 +1,23 @@
 const boom = require('@hapi/boom')
-const joi = require('joi')
-const account = require('../../../account')
+const Joi = require('joi')
+const { register } = require('../../../account')
+const { POST } = require('../../../constants/verbs')
 
 module.exports = [{
-  method: 'POST',
+  method: POST,
   path: '/register',
   options: {
     validate: {
-      payload: joi.object({
-        email: joi.string().email().required(),
-        password: joi.string().required()
+      payload: Joi.object({
+        email: Joi.string().email().required(),
+        password: Joi.string().required()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       }
     },
     handler: async (request, h) => {
-      return h.response(await account.register(request.payload.email, request.payload.password))
+      return h.response(await register(request.payload.email, request.payload.password))
     }
   }
 }]

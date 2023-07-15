@@ -1,9 +1,10 @@
 const db = require('../../../data')
-const joi = require('joi')
+const Joi = require('joi')
 const boom = require('@hapi/boom')
+const { GET, POST } = require('../../../constants/verbs')
 
 module.exports = [{
-  method: 'GET',
+  method: GET,
   path: '/league/teams',
   options: {
     handler: async (_request, h) => {
@@ -14,21 +15,21 @@ module.exports = [{
     }
   }
 }, {
-  method: 'GET',
+  method: GET,
   path: '/league/team',
   handler: async (request, h) => {
     return h.response(await db.Team.findOne({ where: { teamId: request.query.teamId } }))
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/league/team/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        name: joi.string(),
-        alias: joi.string(),
-        divisionId: joi.number()
+      payload: Joi.object({
+        name: Joi.string(),
+        alias: Joi.string(),
+        divisionId: Joi.number()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -39,16 +40,16 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/league/team/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        teamId: joi.number(),
-        name: joi.string(),
-        alias: joi.string(),
-        divisionId: joi.number()
+      payload: Joi.object({
+        teamId: Joi.number(),
+        name: Joi.string(),
+        alias: Joi.string(),
+        divisionId: Joi.number()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -59,12 +60,12 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/league/teams/autocomplete',
   options: {
     validate: {
-      payload: joi.object({
-        prefix: joi.string()
+      payload: Joi.object({
+        prefix: Joi.string()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)

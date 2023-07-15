@@ -1,5 +1,5 @@
 const db = require('../data')
-const createSummary = require('./create-summary')
+const { createSummary } = require('./create-summary')
 
 const update = async (results) => {
   const resultsDate = new Date()
@@ -86,4 +86,6 @@ const updateGoalsCup = async (results, resultsDate) => {
   }
 }
 
-module.exports = update
+module.exports = {
+  update
+}

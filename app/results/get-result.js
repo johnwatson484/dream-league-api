@@ -8,4 +8,6 @@ const getResult = (goals, conceded) => {
   return 'D'
 }
 
-module.exports = getResult
+module.exports = {
+  getResult
+}

@@ -16,4 +16,6 @@ const getCupWeeks = async () => {
   return managerCupWeeks
 }
 
-module.exports = getCupWeeks
+module.exports = {
+  getCupWeeks
+}

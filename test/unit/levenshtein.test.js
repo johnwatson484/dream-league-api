@@ -1,4 +1,4 @@
-const calculateDistance = require('../../app/levenshtein')
+const { calculateDistance } = require('../../app/levenshtein')
 
 describe('levenshtein distance', () => {
   test('calculates distance', () => {

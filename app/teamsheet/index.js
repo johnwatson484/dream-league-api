@@ -1,6 +1,6 @@
-const getTeamsheet = require('./get-teamsheet')
-const updatePlayer = require('./update-player')
-const updateKeeper = require('./update-keeper')
+const { getTeamsheet } = require('./get-teamsheet')
+const { update: updatePlayer } = require('./update-player')
+const { update: updateKeeper } = require('./update-keeper')
 
 module.exports = {
   getTeamsheet,

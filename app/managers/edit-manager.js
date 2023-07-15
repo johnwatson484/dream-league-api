@@ -18,4 +18,6 @@ const editManager = async (manager) => {
   return updatedManager
 }
 
-module.exports = editManager
+module.exports = {
+  editManager
+}

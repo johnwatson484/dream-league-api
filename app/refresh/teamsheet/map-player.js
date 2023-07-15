@@ -1,4 +1,4 @@
-const calculateDistance = require('../../levenshtein')
+const { calculateDistance } = require('../../levenshtein')
 
 const mapPlayer = (players, matchPlayer, position) => {
   const matchText = matchPlayer.replace(/\s/g, '').toUpperCase()
@@ -27,4 +27,6 @@ const mapPlayer = (players, matchPlayer, position) => {
   }
 }
 
-module.exports = mapPlayer
+module.exports = {
+  mapPlayer
+}

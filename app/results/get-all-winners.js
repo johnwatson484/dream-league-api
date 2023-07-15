@@ -1,5 +1,5 @@
 const db = require('../data')
-const getSummary = require('./get-summary')
+const { getSummary } = require('./get-summary')
 
 const getAllWinners = async () => {
   const gameweeks = await db.Gameweek.findAll({ include: { model: db.Summary, as: 'summary', attributes: [], required: true } })
@@ -13,4 +13,6 @@ const getAllWinners = async () => {
   return winners
 }
 
-module.exports = getAllWinners
+module.exports = {
+  getAllWinners
+}

@@ -12,4 +12,6 @@ const mapPlayer = (player, teamsheet) => {
   }
 }
 
-module.exports = mapPlayer
+module.exports = {
+  mapPlayer
+}

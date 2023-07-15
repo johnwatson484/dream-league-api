@@ -1,5 +1,5 @@
 const db = require('../data')
-const sortArray = require('../utils/sort-array')
+const { sortArray } = require('../utils/sort-array')
 
 const getTopScorers = async () => {
   const playersToInclude = await db.Manager.count()
@@ -38,4 +38,6 @@ const orderScorers = (scorers) => {
     .map((x, i) => ({ position: i + 1, ...x }))
 }
 
-module.exports = getTopScorers
+module.exports = {
+  getTopScorers
+}

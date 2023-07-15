@@ -8,4 +8,6 @@ const getSummary = async (gameweekId = 0) => {
   return summary.summary
 }
 
-module.exports = getSummary
+module.exports = {
+  getSummary
+}

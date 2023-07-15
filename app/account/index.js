@@ -1,5 +1,5 @@
-const register = require('./register')
-const login = require('./login')
+const { register } = require('./register')
+const { login } = require('./login')
 const { resetPassword, setNewPassword } = require('./reset-password')
 const { getUser } = require('./user-manager')
 

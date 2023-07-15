@@ -1,6 +1,6 @@
 
-const getGameweekResults = require('./get-gameweek-results')
-const orderTable = require('./order-table')
+const { getGameweekResults } = require('./get-gameweek-results')
+const { orderTable } = require('./order-table')
 
 const getTable = async (gameweekId, managers) => {
   const rows = []
@@ -29,4 +29,6 @@ const getTable = async (gameweekId, managers) => {
   return orderTable(rows)
 }
 
-module.exports = getTable
+module.exports = {
+  getTable
+}

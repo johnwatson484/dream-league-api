@@ -8,4 +8,6 @@ const mapKeeper = (keeper) => {
   }
 }
 
-module.exports = mapKeeper
+module.exports = {
+  mapKeeper
+}

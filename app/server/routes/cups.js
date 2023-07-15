@@ -1,9 +1,10 @@
-const db = require('../../data')
-const joi = require('joi')
+const Joi = require('joi')
 const boom = require('@hapi/boom')
+const db = require('../../data')
+const { GET, POST } = require('../../constants/verbs')
 
 module.exports = [{
-  method: 'GET',
+  method: GET,
   path: '/cups',
   options: {
     handler: async (_request, h) => {
@@ -11,7 +12,7 @@ module.exports = [{
     }
   }
 }, {
-  method: 'GET',
+  method: GET,
   path: '/cup',
   options: {
     handler: async (request, h) => {
@@ -19,15 +20,15 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/cup/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        name: joi.string(),
-        hasGroupStage: joi.boolean().default(false),
-        knockoutLegs: joi.number().default(1)
+      payload: Joi.object({
+        name: Joi.string(),
+        hasGroupStage: Joi.boolean().default(false),
+        knockoutLegs: Joi.number().default(1)
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -38,16 +39,16 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/cup/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        cupId: joi.number().required(),
-        name: joi.string(),
-        hasGroupStage: joi.boolean(),
-        knockoutLegs: joi.number().required()
+      payload: Joi.object({
+        cupId: Joi.number().required(),
+        name: Joi.string(),
+        hasGroupStage: Joi.boolean(),
+        knockoutLegs: Joi.number().required()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
@@ -58,13 +59,13 @@ module.exports = [{
     }
   }
 }, {
-  method: 'POST',
+  method: POST,
   path: '/cup/delete',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
-      payload: joi.object({
-        cupId: joi.number()
+      payload: Joi.object({
+        cupId: Joi.number()
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)

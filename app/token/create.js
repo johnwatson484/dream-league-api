@@ -1,5 +1,5 @@
-const { jwtConfig } = require('../config')
 const jwt = require('jsonwebtoken')
+const { jwtConfig } = require('../config')
 
 const create = (user) => {
   const body = mapUserToBody(user)
@@ -8,11 +8,13 @@ const create = (user) => {
   })
 }
 
-function mapUserToBody (user) {
+const mapUserToBody = (user) => {
   return {
     userId: user.userId,
     scope: user.roles.map(x => x.Role.name)
   }
 }
 
-module.exports = create
+module.exports = {
+  create
+}

@@ -1,5 +1,5 @@
-const mapPlayer = require('./map-player')
-const run = require('./run')
+const { mapPlayer } = require('./map-player')
+const { run } = require('./run')
 
 const refresh = async (players) => {
   const mappedPlayers = []
@@ -23,4 +23,6 @@ const refresh = async (players) => {
   }
 }
 
-module.exports = refresh
+module.exports = {
+  refresh
+}

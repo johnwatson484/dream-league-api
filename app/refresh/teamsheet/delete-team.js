@@ -6,4 +6,6 @@ async function deleteCurrentTeam (managerId) {
   await db.Teamsheet.destroy({ where: { managerId } })
 }
 
-module.exports = deleteCurrentTeam
+module.exports = {
+  deleteCurrentTeam
+}
