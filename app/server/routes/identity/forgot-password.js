@@ -2,6 +2,7 @@ const boom = require('@hapi/boom')
 const Joi = require('joi')
 const { resetPassword } = require('../../../account')
 const { POST } = require('../../../constants/verbs')
+const { OK } = require('../../../constants/ok')
 
 module.exports = [{
   method: POST,
@@ -18,7 +19,7 @@ module.exports = [{
     handler: async (request, h) => {
       const { email, password } = request.payload
       await resetPassword(email, password)
-      return h.response('ok')
+      return h.response(OK)
     }
   }
 }]

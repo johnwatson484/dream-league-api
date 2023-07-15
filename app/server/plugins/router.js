@@ -8,6 +8,8 @@ const routes = [].concat(
   require('../routes/league/player'),
   require('../routes/teamsheet'),
   require('../routes/results'),
+  require('../routes/goals'),
+  require('../routes/conceded'),
   require('../routes/gameweeks'),
   require('../routes/statistics'),
   require('../routes/meetings'),

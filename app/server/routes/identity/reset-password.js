@@ -2,6 +2,7 @@ const boom = require('@hapi/boom')
 const Joi = require('joi')
 const { setNewPassword } = require('../../../account')
 const { POST } = require('../../../constants/verbs')
+const { OK } = require('../../../constants/ok')
 
 module.exports = [{
   method: POST,
@@ -20,7 +21,7 @@ module.exports = [{
     handler: async (request, h) => {
       const { userId, password, token } = request.payload
       await setNewPassword(userId, password, token)
-      return h.response('ok')
+      return h.response(OK)
     }
   }
 }]
