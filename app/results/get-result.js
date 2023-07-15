@@ -1,11 +1,13 @@
+const { W, D, L } = require('../constants/results')
+
 const getResult = (goals, conceded) => {
   if (goals > conceded) {
-    return 'W'
+    return W
   }
   if (goals < conceded) {
-    return 'L'
+    return L
   }
-  return 'D'
+  return D
 }
 
 module.exports = {

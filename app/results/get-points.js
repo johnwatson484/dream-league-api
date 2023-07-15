@@ -1,8 +1,10 @@
+const { W, D } = require('../constants/results')
+
 const getPoints = (result) => {
   switch (result) {
-    case 'W':
+    case W:
       return 3
-    case 'D':
+    case D:
       return 1
     default:
       return 0
