@@ -1,0 +1,18 @@
+TRUNCATE TABLE public."managerKeepers" RESTART IDENTITY CASCADE;
+TRUNCATE TABLE public."managerPlayers" RESTART IDENTITY CASCADE;
+TRUNCATE TABLE public."meetings" RESTART IDENTITY CASCADE;
+TRUNCATE TABLE public."teamsheet"  RESTART IDENTITY CASCADE;
+TRUNCATE TABLE public."fixtures" RESTART IDENTITY CASCADE;
+TRUNCATE TABLE public."groups"  RESTART IDENTITY CASCADE;
+TRUNCATE TABLE public."summaries" RESTART IDENTITY CASCADE;
+TRUNCATE TABLE public."players" RESTART IDENTITY CASCADE;
+TRUNCATE TABLE public."gameweeks" RESTART IDENTITY;
+
+INSERT INTO gameweeks ("startDate")
+SELECT date::date 
+FROM generate_series(
+  '2023-08-04'::date,
+  '2024-05-10'::date,
+  '1 week'::interval
+) date;
+
