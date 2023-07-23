@@ -9,7 +9,7 @@ spec:
   - type: rabbitmq
     metadata:
       host: amqp://{{ .Values.container.messageUsername }}:{{ .Values.container.messagePassword }}@{{ .Values.container.messageHost }}:{{ .Values.container.messagePort }}/
-      queueName: {{ .Values.container.scoreSubscription }}
+      queueName: {{ .Values.container.scoreQueue }}
       mode: QueueLength
       value: {{ .Values.deployment.triggerQueueLength | quote }}
       minReplicaCount: {{ .Values.deployment.minReplicas | quote }}
