@@ -9,10 +9,45 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; p
 
 cd "${projectRoot}"
 
+livescores="false"
+
+show_help() {
+  echo "
+    Usage: path/to/ffc-pay-core [OPTION...]
+    Run payment services.
+
+    Options:
+      -l, --live-scores  include live score service
+      -h, --help       display this help text
+    "
+}
+
+while :; do
+  case $1 in
+    -l|--live-scores)
+      livescores="true"
+      ;;
+    -h|--help)   # Call a "show_help" function to display a synopsis, then exit.
+      show_help
+      exit
+      ;;
+    *)
+      break
+  esac
+
+  shift
+done
+
+cd "${projectRoot}"
+
+if [ "${livescores}" = "false" ]; then
+  args="--scale live-scores-publisher=0"
+fi
+
 docker-compose down
 
 docker-compose \
   -f docker-compose.yaml \
   -f docker-compose.override.yaml \
   -f docker-compose.link.yaml \
-  up $@
+  up $args $@

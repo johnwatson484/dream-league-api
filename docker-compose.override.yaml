@@ -43,6 +43,14 @@ services:
       - "15672:15672"
       - "5672:5672"
 
+  live-scores-publisher:
+    image: johnwatson484/live-scores-publisher
+    environment:
+      REDIS_HOST: dream-league-redis
+      MESSAGE_HOST: dream-league-message
+      MESSAGE_USERNAME: rabbitmq
+      MESSAGE_PASSWORD: rabbitmq
+
 volumes:
   postgres_data:
   redis_data:
