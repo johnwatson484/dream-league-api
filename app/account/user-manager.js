@@ -3,18 +3,12 @@ const bcrypt = require('bcrypt')
 const { addUserToRole, getUserRoles } = require('./role-manager')
 
 const userExists = async (email) => {
-  if (await getUser(email) !== null) {
-    return true
-  }
-  return false
+  return await getUser(email) !== null
 }
 
 const isMember = async (email) => {
   const memberEmail = await db.Email.findOne({ where: { address: email } })
-  if (memberEmail !== null) {
-    return true
-  }
-  return false
+  return memberEmail !== null
 }
 
 const getUser = async (email) => {
