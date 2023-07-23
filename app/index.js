@@ -1,8 +1,14 @@
-const { createServer } = require('./server')
+require('log-timestamp')
+const { start: startMessaging, stop: stopMessaging } = require('./messaging')
+const { start: startServer } = require('./server')
+const { SIGINT, SIGTERM } = require('./constants/signals')
 
-createServer()
-  .then(server => server.start())
-  .catch(err => {
-    console.log(err)
-    process.exit(1)
-  })
+process.on([SIGTERM, SIGINT], async () => {
+  await stopMessaging()
+  process.exit(0)
+})
+
+module.exports = (async () => {
+  await startMessaging()
+  await startServer()
+})()

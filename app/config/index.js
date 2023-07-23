@@ -1,27 +1,44 @@
-const joi = require('joi')
+const Joi = require('joi')
 const databaseConfig = require('./database')
-const envs = ['development', 'test', 'production']
+const { DEVELOPMENT, TEST, PRODUCTION } = require('../constants/environments')
 
-// Define config schema
-const schema = joi.object().keys({
-  port: joi.number().default(3001),
-  env: joi.string().valid(...envs).default(envs[0]),
-  jwtConfig: joi.object({
-    secret: joi.string(),
-    expiryInMinutes: joi.number().default(43800)
+const schema = Joi.object().keys({
+  port: Joi.number().default(3001),
+  env: Joi.string().valid(DEVELOPMENT, TEST, PRODUCTION).default(DEVELOPMENT),
+  jwtConfig: Joi.object({
+    secret: Joi.string(),
+    expiryInMinutes: Joi.number().default(43800)
   }),
-  smtp: joi.object({
-    host: joi.string().allow(''),
-    port: joi.number().default(587),
-    secure: joi.boolean().default(false),
-    requireTLS: joi.boolean().default(true),
-    auth: joi.object({
-      user: joi.string().allow(''),
-      pass: joi.string().allow('')
+  smtp: Joi.object({
+    host: Joi.string().allow(''),
+    port: Joi.number().default(587),
+    secure: Joi.boolean().default(false),
+    requireTLS: Joi.boolean().default(true),
+    auth: Joi.object({
+      user: Joi.string().allow(''),
+      pass: Joi.string().allow('')
     })
   }),
-  webUrl: joi.string().uri().default('http://localhost:3000'),
-  allowNonMemberRegistration: joi.boolean().default(false)
+  webUrl: Joi.string().uri().default('http://localhost:3000'),
+  allowNonMemberRegistration: Joi.boolean().default(false),
+  message: Joi.object({
+    host: Joi.string(),
+    port: Joi.number().default(5672),
+    username: Joi.string(),
+    password: Joi.string(),
+    scoreExchange: Joi.string().default('live-scores'),
+    scoreQueue: Joi.string().default('dream-league-api')
+  }),
+  cache: Joi.object({
+    socket: Joi.object({
+      host: Joi.string(),
+      port: Joi.number().default(6379),
+      tls: Joi.boolean().default(false)
+    }),
+    password: Joi.string().allow(''),
+    partition: Joi.string().default('dream-league-api'),
+    ttl: Joi.number().default(2592000) // 30 days
+  })
 })
 
 // Build config
@@ -43,10 +60,27 @@ const config = {
     }
   },
   webUrl: process.env.WEB_URL,
-  allowNonMemberRegistration: process.env.ALLOW_NON_MEMBER_REGISTRATION
+  allowNonMemberRegistration: process.env.ALLOW_NON_MEMBER_REGISTRATION,
+  message: {
+    host: process.env.MESSAGE_HOST,
+    port: process.env.MESSAGE_PORT,
+    username: process.env.MESSAGE_USERNAME,
+    password: process.env.MESSAGE_PASSWORD,
+    scoreExchange: process.env.SCORE_EXCHANGE,
+    scoreQueue: process.env.SCORE_QUEUE
+  },
+  cache: {
+    socket: {
+      host: process.env.REDIS_HOST,
+      port: process.env.REDIS_PORT,
+      tls: process.env.REDIS_TLS
+    },
+    password: process.env.REDIS_PASSWORD,
+    partition: process.env.REDIS_PARTITION,
+    ttl: process.env.REDIS_TTL
+  }
 }
 
-// Validate config
 const result = schema.validate(config, {
   abortEarly: false
 })
@@ -59,6 +93,6 @@ const value = {
   ...result.value,
   database: databaseConfig
 }
-value.isDev = value.env === 'development'
+value.isDev = value.env === DEVELOPMENT
 
 module.exports = value
