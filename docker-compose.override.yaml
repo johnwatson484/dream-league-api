@@ -46,10 +46,14 @@ services:
   live-scores-publisher:
     image: johnwatson484/live-scores-publisher
     environment:
-      REDIS_HOST: dream-league-redis
+      REDIS_HOST: dream-league-api-redis
       MESSAGE_HOST: dream-league-message
       MESSAGE_USERNAME: rabbitmq
       MESSAGE_PASSWORD: rabbitmq
+    entrypoint: >
+      sh -c "
+        scripts/wait-for dream-league-messaging:5672 --
+        node app"
 
 volumes:
   postgres_data:
