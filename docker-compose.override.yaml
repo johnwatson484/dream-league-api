@@ -11,6 +11,7 @@ services:
       - "9230:9229"
     command: >
       sh -c "
+        scripts/wait-for dream-league-message:5672 --
         scripts/wait-for dream-league-api-postgres:5432 --
         npm run migrate &&
         npm run seed &&
@@ -20,6 +21,10 @@ services:
       - ./package.json:/home/node/package.json
       - ./test/:/home/node/test/
       - ./test-output/:/home/node/test-output/
+    depends_on:
+      - dream-league-api-postgres
+      - dream-league-api-redis
+      - dream-league-message
 
   dream-league-api-postgres:
     ports:
@@ -27,5 +32,17 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  dream-league-api-redis:
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+
+  dream-league-message:
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
 volumes:
   postgres_data:
+  redis_data:

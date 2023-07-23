@@ -5,7 +5,7 @@ image: dream-league-api
 container:
   requestMemory: 120Mi
   requestCpu: 120m
-  limitMemory: 300Mi
+  limitMemory: 1000Mi
   limitCpu: 1000m
   port: 3001
   jwtSecret: secret
@@ -16,6 +16,14 @@ container:
   smtpUser:
   smtpPassword:
   webUrl: https://www.dreamleaguefantasyfootball.co.uk
+  redisHost:
+  redisPassword:
+  messageHost:
+  messagePort: 5672
+  messageUsername:
+  messagePassword:
+  scoreExchange: live-scores
+  scoreQueue: dream-league-api
 
 postgresService:
   postgresHost: dream-league-api-postgres
@@ -24,4 +32,12 @@ postgresService:
   postgresPassword: postgres
   postgresDatabase: dream_league_api
 
-deployment: {}
+deployment:
+  minReplicas: 1
+  maxReplicas: 5
+  cpuThreshold: 80
+  memoryThreshold: 80
+  triggerQueueLength: 50
+
+secret:
+  type: Opaque

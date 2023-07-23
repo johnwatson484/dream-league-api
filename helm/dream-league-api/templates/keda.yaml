@@ -1,0 +1,16 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ .Values.name }}
+spec:
+  scaleTargetRef:
+    name: rabbitmq-deployment
+  triggers:
+  - type: rabbitmq
+    metadata:
+      host: amqp://{{ .Values.container.messageUsername }}:{{ .Values.container.messagePassword }}@{{ .Values.container.messageHost }}:{{ .Values.container.messagePort }}/
+      queueName: {{ .Values.container.scoreSubscription }}
+      mode: QueueLength
+      value: {{ .Values.deployment.triggerQueueLength | quote }}
+      minReplicaCount: {{ .Values.deployment.minReplicas | quote }}
+      maxReplicaCount: {{ .Values.deployment.maxReplicas | quote }}

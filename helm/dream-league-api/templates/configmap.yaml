@@ -2,16 +2,15 @@
 {{- define "dream-league-api.configmap" -}}
 data:
   NODE_ENV: {{ quote .Values.environment }}
-  PORT: {{ quote .Values.container.port }}
-  POSTGRES_USERNAME: {{ quote .Values.postgresService.postgresUsername }}
-  POSTGRES_PASSWORD: {{ quote .Values.postgresService.postgresPassword }}
+  PORT: {{ quote .Values.container.port }}  
   POSTGRES_DB: {{ quote .Values.postgresService.postgresDatabase }}
   POSTGRES_HOST: {{ quote .Values.postgresService.postgresHost }}
   POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
-  JWT_SECRET: {{ quote .Values.container.jwtSecret }}
   JWT_EXPIRY_IN_MINUTES: {{ quote .Values.container.jwtExpiryInMinutes }}
   SMTP_HOST: {{ quote .Values.container.smtpHost }}
-  SMTP_USER: {{ quote .Values.container.smtpUser }}
-  SMTP_PASSWORD: {{ quote .Values.container.smtpPassword }}
   WEB_URL: {{ quote .Values.container.webUrl }}
+  REDIS_HOST: {{ quote .Values.container.redisHost }}
+  MESSAGE_HOST: {{ quote .Values.container.messageHost }}
+  SCORE_EXCHANGE: {{ quote .Values.container.scoreExchange }}
+  SCORE_QUEUE: {{ quote .Values.container.scoreQueue }}
 {{- end -}}
