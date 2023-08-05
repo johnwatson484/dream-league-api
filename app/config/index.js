@@ -37,7 +37,7 @@ const schema = Joi.object().keys({
     }),
     password: Joi.string().allow(''),
     partition: Joi.string().default('dream-league-api'),
-    ttl: Joi.number().default(2592000) // 30 days
+    ttl: Joi.number().default(1468800) // 7 days
   })
 })
 

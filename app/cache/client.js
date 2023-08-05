@@ -1,6 +1,7 @@
 const { createClient } = require('redis')
 const { cache: config } = require('../config')
 const { getFullKey } = require('./get-full-key')
+const { getKeyPrefix } = require('./get-key-prefix')
 
 let client
 
@@ -18,6 +19,11 @@ const stop = async () => {
   }
 }
 
+const getKeys = async (cache) => {
+  const prefix = getKeyPrefix(cache)
+  return client.keys(`${prefix}:*`)
+}
+
 const get = async (cache, key) => {
   const fullKey = getFullKey(cache, key)
   const value = await client.get(fullKey)
@@ -33,6 +39,7 @@ const set = async (cache, key, value) => {
 module.exports = {
   start,
   stop,
+  getKeys,
   get,
   set
 }

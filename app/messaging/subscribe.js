@@ -1,5 +1,6 @@
 const amqp = require('amqplib')
 const { message } = require('../config')
+const { updateLiveScores } = require('../live-scores')
 let connection
 let channel
 
@@ -16,12 +17,7 @@ const start = async (aircraft) => {
   await channel.bindQueue(q.queue, scoreExchange, '')
   console.log('Waiting for score updates')
 
-  await channel.consume(q.queue, async function (msg) {
-    if (msg.content) {
-      const body = JSON.parse(msg.content.toString())
-      console.log('Score received:', body)
-    }
-  }, {
+  await channel.consume(q.queue, updateLiveScores, {
     noAck: true
   })
 }
