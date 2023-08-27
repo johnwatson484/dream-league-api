@@ -18,4 +18,6 @@ const register = async (email, password) => {
   }
 }
 
-module.exports = register
+module.exports = {
+  register
+}
