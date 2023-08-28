@@ -21,7 +21,8 @@ const stop = async () => {
 
 const getKeys = async (cache) => {
   const prefix = getKeyPrefix(cache)
-  return client.keys(`${prefix}:*`)
+  const keys = await client.keys(`${prefix}:*`)
+  return keys.map((key) => key.replace(`${prefix}:`, ''))
 }
 
 const get = async (cache, key) => {
