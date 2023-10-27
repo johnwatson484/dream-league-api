@@ -7,6 +7,7 @@ module.exports = [{
   options: {
     handler: async (request, h) => {
       const matches = await getLiveScores()
+      console.log(matches)
       return h.response(matches)
     }
   }
