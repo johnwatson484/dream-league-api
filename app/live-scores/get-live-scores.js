@@ -1,4 +1,5 @@
 const { getKeys, get } = require('../cache')
+const { sortArray } = require('../utils/sort-array')
 
 const getLiveScores = async () => {
   const matches = []
@@ -7,7 +8,7 @@ const getLiveScores = async () => {
     const match = await get('live-scores', key)
     matches.push(match)
   }
-  return matches
+  return matches.sort((a, b) => { return sortArray(b.date, a.date) || sortArray(a.competition, b.competition) || sortArray(a.homeTeam, b.homeTeam) })
 }
 
 module.exports = {
