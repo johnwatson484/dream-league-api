@@ -1,6 +1,6 @@
 {
   "name": "dream-league-api",
-  "version": "1.7.11",
+  "version": "1.7.12",
   "description": "Dream League backend service",
   "main": "app/index.js",
   "scripts": {
