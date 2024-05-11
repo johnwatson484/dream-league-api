@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     name: DataTypes.STRING,
+    shortName: DataTypes.STRING,
     rank: DataTypes.INTEGER
   }, {
     tableName: 'divisions',
