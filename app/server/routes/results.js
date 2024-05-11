@@ -1,8 +1,8 @@
 const Joi = require('joi')
 const boom = require('@hapi/boom')
-const { getSummary, getInput, update } = require('../../results')
+const { getSummary, getInput, update, deleteResults } = require('../../results')
 const { sendResults } = require('../../notifications')
-const { GET, POST } = require('../../constants/verbs')
+const { GET, POST, DELETE } = require('../../constants/verbs')
 
 module.exports = [{
   method: GET,
@@ -49,6 +49,24 @@ module.exports = [{
     },
     handler: async (request, h) => {
       await update(request.payload)
+      return h.response(true)
+    }
+  }
+}, {
+  method: DELETE,
+  path: '/results',
+  options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
+    validate: {
+      payload: Joi.object({
+        gameweekId: Joi.number().required()
+      }),
+      failAction: async (_request, _h, error) => {
+        return boom.badRequest(error)
+      }
+    },
+    handler: async (request, h) => {
+      await deleteResults(request.payload.gameweekId)
       return h.response(true)
     }
   }
