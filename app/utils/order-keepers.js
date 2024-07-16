@@ -5,5 +5,5 @@ const orderKeepers = (keepers) => {
 }
 
 module.exports = {
-  orderKeepers
+  orderKeepers,
 }

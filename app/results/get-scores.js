@@ -17,7 +17,7 @@ const getScores = async (gameweekId, managers, cup = false) => {
       conceded: conceded.length,
       margin: goals.length - conceded.length,
       result,
-      scorers
+      scorers,
     })
   }
   return scores
@@ -41,5 +41,5 @@ const getScorers = async (goals) => {
 }
 
 module.exports = {
-  getScores
+  getScores,
 }

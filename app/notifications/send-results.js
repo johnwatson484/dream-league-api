@@ -14,5 +14,5 @@ const sendResults = async (gameweekId) => {
 }
 
 module.exports = {
-  sendResults
+  sendResults,
 }

@@ -19,7 +19,7 @@ const getForm = async (weeksToInclude = 6) => {
       managerId: manager.managerId,
       manager: manager.name,
       points,
-      results
+      results,
     })
   })
   return orderForm(form)
@@ -31,5 +31,5 @@ const orderForm = (form) => {
 }
 
 module.exports = {
-  getForm
+  getForm,
 }

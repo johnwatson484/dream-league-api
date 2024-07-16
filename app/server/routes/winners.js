@@ -8,6 +8,6 @@ module.exports = [{
     handler: async (_request, h) => {
       const winners = await getAllWinners()
       return h.response(winners)
-    }
-  }
+    },
+  },
 }]

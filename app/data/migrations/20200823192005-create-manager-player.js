@@ -4,17 +4,17 @@ module.exports = {
       managerId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
       },
       playerId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
       },
-      substitute: Sequelize.BOOLEAN
+      substitute: Sequelize.BOOLEAN,
     })
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('managerPlayers')
-  }
+  },
 }

@@ -17,5 +17,5 @@ const getCupWeeks = async () => {
 }
 
 module.exports = {
-  getCupWeeks
+  getCupWeeks,
 }

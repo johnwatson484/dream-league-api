@@ -10,6 +10,6 @@ module.exports = [{
         return h.response(await db.Gameweek.findAll({ include: { model: db.Summary, as: 'summary', attributes: [], required: true } }))
       }
       return h.response(await db.Gameweek.findAll())
-    }
-  }
+    },
+  },
 }]

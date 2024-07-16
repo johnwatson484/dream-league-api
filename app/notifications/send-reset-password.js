@@ -9,5 +9,5 @@ const sendResults = async (email, token, userId) => {
 }
 
 module.exports = {
-  sendResults
+  sendResults,
 }

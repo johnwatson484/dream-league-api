@@ -9,5 +9,5 @@ module.exports = {
   getInput,
   update,
   deleteResults,
-  getAllWinners
+  getAllWinners,
 }

@@ -9,16 +9,16 @@ module.exports = [{
   options: {
     handler: async (_request, h) => {
       return h.response(await db.Cup.findAll({ order: [['name']] }))
-    }
-  }
+    },
+  },
 }, {
   method: GET,
   path: '/cup',
   options: {
     handler: async (request, h) => {
       return h.response(await db.Cup.findOne({ where: { cupId: request.query.cupId } }))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/cup/create',
@@ -28,16 +28,16 @@ module.exports = [{
       payload: Joi.object({
         name: Joi.string(),
         hasGroupStage: Joi.boolean().default(false),
-        knockoutLegs: Joi.number().default(1)
+        knockoutLegs: Joi.number().default(1),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.Cup.create(request.payload))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/cup/edit',
@@ -48,16 +48,16 @@ module.exports = [{
         cupId: Joi.number().required(),
         name: Joi.string(),
         hasGroupStage: Joi.boolean(),
-        knockoutLegs: Joi.number().required()
+        knockoutLegs: Joi.number().required(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.Cup.upsert(request.payload))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/cup/delete',
@@ -65,14 +65,14 @@ module.exports = [{
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: Joi.object({
-        cupId: Joi.number()
+        cupId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.Cup.destroy({ where: { cupId: request.payload.cupId } }))
-    }
-  }
+    },
+  },
 }]

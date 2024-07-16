@@ -4,7 +4,7 @@ module.exports = {
       historyId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
       },
       year: Sequelize.INTEGER,
       teams: Sequelize.INTEGER,
@@ -12,10 +12,10 @@ module.exports = {
       league2: Sequelize.STRING,
       cup: Sequelize.STRING,
       leagueCup: Sequelize.STRING,
-      plate: Sequelize.STRING
+      plate: Sequelize.STRING,
     })
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('history')
-  }
+  },
 }

@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     playerId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     teamId: DataTypes.INTEGER,
     position: DataTypes.STRING,
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.VIRTUAL,
       get () {
         return `${this.firstName} ${this.lastName}`.trim()
-      }
+      },
     },
     lastNameFirstName: {
       type: DataTypes.VIRTUAL,
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
           return `${this.lastName}, ${this.firstName}`.trim()
         }
         return this.lastName
-      }
+      },
     },
     lastNameInitial: {
       type: DataTypes.VIRTUAL,
@@ -33,33 +33,33 @@ module.exports = (sequelize, DataTypes) => {
           return `${this.lastName}, ${this.firstName[0]}`.trim()
         }
         return this.lastName
-      }
+      },
     },
     hasFirstName: {
       type: DataTypes.VIRTUAL,
       get () {
         return this.firstName != null
-      }
-    }
+      },
+    },
   }, {
     tableName: 'players',
     freezeTableName: true,
-    timestamps: false
+    timestamps: false,
   })
   Player.associate = function (models) {
     Player.belongsTo(models.Team, {
       foreignKey: 'teamId',
-      as: 'team'
+      as: 'team',
     })
     Player.belongsToMany(models.Manager, {
       through: 'managerPlayers',
       foreignKey: 'playerId',
       as: 'managers',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
     })
     Player.hasMany(models.Goal, {
       foreignKey: 'playerId',
-      as: 'goals'
+      as: 'goals',
     })
   }
   return Player

@@ -9,20 +9,20 @@ module.exports = [{
   options: {
     handler: async (_request, h) => {
       return h.response(await db.Meeting.findAll({ order: ['date'] }))
-    }
-  }
+    },
+  },
 }, {
   method: GET,
   path: '/meeting',
   handler: async (request, h) => {
     return h.response(await db.Meeting.findOne({ where: { meetingId: request.query.meetingId } }))
-  }
+  },
 }, {
   method: GET,
   path: '/meetings/next',
   handler: async (_request, h) => {
     return h.response(await db.Meeting.findOne({ where: { date: { [db.Sequelize.Op.gt]: new Date() } }, raw: true }))
-  }
+  },
 }, {
   method: POST,
   path: '/meeting/create',
@@ -30,16 +30,16 @@ module.exports = [{
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: Joi.object({
-        date: Joi.date()
+        date: Joi.date(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.Meeting.create(request.payload))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/meeting/edit',
@@ -48,16 +48,16 @@ module.exports = [{
     validate: {
       payload: Joi.object({
         meetingId: Joi.number(),
-        date: Joi.date()
+        date: Joi.date(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.Meeting.upsert(request.payload))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/meeting/delete',
@@ -65,16 +65,16 @@ module.exports = [{
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: Joi.object({
-        meetingId: Joi.number()
+        meetingId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.Meeting.destroy({ where: { meetingId: request.payload.meetingId } }))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/meeting/refresh',
@@ -83,14 +83,14 @@ module.exports = [{
     validate: {
       payload: Joi.object({
         startDate: Joi.date(),
-        meetings: Joi.number()
+        meetings: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (_request, h) => {
       return h.response()
-    }
-  }
+    },
+  },
 }]

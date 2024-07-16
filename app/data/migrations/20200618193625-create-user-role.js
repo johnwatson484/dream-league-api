@@ -4,16 +4,16 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
       },
       roleId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        allowNull: false
-      }
+        allowNull: false,
+      },
     })
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('userRoles')
-  }
+  },
 }

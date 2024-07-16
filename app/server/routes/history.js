@@ -12,8 +12,8 @@ module.exports = [{
         return h.response(await db.History.findOne({ where: { historyId: request.query.historyId } }))
       }
       return h.response(await db.History.findAll({ order: [['year', 'DESC']] }))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/history/create',
@@ -27,16 +27,16 @@ module.exports = [{
         league2: Joi.string().allow(''),
         cup: Joi.string().allow(''),
         leagueCup: Joi.string().allow(''),
-        plate: Joi.string().allow('')
+        plate: Joi.string().allow(''),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.History.create(request.payload))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/history/edit',
@@ -51,16 +51,16 @@ module.exports = [{
         league2: Joi.string().allow(''),
         cup: Joi.string().allow(''),
         leagueCup: Joi.string().allow(''),
-        plate: Joi.string().allow('')
+        plate: Joi.string().allow(''),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.History.upsert(request.payload))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/history/delete',
@@ -68,14 +68,14 @@ module.exports = [{
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: Joi.object({
-        historyId: Joi.number()
+        historyId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.History.destroy({ where: { historyId: request.payload.historyId } }))
-    }
-  }
+    },
+  },
 }]

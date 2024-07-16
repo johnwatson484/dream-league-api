@@ -15,5 +15,5 @@ const getLeagueTeams = async () => {
 module.exports = {
   getManager,
   getLeaguePlayers,
-  getLeagueTeams
+  getLeagueTeams,
 }

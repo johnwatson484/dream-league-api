@@ -12,7 +12,7 @@ const mapPlayer = async (player) => {
       firstName,
       lastName,
       position,
-      teamId: team.teamId
+      teamId: team.teamId,
     }
   }
   return undefined
@@ -33,5 +33,5 @@ const mapLastName = (player) => {
 }
 
 module.exports = {
-  mapPlayer
+  mapPlayer,
 }

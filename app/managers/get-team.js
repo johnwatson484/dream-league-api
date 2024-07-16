@@ -14,30 +14,30 @@ const getTeam = async (managerId) => {
         attributes: ['playerId', 'firstName', 'lastName', 'position'],
         through: { attributes: ['substitute'] },
         include: [{
-          model: db.Team, as: 'team', attributes: ['teamId', 'name']
+          model: db.Team, as: 'team', attributes: ['teamId', 'name'],
         }, {
-          model: db.Goal, as: 'goals', attributes: ['goalId', 'playerId', 'cup']
-        }]
+          model: db.Goal, as: 'goals', attributes: ['goalId', 'playerId', 'cup'],
+        }],
       },
       {
         model: db.Team,
         as: 'keepers',
         attributes: ['teamId', 'name'],
         through: { attributes: ['substitute'] },
-        include: { model: db.Concede, as: 'conceded', attributes: ['concedeId', 'teamId', 'cup'] }
-      }
+        include: { model: db.Concede, as: 'conceded', attributes: ['concedeId', 'teamId', 'cup'] },
+      },
     ],
-    nest: true
+    nest: true,
   })
 
   return {
     managerId: manager.managerId,
     name: manager.name,
     keepers: orderKeepers(manager.keepers.map(x => mapKeeper(x.dataValues))),
-    players: orderPlayers(manager.players.map(mapPlayer))
+    players: orderPlayers(manager.players.map(mapPlayer)),
   }
 }
 
 module.exports = {
-  getTeam
+  getTeam,
 }

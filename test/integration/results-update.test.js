@@ -47,30 +47,30 @@ describe('get results input', () => {
     gameweekId: 1,
     conceded: [{
       teamId: 65,
-      conceded: 0
+      conceded: 0,
     }, {
       teamId: 60,
-      conceded: 1
+      conceded: 1,
     }, {
       teamId: 28,
-      conceded: 2
+      conceded: 2,
     }, {
       teamId: 1,
-      conceded: 1
+      conceded: 1,
     }],
     goals: [{
       playerId: 2156,
-      goals: 0
+      goals: 0,
     }, {
       playerId: 773,
-      goals: 1
+      goals: 1,
     }, {
       playerId: 291,
-      goals: 2
+      goals: 2,
     }, {
       playerId: 1,
-      goals: 1
-    }]
+      goals: 1,
+    }],
   }
 
   test('should add conceded for team conceding one', async () => {

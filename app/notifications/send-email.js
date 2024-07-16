@@ -9,11 +9,11 @@ const sendEmail = async (recipients, subject, body) => {
       from: config.auth.user,
       to: recipients.toString(),
       subject,
-      html: body
+      html: body,
     })
   }
 }
 
 module.exports = {
-  sendEmail
+  sendEmail,
 }

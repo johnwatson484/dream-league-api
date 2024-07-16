@@ -3,5 +3,5 @@ const { sendResetPassword } = require('./send-reset-password')
 
 module.exports = {
   sendResults,
-  sendResetPassword
+  sendResetPassword,
 }

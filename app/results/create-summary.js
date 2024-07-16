@@ -24,10 +24,10 @@ const getSummary = async (gameweekId) => {
     winners,
     table,
     cupScores,
-    groups
+    groups,
   }
 }
 
 module.exports = {
-  createSummary
+  createSummary,
 }

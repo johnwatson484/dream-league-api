@@ -11,12 +11,12 @@ module.exports = [{
       return h.response(await db.Group.findAll({
         include: [
           { model: db.Cup, as: 'cup' },
-          { model: db.Manager, as: 'managers' }
+          { model: db.Manager, as: 'managers' },
         ],
-        order: [['name']]
+        order: [['name']],
       }))
-    }
-  }
+    },
+  },
 }, {
   method: GET,
   path: '/group',
@@ -26,12 +26,12 @@ module.exports = [{
         where: { groupId: request.query.groupId },
         include: [
           { model: db.Cup, as: 'cup', attributes: [] },
-          { model: db.Manager, as: 'managers', attributes: [] }
+          { model: db.Manager, as: 'managers', attributes: [] },
         ],
-        attributes: ['groupId', 'cupId', 'name', 'groupLegs', 'teamsAdvancing', [db.Sequelize.col('cup.name'), 'cupName']]
+        attributes: ['groupId', 'cupId', 'name', 'groupLegs', 'teamsAdvancing', [db.Sequelize.col('cup.name'), 'cupName']],
       }))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/group/create',
@@ -43,11 +43,11 @@ module.exports = [{
         name: Joi.string(),
         groupLegs: Joi.number(),
         teamsAdvancing: Joi.number(),
-        managers: Joi.array().items(Joi.number()).single()
+        managers: Joi.array().items(Joi.number()).single(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       const group = await db.Group.create(request.payload)
@@ -57,8 +57,8 @@ module.exports = [{
         }
       }
       return h.response(group)
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/group/edit',
@@ -71,11 +71,11 @@ module.exports = [{
         name: Joi.string(),
         groupLegs: Joi.number(),
         teamsAdvancing: Joi.number(),
-        managers: Joi.array().items(Joi.number()).single()
+        managers: Joi.array().items(Joi.number()).single(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       await db.Group.upsert(request.payload)
@@ -96,8 +96,8 @@ module.exports = [{
         await db.ManagerGroup.destroy({ where: { groupId: request.payload.groupId } })
       }
       return h.response()
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/group/delete',
@@ -105,16 +105,16 @@ module.exports = [{
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: Joi.object({
-        groupId: Joi.number()
+        groupId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       await db.ManagerGroup.destroy({ where: { groupId: request.payload.groupId } })
       await db.Group.destroy({ where: { groupId: request.payload.groupId } })
       return h.response()
-    }
-  }
+    },
+  },
 }]

@@ -8,7 +8,7 @@ const getTopScorers = async () => {
     group: ['playerId'],
     attributes: ['playerId', [db.sequelize.fn('COUNT', db.sequelize.col('goalId')), 'goals']],
     order: [[db.sequelize.col('goals'), 'DESC']],
-    where: { cup: false }
+    where: { cup: false },
   })
 
   goals = goals.slice(0, playersToInclude)
@@ -20,13 +20,13 @@ const getTopScorers = async () => {
       where: { playerId: goal.playerId },
       include: [
         { model: db.Manager, as: 'managers', attributes: [], through: { attributes: [] } },
-        { model: db.Team, as: 'team', attributes: [] }
+        { model: db.Team, as: 'team', attributes: [] },
       ],
-      attributes: ['playerId', 'firstName', 'lastName', [db.Sequelize.col('team.name'), 'team'], [db.Sequelize.col('managers.name'), 'manager'], [db.Sequelize.col('managers.managerId'), 'managerId']]
+      attributes: ['playerId', 'firstName', 'lastName', [db.Sequelize.col('team.name'), 'team'], [db.Sequelize.col('managers.name'), 'manager'], [db.Sequelize.col('managers.managerId'), 'managerId']],
     })
     scorers.push({
       ...player,
-      goals: Number(goal.goals)
+      goals: Number(goal.goals),
     })
   }
 
@@ -39,5 +39,5 @@ const orderScorers = (scorers) => {
 }
 
 module.exports = {
-  getTopScorers
+  getTopScorers,
 }

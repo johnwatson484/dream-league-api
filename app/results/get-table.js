@@ -1,4 +1,3 @@
-
 const { getGameweekResults } = require('./get-gameweek-results')
 const { orderTable } = require('./order-table')
 const { W, D, L } = require('../constants/results')
@@ -24,12 +23,12 @@ const getTable = async (gameweekId, managers) => {
       gf,
       ga,
       gd,
-      points
+      points,
     })
   }
   return orderTable(rows)
 }
 
 module.exports = {
-  getTable
+  getTable,
 }

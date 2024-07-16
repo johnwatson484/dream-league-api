@@ -8,10 +8,10 @@ const mapPlayer = (player, teamsheet) => {
     team: player.dataValues.team.dataValues.name,
     sourceName: teamsheetEntry ? teamsheetEntry.player : '',
     matchDistance: teamsheetEntry ? teamsheetEntry.distance : '',
-    substitute: player.managerPlayers.dataValues.substitute
+    substitute: player.managerPlayers.dataValues.substitute,
   }
 }
 
 module.exports = {
-  mapPlayer
+  mapPlayer,
 }

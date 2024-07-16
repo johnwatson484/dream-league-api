@@ -6,5 +6,5 @@ const orderPlayers = (players) => {
 }
 
 module.exports = {
-  orderPlayers
+  orderPlayers,
 }

@@ -9,18 +9,18 @@ const getTeamsheet = async () => {
         as: 'players',
         attributes: ['playerId', 'firstName', 'lastName', 'position'],
         through: { attributes: ['substitute'] },
-        include: { model: db.Team, as: 'team', attributes: ['teamId', 'name'] }
+        include: { model: db.Team, as: 'team', attributes: ['teamId', 'name'] },
       },
       { model: db.Team, as: 'keepers', attributes: ['teamId', 'name'], through: { attributes: ['substitute'] } },
-      { model: db.Teamsheet, as: 'teamsheet' }
+      { model: db.Teamsheet, as: 'teamsheet' },
     ],
     nest: true,
-    order: [['name']]
+    order: [['name']],
   })
 
   return managers.map(x => mapTeams(x.dataValues))
 }
 
 module.exports = {
-  getTeamsheet
+  getTeamsheet,
 }

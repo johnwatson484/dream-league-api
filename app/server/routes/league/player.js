@@ -13,28 +13,28 @@ module.exports = [{
       return h.response(await db.Player.findAll({
         where: {
           [db.Sequelize.Op.or]: [{
-            lastName: { [db.Sequelize.Op.iLike]: search }
+            lastName: { [db.Sequelize.Op.iLike]: search },
           }, {
-            firstName: { [db.Sequelize.Op.iLike]: search }
+            firstName: { [db.Sequelize.Op.iLike]: search },
           }, {
-            '$team.name$': { [db.Sequelize.Op.iLike]: search }
-          }]
+            '$team.name$': { [db.Sequelize.Op.iLike]: search },
+          }],
         },
         include: [{
-          model: db.Team, as: 'team', attributes: ['name']
+          model: db.Team, as: 'team', attributes: ['name'],
         }, {
-          model: db.Manager, as: 'managers', attributes: ['managerId', 'name'], through: { attributes: [] }
+          model: db.Manager, as: 'managers', attributes: ['managerId', 'name'], through: { attributes: [] },
         }],
-        order: [['team', 'name'], ['lastName'], ['firstName']]
+        order: [['team', 'name'], ['lastName'], ['firstName']],
       }))
-    }
-  }
+    },
+  },
 }, {
   method: GET,
   path: '/league/player',
   handler: async (request, h) => {
     return h.response(await db.Player.findOne({ where: { playerId: request.query.playerId } }))
-  }
+  },
 }, {
   method: POST,
   path: '/league/player/create',
@@ -45,16 +45,16 @@ module.exports = [{
         firstName: Joi.string().allow(''),
         lastName: Joi.string(),
         position: Joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
-        teamId: Joi.number()
+        teamId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.Player.create(request.payload))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/league/player/edit',
@@ -66,16 +66,16 @@ module.exports = [{
         firstName: Joi.string().allow(''),
         lastName: Joi.string(),
         position: Joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
-        teamId: Joi.number()
+        teamId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.Player.upsert(request.payload))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/league/player/delete',
@@ -83,37 +83,37 @@ module.exports = [{
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: Joi.object({
-        playerId: Joi.number()
+        playerId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.Player.destroy({ where: { playerId: request.payload.playerId } }))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/league/players/autocomplete',
   options: {
     validate: {
       payload: Joi.object({
-        prefix: Joi.string()
+        prefix: Joi.string(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       const players = await db.Player.findAll({
         where: { lastName: { [db.Sequelize.Op.iLike]: request.payload.prefix + '%' } },
         include: [{ model: db.Team, as: 'team', attributes: ['name'] }],
-        order: [['lastName'], ['firstName']]
+        order: [['lastName'], ['firstName']],
       })
       return h.response(players || [])
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/league/players/refresh',
@@ -124,15 +124,15 @@ module.exports = [{
           firstName: Joi.string().allow(''),
           lastName: Joi.string().allow(''),
           position: Joi.string().allow(''),
-          team: Joi.string().allow('')
-        }))
+          team: Joi.string().allow(''),
+        })),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await refresh(request.payload.players))
-    }
-  }
+    },
+  },
 }]

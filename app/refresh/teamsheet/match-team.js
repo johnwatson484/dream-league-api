@@ -31,5 +31,5 @@ const isKeeper = (position) => {
 }
 
 module.exports = {
-  matchTeam
+  matchTeam,
 }

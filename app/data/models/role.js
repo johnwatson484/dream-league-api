@@ -3,20 +3,20 @@ module.exports = (sequelize, DataTypes) => {
     roleId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
   }, {
     tableName: 'roles',
     freezeTableName: true,
-    timestamps: false
+    timestamps: false,
   })
   Role.associate = function (models) {
     Role.belongsToMany(models.User, {
       through: 'userRole',
       foreignKey: 'roleId',
       as: 'users',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
     })
   }
   return Role

@@ -27,7 +27,7 @@ const getCupScores = async (gameweekId, managers) => {
         homeMargin,
         awayScore,
         awayMargin,
-        result
+        result,
       })
     }
   }
@@ -46,5 +46,5 @@ const getCupResult = (homeMargin, awayMargin) => {
 }
 
 module.exports = {
-  getCupScores
+  getCupScores,
 }

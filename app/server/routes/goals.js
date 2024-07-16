@@ -12,10 +12,10 @@ module.exports = [{
     handler: async (_request, h) => {
       return h.response(await db.Goal.findAll({
         include: [{ model: db.Player, as: 'player', include: [{ model: db.Team, as: 'team' }] }],
-        order: [['gameweekId', 'DESC'], ['goalId', 'DESC']]
+        order: [['gameweekId', 'DESC'], ['goalId', 'DESC']],
       }))
-    }
-  }
+    },
+  },
 }, {
   method: GET,
   path: '/goal',
@@ -23,10 +23,10 @@ module.exports = [{
     handler: async (request, h) => {
       return h.response(await db.Goal.findOne({
         where: { goalId: request.query.goalId },
-        include: [{ model: db.Player, as: 'player', include: [{ model: db.Team, as: 'team' }] }]
+        include: [{ model: db.Player, as: 'player', include: [{ model: db.Team, as: 'team' }] }],
       }))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/goal/delete',
@@ -34,17 +34,17 @@ module.exports = [{
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: Joi.object({
-        goalId: Joi.number()
+        goalId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       const goal = await db.Goal.findOne({ where: { goalId: request.payload.goalId } })
       await db.Goal.destroy({ where: { goalId: request.payload.goalId } })
       await update({ gameweekId: goal.gameweekId })
       return h.response(OK)
-    }
-  }
+    },
+  },
 }]

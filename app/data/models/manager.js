@@ -3,50 +3,50 @@ module.exports = (sequelize, DataTypes) => {
     managerId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     name: DataTypes.STRING,
-    alias: DataTypes.STRING
+    alias: DataTypes.STRING,
   }, {
     tableName: 'managers',
     freezeTableName: true,
-    timestamps: false
+    timestamps: false,
   })
   Manager.associate = function (models) {
     Manager.belongsToMany(models.Player, {
       through: 'managerPlayers',
       foreignKey: 'managerId',
       as: 'players',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
     })
     Manager.belongsToMany(models.Team, {
       through: 'managerKeepers',
       foreignKey: 'managerId',
       as: 'keepers',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
     })
     Manager.hasMany(models.Teamsheet, {
       foreignKey: 'managerId',
-      as: 'teamsheet'
+      as: 'teamsheet',
     })
     Manager.hasMany(models.Goal, {
       foreignKey: 'managerId',
-      as: 'goals'
+      as: 'goals',
     })
     Manager.hasMany(models.Concede, {
       foreignKey: 'managerId',
-      as: 'conceded'
+      as: 'conceded',
     })
     Manager.belongsToMany(models.Group, {
       through: 'managerGroups',
       foreignKey: 'managerId',
       as: 'groups',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
     })
     Manager.hasMany(models.Email, {
       foreignKey: 'managerId',
       as: 'emails',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
     })
   }
   return Manager

@@ -3,5 +3,5 @@ const { refresh: refreshTeamsheet } = require('./teamsheet')
 
 module.exports = {
   refreshPlayers,
-  refreshTeamsheet
+  refreshTeamsheet,
 }

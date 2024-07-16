@@ -33,5 +33,5 @@ const calculateDistance = (a, b) => {
 }
 
 module.exports = {
-  calculateDistance
+  calculateDistance,
 }

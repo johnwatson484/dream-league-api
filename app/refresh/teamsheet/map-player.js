@@ -23,10 +23,10 @@ const mapPlayer = (players, matchPlayer, position) => {
 
   return {
     bestMatchId: bestPlayerId,
-    distance: bestDistance
+    distance: bestDistance,
   }
 }
 
 module.exports = {
-  mapPlayer
+  mapPlayer,
 }

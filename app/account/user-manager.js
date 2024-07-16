@@ -14,7 +14,7 @@ const isMember = async (email) => {
 const getUser = async (email) => {
   const user = await db.User.findOne({
     where: { email },
-    raw: true
+    raw: true,
   })
   // sequelize bug restricts use of include on many to many to only one result
   // therefore pulling roles in separate query
@@ -29,7 +29,7 @@ const createUser = async (email, password) => {
 
   const user = await db.User.create({
     email,
-    passwordHash
+    passwordHash,
   })
 
   await addUserToRole(user.userId, 'user')
@@ -40,5 +40,5 @@ module.exports = {
   userExists,
   getUser,
   createUser,
-  isMember
+  isMember,
 }

@@ -10,5 +10,5 @@ const updateLiveScores = async (msg) => {
 }
 
 module.exports = {
-  updateLiveScores
+  updateLiveScores,
 }

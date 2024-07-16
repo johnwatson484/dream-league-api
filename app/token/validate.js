@@ -3,7 +3,7 @@ const db = require('../data')
 const validate = async (decoded, _request, _h) => {
   const user = await db.User.findOne({
     raw: true,
-    where: { userId: decoded.userId }
+    where: { userId: decoded.userId },
   })
   if (user === null) {
     return { isValid: false }
@@ -12,5 +12,5 @@ const validate = async (decoded, _request, _h) => {
 }
 
 module.exports = {
-  validate
+  validate,
 }

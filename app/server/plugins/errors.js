@@ -10,11 +10,11 @@ module.exports = {
             statusCode: response.output.statusCode,
             message: response.message,
             payloadMessage: response.data?.payload?.message,
-            stack: response.data?.stack
+            stack: response.data?.stack,
           })
         }
         return h.continue
       })
-    }
-  }
+    },
+  },
 }

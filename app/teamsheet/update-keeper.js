@@ -5,7 +5,7 @@ const update = async (payload) => {
   await updateTeams(payload.teamIds, manager)
   await updateSubs(payload.teamSubs, payload.managerId)
   return {
-    success: true
+    success: true,
   }
 }
 
@@ -90,13 +90,13 @@ const getManager = async (managerId) => {
         model: db.Team,
         as: 'keepers',
         attributes: ['teamId', 'name'],
-        through: { attributes: ['substitute'] }
-      }
+        through: { attributes: ['substitute'] },
+      },
     ],
-    nest: true
+    nest: true,
   })
 }
 
 module.exports = {
-  update
+  update,
 }

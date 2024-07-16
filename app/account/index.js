@@ -8,5 +8,5 @@ module.exports = {
   login,
   resetPassword,
   setNewPassword,
-  getUser
+  getUser,
 }

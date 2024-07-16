@@ -3,20 +3,20 @@ module.exports = (sequelize, DataTypes) => {
     divisionId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     name: DataTypes.STRING,
     shortName: DataTypes.STRING,
-    rank: DataTypes.INTEGER
+    rank: DataTypes.INTEGER,
   }, {
     tableName: 'divisions',
     freezeTableName: true,
-    timestamps: false
+    timestamps: false,
   })
   Division.associate = function (models) {
     Division.hasMany(models.Team, {
       foreignKey: 'divisionId',
-      as: 'teams'
+      as: 'teams',
     })
   }
   return Division

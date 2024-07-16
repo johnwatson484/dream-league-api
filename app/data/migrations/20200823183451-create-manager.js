@@ -5,13 +5,13 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: Sequelize.STRING,
-      alias: Sequelize.STRING
+      alias: Sequelize.STRING,
     })
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('managers')
-  }
+  },
 }

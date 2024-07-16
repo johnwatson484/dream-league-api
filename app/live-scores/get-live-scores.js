@@ -12,5 +12,5 @@ const getLiveScores = async () => {
 }
 
 module.exports = {
-  getLiveScores
+  getLiveScores,
 }

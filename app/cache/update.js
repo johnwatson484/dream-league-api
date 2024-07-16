@@ -8,5 +8,5 @@ const update = async (cache, key, cacheData) => {
 }
 
 module.exports = {
-  update
+  update,
 }

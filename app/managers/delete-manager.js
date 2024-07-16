@@ -6,5 +6,5 @@ const deleteManager = async (managerId) => {
 }
 
 module.exports = {
-  deleteManager
+  deleteManager,
 }

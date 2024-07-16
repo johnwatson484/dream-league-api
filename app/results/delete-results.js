@@ -14,5 +14,5 @@ const deleteResults = async (gameweekId) => {
 }
 
 module.exports = {
-  deleteResults
+  deleteResults,
 }

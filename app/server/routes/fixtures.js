@@ -14,18 +14,18 @@ module.exports = [{
           { model: db.Manager, as: 'homeManager', attributes: [] },
           { model: db.Manager, as: 'awayManager', attributes: [] }],
         attributes: ['fixtureId', 'gameweekId', 'cupId', 'round', [db.Sequelize.col('cup.name'), 'cupName'], [db.Sequelize.col('homeManager.name'), 'homeManagerName'], [db.Sequelize.col('awayManager.name'), 'awayManagerName']],
-        order: [['gameweekId']]
+        order: [['gameweekId']],
       }))
-    }
-  }
+    },
+  },
 }, {
   method: GET,
   path: '/fixture',
   options: {
     handler: async (request, h) => {
       return h.response(await db.Fixture.findOne({ where: { fixtureId: request.query.fixtureId } }))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/fixture/create',
@@ -37,16 +37,16 @@ module.exports = [{
         gameweekId: Joi.number().integer().required(),
         homeManagerId: Joi.number().integer().required(),
         awayManagerId: Joi.number().integer().required(),
-        round: Joi.number().integer().required()
+        round: Joi.number().integer().required(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.Fixture.create(request.payload))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/fixture/edit',
@@ -59,16 +59,16 @@ module.exports = [{
         gameweekId: Joi.number().integer().required(),
         homeManagerId: Joi.number().integer().required(),
         awayManagerId: Joi.number().integer().required(),
-        round: Joi.number().integer().required()
+        round: Joi.number().integer().required(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.Fixture.upsert(request.payload))
-    }
-  }
+    },
+  },
 }, {
   method: POST,
   path: '/fixture/delete',
@@ -76,14 +76,14 @@ module.exports = [{
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: Joi.object({
-        fixtureId: Joi.number()
+        fixtureId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await db.Fixture.destroy({ where: { fixtureId: request.payload.fixtureId } }))
-    }
-  }
+    },
+  },
 }]

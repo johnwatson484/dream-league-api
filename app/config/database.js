@@ -10,8 +10,8 @@ const schema = joi.object().keys({
   dialect: joi.string().default('postgres'),
   logging: joi.string().default(false),
   define: joi.object().keys({
-    timestamps: joi.bool().valid(false)
-  })
+    timestamps: joi.bool().valid(false),
+  }),
 })
 
 // Build config
@@ -24,8 +24,8 @@ const config = {
   dialect: process.env.POSTGRES_DIALECT,
   logging: process.env.POSTGRES_LOGGING,
   define: {
-    timestamps: false
-  }
+    timestamps: false,
+  },
 }
 
 // Validate config

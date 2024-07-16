@@ -5,14 +5,14 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       managerId: Sequelize.INTEGER,
-      address: Sequelize.STRING
+      address: Sequelize.STRING,
 
     })
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('emails')
-  }
+  },
 }

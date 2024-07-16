@@ -2,11 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const ManagerKeeper = sequelize.define('ManagerKeeper', {
     managerId: { type: DataTypes.INTEGER, primaryKey: true },
     teamId: { type: DataTypes.INTEGER, primaryKey: true },
-    substitute: DataTypes.BOOLEAN
+    substitute: DataTypes.BOOLEAN,
   }, {
     tableName: 'managerKeepers',
     freezeTableName: true,
-    timestamps: false
+    timestamps: false,
   })
   ManagerKeeper.associate = function (models) {
     ManagerKeeper.belongsTo(models.Manager, { foreignKey: 'managerId' })

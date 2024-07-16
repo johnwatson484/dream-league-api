@@ -7,9 +7,9 @@ module.exports = {
     register: (server, _options) => {
       server.auth.strategy('jwt', 'jwt', {
         key: jwtConfig.secret,
-        validate
+        validate,
       })
       server.auth.default({ strategy: 'jwt', mode: 'try' })
-    }
-  }
+    },
+  },
 }

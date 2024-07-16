@@ -3,5 +3,5 @@ const { validate } = require('./validate')
 
 module.exports = {
   create,
-  validate
+  validate,
 }

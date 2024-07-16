@@ -5,5 +5,5 @@ const getManager = async (managerId) => {
 }
 
 module.exports = {
-  getManager
+  getManager,
 }

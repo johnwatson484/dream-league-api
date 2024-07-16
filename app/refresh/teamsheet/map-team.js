@@ -15,10 +15,10 @@ const mapTeam = (teams, matchTeam) => {
 
   return {
     bestMatchId: bestTeamId,
-    distance: bestDistance
+    distance: bestDistance,
   }
 }
 
 module.exports = {
-  mapTeam
+  mapTeam,
 }

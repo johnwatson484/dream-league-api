@@ -10,5 +10,5 @@ const getConceded = async (gameweekId, managerId, cup = false) => {
 
 module.exports = {
   getGoals,
-  getConceded
+  getConceded,
 }

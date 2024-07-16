@@ -3,19 +3,19 @@ module.exports = (sequelize, DataTypes) => {
     emailId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     managerId: DataTypes.INTEGER,
-    address: DataTypes.STRING
+    address: DataTypes.STRING,
   }, {
     tableName: 'emails',
     freezeTableName: true,
-    timestamps: false
+    timestamps: false,
   })
   Email.associate = function (models) {
     Email.belongsTo(models.Manager, {
       foreignKey: 'managerId',
-      as: 'manager'
+      as: 'manager',
     })
   }
   return Email

@@ -4,16 +4,16 @@ module.exports = {
       managerId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
       },
       groupId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        allowNull: false
-      }
+        allowNull: false,
+      },
     })
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('managerGroups')
-  }
+  },
 }

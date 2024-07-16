@@ -6,5 +6,5 @@ const getFullKey = (cache, key) => {
 }
 
 module.exports = {
-  getFullKey
+  getFullKey,
 }

@@ -4,5 +4,5 @@ const getWinners = (scores) => {
 }
 
 module.exports = {
-  getWinners
+  getWinners,
 }

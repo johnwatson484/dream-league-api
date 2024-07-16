@@ -7,7 +7,7 @@ const schema = Joi.object().keys({
   env: Joi.string().valid(DEVELOPMENT, TEST, PRODUCTION).default(DEVELOPMENT),
   jwtConfig: Joi.object({
     secret: Joi.string(),
-    expiryInMinutes: Joi.number().default(43800)
+    expiryInMinutes: Joi.number().default(43800),
   }),
   smtp: Joi.object({
     host: Joi.string().allow(''),
@@ -16,8 +16,8 @@ const schema = Joi.object().keys({
     requireTLS: Joi.boolean().default(true),
     auth: Joi.object({
       user: Joi.string().allow(''),
-      pass: Joi.string().allow('')
-    })
+      pass: Joi.string().allow(''),
+    }),
   }),
   webUrl: Joi.string().uri().default('http://localhost:3000'),
   allowNonMemberRegistration: Joi.boolean().default(false),
@@ -27,18 +27,18 @@ const schema = Joi.object().keys({
     username: Joi.string(),
     password: Joi.string(),
     scoreExchange: Joi.string().default('live-scores'),
-    scoreQueue: Joi.string().default('dream-league-api')
+    scoreQueue: Joi.string().default('dream-league-api'),
   }),
   cache: Joi.object({
     socket: Joi.object({
       host: Joi.string(),
       port: Joi.number().default(6379),
-      tls: Joi.boolean().default(false)
+      tls: Joi.boolean().default(false),
     }),
     password: Joi.string().allow(''),
     partition: Joi.string().default('dream-league-api'),
-    ttl: Joi.number().default(1468800) // 7 days
-  })
+    ttl: Joi.number().default(1468800), // 7 days
+  }),
 })
 
 // Build config
@@ -47,7 +47,7 @@ const config = {
   env: process.env.NODE_ENV,
   jwtConfig: {
     secret: process.env.JWT_SECRET,
-    expiryInMinutes: process.env.JWT_EXPIRY_IN_MINUTES
+    expiryInMinutes: process.env.JWT_EXPIRY_IN_MINUTES,
   },
   smtp: {
     host: process.env.SMTP_HOST,
@@ -56,8 +56,8 @@ const config = {
     requireTLS: process.env.SMTP_TLS,
     auth: {
       user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD
-    }
+      pass: process.env.SMTP_PASSWORD,
+    },
   },
   webUrl: process.env.WEB_URL,
   allowNonMemberRegistration: process.env.ALLOW_NON_MEMBER_REGISTRATION,
@@ -67,22 +67,22 @@ const config = {
     username: process.env.MESSAGE_USERNAME,
     password: process.env.MESSAGE_PASSWORD,
     scoreExchange: process.env.SCORE_EXCHANGE,
-    scoreQueue: process.env.SCORE_QUEUE
+    scoreQueue: process.env.SCORE_QUEUE,
   },
   cache: {
     socket: {
       host: process.env.REDIS_HOST,
       port: process.env.REDIS_PORT,
-      tls: process.env.REDIS_TLS
+      tls: process.env.REDIS_TLS,
     },
     password: process.env.REDIS_PASSWORD,
     partition: process.env.REDIS_PARTITION,
-    ttl: process.env.REDIS_TTL
-  }
+    ttl: process.env.REDIS_TTL,
+  },
 }
 
 const result = schema.validate(config, {
-  abortEarly: false
+  abortEarly: false,
 })
 
 if (result.error) {
@@ -91,7 +91,7 @@ if (result.error) {
 
 const value = {
   ...result.value,
-  database: databaseConfig
+  database: databaseConfig,
 }
 value.isDev = value.env === DEVELOPMENT
 

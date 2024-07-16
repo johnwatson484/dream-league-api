@@ -5,13 +5,13 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: Sequelize.STRING,
-      rank: Sequelize.INTEGER
+      rank: Sequelize.INTEGER,
     })
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('divisions')
-  }
+  },
 }

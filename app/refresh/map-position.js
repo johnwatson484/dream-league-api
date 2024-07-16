@@ -17,5 +17,5 @@ const mapPosition = (position) => {
 }
 
 module.exports = {
-  mapPosition
+  mapPosition,
 }

@@ -43,5 +43,5 @@ module.exports = {
   stop,
   getKeys,
   get,
-  set
+  set,
 }

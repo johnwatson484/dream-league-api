@@ -5,10 +5,10 @@ const mapKeeper = (keeper, teamsheet) => {
     name: keeper.name,
     sourceName: teamsheetEntry ? teamsheetEntry.player : '',
     matchDistance: teamsheetEntry ? teamsheetEntry.distance : '',
-    substitute: keeper.managerKeepers.dataValues.substitute
+    substitute: keeper.managerKeepers.dataValues.substitute,
   }
 }
 
 module.exports = {
-  mapKeeper
+  mapKeeper,
 }

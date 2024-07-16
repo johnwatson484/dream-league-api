@@ -3,31 +3,31 @@ module.exports = (sequelize, DataTypes) => {
     concedeId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     teamId: DataTypes.INTEGER,
     gameweekId: DataTypes.INTEGER,
     managerId: DataTypes.INTEGER,
     cup: DataTypes.BOOLEAN,
     created: DataTypes.DATE,
-    createdBy: DataTypes.STRING
+    createdBy: DataTypes.STRING,
   }, {
     tableName: 'conceded',
     freezeTableName: true,
-    timestamps: false
+    timestamps: false,
   })
   Concede.associate = function (models) {
     Concede.belongsTo(models.Team, {
       foreignKey: 'teamId',
-      as: 'team'
+      as: 'team',
     })
     Concede.belongsTo(models.Manager, {
       foreignKey: 'managerId',
-      as: 'manager'
+      as: 'manager',
     })
     Concede.belongsTo(models.Gameweek, {
       foreignKey: 'gameweekId',
-      as: 'gameweek'
+      as: 'gameweek',
     })
   }
   return Concede

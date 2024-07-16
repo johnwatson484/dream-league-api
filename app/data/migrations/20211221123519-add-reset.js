@@ -7,5 +7,5 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     await queryInterface.removeColumn('users', 'resetToken')
     await queryInterface.removeColumn('users', 'resetExpiresAt')
-  }
+  },
 }

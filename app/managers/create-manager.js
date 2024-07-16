@@ -11,5 +11,5 @@ const createManager = async (manager) => {
 }
 
 module.exports = {
-  createManager
+  createManager,
 }

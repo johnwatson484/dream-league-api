@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     historyId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     year: DataTypes.INTEGER,
     teams: DataTypes.INTEGER,
@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
     league2: DataTypes.STRING,
     cup: DataTypes.STRING,
     leagueCup: DataTypes.STRING,
-    plate: DataTypes.STRING
+    plate: DataTypes.STRING,
   }, {
     tableName: 'history',
     freezeTableName: true,
-    timestamps: false
+    timestamps: false,
   })
 }

@@ -10,5 +10,5 @@ const rankPosition = (position) => {
 }
 
 module.exports = {
-  rankPosition
+  rankPosition,
 }

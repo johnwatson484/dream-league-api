@@ -5,7 +5,7 @@ const { sendResetPassword } = require('../notifications')
 
 const resetPassword = async (email) => {
   const user = await db.User.findOne({
-    where: { email }
+    where: { email },
   })
 
   if (user === null) {
@@ -44,5 +44,5 @@ const setNewPassword = async (userId, password, token) => {
 
 module.exports = {
   resetPassword,
-  setNewPassword
+  setNewPassword,
 }

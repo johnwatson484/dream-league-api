@@ -11,8 +11,8 @@ const getGroups = async (gameweekId) => {
       where: {
         cupId: cup.cupId,
         gameweekId: { [db.Sequelize.Op.lte]: gameweekId },
-        round: 1
-      }
+        round: 1,
+      },
     })
 
     // if no fixtures this gameweek no need to add groups
@@ -60,7 +60,7 @@ const getGroups = async (gameweekId) => {
             gf,
             ga,
             gd,
-            points
+            points,
           })
         }
         table = orderTable(table)
@@ -72,5 +72,5 @@ const getGroups = async (gameweekId) => {
 }
 
 module.exports = {
-  getGroups
+  getGroups,
 }

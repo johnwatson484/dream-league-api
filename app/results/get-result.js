@@ -11,5 +11,5 @@ const getResult = (goals, conceded) => {
 }
 
 module.exports = {
-  getResult
+  getResult,
 }

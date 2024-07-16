@@ -5,5 +5,5 @@ const { update: updateKeeper } = require('./update-keeper')
 module.exports = {
   getTeamsheet,
   updatePlayer,
-  updateKeeper
+  updateKeeper,
 }

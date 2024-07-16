@@ -7,5 +7,5 @@ module.exports = {
   getKeys,
   get,
   set,
-  update
+  update,
 }

@@ -4,12 +4,12 @@ module.exports = {
       gameweekId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
       },
-      startDate: Sequelize.DATE
+      startDate: Sequelize.DATE,
     })
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('gameweeks')
-  }
+  },
 }

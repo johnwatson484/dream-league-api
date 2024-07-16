@@ -3,23 +3,23 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     email: DataTypes.STRING,
     passwordHash: DataTypes.STRING,
     resetToken: DataTypes.STRING,
-    resetExpiresAt: DataTypes.DATE
+    resetExpiresAt: DataTypes.DATE,
   }, {
     tableName: 'users',
     freezeTableName: true,
-    timestamps: false
+    timestamps: false,
   })
   User.associate = function (models) {
     User.belongsToMany(models.Role, {
       through: 'userRole',
       foreignKey: 'userId',
       as: 'roles',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
     })
   }
   return User

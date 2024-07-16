@@ -22,12 +22,12 @@ describe('refreshing player list', () => {
       firstName: 'Ian',
       lastName: 'Henderson',
       position: 'FWD',
-      team: 'Rochdale'
+      team: 'Rochdale',
     }, {
       firstName: 'Adebayo',
       lastName: 'Akinfenwa',
       position: 'FWD',
-      team: 'Wycombe'
+      team: 'Wycombe',
     }]
 
     const result = await refresh(players)
@@ -40,12 +40,12 @@ describe('refreshing player list', () => {
       firstName: 'Ian',
       lastName: 'Henderson',
       position: 'FWD',
-      team: 'Rochdale'
+      team: 'Rochdale',
     }, {
       firstName: 'Adebayo',
       lastName: 'Akinfenwa',
       position: 'FWD',
-      team: 'Wycombe'
+      team: 'Wycombe',
     }]
 
     await refresh(players)
@@ -60,7 +60,7 @@ describe('refreshing player list', () => {
       firstName: 'Lee',
       lastName: 'Gregory',
       position: 'Forward',
-      teamId: 1
+      teamId: 1,
     }
 
     await db.Player.create(originalPlayer)
@@ -69,12 +69,12 @@ describe('refreshing player list', () => {
       firstName: 'Ian',
       lastName: 'Henderson',
       position: 'FWD',
-      team: 'Rochdale'
+      team: 'Rochdale',
     }, {
       firstName: 'Adebayo',
       lastName: 'Akinfenwa',
       position: 'FWD',
-      team: 'Wycombe'
+      team: 'Wycombe',
     }]
 
     await refresh(players)
@@ -90,12 +90,12 @@ describe('refreshing player list', () => {
       firstName: 'Ian',
       lastName: 'Henderson',
       position: 'FWD',
-      team: 'rochdale'
+      team: 'rochdale',
     }, {
       firstName: 'Adebayo',
       lastName: 'Akinfenwa',
       position: 'FWD',
-      team: 'WycoMbe'
+      team: 'WycoMbe',
     }]
 
     const result = await refresh(players)
@@ -108,12 +108,12 @@ describe('refreshing player list', () => {
       firstName: 'Ian',
       lastName: 'Henderson',
       position: 'FWD',
-      team: 'Rochdal'
+      team: 'Rochdal',
     }, {
       firstName: 'Adebayo',
       lastName: 'Akinfenwa',
       position: 'FWD',
-      team: 'Wycomb'
+      team: 'Wycomb',
     }]
 
     const result = await refresh(players)
@@ -127,12 +127,12 @@ describe('refreshing player list', () => {
       firstName: 'Ian',
       lastName: 'Henderson',
       position: 'FWD',
-      team: 'Rochdale'
+      team: 'Rochdale',
     }, {
       firstName: 'Adebayo',
       lastName: 'Akinfenwa',
       position: 'FWD',
-      team: 'Wycomb'
+      team: 'Wycomb',
     }]
 
     const result = await refresh(players)
@@ -146,12 +146,12 @@ describe('refreshing player list', () => {
       firstName: 'Ian',
       lastName: 'Henderson',
       position: 'FWD',
-      team: 'Rochdale'
+      team: 'Rochdale',
     }, {
       firstName: 'Adebayo',
       lastName: 'Akinfenwa',
       position: 'FWD',
-      team: 'Wycomb'
+      team: 'Wycomb',
     }]
 
     await refresh(players)
@@ -165,7 +165,7 @@ describe('refreshing player list', () => {
       firstName: 'Ian',
       lastName: 'Henderson',
       position: 'ST',
-      team: 'Rochdale'
+      team: 'Rochdale',
     }])
 
     expect(result.success).toBeFalsy()

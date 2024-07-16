@@ -5,14 +5,14 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: Sequelize.STRING,
       hasGroupStage: Sequelize.BOOLEAN,
-      knockoutLegs: Sequelize.INTEGER
+      knockoutLegs: Sequelize.INTEGER,
     })
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('cups')
-  }
+  },
 }

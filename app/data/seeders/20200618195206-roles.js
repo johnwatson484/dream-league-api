@@ -2,16 +2,16 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('roles', [{
       roleId: 1,
-      name: 'admin'
+      name: 'admin',
     }, {
       roleId: 2,
-      name: 'user'
+      name: 'user',
     }], {
-      ignoreDuplicates: true
+      ignoreDuplicates: true,
     })
   },
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete('roles', null, {})
-  }
+  },
 }

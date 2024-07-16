@@ -9,7 +9,7 @@ const start = async (aircraft) => {
   connection = await amqp.connect(`amqp://${username}:${password}@${host}:${port}`)
   channel = await connection.createChannel()
   await channel.assertExchange(scoreExchange, 'fanout', {
-    durable: true
+    durable: true,
   })
 
   const q = await channel.assertQueue(scoreQueue)
@@ -18,7 +18,7 @@ const start = async (aircraft) => {
   console.log('Waiting for score updates')
 
   await channel.consume(q.queue, updateLiveScores, {
-    noAck: true
+    noAck: true,
   })
 }
 
@@ -29,5 +29,5 @@ const stop = async () => {
 
 module.exports = {
   start,
-  stop
+  stop,
 }

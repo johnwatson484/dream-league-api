@@ -5,17 +5,17 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       passwordHash: {
-        type: Sequelize.STRING
-      }
+        type: Sequelize.STRING,
+      },
     })
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('users')
-  }
+  },
 }

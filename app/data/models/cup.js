@@ -3,24 +3,24 @@ module.exports = (sequelize, DataTypes) => {
     cupId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     name: DataTypes.STRING,
     hasGroupStage: DataTypes.BOOLEAN,
-    knockoutLegs: DataTypes.INTEGER
+    knockoutLegs: DataTypes.INTEGER,
   }, {
     tableName: 'cups',
     freezeTableName: true,
-    timestamps: false
+    timestamps: false,
   })
   Cup.associate = function (models) {
     Cup.hasMany(models.Group, {
       foreignKey: 'cupId',
-      as: 'groups'
+      as: 'groups',
     })
     Cup.hasMany(models.Fixture, {
       foreignKey: 'cupId',
-      as: 'fixtures'
+      as: 'fixtures',
     })
   }
   return Cup

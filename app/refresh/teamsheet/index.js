@@ -10,7 +10,7 @@ const refresh = async (teams) => {
     }
   }
   return {
-    success: true
+    success: true,
   }
 }
 
@@ -20,5 +20,5 @@ const updateTeam = async (managerId, players) => {
 }
 
 module.exports = {
-  refresh
+  refresh,
 }

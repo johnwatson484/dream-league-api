@@ -5,18 +5,18 @@ module.exports = (sequelize, DataTypes) => {
     meetingId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     date: DataTypes.DATE,
     shortDate: {
       type: DataTypes.VIRTUAL,
       get () {
         return moment(this.startDate).format('DD[/]MM[/]YYYY HH:mm')
-      }
-    }
+      },
+    },
   }, {
     tableName: 'meetings',
     freezeTableName: true,
-    timestamps: false
+    timestamps: false,
   })
 }

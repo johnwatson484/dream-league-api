@@ -22,7 +22,7 @@ const updateConceded = async (results, resultsDate) => {
           managerId: manager.managerId,
           cup: false,
           created: resultsDate,
-          createdBy: 'results-sheet'
+          createdBy: 'results-sheet',
         })
       }
     }
@@ -41,7 +41,7 @@ const updateGoals = async (results, resultsDate) => {
           managerId: manager.managerId,
           cup: false,
           created: resultsDate,
-          createdBy: 'results-sheet'
+          createdBy: 'results-sheet',
         })
       }
     }
@@ -60,7 +60,7 @@ const updateConcededCup = async (results, resultsDate) => {
           managerId: manager.managerId,
           cup: true,
           created: resultsDate,
-          createdBy: 'results-sheet'
+          createdBy: 'results-sheet',
         })
       }
     }
@@ -79,7 +79,7 @@ const updateGoalsCup = async (results, resultsDate) => {
           managerId: manager.managerId,
           cup: true,
           created: resultsDate,
-          createdBy: 'results-sheet'
+          createdBy: 'results-sheet',
         })
       }
     }
@@ -87,5 +87,5 @@ const updateGoalsCup = async (results, resultsDate) => {
 }
 
 module.exports = {
-  update
+  update,
 }

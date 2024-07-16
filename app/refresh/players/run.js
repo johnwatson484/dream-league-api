@@ -6,5 +6,5 @@ const run = async (players) => {
 }
 
 module.exports = {
-  run
+  run,
 }

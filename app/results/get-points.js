@@ -12,5 +12,5 @@ const getPoints = (result) => {
 }
 
 module.exports = {
-  getPoints
+  getPoints,
 }

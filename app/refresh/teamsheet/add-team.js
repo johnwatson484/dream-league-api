@@ -7,7 +7,7 @@ const addTeamsheetMatch = async (managerId, player, position, bestMatchId, dista
     position,
     substitute: player.substitute,
     bestMatchId,
-    distance
+    distance,
   })
 }
 
@@ -15,7 +15,7 @@ const addPlayer = async (managerId, playerId, substitute) => {
   return db.ManagerPlayer.create({
     managerId,
     playerId,
-    substitute
+    substitute,
   })
 }
 
@@ -23,12 +23,12 @@ const addKeeper = async (managerId, teamId, substitute) => {
   return db.ManagerKeeper.create({
     managerId,
     teamId,
-    substitute
+    substitute,
   })
 }
 
 module.exports = {
   addTeamsheetMatch,
   addPlayer,
-  addKeeper
+  addKeeper,
 }

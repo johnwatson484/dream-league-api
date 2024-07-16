@@ -6,5 +6,5 @@ const getHtmlStringFromFile = (file, context) => {
 }
 
 module.exports = {
-  getHtmlStringFromFile
+  getHtmlStringFromFile,
 }

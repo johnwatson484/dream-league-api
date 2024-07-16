@@ -19,10 +19,10 @@ const refresh = async (players) => {
 
   return {
     success: !unmappedPlayers.length,
-    unmappedPlayers
+    unmappedPlayers,
   }
 }
 
 module.exports = {
-  refresh
+  refresh,
 }

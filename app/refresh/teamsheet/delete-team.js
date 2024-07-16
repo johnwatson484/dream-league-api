@@ -7,5 +7,5 @@ async function deleteCurrentTeam (managerId) {
 }
 
 module.exports = {
-  deleteCurrentTeam
+  deleteCurrentTeam,
 }

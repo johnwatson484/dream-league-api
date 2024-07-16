@@ -1,3 +1,3 @@
 module.exports = {
-  OK: 'ok'
+  OK: 'ok',
 }

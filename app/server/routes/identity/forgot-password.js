@@ -10,16 +10,16 @@ module.exports = [{
   options: {
     validate: {
       payload: Joi.object({
-        email: Joi.string().email().required()
+        email: Joi.string().email().required(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       const { email, password } = request.payload
       await resetPassword(email, password)
       return h.response(OK)
-    }
-  }
+    },
+  },
 }]

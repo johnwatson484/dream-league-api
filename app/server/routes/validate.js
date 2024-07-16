@@ -9,14 +9,14 @@ module.exports = [{
   options: {
     validate: {
       payload: Joi.object({
-        token: Joi.object().required()
+        token: Joi.object().required(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
-      }
+      },
     },
     handler: async (request, h) => {
       return h.response(await validate(request.payload.token))
-    }
-  }
+    },
+  },
 }]

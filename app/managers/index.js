@@ -11,5 +11,5 @@ module.exports = {
   createManager,
   editManager,
   deleteManager,
-  getTeam
+  getTeam,
 }

@@ -14,5 +14,5 @@ const getAllWinners = async () => {
 }
 
 module.exports = {
-  getAllWinners
+  getAllWinners,
 }

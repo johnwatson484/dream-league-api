@@ -28,6 +28,6 @@ module.exports = {
     name: 'router',
     register: (server, _options) => {
       server.route(routes)
-    }
-  }
+    },
+  },
 }

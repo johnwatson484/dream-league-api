@@ -8,6 +8,6 @@ module.exports = [{
     handler: async (request, h) => {
       const matches = await getLiveScores()
       return h.response(matches)
-    }
-  }
+    },
+  },
 }]

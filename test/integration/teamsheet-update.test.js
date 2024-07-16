@@ -44,9 +44,9 @@ describe('update teamsheet', () => {
       '1067', '1194', '1500',
       '1509', '1868', '1911',
       '1916', '1994', '2047',
-      '2129'
+      '2129',
     ],
-    playerSubs: ['562', '1509', '1994']
+    playerSubs: ['562', '1509', '1994'],
   }
 
   test('should add new player', async () => {
@@ -77,9 +77,9 @@ describe('update teamsheet', () => {
   const keeperPayload = {
     managerId: '10',
     teamIds: [
-      '62', '31'
+      '62', '31',
     ],
-    teamSubs: ['31']
+    teamSubs: ['31'],
   }
 
   test('should add new keeper', async () => {

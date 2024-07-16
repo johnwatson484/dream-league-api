@@ -3,5 +3,5 @@ const { getLiveScores } = require('./get-live-scores')
 
 module.exports = {
   updateLiveScores,
-  getLiveScores
+  getLiveScores,
 }

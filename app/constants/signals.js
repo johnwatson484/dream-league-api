@@ -1,4 +1,4 @@
 module.exports = {
   SIGINT: 'SIGINT',
-  SIGTERM: 'SIGTERM'
+  SIGTERM: 'SIGTERM',
 }

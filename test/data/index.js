@@ -7,5 +7,5 @@ module.exports = {
   teamsheet: require('./teamsheet.json'),
   teamsheetPayload: require('./teamsheet-payload.json'),
   gameweeks: require('./gameweeks.json'),
-  summaries: require('./summaries')
+  summaries: require('./summaries'),
 }

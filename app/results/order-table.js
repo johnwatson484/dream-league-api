@@ -6,5 +6,5 @@ const orderTable = (rows) => {
 }
 
 module.exports = {
-  orderTable
+  orderTable,
 }

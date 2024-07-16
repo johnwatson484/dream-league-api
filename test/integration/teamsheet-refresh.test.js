@@ -37,8 +37,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Henderson - Rochdale',
         position: 'FWD',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     const result = await refreshTeamsheet(teams)
@@ -52,8 +52,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Henderson - Rochdale',
         position: 'FWD',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -68,8 +68,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Rochdale',
         position: 'GK',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -82,7 +82,7 @@ describe('refreshing teamsheet', () => {
     const originalPlayer = {
       managerId: 1,
       playerId: 1,
-      substitute: false
+      substitute: false,
     }
 
     await db.ManagerPlayer.create(originalPlayer)
@@ -92,8 +92,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Henderson - Rochdale',
         position: 'FWD',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -109,8 +109,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'HenDersOn - RocHdaLe',
         position: 'FWD',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -125,8 +125,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Henderson - Rochdale',
         position: 'FWD',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -141,8 +141,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Henderson - Rochdale',
         position: 'FWD',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -157,8 +157,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Rochdale',
         position: 'GK',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -173,16 +173,16 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Henderson - Rochdale',
         position: 'FWD',
-        substitute: false
+        substitute: false,
       }, {
         player: 'Akinfenwa - Wycombe',
         position: 'FWD',
-        substitute: false
+        substitute: false,
       }, {
         player: 'Brighton',
         position: 'GK',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -199,31 +199,31 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Henderson - Rochdale',
         position: 'FWD',
-        substitute: false
+        substitute: false,
       }, {
         player: 'Akinfenwa - Wycombe',
         position: 'FWD',
-        substitute: false
+        substitute: false,
       }, {
         player: 'Brighton',
         position: 'GK',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }, {
       manager: 'Lee',
       players: [{
         player: 'Davenport - Blackburn',
         position: 'MID',
-        substitute: false
+        substitute: false,
       }, {
         player: 'Feeney - Blackpool',
         position: 'MID',
-        substitute: false
+        substitute: false,
       }, {
         player: 'Charlton',
         position: 'GK',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -240,12 +240,12 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Henderson - Rochdale',
         position: 'FWD',
-        substitute: false
+        substitute: false,
       }, {
         player: 'Akinfenwa - Wycombe',
         position: 'FWD',
-        substitute: true
-      }]
+        substitute: true,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -262,12 +262,12 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Rochdale',
         position: 'GK',
-        substitute: false
+        substitute: false,
       }, {
         player: 'Wycombe',
         position: 'GK',
-        substitute: true
-      }]
+        substitute: true,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -284,12 +284,12 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Henderson - Rochdale',
         position: 'FWD',
-        substitute: false
+        substitute: false,
       }, {
         player: 'Akinfenwa - Wycombe',
         position: 'FWD',
-        substitute: true
-      }]
+        substitute: true,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -306,12 +306,12 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Rochdale',
         position: 'GK',
-        substitute: false
+        substitute: false,
       }, {
         player: 'Wycombe',
         position: 'GK',
-        substitute: true
-      }]
+        substitute: true,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -328,8 +328,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Adams - Forest Green',
         position: 'MID',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -344,12 +344,12 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Adams - Forest Green',
         position: 'MID',
-        substitute: false
+        substitute: false,
       }, {
         player: 'Adams - Forest Green',
         position: 'MID',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -364,8 +364,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Ayala - Middlesbrough',
         position: 'DEF',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -380,8 +380,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Sarpeng-Wiredu - Charlton',
         position: 'MID',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -396,8 +396,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Segbe Azankpo - Oldham',
         position: 'FWD',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -411,8 +411,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Azankpo - Oldham',
         position: 'FWD',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -426,8 +426,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Segbe - Oldham',
         position: 'FWD',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)
@@ -441,8 +441,8 @@ describe('refreshing teamsheet', () => {
       players: [{
         player: 'Phillips - West Brom',
         position: 'MID',
-        substitute: false
-      }]
+        substitute: false,
+      }],
     }]
 
     await refreshTeamsheet(teams)

@@ -17,5 +17,5 @@ const getGameweekResults = async (gameweekId, managerId) => {
 }
 
 module.exports = {
-  getGameweekResults
+  getGameweekResults,
 }

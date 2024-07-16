@@ -9,5 +9,5 @@ const getSummary = async (gameweekId = 0) => {
 }
 
 module.exports = {
-  getSummary
+  getSummary,
 }

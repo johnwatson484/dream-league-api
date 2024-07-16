@@ -10,10 +10,10 @@ const login = async (email, password) => {
   }
 
   return {
-    token: create(user)
+    token: create(user),
   }
 }
 
 module.exports = {
-  login
+  login,
 }

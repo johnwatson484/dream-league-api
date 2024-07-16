@@ -14,10 +14,10 @@ const register = async (email, password) => {
   const user = await createUser(email, password)
 
   return {
-    token: create(user)
+    token: create(user),
   }
 }
 
 module.exports = {
-  register
+  register,
 }

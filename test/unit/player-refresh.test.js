@@ -1,4 +1,3 @@
-
 const db = require('../../app/data')
 jest.mock('../../app/data')
 const { refresh } = require('../../app/refresh/players')
@@ -7,12 +6,12 @@ const players = [{
   firstName: 'Ian',
   lastName: 'Henderson',
   position: 'FWD',
-  team: 'Rochdale'
+  team: 'Rochdale',
 }, {
   firstName: 'Adebayo',
   lastName: 'Akinfenwa',
   position: 'FWD',
-  team: 'Wycombe'
+  team: 'Wycombe',
 }]
 
 describe('refreshing player list unit', () => {
@@ -64,7 +63,7 @@ describe('refreshing player list unit', () => {
       firstName: 'Ian',
       lastName: 'Henderson',
       position: 'ST',
-      team: 'Rochdale'
+      team: 'Rochdale',
     }])
 
     expect(result.success).toBeFalsy()

@@ -19,5 +19,5 @@ const editManager = async (manager) => {
 }
 
 module.exports = {
-  editManager
+  editManager,
 }

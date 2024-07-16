@@ -3,26 +3,26 @@ module.exports = (sequelize, DataTypes) => {
     groupId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     cupId: DataTypes.INTEGER,
     name: DataTypes.STRING,
     groupLegs: DataTypes.INTEGER,
-    teamsAdvancing: DataTypes.INTEGER
+    teamsAdvancing: DataTypes.INTEGER,
   }, {
     tableName: 'groups',
     freezeTableName: true,
-    timestamps: false
+    timestamps: false,
   })
   Group.associate = function (models) {
     Group.belongsTo(models.Cup, {
       foreignKey: 'cupId',
-      as: 'cup'
+      as: 'cup',
     })
     Group.belongsToMany(models.Manager, {
       through: 'managerGroups',
       foreignKey: 'groupId',
-      as: 'managers'
+      as: 'managers',
     })
   }
   return Group

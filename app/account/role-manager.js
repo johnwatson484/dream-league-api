@@ -15,11 +15,11 @@ const getUserRoles = async (userId) => {
     raw: true,
     nest: true,
     attributes: [],
-    include: [db.Role]
+    include: [db.Role],
   })
 }
 
 module.exports = {
   addUserToRole,
-  getUserRoles
+  getUserRoles,
 }

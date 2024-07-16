@@ -5,5 +5,5 @@ const getKeyPrefix = (cache) => {
 }
 
 module.exports = {
-  getKeyPrefix
+  getKeyPrefix,
 }

@@ -12,5 +12,5 @@ const getInput = async () => {
 }
 
 module.exports = {
-  getInput
+  getInput,
 }
