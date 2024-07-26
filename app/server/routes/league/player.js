@@ -25,7 +25,7 @@ module.exports = [{
         }, {
           model: db.Manager, as: 'managers', attributes: ['managerId', 'name'], through: { attributes: [] },
         }],
-        order: [['team', 'name'], ['lastName'], ['firstName']],
+        order: [['team', 'name'], ['position'], ['lastName'], ['firstName']],
       }))
     },
   },
