@@ -3,7 +3,7 @@ const boom = require('@hapi/boom')
 const db = require('../../../data')
 const { refresh } = require('../../../refresh/players')
 const { GET, POST } = require('../../../constants/verbs')
-const { GOALKEEPER } = require('../../../constants/positions')
+const { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } = require('../../../constants/positions')
 
 module.exports = [{
   method: GET,
@@ -27,7 +27,12 @@ module.exports = [{
         }, {
           model: db.Manager, as: 'managers', attributes: ['managerId', 'name'], through: { attributes: [] },
         }],
-        order: [['team', 'name'], ['position'], ['lastName'], ['firstName']],
+        order: [
+          ['team', 'name'],
+          [db.Sequelize.literal(`CASE position WHEN '${DEFENDER}' THEN 1 WHEN '${MIDFIELDER}' THEN 2 WHEN '${FORWARD}' THEN 3 ELSE 4 END`)],
+          ['lastName'],
+          ['firstName'],
+        ],
       }))
     },
   },
