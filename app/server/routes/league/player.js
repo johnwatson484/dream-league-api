@@ -3,6 +3,7 @@ const boom = require('@hapi/boom')
 const db = require('../../../data')
 const { refresh } = require('../../../refresh/players')
 const { GET, POST } = require('../../../constants/verbs')
+const { GOALKEEPER } = require('../../../constants/positions')
 
 module.exports = [{
   method: GET,
@@ -12,6 +13,7 @@ module.exports = [{
       const search = request.query.search !== 'undefined' ? `${request.query.search}%` : '%'
       return h.response(await db.Player.findAll({
         where: {
+          position: { [db.Sequelize.Op.ne]: GOALKEEPER },
           [db.Sequelize.Op.or]: [{
             lastName: { [db.Sequelize.Op.iLike]: search },
           }, {
