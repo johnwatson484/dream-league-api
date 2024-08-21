@@ -25,23 +25,31 @@ services:
       - dream-league-api-postgres
       - dream-league-api-redis
       - dream-league-message
+    networks:
+      - dream-league
 
   dream-league-api-postgres:
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - dream-league
 
   dream-league-api-redis:
     volumes:
       - redis_data:/data
     ports:
       - "6379:6379"
+    networks:
+      - dream-league
 
   dream-league-message:
     ports:
       - "15672:15672"
       - "5672:5672"
+    networks:
+      - dream-league
 
   live-scores-publisher:
     image: johnwatson484/live-scores-publisher
@@ -58,7 +66,14 @@ services:
       - dream-league-message
     volumes:
       - ./scripts:/home/node/scripts
+    networks:
+      - dream-league
 
 volumes:
   postgres_data:
   redis_data:
+
+networks:
+  dream-league:
+    driver: bridge
+    name: dream-league
