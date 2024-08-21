@@ -9,7 +9,6 @@ services:
       POSTGRES_HOST: dream-league-api-postgres
     command: >
       sh -c "
-        scripts/wait-for dream-league-api-postgres:5432 --
         npm run migrate &&
         npm run seed &&
         npm run test"

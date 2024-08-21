@@ -10,8 +10,6 @@ services:
       - "9230:9229"
     command: >
       sh -c "
-        ./scripts/wait-for dream-league-message:5672 --
-        ./scripts/wait-for dream-league-api-postgres:5432 --
         npm run migrate &&
         npm run seed &&
         npm run start:watch"
@@ -20,11 +18,6 @@ services:
       - ./package.json:/home/node/package.json
       - ./test:/home/node/test
       - ./test-output:/home/node/test-output
-      - ./scripts:/home/node/scripts
-    depends_on:
-      - dream-league-api-postgres
-      - dream-league-api-redis
-      - dream-league-message
     networks:
       - dream-league
 
@@ -58,12 +51,9 @@ services:
       MESSAGE_HOST: dream-league-message
       MESSAGE_USERNAME: rabbitmq
       MESSAGE_PASSWORD: rabbitmq
-    entrypoint: >
-      sh -c "
-        ./scripts/wait-for dream-league-messaging:5672 --
-        node app"
     depends_on:
-      - dream-league-message
+      dream-league-message:
+        condition: service_healthy
     volumes:
       - ./scripts:/home/node/scripts
     networks:

@@ -2,7 +2,6 @@ services:
   dream-league-api:
     command: >
       sh -c "
-        scripts/wait-for dream-league-api-postgres-test:5432 --
         npm run migrate &&
         npm run seed &&
         npm run test:watch"

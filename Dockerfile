@@ -1,8 +1,8 @@
 # Development
 FROM node:20-alpine AS development
-ENV NODE_ENV development
+ENV NODE_ENV=development
 ARG PORT=3001
-ENV PORT ${PORT}
+ENV PORT=${PORT}
 EXPOSE ${PORT} 9229
 
 # Set global npm dependencies to be stored under the node user directory
@@ -16,7 +16,7 @@ RUN apk update && \
 USER node
 WORKDIR /home/node
 COPY --chown=node:node package*.json ./
-RUN npm install --production=false
+RUN npm install
 COPY --chown=node:node ./app ./app
 COPY --chown=node:node ./test ./test
 COPY --chown=node:node ./scripts ./scripts
@@ -26,6 +26,6 @@ CMD [ "npm", "run", "start:watch" ]
 
 # Production
 FROM development AS production
-ENV NODE_ENV production
+ENV NODE_ENV=production
 RUN npm ci
 CMD [ "node", "app" ]

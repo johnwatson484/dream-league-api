@@ -16,6 +16,13 @@ services:
       MESSAGE_HOST: dream-league-message
       MESSAGE_USERNAME: rabbitmq
       MESSAGE_PASSWORD: rabbitmq
+    depends_on:
+      dream-league-api-postgres:
+        condition: service_healthy
+      dream-league-api-redis:
+        condition: service_started
+      dream-league-message:
+        condition: service_healthy
 
   dream-league-api-postgres:
     image: postgres:12.8-alpine
@@ -24,6 +31,12 @@ services:
       POSTGRES_DB: dream_league_api
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      retries: 5
+      start_period: 1s
+      timeout: 10s
 
   dream-league-api-redis:
     image: redis:6
@@ -37,3 +50,10 @@ services:
       RABBITMQ_DEFAULT_USER: rabbitmq
       RABBITMQ_DEFAULT_PASS: rabbitmq
       RABBITMQ_DEFAULT_VHOST: /
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      retries: 5
+      start_period: 1s
+      timeout: 10s
+    
