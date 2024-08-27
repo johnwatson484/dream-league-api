@@ -45,7 +45,7 @@ services:
       - dream-league
 
   live-scores-publisher:
-    image: johnwatson484/live-scores-publisher
+    image: johnwatson484/live-scores-publisher:2.0.0
     environment:
       REDIS_HOST: dream-league-api-redis
       MESSAGE_HOST: dream-league-message
