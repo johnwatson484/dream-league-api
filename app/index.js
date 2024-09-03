@@ -12,6 +12,6 @@ process.on([SIGTERM, SIGINT], async () => {
 
 module.exports = (async () => {
   await startCache()
-  await startMessaging()
   await startServer()
+  await startMessaging()
 })()
