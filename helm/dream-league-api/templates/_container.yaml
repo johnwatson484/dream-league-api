@@ -3,7 +3,7 @@ envFrom:
 - configMapRef:
     name: {{ .Values.name }}
 - secretRef:
-    name: {{ .Values.name }}
+    name: {{ .Values.name }}-infiscal-secret
 ports:
 - containerPort: {{ .Values.container.port }}
   name: http
