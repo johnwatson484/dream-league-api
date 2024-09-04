@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.name }}
 spec:
   scaleTargetRef:
-    name: rabbitmq-deployment
+    name: {{ .Values.name }}
   triggers:
   - type: rabbitmq
     metadata:
