@@ -1,6 +1,7 @@
 environment: production
 name: dream-league-api
 image: dream-league-api
+namespace: dream-league
 
 container:
   requestMemory: 120Mi
