@@ -8,7 +8,7 @@ spec:
   triggers:
   - type: rabbitmq
     metadata:
-      host: MESSAGE_HOST
+      hostFromEnv: MESSAGE_HOST
       queueName: {{ .Values.container.scoreQueue }}
       mode: QueueLength
       value: {{ .Values.deployment.triggerQueueLength | quote }}
