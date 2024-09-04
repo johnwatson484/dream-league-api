@@ -33,4 +33,4 @@ deployment:
   triggerQueueLength: 50
 
 secret:
-  secretsPath: /dream-league-api
+  secretsPath: /dream-league-api/
