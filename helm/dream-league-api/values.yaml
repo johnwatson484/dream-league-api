@@ -1,7 +1,6 @@
 environment: production
 name: dream-league-api
 image: dream-league-api
-namespace: dream-league
 
 container:
   requestMemory: 120Mi
@@ -33,4 +32,4 @@ deployment:
   triggerQueueLength: 50
 
 secret:
-  secretsPath: /dream-league-api/
+  secretsPath: /dream-league-api
