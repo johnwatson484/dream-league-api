@@ -8,7 +8,7 @@ spec:
   triggers:
   - type: rabbitmq
     metadata:
-      host: amqp://{{ .Values.container.messageUsername }}:{{ .Values.container.messagePassword }}@{{ .Values.container.messageHost }}:{{ .Values.container.messagePort }}/
+      host: MESSAGE_HOST
       queueName: {{ .Values.container.scoreQueue }}
       mode: QueueLength
       value: {{ .Values.deployment.triggerQueueLength | quote }}
