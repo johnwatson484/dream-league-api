@@ -13,4 +13,4 @@ spec:
       hostFromEnv: MESSAGE_HOST_STRING
       queueName: {{ .Values.container.scoreQueue }}
       mode: QueueLength
-      value: {{ .Values.deployment.triggerQueueLength }}
+      value: {{ .Values.deployment.triggerQueueLength | quote }}
