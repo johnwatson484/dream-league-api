@@ -3,10 +3,9 @@ name: dream-league-api
 image: dream-league-api
 
 container:
-  requestMemory: 120Mi
+  requestMemory: 500Mi
   requestCpu: 120m
-  limitMemory: 1000Mi
-  limitCpu: 1000m
+  limitMemory: 500Mi
   port: 3001
   jwtExpiryInMinutes: 43800
   command: ["/bin/sh"]
