@@ -11,6 +11,6 @@ spec:
   - type: rabbitmq
     metadata:
       hostFromEnv: MESSAGE_HOST_STRING
-      queueName: {{ .Values.container.scoreQueue }}
+      queueName: {{ .Values.rabbit.scoreQueue }}
       mode: QueueLength
       value: {{ .Values.deployment.triggerQueueLength | quote }}
