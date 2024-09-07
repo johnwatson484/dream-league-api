@@ -14,3 +14,11 @@ spec:
       queueName: {{ .Values.rabbit.scoreQueue }}
       mode: QueueLength
       value: {{ .Values.deployment.triggerQueueLength | quote }}
+  - type: cpu
+    metricType: Utilization
+    metadata:
+      value: {{ .Values.deployment.cpuThreshold | quote }}
+  - type: memory
+    metricType: Utilization
+    metadata:
+      value: {{ .Values.deployment.memoryThreshold | quote }}

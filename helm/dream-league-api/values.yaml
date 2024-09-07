@@ -31,9 +31,9 @@ postgres:
 deployment:
   minReplicas: 1
   maxReplicas: 4
+  triggerQueueLength: 50
   cpuThreshold: 80
   memoryThreshold: 80
-  triggerQueueLength: 50
 
 secret:
   secretsPath: /dream-league-api
