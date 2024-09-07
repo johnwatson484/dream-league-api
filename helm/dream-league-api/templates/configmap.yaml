@@ -3,14 +3,14 @@
 data:
   NODE_ENV: {{ quote .Values.environment }}
   PORT: {{ quote .Values.container.port }}  
-  POSTGRES_DB: {{ quote .Values.postgresService.postgresDatabase }}
-  POSTGRES_HOST: {{ quote .Values.postgresService.postgresHost }}
-  POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
-  JWT_EXPIRY_IN_MINUTES: {{ quote .Values.container.jwtExpiryInMinutes }}
-  SMTP_HOST: {{ quote .Values.container.smtpHost }}
-  WEB_URL: {{ quote .Values.container.webUrl }}
-  REDIS_HOST: {{ quote .Values.container.redisHost }}
-  MESSAGE_HOST: {{ quote .Values.container.messageHost }}
-  SCORE_EXCHANGE: {{ quote .Values.container.scoreExchange }}
-  SCORE_QUEUE: {{ quote .Values.container.scoreQueue }}
+  REDIS_HOST: {{ quote .Values.redis.host }}
+  MESSAGE_HOST: {{ quote .Values.rabbit.host }}
+  SCORE_EXCHANGE: {{ quote .Values.rabbit.scoreExchange }}
+  SCORE_QUEUE: {{ quote .Values.rabbit.scoreQueue }}
+  POSTGRES_HOST: {{ quote .Values.postgres.host }}
+  POSTGRES_PORT: {{ quote .Values.postgres.port }}
+  POSTGRES_DB: {{ quote .Values.postgres.database }}
+  SMTP_HOST: {{ quote .Values.smtp.host }}
+  JWT_EXPIRY_IN_MINUTES: {{ quote .Values.config.jwtExpiryInMinutes }}
+  WEB_URL: {{ quote .Values.config.webUrl }}
 {{- end -}}

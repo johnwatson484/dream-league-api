@@ -3,29 +3,34 @@ name: dream-league-api
 image: dream-league-api
 
 container:
-  requestMemory: 500Mi
-  requestCpu: 120m
-  limitMemory: 500Mi
-  port: 3001
-  jwtExpiryInMinutes: 43800
+  resourceTier: M
+  port: 3001  
   command: ["/bin/sh"]
   args: ["-c", "npx sequelize-cli db:migrate && node app"]
-  smtpHost: smtp.zoho.com
+
+config:
+  jwtExpiryInMinutes: 43800
   webUrl: https://www.dreamleaguefantasyfootball.co.uk
-  redisHost: services.lynxmagnus.com
-  messageHost: services.lynxmagnus.com
-  messagePort: 5672
+
+smtp:
+  host: smtp.zoho.com
+
+redis:
+  host: services.lynxmagnus.com
+  
+rabbit:
+  host: services.lynxmagnus.com
   scoreExchange: live-scores
   scoreQueue: dream-league-api
 
-postgresService:
-  postgresHost: services.lynxmagnus.com
-  postgresPort: 5432
-  postgresDatabase: dream_league_api
+postgres:
+  host: services.lynxmagnus.com
+  port: 5432
+  database: dream_league_api
 
 deployment:
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 4
   cpuThreshold: 80
   memoryThreshold: 80
   triggerQueueLength: 50
