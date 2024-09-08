@@ -1,12 +1,6 @@
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: {{ .Chart.Name }}
+{{- include "helm-library.keda-scaled-object" (list . "dream-league-api.keda-scaled-object") -}}
+{{- define "dream-league-api.keda-scaled-object" -}}
 spec:
-  scaleTargetRef:
-    name: {{ .Chart.Name }}
-  minReplicaCount: {{ .Values.deployment.minReplicas }}
-  maxReplicaCount: {{ .Values.deployment.maxReplicas }}
   triggers:
   - type: rabbitmq
     metadata:
@@ -22,3 +16,4 @@ spec:
     metricType: Utilization
     metadata:
       value: {{ .Values.deployment.memoryThreshold | quote }}
+{{- end -}}
