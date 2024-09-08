@@ -1,10 +1,10 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: {{ .Values.name }}
+  name: {{ .Chart.Name }}
 spec:
   scaleTargetRef:
-    name: {{ .Values.name }}
+    name: {{ .Chart.Name }}
   minReplicaCount: {{ .Values.deployment.minReplicas }}
   maxReplicaCount: {{ .Values.deployment.maxReplicas }}
   triggers:

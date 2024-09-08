@@ -1,14 +1,11 @@
-environment: production
-name: dream-league-api
-image: dream-league-api
-
 container:
   resourceTier: M
   port: 3001  
   command: ["/bin/sh"]
   args: ["-c", "npx sequelize-cli db:migrate && node app"]
 
-config:
+configMap:
+  environment: production
   jwtExpiryInMinutes: 43800
   webUrl: https://www.dreamleaguefantasyfootball.co.uk
 
