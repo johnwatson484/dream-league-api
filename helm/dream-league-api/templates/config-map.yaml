@@ -1,8 +1,10 @@
 {{- include "helm-library.configmap" (list . "dream-league-api.configmap") -}}
 {{- define "dream-league-api.configmap" -}}
 data:
-  NODE_ENV: {{ .Values.configMap.environment | quote }}
   PORT: {{ .Values.container.port | quote }}
+  NODE_ENV: {{ .Values.configMap.environment | quote }}
+  JWT_EXPIRY_IN_MINUTES: {{ .Values.configMap.jwtExpiryInMinutes | quote }}
+  WEB_URL: {{ .Values.configMap.webUrl | quote }}
   REDIS_HOST: {{ .Values.redis.host | quote }}
   MESSAGE_HOST: {{ .Values.rabbit.host | quote }}
   SCORE_EXCHANGE: {{ .Values.rabbit.scoreExchange | quote }}
@@ -11,6 +13,4 @@ data:
   POSTGRES_PORT: {{ .Values.postgres.port | quote }}
   POSTGRES_DB: {{ .Values.postgres.database | quote }}
   SMTP_HOST: {{ .Values.smtp.host | quote }}
-  JWT_EXPIRY_IN_MINUTES: {{ .Values.configMap.jwtExpiryInMinutes | quote }}
-  WEB_URL: {{ .Values.configMap.webUrl | quote }}
 {{- end -}}
