@@ -12,8 +12,20 @@ module.exports = [{
         include: [
           { model: db.Cup, as: 'cup', attributes: [] },
           { model: db.Manager, as: 'homeManager', attributes: [] },
-          { model: db.Manager, as: 'awayManager', attributes: [] }],
-        attributes: ['fixtureId', 'gameweekId', 'cupId', 'round', [db.Sequelize.col('cup.name'), 'cupName'], [db.Sequelize.col('homeManager.name'), 'homeManagerName'], [db.Sequelize.col('awayManager.name'), 'awayManagerName']],
+          { model: db.Manager, as: 'awayManager', attributes: [] },
+          { model: db.Gameweek, as: 'gameweek', attributes: [] },
+        ],
+        attributes: [
+          'fixtureId',
+          'gameweekId',
+          [db.Sequelize.fn('TO_CHAR', db.Sequelize.col('gameweek.startDate'), 'DD/MM/YYYY'), 'date'],
+          'cupId',
+          'round',
+          [db.Sequelize.col('cup.name'),
+            'cupName'],
+          [db.Sequelize.col('homeManager.name'), 'homeManagerName'],
+          [db.Sequelize.col('awayManager.name'), 'awayManagerName'],
+        ],
         order: [['gameweekId']],
       }))
     },
