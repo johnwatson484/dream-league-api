@@ -5,6 +5,7 @@ services:
     container_name: dream-league-api
     environment: 
       JWT_SECRET: secret
+      POSTGRES_HOST: dream-league-api-postgres
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: postgres
       SMTP_HOST: ${SMTP_HOST}
@@ -16,13 +17,6 @@ services:
       MESSAGE_HOST: dream-league-message
       MESSAGE_USERNAME: rabbitmq
       MESSAGE_PASSWORD: rabbitmq
-    depends_on:
-      dream-league-api-postgres:
-        condition: service_healthy
-      dream-league-api-redis:
-        condition: service_started
-      dream-league-message:
-        condition: service_healthy
 
   dream-league-api-postgres:
     image: postgres:12.8-alpine

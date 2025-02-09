@@ -1,12 +1,10 @@
 services:
   dream-league-api:
+    extends:
+      file: compose.yaml
+      service: dream-league-api
     build:
-      context: .
       target: development
-    depends_on:
-      - dream-league-api-postgres
-    environment:
-      POSTGRES_HOST: dream-league-api-postgres
     command: >
       sh -c "
         npm run migrate &&
@@ -17,8 +15,14 @@ services:
       - ./package.json:/home/node/package.json
       - ./test/:/home/node/test/
       - ./test-output/:/home/node/test-output/
+    depends_on:
+      dream-league-api-postgres:
+        condition: service_healthy
 
   dream-league-api-postgres:
+    extends:
+      file: compose.yaml
+      service: dream-league-api-postgres
     container_name: dream-league-api-postgres-test
     volumes:
       - postgres_data:/var/lib/postgresql/data

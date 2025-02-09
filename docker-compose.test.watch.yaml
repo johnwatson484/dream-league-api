@@ -1,9 +1,0 @@
-services:
-  dream-league-api:
-    command: >
-      sh -c "
-        npm run migrate &&
-        npm run seed &&
-        npm run test:watch"
-    volumes:
-      - ./.git:/home/node/.git

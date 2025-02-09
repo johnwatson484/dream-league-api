@@ -1,0 +1,21 @@
+services:
+  dream-league-api:
+    extends:
+      file: compose.test.watch.yaml
+      service: dream-league-api
+    command: >
+      sh -c "
+        npm run migrate &&
+        npm run seed &&
+        npm run test:debug"
+    ports:
+      - "9230:9229"
+
+  dream-league-api-postgres:
+    extends:
+      file: compose.test.watch.yaml
+      service: dream-league-api-postgres
+    container_name: dream-league-api-postgres-test
+
+volumes:
+  postgres_data:

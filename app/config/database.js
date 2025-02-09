@@ -1,11 +1,10 @@
 const joi = require('joi')
 
-// Define config schema
 const schema = joi.object().keys({
   username: joi.string(),
   password: joi.string(),
   database: joi.string().default('dream_league_api'),
-  host: joi.string().default('localhost'),
+  host: joi.string(),
   port: joi.number().default(5432),
   dialect: joi.string().default('postgres'),
   logging: joi.string().default(false),
@@ -14,7 +13,6 @@ const schema = joi.object().keys({
   }),
 })
 
-// Build config
 const config = {
   username: process.env.POSTGRES_USERNAME,
   password: process.env.POSTGRES_PASSWORD,
@@ -28,10 +26,8 @@ const config = {
   },
 }
 
-// Validate config
 const { error, value } = schema.validate(config)
 
-// Throw if config is invalid
 if (error) {
   throw new Error(`The database config is invalid. ${error.message}`)
 }

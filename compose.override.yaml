@@ -20,8 +20,18 @@ services:
       - ./test-output:/home/node/test-output
     networks:
       - dream-league
+    depends_on:
+      dream-league-api-postgres:
+        condition: service_healthy
+      dream-league-api-redis:
+        condition: service_started
+      dream-league-message:
+        condition: service_healthy
 
   dream-league-api-postgres:
+    extends:
+      file: compose.yaml
+      service: dream-league-api-postgres
     ports:
       - "5432:5432"
     volumes:
@@ -30,6 +40,9 @@ services:
       - dream-league
 
   dream-league-api-redis:
+    extends:
+      file: compose.yaml
+      service: dream-league-api-redis
     volumes:
       - redis_data:/data
     ports:
@@ -38,6 +51,9 @@ services:
       - dream-league
 
   dream-league-message:
+    extends:
+      file: compose.yaml
+      service: dream-league-message
     ports:
       - "15672:15672"
       - "5672:5672"
