@@ -1,8 +1,5 @@
 services:
   dream-league-api:
-    extends:
-      file: compose.yaml
-      service: dream-league-api
     build:
       target: development
     command: >
@@ -20,9 +17,6 @@ services:
         condition: service_healthy
 
   dream-league-api-postgres:
-    extends:
-      file: compose.yaml
-      service: dream-league-api-postgres
     container_name: dream-league-api-postgres-test
     volumes:
       - postgres_data:/var/lib/postgresql/data

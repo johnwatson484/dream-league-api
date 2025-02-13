@@ -1,8 +1,5 @@
 services:
   dream-league-api:
-    extends:
-      file: compose.test.yaml
-      service: dream-league-api
     command: >
       sh -c "
         npm run migrate &&
@@ -10,11 +7,3 @@ services:
         npm run test:watch"
     volumes:
       - ./.git:/home/node/.git
-
-  dream-league-api-postgres:
-    extends:
-      file: compose.test.yaml
-      service: dream-league-api-postgres
-
-volumes:
-  postgres_data:

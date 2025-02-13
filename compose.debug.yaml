@@ -1,30 +1,3 @@
 services:
   dream-league-api:
-    extends:
-      file: compose.override.yaml
-      service: dream-league-api
     command: npm run start:debug
-
-  dream-league-api-postgres:
-    extends:
-      file: compose.override.yaml
-      service: dream-league-api-postgres
-
-  dream-league-api-redis:
-    extends:
-      file: compose.override.yaml
-      service: dream-league-api-redis
-
-  dream-league-message:
-    extends:
-      file: compose.override.yaml
-      service: dream-league-message
-
-networks:
-  dream-league:
-    driver: bridge
-    name: dream-league
-
-volumes:
-  postgres_data:
-  redis_data:
