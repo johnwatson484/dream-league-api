@@ -7,9 +7,9 @@ module.exports = [{
   options: {
     handler: async (request, h) => {
       if (request.query.completed) {
-        return h.response(await db.Gameweek.findAll({ include: { model: db.Summary, as: 'summary', attributes: [], required: true } }))
+        return h.response(await db.Gameweek.findAll({ include: { model: db.Summary, as: 'summary', attributes: [], required: true }, order: ['gameweekId'] }))
       }
-      return h.response(await db.Gameweek.findAll())
+      return h.response(await db.Gameweek.findAll({ order: ['gameweekId'] }))
     },
   },
 }]
