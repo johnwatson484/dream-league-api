@@ -13,7 +13,7 @@ const refresh = async (players) => {
     }
   }
 
-  if (!unmappedPlayers.length) {
+  if (!unmappedPlayers.length && mappedPlayers.length) {
     await run(mappedPlayers)
   }
 
