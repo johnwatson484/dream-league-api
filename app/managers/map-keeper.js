@@ -1,5 +1,6 @@
 const mapKeeper = (keeper) => {
   return {
+    playerId: keeper.teamId,
     teamId: keeper.teamId,
     name: keeper.name,
     substitute: keeper.managerKeepers.dataValues.substitute,

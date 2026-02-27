@@ -7,9 +7,23 @@ module.exports = [{
   method: GET,
   path: '/league/teams',
   options: {
-    handler: async (_request, h) => {
+    handler: async (request, h) => {
+      const search = request.query.search || ''
+      const division = request.query.division || ''
+      
+      const whereClause = {}
+      
+      if (search) {
+        whereClause.name = { [db.Sequelize.Op.iLike]: `%${search}%` }
+      }
+      
+      if (division) {
+        whereClause['$division.name$'] = { [db.Sequelize.Op.iLike]: `%${division}%` }
+      }
+      
       return h.response(await db.Team.findAll({
-        include: [{ model: db.Division, as: 'division', attributes: ['name'] }],
+        where: whereClause,
+        include: [{ model: db.Division, as: 'division', attributes: ['name', 'divisionId'] }],
         order: [['division', 'rank'], ['name']],
       }))
     },
@@ -18,7 +32,23 @@ module.exports = [{
   method: GET,
   path: '/league/team',
   handler: async (request, h) => {
-    return h.response(await db.Team.findOne({ where: { teamId: request.query.teamId } }))
+    const team = await db.Team.findOne({
+      where: { teamId: request.query.teamId },
+      include: [{
+        model: db.Division,
+        as: 'division',
+      }, {
+        model: db.Player,
+        as: 'players',
+        include: [{
+          model: db.Manager,
+          as: 'managers',
+          attributes: ['managerId', 'name'],
+          through: { attributes: [] },
+        }],
+      }],
+    })
+    return h.response(team)
   },
 }, {
   method: POST,

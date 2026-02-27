@@ -20,6 +20,7 @@ const routes = [].concat(
   require('../routes/fixtures'),
   require('../routes/winners'),
   require('../routes/live-scores'),
+  require('../routes/search'),
   require('../routes/validate')
 )
 

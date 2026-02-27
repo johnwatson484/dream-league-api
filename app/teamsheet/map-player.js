@@ -6,6 +6,7 @@ const mapPlayer = (player, teamsheet) => {
     lastNameFirstName: player.lastNameFirstName,
     position: player.dataValues.position,
     team: player.dataValues.team.dataValues.name,
+    teamId: player.dataValues.team.dataValues.teamId,
     sourceName: teamsheetEntry ? teamsheetEntry.player : '',
     matchDistance: teamsheetEntry ? teamsheetEntry.distance : '',
     substitute: player.managerPlayers.dataValues.substitute,

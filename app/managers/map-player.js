@@ -5,6 +5,7 @@ const mapPlayer = (player) => {
     lastNameFirstName: player.lastNameFirstName,
     position: player.dataValues.position,
     team: player.dataValues.team.dataValues.name,
+    teamId: player.dataValues.team.dataValues.teamId,
     substitute: player.managerPlayers.dataValues.substitute,
     goals: player.goals?.filter(x => !x.cup).length ?? 0,
     cupGoals: player.goals?.filter(x => x.cup).length ?? 0,

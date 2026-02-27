@@ -11,19 +11,28 @@ module.exports = [{
   options: {
     handler: async (request, h) => {
       const search = request.query.search !== 'undefined' ? `${request.query.search}%` : '%'
+      const position = request.query.position
+      
+      const whereClause = {
+        position: { [db.Sequelize.Op.ne]: GOALKEEPER },
+        [db.Sequelize.Op.or]: [{
+          lastName: { [db.Sequelize.Op.iLike]: search },
+        }, {
+          firstName: { [db.Sequelize.Op.iLike]: search },
+        }, {
+          '$team.name$': { [db.Sequelize.Op.iLike]: search },
+        }],
+      }
+      
+      // Add position filter if specified
+      if (position && [DEFENDER, MIDFIELDER, FORWARD].includes(position)) {
+        whereClause.position = position
+      }
+      
       return h.response(await db.Player.findAll({
-        where: {
-          position: { [db.Sequelize.Op.ne]: GOALKEEPER },
-          [db.Sequelize.Op.or]: [{
-            lastName: { [db.Sequelize.Op.iLike]: search },
-          }, {
-            firstName: { [db.Sequelize.Op.iLike]: search },
-          }, {
-            '$team.name$': { [db.Sequelize.Op.iLike]: search },
-          }],
-        },
+        where: whereClause,
         include: [{
-          model: db.Team, as: 'team', attributes: ['name'],
+          model: db.Team, as: 'team', attributes: ['teamId', 'name'],
         }, {
           model: db.Manager, as: 'managers', attributes: ['managerId', 'name'], through: { attributes: [] },
         }],
@@ -40,7 +49,27 @@ module.exports = [{
   method: GET,
   path: '/league/player',
   handler: async (request, h) => {
-    return h.response(await db.Player.findOne({ where: { playerId: request.query.playerId } }))
+    const player = await db.Player.findOne({
+      where: { playerId: request.query.playerId },
+      include: [{
+        model: db.Team,
+        as: 'team',
+        include: [{
+          model: db.Division,
+          as: 'division',
+        }],
+      }, {
+        model: db.Manager,
+        as: 'managers',
+        attributes: ['managerId', 'name'],
+        through: { attributes: ['substitute'] },
+      }, {
+        model: db.Goal,
+        as: 'goals',
+        attributes: ['goalId', 'gameweekId', 'cup'],
+      }],
+    })
+    return h.response(player)
   },
 }, {
   method: POST,
