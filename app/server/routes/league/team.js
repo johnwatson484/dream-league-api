@@ -2,6 +2,7 @@ const db = require('../../../data')
 const Joi = require('joi')
 const boom = require('@hapi/boom')
 const { GET, POST } = require('../../../constants/verbs')
+const { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } = require('../../../constants/positions')
 
 module.exports = [{
   method: GET,
@@ -10,17 +11,17 @@ module.exports = [{
     handler: async (request, h) => {
       const search = request.query.search || ''
       const division = request.query.division || ''
-      
+
       const whereClause = {}
-      
+
       if (search) {
         whereClause.name = { [db.Sequelize.Op.iLike]: `%${search}%` }
       }
-      
+
       if (division) {
         whereClause['$division.name$'] = { [db.Sequelize.Op.iLike]: `%${division}%` }
       }
-      
+
       return h.response(await db.Team.findAll({
         where: whereClause,
         include: [{ model: db.Division, as: 'division', attributes: ['name', 'divisionId'] }],
@@ -47,6 +48,11 @@ module.exports = [{
           through: { attributes: [] },
         }],
       }],
+      order: [
+        [db.Sequelize.literal(`CASE "players"."position" WHEN '${GOALKEEPER}' THEN 1 WHEN '${DEFENDER}' THEN 2 WHEN '${MIDFIELDER}' THEN 3 WHEN '${FORWARD}' THEN 4 ELSE 5 END`)],
+        [db.Sequelize.literal('"players"."lastName"')],
+        [db.Sequelize.literal('"players"."firstName"')],
+      ],
     })
     return h.response(team)
   },
