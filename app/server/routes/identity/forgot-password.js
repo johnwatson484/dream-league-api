@@ -17,8 +17,8 @@ module.exports = [{
       },
     },
     handler: async (request, h) => {
-      const { email, password } = request.payload
-      await resetPassword(email, password)
+      const { email } = request.payload
+      await resetPassword(email)
       return h.response(OK)
     },
   },

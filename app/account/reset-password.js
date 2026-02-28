@@ -17,7 +17,7 @@ const resetPassword = async (email) => {
   user.resetToken = tokenHash
 
   const expirationDate = new Date()
-  expirationDate.setHours(expirationDate.getHours() + 2)
+  expirationDate.setHours(expirationDate.getHours() + 1)
   user.resetExpiresAt = expirationDate
   await user.save()
 
