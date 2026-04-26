@@ -1,6 +1,6 @@
 {
   "name": "dream-league-api",
-  "version": "1.14.2",
+  "version": "1.15.0",
   "description": "Dream League backend service",
   "main": "app/index.js",
   "scripts": {
@@ -23,7 +23,6 @@
     "@hapi/hapi": "20.2.2",
     "@hapi/inert": "7.0.0",
     "@hapi/vision": "7.0.0",
-    "amqplib": "0.10.3",
     "bcrypt": "5.0.1",
     "hapi-auth-jwt2": "10.7.0",
     "hapi-pino": "10.1.0",

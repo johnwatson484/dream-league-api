@@ -2,12 +2,6 @@
 {{- define "dream-league-api.keda-scaled-object" -}}
 spec:
   triggers:
-  - type: rabbitmq
-    metadata:
-      hostFromEnv: MESSAGE_HOST_STRING
-      queueName: {{ .Values.rabbit.scoreQueue }}
-      mode: QueueLength
-      value: {{ .Values.deployment.triggerQueueLength | quote }}
   - type: cpu
     metricType: Utilization
     metadata:

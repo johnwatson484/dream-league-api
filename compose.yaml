@@ -14,9 +14,6 @@ services:
       WEB_URL: http://localhost:3000
       ALLOW_NON_MEMBER_REGISTRATION: "true"
       REDIS_HOST: dream-league-api-redis
-      MESSAGE_HOST: dream-league-message
-      MESSAGE_USERNAME: rabbitmq
-      MESSAGE_PASSWORD: rabbitmq
 
   dream-league-api-postgres:
     image: postgres:12.8-alpine
@@ -35,19 +32,3 @@ services:
   dream-league-api-redis:
     image: redis:6
 
-  dream-league-message:
-    image: rabbitmq:3-management-alpine
-    container_name: dream-league-message
-    hostname: dream-league-message
-    environment:
-      RABBITMQ_ERLANG_COOKIE: rabbitmq
-      RABBITMQ_DEFAULT_USER: rabbitmq
-      RABBITMQ_DEFAULT_PASS: rabbitmq
-      RABBITMQ_DEFAULT_VHOST: /
-    healthcheck:
-      test: rabbitmq-diagnostics -q ping --erlang-cookie rabbitmq
-      interval: 10s
-      retries: 5
-      start_period: 1s
-      timeout: 10s
-    

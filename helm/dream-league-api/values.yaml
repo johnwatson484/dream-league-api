@@ -16,11 +16,6 @@ smtp:
 redis:
   host: services.lynxmagnus.com
   
-rabbit:
-  host: services.lynxmagnus.com
-  scoreExchange: live-scores
-  scoreQueue: dream-league-api
-
 postgres:
   host: services.lynxmagnus.com
   port: 5432

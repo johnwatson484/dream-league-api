@@ -21,14 +21,6 @@ const schema = Joi.object().keys({
   }),
   webUrl: Joi.string().uri().default('http://localhost:3000'),
   allowNonMemberRegistration: Joi.boolean().default(false),
-  message: Joi.object({
-    host: Joi.string(),
-    port: Joi.number().default(5672),
-    username: Joi.string(),
-    password: Joi.string(),
-    scoreExchange: Joi.string().default('live-scores'),
-    scoreQueue: Joi.string().default('dream-league-api'),
-  }),
   cache: Joi.object({
     socket: Joi.object({
       host: Joi.string(),
@@ -61,14 +53,6 @@ const config = {
   },
   webUrl: process.env.WEB_URL,
   allowNonMemberRegistration: process.env.ALLOW_NON_MEMBER_REGISTRATION,
-  message: {
-    host: process.env.MESSAGE_HOST,
-    port: process.env.MESSAGE_PORT,
-    username: process.env.MESSAGE_USERNAME,
-    password: process.env.MESSAGE_PASSWORD,
-    scoreExchange: process.env.SCORE_EXCHANGE,
-    scoreQueue: process.env.SCORE_QUEUE,
-  },
   cache: {
     socket: {
       host: process.env.REDIS_HOST,

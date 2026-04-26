@@ -1,5 +1,4 @@
 const { start, stop, getKeys, get, set } = require('./client')
-const { update } = require('./update')
 
 module.exports = {
   start,
@@ -7,5 +6,4 @@ module.exports = {
   getKeys,
   get,
   set,
-  update,
 }
