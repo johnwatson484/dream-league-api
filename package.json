@@ -1,6 +1,6 @@
 {
   "name": "dream-league-api",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Dream League backend service",
   "main": "app/index.js",
   "scripts": {
@@ -20,21 +20,22 @@
   "license": "MIT",
   "dependencies": {
     "@hapi/boom": "10.0.0",
-    "@hapi/hapi": "20.2.2",
+    "@hapi/hapi": "21.4.9",
     "@hapi/inert": "7.0.0",
     "@hapi/vision": "7.0.0",
+    "@hapi/wreck": "18.1.2",
     "bcrypt": "5.0.1",
     "hapi-auth-jwt2": "10.7.0",
     "hapi-pino": "10.1.0",
     "joi": "17.6.0",
     "log-timestamp": "0.3.0",
     "moment": "2.29.4",
-    "nodemailer": "7.0.12",
+    "nodemailer": "8.0.7",
     "nunjucks": "3.2.4",
     "pg": "8.7.3",
     "pg-hstore": "2.3.4",
     "redis": "4.6.10",
-    "sequelize": "6.29.3",
+    "sequelize": "6.37.8",
     "sequelize-cli": "6.4.1"
   },
   "devDependencies": {
