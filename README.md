@@ -1,47 +1,55 @@
 [![Build Status](https://github.com/johnwatson484/dream-league-api/actions/workflows/build.yaml/badge.svg)](https://github.com/johnwatson484/dream-league-api/actions/workflows/build.yaml)
+
 # Dream League API
-Dream League backend service
 
-# Prerequisites
-- Docker
-- Docker Compose
+Dream League backend service.
 
-Optional:
-- Kubernetes
-- Helm
+## Prerequisites
 
-## Running the application
-The application is designed to run in containerised environments, using Docker Compose in development and Kubernetes in production.
+- Node.js >= 24 (see `.nvmrc`)
+- Docker (for Postgres and Redis containers)
 
-- A Helm chart is provided for production deployments to Kubernetes.
+## Local development
 
-## Run production application in container with Docker
-
-```
-docker compose build
-docker compose up
+```bash
+nvm use
+npm install
+cp .env.example .env   # edit JWT_SECRET etc. as needed
+npm run local          # starts Postgres + Redis containers, runs migrations, launches dev server with --watch
 ```
 
-## Develop application in container
+The `local` script runs `docker compose up -d` (Postgres + Redis only), then `npm run migrate`, then starts the app with file watching.
 
-This service is intended to support [Dream League Web](https://github.com/johnwatson484/dream-league-web) running in the same Docker network.
+### Seeding
 
-Running `docker compose up` in each repository will start the services in the same network.
-
-### Running tests
-
-A convenience script is provided to run automated tests in a containerised
-environment. This will rebuild images before running tests via docker-compose,
-using a combination of `compose.yaml` and `compose.test.yaml`.
-The command given to `docker compose run` may be customised by passing
-arguments to the test script.
-
-Examples:
-
+```bash
+npm run seed           # runs sequelize db:seed:all against local Postgres
 ```
-# Run all tests
-scripts/test
 
-# Run tests with file watch
-scripts/test -w
+### Debug mode
+
+```bash
+npm run dev:debug      # same as dev but with --inspect (port 9229)
 ```
+
+## Testing
+
+```bash
+npm test               # all tests (unit + integration) with coverage
+npm run test:unit      # unit tests only
+npm run test:integration  # integration tests only (uses Testcontainers -- no manual Docker needed)
+npm run test:watch     # watch mode
+npm run test:lint      # ESLint
+```
+
+Tests are self-contained via [Testcontainers](https://testcontainers.com/) -- `npm test` spins up ephemeral Postgres and Redis containers automatically.
+
+## Docker (full containerised mode)
+
+```bash
+docker compose --profile app up    # starts app + Postgres + Redis in containers
+```
+
+## Multi-service development
+
+For running the full stack (API + Web), see the [dream-league-core](https://github.com/johnwatson484/dream-league-core) orchestration repo.

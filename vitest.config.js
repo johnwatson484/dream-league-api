@@ -4,8 +4,6 @@ const sharedEnv = {
   NODE_ENV: 'test',
   JWT_SECRET: 'test-secret-at-least-32-characters!!',
   WEB_URL: 'http://localhost:3000',
-  REDIS_HOST: 'localhost',
-  REDIS_PORT: '6379',
 }
 
 const coverageConfig = {
@@ -45,7 +43,7 @@ export default defineConfig({
           clearMocks: true,
           environment: 'node',
           env: sharedEnv,
-          globalSetup: ['./test/setup/global-db.js'],
+          globalSetup: ['./test/setup/global-db.js', './test/setup/global-redis.js'],
         },
       },
     ],

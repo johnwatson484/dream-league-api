@@ -1,6 +1,6 @@
-const db = require('../../app/data')
-const { refreshTeamsheet } = require('../../app/refresh')
-const testData = require('../data')
+import db from '../../app/data/index.js'
+import { refreshTeamsheet } from '../../app/refresh/index.js'
+import testData from '../data/index.js'
 
 describe('refreshing teamsheet', () => {
   beforeAll(async () => {
