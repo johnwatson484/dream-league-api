@@ -1,4 +1,4 @@
-const db = require('../data')
+import db from '../data/index.js'
 
 const getSummary = async (gameweekId = 0) => {
   if (gameweekId === 0) {
@@ -8,6 +8,4 @@ const getSummary = async (gameweekId = 0) => {
   return summary.summary
 }
 
-module.exports = {
-  getSummary,
-}
+export { getSummary }

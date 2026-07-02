@@ -1,4 +1,4 @@
-const db = require('../data')
+import db from '../data/index.js'
 
 const editManager = async (manager) => {
   const updatedManager = await db.Manager.upsert(manager)
@@ -18,6 +18,4 @@ const editManager = async (manager) => {
   return updatedManager
 }
 
-module.exports = {
-  editManager,
-}
+export { editManager }

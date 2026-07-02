@@ -1,9 +1,7 @@
-const { cache: config } = require('../config')
+import { cache as config } from '../config/index.js'
 
 const getKeyPrefix = (cache) => {
   return `${config.partition}:${cache}`
 }
 
-module.exports = {
-  getKeyPrefix,
-}
+export { getKeyPrefix }

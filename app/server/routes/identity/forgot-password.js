@@ -1,10 +1,10 @@
-const boom = require('@hapi/boom')
-const Joi = require('joi')
-const { resetPassword } = require('../../../account')
-const { POST } = require('../../../constants/verbs')
-const { OK } = require('../../../constants/ok')
+import boom from '@hapi/boom'
+import Joi from 'joi'
+import { resetPassword } from '../../../account/index.js'
+import { POST } from '../../../constants/verbs.js'
+import { OK } from '../../../constants/ok.js'
 
-module.exports = [{
+export default [{
   method: POST,
   path: '/forgot-password',
   options: {

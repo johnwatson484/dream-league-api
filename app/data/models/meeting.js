@@ -1,6 +1,6 @@
-const moment = require('moment')
+import moment from 'moment'
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   return sequelize.define('Meeting', {
     meetingId: {
       type: DataTypes.INTEGER,

@@ -1,6 +1,6 @@
-const db = require('../../app/data')
-const { getTable } = require('../../app/results/get-table')
-const testData = require('../data')
+import db from '../../app/data/index.js'
+import { getTable } from '../../app/results/get-table.js'
+import testData from '../data/index.js'
 let managers
 
 describe('get table', () => {

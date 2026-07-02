@@ -1,13 +1,7 @@
-const { getSummary } = require('./get-summary.js')
-const { getInput } = require('./get-input')
-const { update } = require('./update')
-const { deleteResults } = require('./delete-results')
-const { getAllWinners } = require('./get-all-winners')
+import { getSummary } from './get-summary.js'
+import { getInput } from './get-input.js'
+import { update } from './update.js'
+import { deleteResults } from './delete-results.js'
+import { getAllWinners } from './get-all-winners.js'
 
-module.exports = {
-  getSummary,
-  getInput,
-  update,
-  deleteResults,
-  getAllWinners,
-}
+export { getSummary, getInput, update, deleteResults, getAllWinners }

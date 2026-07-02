@@ -1,6 +1,6 @@
-const Joi = require('joi')
-const databaseConfig = require('./database')
-const { DEVELOPMENT, TEST, PRODUCTION } = require('../constants/environments')
+import Joi from 'joi'
+import databaseConfig from './database.js'
+import { DEVELOPMENT, TEST, PRODUCTION } from '../constants/environments.js'
 
 const schema = Joi.object().keys({
   port: Joi.number().default(3001),
@@ -79,4 +79,4 @@ const value = {
 }
 value.isDev = value.env === DEVELOPMENT
 
-module.exports = value
+export default value

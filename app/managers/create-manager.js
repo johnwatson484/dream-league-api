@@ -1,4 +1,4 @@
-const db = require('../data')
+import db from '../data/index.js'
 
 const createManager = async (manager) => {
   const createdManager = await db.Manager.create(manager)
@@ -10,6 +10,4 @@ const createManager = async (manager) => {
   return createdManager
 }
 
-module.exports = {
-  createManager,
-}
+export { createManager }

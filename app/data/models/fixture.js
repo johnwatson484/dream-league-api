@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Fixture = sequelize.define('Fixture', {
     fixtureId: {
       type: DataTypes.INTEGER,

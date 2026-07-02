@@ -1,7 +1,7 @@
-const db = require('../../data')
-const { GET } = require('../../constants/verbs')
+import db from '../../data/index.js'
+import { GET } from '../../constants/verbs.js'
 
-module.exports = [{
+export default [{
   method: GET,
   path: '/gameweeks',
   options: {

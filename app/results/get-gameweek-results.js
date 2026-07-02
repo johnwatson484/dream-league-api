@@ -1,7 +1,7 @@
-const db = require('../data')
-const { getConceded, getGoals } = require('./get-goals')
-const { getPoints } = require('./get-points')
-const { getResult } = require('./get-result')
+import db from '../data/index.js'
+import { getConceded, getGoals } from './get-goals.js'
+import { getPoints } from './get-points.js'
+import { getResult } from './get-result.js'
 
 const getGameweekResults = async (gameweekId, managerId) => {
   const gameweeks = await db.Gameweek.findAll({ where: { gameweekId: { [db.Sequelize.Op.lte]: gameweekId } } })
@@ -16,6 +16,4 @@ const getGameweekResults = async (gameweekId, managerId) => {
   return gameweekResults
 }
 
-module.exports = {
-  getGameweekResults,
-}
+export { getGameweekResults }

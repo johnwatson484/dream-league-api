@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt')
-const { getUser } = require('./user-manager')
-const { create } = require('../token')
+import bcrypt from 'bcrypt'
+import { getUser } from './user-manager.js'
+import { create } from '../token/index.js'
 
 const login = async (email, password) => {
   const user = await getUser(email)
@@ -14,6 +14,4 @@ const login = async (email, password) => {
   }
 }
 
-module.exports = {
-  login,
-}
+export { login }

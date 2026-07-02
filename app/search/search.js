@@ -1,4 +1,4 @@
-const db = require('../data')
+import db from '../data/index.js'
 
 const search = async (prefix) => {
   const result = []
@@ -120,6 +120,4 @@ const search = async (prefix) => {
   return result
 }
 
-module.exports = {
-  search,
-}
+export { search }

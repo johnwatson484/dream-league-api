@@ -1,10 +1,8 @@
-const { createServer } = require('./create-server')
+import { createServer } from './create-server.js'
 
 const start = async () => {
   const server = await createServer()
   await server.start()
 }
 
-module.exports = {
-  start,
-}
+export { start }

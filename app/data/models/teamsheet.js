@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Teamsheet = sequelize.define('Teamsheet', {
     teamsheetId: {
       type: DataTypes.INTEGER,

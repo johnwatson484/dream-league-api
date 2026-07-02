@@ -1,10 +1,10 @@
-const db = require('../../../data')
-const Joi = require('joi')
-const boom = require('@hapi/boom')
-const { GET, POST } = require('../../../constants/verbs')
-const { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } = require('../../../constants/positions')
+import db from '../../../data/index.js'
+import Joi from 'joi'
+import boom from '@hapi/boom'
+import { GET, POST } from '../../../constants/verbs.js'
+import { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } from '../../../constants/positions.js'
 
-module.exports = [{
+export default [{
   method: GET,
   path: '/league/teams',
   options: {

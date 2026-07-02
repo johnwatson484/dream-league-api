@@ -1,6 +1,6 @@
-const db = require('../data')
-const bcrypt = require('bcrypt')
-const { addUserToRole, getUserRoles } = require('./role-manager')
+import db from '../data/index.js'
+import bcrypt from 'bcrypt'
+import { addUserToRole, getUserRoles } from './role-manager.js'
 
 const userExists = async (email) => {
   return await getUser(email) !== null
@@ -36,9 +36,4 @@ const createUser = async (email, password) => {
   return getUser(email)
 }
 
-module.exports = {
-  userExists,
-  getUser,
-  createUser,
-  isMember,
-}
+export { userExists, getUser, createUser, isMember }

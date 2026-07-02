@@ -1,6 +1,6 @@
-const { allowNonMemberRegistration } = require('../config')
-const { create } = require('../token')
-const { userExists, createUser, isMember } = require('./user-manager')
+import { allowNonMemberRegistration } from '../config/index.js'
+import { create } from '../token/index.js'
+import { userExists, createUser, isMember } from './user-manager.js'
 
 const register = async (email, password) => {
   if (await userExists(email)) {
@@ -18,6 +18,4 @@ const register = async (email, password) => {
   }
 }
 
-module.exports = {
-  register,
-}
+export { register }

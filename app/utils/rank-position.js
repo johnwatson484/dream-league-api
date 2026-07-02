@@ -9,6 +9,4 @@ const rankPosition = (position) => {
   }
 }
 
-module.exports = {
-  rankPosition,
-}
+export { rankPosition }

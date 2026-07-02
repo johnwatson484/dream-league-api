@@ -1,7 +1,7 @@
-const db = require('../data')
-const { getKeepers } = require('./get-keepers')
-const { getPlayers } = require('./get-players')
-const { getCupWeeks } = require('./get-cup-weeks')
+import db from '../data/index.js'
+import { getKeepers } from './get-keepers.js'
+import { getPlayers } from './get-players.js'
+import { getCupWeeks } from './get-cup-weeks.js'
 
 const getInput = async () => {
   const gameweeks = await db.Gameweek.findAll()
@@ -11,6 +11,4 @@ const getInput = async () => {
   return { gameweeks, cupWeeks, keepers, players }
 }
 
-module.exports = {
-  getInput,
-}
+export { getInput }

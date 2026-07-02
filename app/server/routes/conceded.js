@@ -1,11 +1,11 @@
-const Joi = require('joi')
-const boom = require('@hapi/boom')
-const db = require('../../data')
-const { GET, POST } = require('../../constants/verbs')
-const { OK } = require('../../constants/ok')
-const { update } = require('../../results')
+import Joi from 'joi'
+import boom from '@hapi/boom'
+import db from '../../data/index.js'
+import { GET, POST } from '../../constants/verbs.js'
+import { OK } from '../../constants/ok.js'
+import { update } from '../../results/index.js'
 
-module.exports = [{
+export default [{
   method: GET,
   path: '/conceded',
   options: {

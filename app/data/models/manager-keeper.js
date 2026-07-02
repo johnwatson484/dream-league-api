@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const ManagerKeeper = sequelize.define('ManagerKeeper', {
     managerId: { type: DataTypes.INTEGER, primaryKey: true },
     teamId: { type: DataTypes.INTEGER, primaryKey: true },

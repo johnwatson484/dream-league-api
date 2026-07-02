@@ -1,10 +1,8 @@
-const db = require('../../data')
+import db from '../../data/index.js'
 
 const run = async (players) => {
   await db.Player.truncate()
   await db.Player.bulkCreate(players)
 }
 
-module.exports = {
-  run,
-}
+export { run }

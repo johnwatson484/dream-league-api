@@ -1,15 +1,8 @@
-const { getManagers } = require('./get-managers')
-const { getManager } = require('./get-manager')
-const { createManager } = require('./create-manager')
-const { editManager } = require('./edit-manager')
-const { deleteManager } = require('./delete-manager')
-const { getTeam } = require('./get-team')
+import { getManagers } from './get-managers.js'
+import { getManager } from './get-manager.js'
+import { createManager } from './create-manager.js'
+import { editManager } from './edit-manager.js'
+import { deleteManager } from './delete-manager.js'
+import { getTeam } from './get-team.js'
 
-module.exports = {
-  getManagers,
-  getManager,
-  createManager,
-  editManager,
-  deleteManager,
-  getTeam,
-}
+export { getManagers, getManager, createManager, editManager, deleteManager, getTeam }

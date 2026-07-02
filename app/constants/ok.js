@@ -1,3 +1,1 @@
-module.exports = {
-  OK: 'ok',
-}
+export const OK = 'ok'

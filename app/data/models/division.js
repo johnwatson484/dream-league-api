@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Division = sequelize.define('Division', {
     divisionId: {
       type: DataTypes.INTEGER,

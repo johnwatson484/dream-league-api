@@ -10,6 +10,4 @@ const mapKeeper = (keeper, teamsheet) => {
   }
 }
 
-module.exports = {
-  mapKeeper,
-}
+export { mapKeeper }

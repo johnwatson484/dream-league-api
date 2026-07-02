@@ -1,9 +1,9 @@
-const Joi = require('joi')
-const boom = require('@hapi/boom')
-const { getForm, getTopScorers } = require('../../statistics')
-const { GET } = require('../../constants/verbs')
+import Joi from 'joi'
+import boom from '@hapi/boom'
+import { getForm, getTopScorers } from '../../statistics/index.js'
+import { GET } from '../../constants/verbs.js'
 
-module.exports = [{
+export default [{
   method: GET,
   path: '/statistics/form',
   options: {

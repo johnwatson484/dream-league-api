@@ -1,7 +1,7 @@
-const { createClient } = require('redis')
-const { cache: config } = require('../config')
-const { getFullKey } = require('./get-full-key')
-const { getKeyPrefix } = require('./get-key-prefix')
+import { createClient } from 'redis'
+import { cache as config } from '../config/index.js'
+import { getFullKey } from './get-full-key.js'
+import { getKeyPrefix } from './get-key-prefix.js'
 
 let client
 
@@ -38,10 +38,4 @@ const set = async (cache, key, value) => {
   await client.set(fullKey, serializedValue, { EX: config.ttl })
 }
 
-module.exports = {
-  start,
-  stop,
-  getKeys,
-  get,
-  set,
-}
+export { start, stop, getKeys, get, set }

@@ -1,14 +1,12 @@
-require('log-timestamp')
-const { start: startCache, stop: stopCache } = require('./cache')
-const { start: startServer } = require('./server')
-const { SIGINT, SIGTERM } = require('./constants/signals')
+import 'log-timestamp'
+import { start as startCache, stop as stopCache } from './cache/index.js'
+import { start as startServer } from './server/index.js'
+import { SIGINT, SIGTERM } from './constants/signals.js'
 
 process.on([SIGTERM, SIGINT], async () => {
   await stopCache()
   process.exit(0)
 })
 
-module.exports = (async () => {
-  await startCache()
-  await startServer()
-})()
+await startCache()
+await startServer()

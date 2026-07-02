@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const ManagerGroup = sequelize.define('ManagerGroup', {
     managerId: { type: DataTypes.INTEGER, primaryKey: true },
     groupId: { type: DataTypes.INTEGER, primaryKey: true },

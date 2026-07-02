@@ -1,4 +1,4 @@
-const { getPoints } = require('../../app/results/get-points')
+import { getPoints } from '../../app/results/get-points.js'
 
 describe('get points', () => {
   test('returns 3 points for a win', () => {

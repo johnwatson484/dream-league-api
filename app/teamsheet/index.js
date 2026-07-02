@@ -1,9 +1,5 @@
-const { getTeamsheet } = require('./get-teamsheet')
-const { update: updatePlayer } = require('./update-player')
-const { update: updateKeeper } = require('./update-keeper')
+import { getTeamsheet } from './get-teamsheet.js'
+import { update as updatePlayer } from './update-player.js'
+import { update as updateKeeper } from './update-keeper.js'
 
-module.exports = {
-  getTeamsheet,
-  updatePlayer,
-  updateKeeper,
-}
+export { getTeamsheet, updatePlayer, updateKeeper }

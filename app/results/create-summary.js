@@ -1,9 +1,9 @@
-const db = require('../data')
-const { getScores } = require('./get-scores')
-const { getCupScores } = require('./get-cup-scores')
-const { getTable } = require('./get-table')
-const { getWinners } = require('./get-winners')
-const { getGroups } = require('./get-groups')
+import db from '../data/index.js'
+import { getScores } from './get-scores.js'
+import { getCupScores } from './get-cup-scores.js'
+import { getTable } from './get-table.js'
+import { getWinners } from './get-winners.js'
+import { getGroups } from './get-groups.js'
 
 const createSummary = async (gameweekId) => {
   const summary = await getSummary(gameweekId)
@@ -28,6 +28,4 @@ const getSummary = async (gameweekId) => {
   }
 }
 
-module.exports = {
-  createSummary,
-}
+export { createSummary }

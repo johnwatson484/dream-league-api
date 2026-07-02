@@ -1,9 +1,9 @@
-const boom = require('@hapi/boom')
-const Joi = require('joi')
-const { register } = require('../../../account')
-const { POST } = require('../../../constants/verbs')
+import boom from '@hapi/boom'
+import Joi from 'joi'
+import { register } from '../../../account/index.js'
+import { POST } from '../../../constants/verbs.js'
 
-module.exports = [{
+export default [{
   method: POST,
   path: '/register',
   options: {

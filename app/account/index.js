@@ -1,12 +1,6 @@
-const { register } = require('./register')
-const { login } = require('./login')
-const { resetPassword, setNewPassword } = require('./reset-password')
-const { getUser } = require('./user-manager')
+import { register } from './register.js'
+import { login } from './login.js'
+import { resetPassword, setNewPassword } from './reset-password.js'
+import { getUser } from './user-manager.js'
 
-module.exports = {
-  register,
-  login,
-  resetPassword,
-  setNewPassword,
-  getUser,
-}
+export { register, login, resetPassword, setNewPassword, getUser }

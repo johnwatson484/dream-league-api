@@ -1,7 +1,7 @@
-const { getAllWinners } = require('../../results')
-const { GET } = require('../../constants/verbs')
+import { getAllWinners } from '../../results/index.js'
+import { GET } from '../../constants/verbs.js'
 
-module.exports = [{
+export default [{
   method: GET,
   path: '/winners',
   options: {

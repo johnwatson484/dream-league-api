@@ -1,5 +1,5 @@
-const db = require('../data')
-const { createSummary } = require('./create-summary')
+import db from '../data/index.js'
+import { createSummary } from './create-summary.js'
 
 const update = async (results) => {
   const resultsDate = new Date()
@@ -86,6 +86,4 @@ const updateGoalsCup = async (results, resultsDate) => {
   }
 }
 
-module.exports = {
-  update,
-}
+export { update }

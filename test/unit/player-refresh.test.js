@@ -1,6 +1,19 @@
-const db = require('../../app/data')
-jest.mock('../../app/data')
-const { refresh } = require('../../app/refresh/players')
+import db from '../../app/data/index.js'
+
+const { mockTeam, mockPlayer } = vi.hoisted(() => ({
+  mockTeam: { findOne: vi.fn() },
+  mockPlayer: { truncate: vi.fn(), bulkCreate: vi.fn() },
+}))
+
+vi.mock('../../app/data/index.js', () => ({
+  default: {
+    Team: mockTeam,
+    Player: mockPlayer,
+    Sequelize: { Op: { iLike: Symbol('iLike') } },
+  },
+}))
+
+import { refresh } from '../../app/refresh/players/index.js'
 
 const players = [{
   firstName: 'Ian',
@@ -16,7 +29,7 @@ const players = [{
 
 describe('refreshing player list unit', () => {
   afterEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   test('should return success if list valid', async () => {

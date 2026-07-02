@@ -1,5 +1,12 @@
-const Hapi = require('@hapi/hapi')
-const config = require('../config')
+import Hapi from '@hapi/hapi'
+import inert from '@hapi/inert'
+import hapiAuthJwt2 from 'hapi-auth-jwt2'
+import blipp from 'blipp'
+import config from '../config/index.js'
+import auth from './plugins/auth.js'
+import errors from './plugins/errors.js'
+import router from './plugins/router.js'
+import logging from './plugins/logging.js'
 
 const createServer = async () => {
   const server = Hapi.server({
@@ -16,19 +23,17 @@ const createServer = async () => {
     },
   })
 
-  await server.register(require('@hapi/inert'))
-  await server.register(require('hapi-auth-jwt2'))
-  await server.register(require('./plugins/auth'))
-  await server.register(require('./plugins/errors'))
-  await server.register(require('./plugins/router'))
-  await server.register(require('./plugins/logging'))
+  await server.register(inert)
+  await server.register(hapiAuthJwt2)
+  await server.register(auth)
+  await server.register(errors)
+  await server.register(router)
+  await server.register(logging)
   if (config.isDev) {
-    await server.register(require('blipp'))
+    await server.register(blipp)
   }
 
   return server
 }
 
-module.exports = {
-  createServer,
-}
+export { createServer }

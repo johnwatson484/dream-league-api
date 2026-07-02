@@ -1,4 +1,4 @@
-const db = require('../../data')
+import db from '../../data/index.js'
 
 async function deleteCurrentTeam (managerId) {
   await db.ManagerKeeper.destroy({ where: { managerId } })
@@ -6,6 +6,4 @@ async function deleteCurrentTeam (managerId) {
   await db.Teamsheet.destroy({ where: { managerId } })
 }
 
-module.exports = {
-  deleteCurrentTeam,
-}
+export { deleteCurrentTeam }

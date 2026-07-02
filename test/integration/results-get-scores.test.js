@@ -1,6 +1,6 @@
-const db = require('../../app/data')
-const { getScores } = require('../../app/results/get-scores')
-const testData = require('../data')
+import db from '../../app/data/index.js'
+import { getScores } from '../../app/results/get-scores.js'
+import testData from '../data/index.js'
 let managers
 
 describe('get scores', () => {

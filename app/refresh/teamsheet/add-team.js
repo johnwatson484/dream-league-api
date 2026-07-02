@@ -1,4 +1,4 @@
-const db = require('../../data')
+import db from '../../data/index.js'
 
 const addTeamsheetMatch = async (managerId, player, position, bestMatchId, distance) => {
   await db.Teamsheet.create({
@@ -27,8 +27,4 @@ const addKeeper = async (managerId, teamId, substitute) => {
   })
 }
 
-module.exports = {
-  addTeamsheetMatch,
-  addPlayer,
-  addKeeper,
-}
+export { addTeamsheetMatch, addPlayer, addKeeper }

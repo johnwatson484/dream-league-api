@@ -1,4 +1,4 @@
-const db = require('../data')
+import db from '../data/index.js'
 
 const getPlayers = async () => {
   return db.ManagerPlayer.findAll({
@@ -14,6 +14,4 @@ const getPlayers = async () => {
   })
 }
 
-module.exports = {
-  getPlayers,
-}
+export { getPlayers }

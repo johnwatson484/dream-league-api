@@ -1,6 +1,6 @@
-const db = require('../data')
-const { getPoints } = require('../results/get-points')
-const { sortArray } = require('../utils/sort-array')
+import db from '../data/index.js'
+import { getPoints } from '../results/get-points.js'
+import { sortArray } from '../utils/sort-array.js'
 
 const getForm = async (weeksToInclude = 6) => {
   const managers = await db.Manager.findAll({ raw: true })
@@ -30,6 +30,4 @@ const orderForm = (form) => {
     .map((x, i) => ({ position: i + 1, ...x }))
 }
 
-module.exports = {
-  getForm,
-}
+export { getForm }

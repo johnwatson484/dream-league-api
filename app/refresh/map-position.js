@@ -1,5 +1,5 @@
-const { GK, DEF, MID, FWD } = require('../constants/position-codes')
-const { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } = require('../constants/positions')
+import { GK, DEF, MID, FWD } from '../constants/position-codes.js'
+import { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } from '../constants/positions.js'
 
 const mapPosition = (position) => {
   switch (position) {
@@ -16,6 +16,4 @@ const mapPosition = (position) => {
   }
 }
 
-module.exports = {
-  mapPosition,
-}
+export { mapPosition }

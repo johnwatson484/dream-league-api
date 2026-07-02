@@ -1,7 +1,4 @@
-const { sendResults } = require('./send-results')
-const { sendResetPassword } = require('./send-reset-password')
+import { sendResults } from './send-results.js'
+import { sendResetPassword } from './send-reset-password.js'
 
-module.exports = {
-  sendResults,
-  sendResetPassword,
-}
+export { sendResults, sendResetPassword }

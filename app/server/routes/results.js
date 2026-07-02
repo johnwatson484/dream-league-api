@@ -1,10 +1,10 @@
-const Joi = require('joi')
-const boom = require('@hapi/boom')
-const { getSummary, getInput, update, deleteResults } = require('../../results')
-const { sendResults } = require('../../notifications')
-const { GET, POST, DELETE } = require('../../constants/verbs')
+import Joi from 'joi'
+import boom from '@hapi/boom'
+import { getSummary, getInput, update, deleteResults } from '../../results/index.js'
+import { sendResults } from '../../notifications/index.js'
+import { GET, POST, DELETE } from '../../constants/verbs.js'
 
-module.exports = [{
+export default [{
   method: GET,
   path: '/results',
   options: {

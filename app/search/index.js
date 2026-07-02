@@ -1,5 +1,3 @@
-const { search } = require('./search')
+import { search } from './search.js'
 
-module.exports = {
-  search,
-}
+export { search }

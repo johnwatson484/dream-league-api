@@ -1,4 +1,4 @@
-const db = require('../data')
+import db from '../data/index.js'
 
 const getKeepers = async () => {
   return db.ManagerKeeper.findAll({
@@ -11,6 +11,4 @@ const getKeepers = async () => {
   })
 }
 
-module.exports = {
-  getKeepers,
-}
+export { getKeepers }

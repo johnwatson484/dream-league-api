@@ -1,10 +1,8 @@
-const { getKeyPrefix } = require('./get-key-prefix')
+import { getKeyPrefix } from './get-key-prefix.js'
 
 const getFullKey = (cache, key) => {
   const prefix = getKeyPrefix(cache)
   return `${prefix}:${key}`
 }
 
-module.exports = {
-  getFullKey,
-}
+export { getFullKey }

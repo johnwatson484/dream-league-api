@@ -1,4 +1,4 @@
-const db = require('../data')
+import db from '../data/index.js'
 
 const getCupWeeks = async () => {
   const managers = await db.Manager.findAll()
@@ -16,6 +16,4 @@ const getCupWeeks = async () => {
   return managerCupWeeks
 }
 
-module.exports = {
-  getCupWeeks,
-}
+export { getCupWeeks }

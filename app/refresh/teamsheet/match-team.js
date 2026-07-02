@@ -1,8 +1,8 @@
-const { mapPlayer } = require('./map-player')
-const { mapTeam } = require('./map-team')
-const { mapPosition } = require('../map-position')
-const { addTeamsheetMatch, addPlayer, addKeeper } = require('./add-team')
-const { getLeagueTeams, getLeaguePlayers } = require('./get-league-data')
+import { mapPlayer } from './map-player.js'
+import { mapTeam } from './map-team.js'
+import { mapPosition } from '../map-position.js'
+import { addTeamsheetMatch, addPlayer, addKeeper } from './add-team.js'
+import { getLeagueTeams, getLeaguePlayers } from './get-league-data.js'
 
 const matchTeam = async (managerId, players) => {
   for (const player of players) {
@@ -30,6 +30,4 @@ const isKeeper = (position) => {
   return position === 'Goalkeeper'
 }
 
-module.exports = {
-  matchTeam,
-}
+export { matchTeam }

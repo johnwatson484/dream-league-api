@@ -1,5 +1,5 @@
-const db = require('../../data')
-const { mapPosition } = require('../map-position')
+import db from '../../data/index.js'
+import { mapPosition } from '../map-position.js'
 const positions = ['GK', 'DEF', 'MID', 'FWD']
 
 const mapPlayer = async (player) => {
@@ -32,6 +32,4 @@ const mapLastName = (player) => {
   return player.lastName
 }
 
-module.exports = {
-  mapPlayer,
-}
+export { mapPlayer }

@@ -1,4 +1,4 @@
-const db = require('../data')
+import db from '../data/index.js'
 
 const getRole = async (roleName) => {
   return db.Role.findOne({ where: { name: roleName } })
@@ -19,7 +19,4 @@ const getUserRoles = async (userId) => {
   })
 }
 
-module.exports = {
-  addUserToRole,
-  getUserRoles,
-}
+export { addUserToRole, getUserRoles }

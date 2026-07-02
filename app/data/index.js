@@ -1,28 +1,33 @@
-const fs = require('fs')
-const path = require('path')
-const { Sequelize, DataTypes } = require('sequelize')
-const modelPath = path.join(__dirname, 'models')
-const config = require('../config').database
+import { readdirSync } from 'fs'
+import { join } from 'path'
+import { pathToFileURL } from 'url'
+import { Sequelize, DataTypes } from 'sequelize'
+import config from '../config/index.js'
+
 const db = {}
 
-const sequelize = new Sequelize(config.database, config.username, config.password, config)
+const sequelize = new Sequelize(
+  config.database.database,
+  config.database.username,
+  config.database.password,
+  config.database
+)
 
-fs.readdirSync(modelPath)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== 'index.js') && (file.slice(-3) === '.js')
-  })
-  .forEach(file => {
-    const model = require(path.join(modelPath, file))(sequelize, DataTypes)
-    db[model.name] = model
-  })
+const modelPath = join(import.meta.dirname, 'models')
 
-Object.keys(db).forEach(modelName => {
+for (const file of readdirSync(modelPath).filter(f => !f.startsWith('.') && f !== 'index.js' && f.endsWith('.js'))) {
+  const { default: modelFactory } = await import(pathToFileURL(join(modelPath, file)).href)
+  const model = modelFactory(sequelize, DataTypes)
+  db[model.name] = model
+}
+
+for (const modelName of Object.keys(db)) {
   if (db[modelName].associate) {
     db[modelName].associate(db)
   }
-})
+}
 
 db.sequelize = sequelize
 db.Sequelize = Sequelize
 
-module.exports = db
+export default db

@@ -1,9 +1,7 @@
-const db = require('../data')
+import db from '../data/index.js'
 
 const getManagers = async () => {
   return db.Manager.findAll({ order: ['name'] })
 }
 
-module.exports = {
-  getManagers,
-}
+export { getManagers }

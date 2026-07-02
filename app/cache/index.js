@@ -1,9 +1,3 @@
-const { start, stop, getKeys, get, set } = require('./client')
+import { start, stop, getKeys, get, set } from './client.js'
 
-module.exports = {
-  start,
-  stop,
-  getKeys,
-  get,
-  set,
-}
+export { start, stop, getKeys, get, set }

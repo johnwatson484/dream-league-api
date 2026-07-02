@@ -1,5 +1,3 @@
-const { start } = require('./start')
+import { start } from './start.js'
 
-module.exports = {
-  start,
-}
+export { start }

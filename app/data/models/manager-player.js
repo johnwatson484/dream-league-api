@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const ManagerPlayer = sequelize.define('ManagerPlayer', {
     managerId: { type: DataTypes.INTEGER, primaryKey: true },
     playerId: { type: DataTypes.INTEGER, primaryKey: true },

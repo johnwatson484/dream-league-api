@@ -1,6 +1,4 @@
-module.exports = {
-  GOALKEEPER: 'Goalkeeper',
-  DEFENDER: 'Defender',
-  MIDFIELDER: 'Midfielder',
-  FORWARD: 'Forward',
-}
+export const GOALKEEPER = 'Goalkeeper'
+export const DEFENDER = 'Defender'
+export const MIDFIELDER = 'Midfielder'
+export const FORWARD = 'Forward'

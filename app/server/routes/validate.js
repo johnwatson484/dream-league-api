@@ -1,9 +1,9 @@
-const Joi = require('joi')
-const boom = require('@hapi/boom')
-const { validate } = require('../../token')
-const { POST } = require('../../constants/verbs')
+import Joi from 'joi'
+import boom from '@hapi/boom'
+import { validate } from '../../token/index.js'
+import { POST } from '../../constants/verbs.js'
 
-module.exports = [{
+export default [{
   method: POST,
   path: '/validate',
   options: {

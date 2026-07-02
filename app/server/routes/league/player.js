@@ -1,18 +1,18 @@
-const Joi = require('joi')
-const boom = require('@hapi/boom')
-const db = require('../../../data')
-const { refresh } = require('../../../refresh/players')
-const { GET, POST } = require('../../../constants/verbs')
-const { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } = require('../../../constants/positions')
+import Joi from 'joi'
+import boom from '@hapi/boom'
+import db from '../../../data/index.js'
+import { refresh } from '../../../refresh/players/index.js'
+import { GET, POST } from '../../../constants/verbs.js'
+import { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } from '../../../constants/positions.js'
 
-module.exports = [{
+export default [{
   method: GET,
   path: '/league/players',
   options: {
     handler: async (request, h) => {
       const search = request.query.search !== 'undefined' ? `${request.query.search}%` : '%'
       const position = request.query.position
-      
+
       const whereClause = {
         position: { [db.Sequelize.Op.ne]: GOALKEEPER },
         [db.Sequelize.Op.or]: [{
@@ -23,12 +23,12 @@ module.exports = [{
           '$team.name$': { [db.Sequelize.Op.iLike]: search },
         }],
       }
-      
+
       // Add position filter if specified
       if (position && [DEFENDER, MIDFIELDER, FORWARD].includes(position)) {
         whereClause.position = position
       }
-      
+
       return h.response(await db.Player.findAll({
         where: whereClause,
         include: [{

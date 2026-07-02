@@ -1,7 +1,4 @@
-const { create } = require('./create')
-const { validate } = require('./validate')
+import { create } from './create.js'
+import { validate } from './validate.js'
 
-module.exports = {
-  create,
-  validate,
-}
+export { create, validate }

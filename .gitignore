@@ -106,3 +106,7 @@ dist
 *.lock
 
 production-values.yaml
+
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json

@@ -9,6 +9,4 @@ const mapKeeper = (keeper) => {
   }
 }
 
-module.exports = {
-  mapKeeper,
-}
+export { mapKeeper }

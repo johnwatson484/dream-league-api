@@ -1,6 +1,6 @@
-const db = require('../data')
-const { getCupScores } = require('./get-cup-scores')
-const { orderTable } = require('./order-table')
+import db from '../data/index.js'
+import { getCupScores } from './get-cup-scores.js'
+import { orderTable } from './order-table.js'
 
 const getGroups = async (gameweekId) => {
   const cups = await db.Cup.findAll({ where: { hasGroupStage: true } })
@@ -71,6 +71,4 @@ const getGroups = async (gameweekId) => {
   return groupTables
 }
 
-module.exports = {
-  getGroups,
-}
+export { getGroups }

@@ -1,6 +1,6 @@
 const calculateDistance = (a, b) => {
-  if (a.length === 0) return b.length
-  if (b.length === 0) return a.length
+  if (a.length === 0) { return b.length }
+  if (b.length === 0) { return a.length }
 
   const matrix = []
 
@@ -32,6 +32,4 @@ const calculateDistance = (a, b) => {
   return matrix[b.length][a.length]
 }
 
-module.exports = {
-  calculateDistance,
-}
+export { calculateDistance }

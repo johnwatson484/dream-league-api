@@ -1,4 +1,2 @@
-module.exports = {
-  SIGINT: 'SIGINT',
-  SIGTERM: 'SIGTERM',
-}
+export const SIGINT = 'SIGINT'
+export const SIGTERM = 'SIGTERM'

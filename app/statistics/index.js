@@ -1,7 +1,4 @@
-const { getForm } = require('./get-form')
-const { getTopScorers } = require('./get-top-scorers')
+import { getForm } from './get-form.js'
+import { getTopScorers } from './get-top-scorers.js'
 
-module.exports = {
-  getForm,
-  getTopScorers,
-}
+export { getForm, getTopScorers }

@@ -1,10 +1,10 @@
-const Joi = require('joi')
-const boom = require('@hapi/boom')
-const { getTeamsheet, updatePlayer, updateKeeper } = require('../../teamsheet')
-const { refreshTeamsheet } = require('../../refresh')
-const { GET, POST } = require('../../constants/verbs')
+import Joi from 'joi'
+import boom from '@hapi/boom'
+import { getTeamsheet, updatePlayer, updateKeeper } from '../../teamsheet/index.js'
+import { refreshTeamsheet } from '../../refresh/index.js'
+import { GET, POST } from '../../constants/verbs.js'
 
-module.exports = [{
+export default [{
   method: GET,
   path: '/teamsheet',
   options: {

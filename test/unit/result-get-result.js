@@ -1,4 +1,4 @@
-const { getResult } = require('../../app/results/get-result')
+import { getResult } from '../../app/results/get-result.js'
 
 describe('get points', () => {
   test('returns W for a win to nil', () => {

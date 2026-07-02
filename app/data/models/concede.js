@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Concede = sequelize.define('Concede', {
     concedeId: {
       type: DataTypes.INTEGER,

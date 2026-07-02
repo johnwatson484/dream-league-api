@@ -1,4 +1,4 @@
-const db = require('../data')
+import db from '../data/index.js'
 
 const deleteResults = async (gameweekId) => {
   const transaction = await db.sequelize.transaction()
@@ -13,6 +13,4 @@ const deleteResults = async (gameweekId) => {
   }
 }
 
-module.exports = {
-  deleteResults,
-}
+export { deleteResults }

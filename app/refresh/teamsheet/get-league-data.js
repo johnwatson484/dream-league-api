@@ -1,4 +1,4 @@
-const db = require('../../data')
+import db from '../../data/index.js'
 
 const getManager = async (manager) => {
   return db.Manager.findOne({ attributes: ['managerId'], where: { alias: { [db.Sequelize.Op.iLike]: manager } }, raw: true })
@@ -12,8 +12,4 @@ const getLeagueTeams = async () => {
   return db.Team.findAll({ raw: true })
 }
 
-module.exports = {
-  getManager,
-  getLeaguePlayers,
-  getLeagueTeams,
-}
+export { getManager, getLeaguePlayers, getLeagueTeams }

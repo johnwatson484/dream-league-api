@@ -1,4 +1,4 @@
-const db = require('../data')
+import db from '../data/index.js'
 
 const update = async (payload) => {
   const manager = await getManager(payload.managerId)
@@ -98,6 +98,4 @@ const getManager = async (managerId) => {
   })
 }
 
-module.exports = {
-  update,
-}
+export { update }

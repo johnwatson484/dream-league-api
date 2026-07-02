@@ -1,6 +1,6 @@
-const moment = require('moment')
+import moment from 'moment'
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Gameweek = sequelize.define('Gameweek', {
     gameweekId: {
       type: DataTypes.INTEGER,

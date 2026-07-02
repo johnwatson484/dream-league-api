@@ -1,4 +1,4 @@
-const { W, D } = require('../constants/results')
+import { W, D } from '../constants/results.js'
 
 const getPoints = (result) => {
   switch (result) {
@@ -11,6 +11,4 @@ const getPoints = (result) => {
   }
 }
 
-module.exports = {
-  getPoints,
-}
+export { getPoints }

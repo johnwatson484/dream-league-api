@@ -1,11 +1,11 @@
-const Joi = require('joi')
-const boom = require('@hapi/boom')
-const db = require('../../data')
-const { getManager, getManagers, createManager, editManager, deleteManager, getTeam } = require('../../managers')
-const { getSummary } = require('../../results')
-const { GET, POST } = require('../../constants/verbs')
+import Joi from 'joi'
+import boom from '@hapi/boom'
+import db from '../../data/index.js'
+import { getManager, getManagers, createManager, editManager, deleteManager, getTeam } from '../../managers/index.js'
+import { getSummary } from '../../results/index.js'
+import { GET, POST } from '../../constants/verbs.js'
 
-module.exports = [{
+export default [{
   method: GET,
   path: '/managers',
   options: {

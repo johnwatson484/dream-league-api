@@ -1,7 +1,7 @@
-const bcrypt = require('bcrypt')
-const crypto = require('crypto')
-const db = require('../data')
-const { sendResetPassword } = require('../notifications')
+import bcrypt from 'bcrypt'
+import crypto from 'crypto'
+import db from '../data/index.js'
+import { sendResetPassword } from '../notifications/index.js'
 
 const resetPassword = async (email) => {
   const user = await db.User.findOne({
@@ -42,7 +42,4 @@ const setNewPassword = async (userId, password, token) => {
   await user.save()
 }
 
-module.exports = {
-  resetPassword,
-  setNewPassword,
-}
+export { resetPassword, setNewPassword }

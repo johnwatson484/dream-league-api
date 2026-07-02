@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken')
-const { jwtConfig } = require('../config')
+import jwt from 'jsonwebtoken'
+import { jwtConfig } from '../config/index.js'
 
 const create = (user) => {
   const body = mapUserToBody(user)
@@ -15,6 +15,4 @@ const mapUserToBody = (user) => {
   }
 }
 
-module.exports = {
-  create,
-}
+export { create }

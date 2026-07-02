@@ -1,9 +1,9 @@
-const Joi = require('joi')
-const boom = require('@hapi/boom')
-const db = require('../../../data')
-const { GET, POST } = require('../../../constants/verbs')
+import Joi from 'joi'
+import boom from '@hapi/boom'
+import db from '../../../data/index.js'
+import { GET, POST } from '../../../constants/verbs.js'
 
-module.exports = [{
+export default [{
   method: GET,
   path: '/league/divisions',
   options: {

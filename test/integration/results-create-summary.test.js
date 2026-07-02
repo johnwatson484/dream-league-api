@@ -1,6 +1,6 @@
-const db = require('../../app/data')
-const { createSummary } = require('../../app/results/create-summary')
-const testData = require('../data')
+import db from '../../app/data/index.js'
+import { createSummary } from '../../app/results/create-summary.js'
+import testData from '../data/index.js'
 
 describe('get table', () => {
   beforeAll(async () => {

@@ -1,4 +1,4 @@
-const { W, D, L } = require('../constants/results')
+import { W, D, L } from '../constants/results.js'
 
 const getResult = (goals, conceded) => {
   if (goals > conceded) {
@@ -10,6 +10,4 @@ const getResult = (goals, conceded) => {
   return D
 }
 
-module.exports = {
-  getResult,
-}
+export { getResult }

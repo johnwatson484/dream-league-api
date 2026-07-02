@@ -1,4 +1,4 @@
-const { calculateDistance } = require('../../levenshtein')
+import { calculateDistance } from '../../levenshtein.js'
 
 const mapTeam = (teams, matchTeam) => {
   const matchText = matchTeam.replace(/' '/g, '').toUpperCase()
@@ -19,6 +19,4 @@ const mapTeam = (teams, matchTeam) => {
   }
 }
 
-module.exports = {
-  mapTeam,
-}
+export { mapTeam }

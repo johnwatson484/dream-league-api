@@ -1,6 +1,6 @@
-const db = require('../data')
-const { getConceded, getGoals } = require('./get-goals')
-const { getResult } = require('./get-result')
+import db from '../data/index.js'
+import { getConceded, getGoals } from './get-goals.js'
+import { getResult } from './get-result.js'
 
 const getScores = async (gameweekId, managers, cup = false) => {
   const scores = []
@@ -40,6 +40,4 @@ const getScorers = async (goals) => {
   return scorers
 }
 
-module.exports = {
-  getScores,
-}
+export { getScores }

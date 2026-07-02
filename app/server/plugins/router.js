@@ -1,29 +1,52 @@
-const routes = [].concat(
-  require('../routes/identity/login'),
-  require('../routes/identity/register'),
-  require('../routes/identity/forgot-password'),
-  require('../routes/identity/reset-password'),
-  require('../routes/league/division'),
-  require('../routes/league/team'),
-  require('../routes/league/player'),
-  require('../routes/teamsheet'),
-  require('../routes/results'),
-  require('../routes/goals'),
-  require('../routes/conceded'),
-  require('../routes/gameweeks'),
-  require('../routes/statistics'),
-  require('../routes/meetings'),
-  require('../routes/managers'),
-  require('../routes/history'),
-  require('../routes/cups'),
-  require('../routes/groups'),
-  require('../routes/fixtures'),
-  require('../routes/winners'),
-  require('../routes/search'),
-  require('../routes/validate')
-)
+import login from '../routes/identity/login.js'
+import register from '../routes/identity/register.js'
+import forgotPassword from '../routes/identity/forgot-password.js'
+import resetPassword from '../routes/identity/reset-password.js'
+import division from '../routes/league/division.js'
+import team from '../routes/league/team.js'
+import player from '../routes/league/player.js'
+import teamsheet from '../routes/teamsheet.js'
+import results from '../routes/results.js'
+import goals from '../routes/goals.js'
+import conceded from '../routes/conceded.js'
+import gameweeks from '../routes/gameweeks.js'
+import statistics from '../routes/statistics.js'
+import meetings from '../routes/meetings.js'
+import managers from '../routes/managers.js'
+import history from '../routes/history.js'
+import cups from '../routes/cups.js'
+import groups from '../routes/groups.js'
+import fixtures from '../routes/fixtures.js'
+import winners from '../routes/winners.js'
+import search from '../routes/search.js'
+import validate from '../routes/validate.js'
 
-module.exports = {
+const routes = [
+  ...login,
+  ...register,
+  ...forgotPassword,
+  ...resetPassword,
+  ...division,
+  ...team,
+  ...player,
+  ...teamsheet,
+  ...results,
+  ...goals,
+  ...conceded,
+  ...gameweeks,
+  ...statistics,
+  ...meetings,
+  ...managers,
+  ...history,
+  ...cups,
+  ...groups,
+  ...fixtures,
+  ...winners,
+  ...search,
+  ...validate,
+]
+
+export default {
   plugin: {
     name: 'router',
     register: (server, _options) => {

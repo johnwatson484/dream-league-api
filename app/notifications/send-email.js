@@ -1,5 +1,5 @@
-const nodemailer = require('nodemailer')
-const config = require('../config').smtp
+import nodemailer from 'nodemailer'
+import { smtp as config } from '../config/index.js'
 
 const sendEmail = async (recipients, subject, body) => {
   if (config.host) {
@@ -14,6 +14,4 @@ const sendEmail = async (recipients, subject, body) => {
   }
 }
 
-module.exports = {
-  sendEmail,
-}
+export { sendEmail }
