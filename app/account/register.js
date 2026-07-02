@@ -1,4 +1,4 @@
-import { allowNonMemberRegistration } from '../config/index.js'
+import config from '../config/index.js'
 import { create } from '../token/index.js'
 import { userExists, createUser, isMember } from './user-manager.js'
 
@@ -7,7 +7,7 @@ const register = async (email, password) => {
     return false
   }
 
-  if (!allowNonMemberRegistration && !await isMember(email)) {
+  if (!config.allowNonMemberRegistration && !await isMember(email)) {
     return false
   }
 

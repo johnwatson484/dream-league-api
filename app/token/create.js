@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken'
-import { jwtConfig } from '../config/index.js'
+import config from '../config/index.js'
 
 const create = (user) => {
   const body = mapUserToBody(user)
-  return jwt.sign(body, jwtConfig.secret, {
-    expiresIn: `${jwtConfig.expiryInMinutes}m`,
+  return jwt.sign(body, config.jwtConfig.secret, {
+    expiresIn: `${config.jwtConfig.expiryInMinutes}m`,
   })
 }
 

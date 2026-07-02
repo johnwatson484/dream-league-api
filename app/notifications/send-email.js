@@ -1,12 +1,12 @@
 import nodemailer from 'nodemailer'
-import { smtp as config } from '../config/index.js'
+import config from '../config/index.js'
 
 const sendEmail = async (recipients, subject, body) => {
-  if (config.host) {
-    const transporter = nodemailer.createTransport(config)
+  if (config.smtp.host) {
+    const transporter = nodemailer.createTransport(config.smtp)
 
     await transporter.sendMail({
-      from: config.auth.user,
+      from: config.smtp.auth.user,
       to: recipients.toString(),
       subject,
       html: body,

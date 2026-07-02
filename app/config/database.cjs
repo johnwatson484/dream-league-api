@@ -1,10 +1,10 @@
 const joi = require('joi')
 
 const schema = joi.object().keys({
-  username: joi.string(),
-  password: joi.string(),
+  username: joi.string().default('postgres'),
+  password: joi.string().default('postgres'),
   database: joi.string().default('dream_league_api'),
-  host: joi.string(),
+  host: joi.string().default('localhost'),
   port: joi.number().default(5432),
   dialect: joi.string().default('postgres'),
   logging: joi.string().default(false),

@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import databaseConfig from './database.js'
+import databaseConfig from './database.cjs'
 import { DEVELOPMENT, TEST, PRODUCTION } from '../constants/environments.js'
 
 const schema = Joi.object().keys({
