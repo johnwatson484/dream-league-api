@@ -1,7 +1,6 @@
 import Hapi from '@hapi/hapi'
 import inert from '@hapi/inert'
 import hapiAuthJwt2 from 'hapi-auth-jwt2'
-import blipp from 'blipp'
 import config from '../config/index.js'
 import auth from './plugins/auth.js'
 import errors from './plugins/errors.js'
@@ -29,9 +28,5 @@ export async function createServer () {
   await server.register(errors)
   await server.register(router)
   await server.register(logging)
-  if (config.isDev) {
-    await server.register(blipp)
-  }
-
   return server
 }
