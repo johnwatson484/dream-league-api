@@ -8,6 +8,15 @@ export default [{
   method: GET,
   path: '/league/teams',
   options: {
+    validate: {
+      query: Joi.object({
+        search: Joi.string().allow('').optional(),
+        division: Joi.string().allow('').optional(),
+      }),
+      failAction: async (_request, _h, error) => {
+        return boom.badRequest(error)
+      },
+    },
     handler: async (request, h) => {
       const search = request.query.search || ''
       const division = request.query.division || ''
