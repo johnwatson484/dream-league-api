@@ -1,7 +1,7 @@
 import db from '../data/index.js'
 import { createSummary } from './create-summary.js'
 
-const update = async (results) => {
+export async function update (results) {
   const resultsDate = new Date()
   await updateConceded(results, resultsDate)
   await updateGoals(results, resultsDate)
@@ -10,7 +10,7 @@ const update = async (results) => {
   await createSummary(results.gameweekId)
 }
 
-const updateConceded = async (results, resultsDate) => {
+async function updateConceded (results, resultsDate) {
   const conceded = results.conceded?.filter(x => x.conceded > 0) || []
   for (const concede of conceded) {
     const manager = await db.ManagerKeeper.findOne({ where: { teamId: concede.teamId } })
@@ -29,7 +29,7 @@ const updateConceded = async (results, resultsDate) => {
   }
 }
 
-const updateGoals = async (results, resultsDate) => {
+async function updateGoals (results, resultsDate) {
   const goals = results.goals?.filter(x => x.goals > 0) || []
   for (const goal of goals) {
     const manager = await db.ManagerPlayer.findOne({ where: { playerId: goal.playerId } })
@@ -48,7 +48,7 @@ const updateGoals = async (results, resultsDate) => {
   }
 }
 
-const updateConcededCup = async (results, resultsDate) => {
+async function updateConcededCup (results, resultsDate) {
   const conceded = results.concededCup?.filter(x => x.conceded > 0) || []
   for (const concede of conceded) {
     const manager = await db.ManagerKeeper.findOne({ where: { teamId: concede.teamId } })
@@ -67,7 +67,7 @@ const updateConcededCup = async (results, resultsDate) => {
   }
 }
 
-const updateGoalsCup = async (results, resultsDate) => {
+async function updateGoalsCup (results, resultsDate) {
   const goals = results.goalsCup?.filter(x => x.goals > 0) || []
   for (const goal of goals) {
     const manager = await db.ManagerPlayer.findOne({ where: { playerId: goal.playerId } })
@@ -85,5 +85,3 @@ const updateGoalsCup = async (results, resultsDate) => {
     }
   }
 }
-
-export { update }

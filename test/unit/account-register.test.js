@@ -15,7 +15,7 @@ vi.mock('../../src/account/user-manager.js', () => ({
   isMember: mockIsMember,
 }))
 
-vi.mock('../../src/token/index.js', () => ({
+vi.mock('../../src/token/create.js', () => ({
   create: mockCreate,
 }))
 

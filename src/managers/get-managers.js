@@ -1,7 +1,5 @@
 import db from '../data/index.js'
 
-const getManagers = async () => {
+export async function getManagers () {
   return db.Manager.findAll({ order: ['name'] })
 }
-
-export { getManagers }

@@ -1,7 +1,9 @@
 import Joi from 'joi'
 import boom from '@hapi/boom'
-import { getTeamsheet, updatePlayer, updateKeeper } from '../../teamsheet/index.js'
-import { refreshTeamsheet } from '../../refresh/index.js'
+import { getTeamsheet } from '../../teamsheet/get-teamsheet.js'
+import { updatePlayer } from '../../teamsheet/update-player.js'
+import { updateKeeper } from '../../teamsheet/update-keeper.js'
+import { refreshTeamsheet } from '../../refresh/teamsheet/refresh-teamsheet.js'
 import { GET, POST } from '../../constants/verbs.js'
 
 export default [{

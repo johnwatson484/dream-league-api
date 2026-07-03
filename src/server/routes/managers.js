@@ -1,8 +1,13 @@
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import db from '../../data/index.js'
-import { getManager, getManagers, createManager, editManager, deleteManager, getTeam } from '../../managers/index.js'
-import { getSummary } from '../../results/index.js'
+import { getManagers } from '../../managers/get-managers.js'
+import { getManager } from '../../managers/get-manager.js'
+import { createManager } from '../../managers/create-manager.js'
+import { editManager } from '../../managers/edit-manager.js'
+import { deleteManager } from '../../managers/delete-manager.js'
+import { getTeam } from '../../managers/get-team.js'
+import { getSummary } from '../../results/get-summary.js'
 import { GET, POST } from '../../constants/verbs.js'
 
 export default [{

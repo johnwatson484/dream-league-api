@@ -1,5 +1,5 @@
 import config from '../../config/index.js'
-import { validate } from '../../token/index.js'
+import { validate } from '../../token/validate.js'
 
 export default {
   plugin: {

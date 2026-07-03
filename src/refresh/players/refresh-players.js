@@ -1,7 +1,7 @@
 import { mapPlayer } from './map-player.js'
 import { run } from './run.js'
 
-const refresh = async (players) => {
+export async function refreshPlayers (players) {
   const mappedPlayers = []
   const unmappedPlayers = []
   for (const player of players) {
@@ -22,5 +22,3 @@ const refresh = async (players) => {
     unmappedPlayers,
   }
 }
-
-export { refresh }

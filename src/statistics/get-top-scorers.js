@@ -1,7 +1,7 @@
 import db from '../data/index.js'
 import { sortArray } from '../utils/sort-array.js'
 
-const getTopScorers = async () => {
+export async function getTopScorers () {
   const playersToInclude = await db.Manager.count()
   let goals = await db.Goal.findAll({
     raw: true,
@@ -33,9 +33,7 @@ const getTopScorers = async () => {
   return orderScorers(scorers)
 }
 
-const orderScorers = (scorers) => {
+function orderScorers (scorers) {
   return scorers.sort((a, b) => { return sortArray(b.goals, a.goals) || sortArray(a.lastName, b.lastName) || sortArray(a.firstName, b.firstName) })
     .map((x, i) => ({ position: i + 1, ...x }))
 }
-
-export { getTopScorers }

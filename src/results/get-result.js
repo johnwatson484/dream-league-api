@@ -1,6 +1,6 @@
 import { W, D, L } from '../constants/results.js'
 
-const getResult = (goals, conceded) => {
+export function getResult (goals, conceded) {
   if (goals > conceded) {
     return W
   }
@@ -9,5 +9,3 @@ const getResult = (goals, conceded) => {
   }
   return D
 }
-
-export { getResult }

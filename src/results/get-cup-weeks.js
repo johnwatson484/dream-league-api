@@ -1,6 +1,6 @@
 import db from '../data/index.js'
 
-const getCupWeeks = async () => {
+export async function getCupWeeks () {
   const managers = await db.Manager.findAll()
   const fixtures = await db.Fixture.findAll()
   const managerCupWeeks = []
@@ -15,5 +15,3 @@ const getCupWeeks = async () => {
 
   return managerCupWeeks
 }
-
-export { getCupWeeks }

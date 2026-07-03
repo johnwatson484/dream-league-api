@@ -1,8 +1,6 @@
 import { createServer } from './create-server.js'
 
-const start = async () => {
+export async function start () {
   const server = await createServer()
   await server.start()
 }
-
-export { start }

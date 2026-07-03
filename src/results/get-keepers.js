@@ -1,6 +1,6 @@
 import db from '../data/index.js'
 
-const getKeepers = async () => {
+export async function getKeepers () {
   return db.ManagerKeeper.findAll({
     where: { substitute: false },
     include: [{ model: db.Team, attributes: [], include: { model: db.Division, as: 'division', attributes: [] } }, {
@@ -10,5 +10,3 @@ const getKeepers = async () => {
     raw: true,
   })
 }
-
-export { getKeepers }

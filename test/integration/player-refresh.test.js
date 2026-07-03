@@ -1,5 +1,5 @@
 import db from '../../src/data/index.js'
-import { refresh } from '../../src/refresh/players/index.js'
+import { refreshPlayers } from '../../src/refresh/players/refresh-players.js'
 import testData from '../data/index.js'
 
 describe('refreshing player list', () => {
@@ -30,7 +30,7 @@ describe('refreshing player list', () => {
       team: 'Wycombe',
     }]
 
-    const result = await refresh(players)
+    const result = await refreshPlayers(players)
 
     expect(result.success).toBeTruthy()
   })
@@ -48,7 +48,7 @@ describe('refreshing player list', () => {
       team: 'Wycombe',
     }]
 
-    await refresh(players)
+    await refreshPlayers(players)
     const savedPlayers = await db.Player.findAll()
 
     expect(savedPlayers.filter(x => x.firstName === players[0].firstName && x.lastName === players[0].lastName).length).toBe(1)
@@ -77,7 +77,7 @@ describe('refreshing player list', () => {
       team: 'Wycombe',
     }]
 
-    await refresh(players)
+    await refreshPlayers(players)
     const savedPlayers = await db.Player.findAll()
 
     expect(savedPlayers.filter(x => x.firstName === players[0].firstName && x.lastName === players[0].lastName).length).toBe(1)
@@ -98,7 +98,7 @@ describe('refreshing player list', () => {
       team: 'WycoMbe',
     }]
 
-    const result = await refresh(players)
+    const result = await refreshPlayers(players)
 
     expect(result.success).toBeTruthy()
   })
@@ -116,7 +116,7 @@ describe('refreshing player list', () => {
       team: 'Wycomb',
     }]
 
-    const result = await refresh(players)
+    const result = await refreshPlayers(players)
 
     expect(result.success).toBeFalsy()
     expect(result.unmappedPlayers.length).toBe(2)
@@ -135,7 +135,7 @@ describe('refreshing player list', () => {
       team: 'Wycomb',
     }]
 
-    const result = await refresh(players)
+    const result = await refreshPlayers(players)
 
     expect(result.success).toBeFalsy()
     expect(result.unmappedPlayers.length).toBe(1)
@@ -154,14 +154,14 @@ describe('refreshing player list', () => {
       team: 'Wycomb',
     }]
 
-    await refresh(players)
+    await refreshPlayers(players)
 
     const { count } = await db.Player.findAndCountAll()
     expect(count).toBe(0)
   })
 
   test('should return failure if position invalid', async () => {
-    const result = await refresh([{
+    const result = await refreshPlayers([{
       firstName: 'Ian',
       lastName: 'Henderson',
       position: 'ST',

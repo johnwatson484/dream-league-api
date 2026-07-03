@@ -1,4 +1,4 @@
-const mapPlayer = (player) => {
+export function mapPlayer (player) {
   return {
     playerId: player.dataValues.playerId,
     fullName: player.fullName,
@@ -11,5 +11,3 @@ const mapPlayer = (player) => {
     cupGoals: player.goals?.filter(x => x.cup).length ?? 0,
   }
 }
-
-export { mapPlayer }

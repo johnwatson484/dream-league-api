@@ -1,4 +1,4 @@
-const mapKeeper = (keeper) => {
+export function mapKeeper (keeper) {
   return {
     playerId: keeper.teamId,
     teamId: keeper.teamId,
@@ -8,5 +8,3 @@ const mapKeeper = (keeper) => {
     cupConceded: keeper.conceded?.filter(x => x.cup).length ?? 0,
   }
 }
-
-export { mapKeeper }

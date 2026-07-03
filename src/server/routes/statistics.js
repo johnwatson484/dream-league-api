@@ -1,6 +1,7 @@
 import Joi from 'joi'
 import boom from '@hapi/boom'
-import { getForm, getTopScorers } from '../../statistics/index.js'
+import { getForm } from '../../statistics/get-form.js'
+import { getTopScorers } from '../../statistics/get-top-scorers.js'
 import { GET } from '../../constants/verbs.js'
 
 export default [{

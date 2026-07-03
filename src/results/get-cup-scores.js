@@ -1,7 +1,7 @@
 import db from '../data/index.js'
 import { getScores } from './get-scores.js'
 
-const getCupScores = async (gameweekId, managers) => {
+export async function getCupScores (gameweekId, managers) {
   const cupScores = []
   const scores = await getScores(gameweekId, managers, true)
 
@@ -35,7 +35,7 @@ const getCupScores = async (gameweekId, managers) => {
   return cupScores
 }
 
-const getCupResult = (homeMargin, awayMargin) => {
+function getCupResult (homeMargin, awayMargin) {
   if (homeMargin > awayMargin) {
     return 'H'
   }
@@ -44,5 +44,3 @@ const getCupResult = (homeMargin, awayMargin) => {
   }
   return 'D'
 }
-
-export { getCupScores }

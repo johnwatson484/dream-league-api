@@ -2,7 +2,7 @@ import db from '../data/index.js'
 import { getConceded, getGoals } from './get-goals.js'
 import { getResult } from './get-result.js'
 
-const getScores = async (gameweekId, managers, cup = false) => {
+export async function getScores (gameweekId, managers, cup = false) {
   const scores = []
   for (const manager of managers) {
     const goals = await getGoals(gameweekId, manager.managerId, cup)
@@ -23,7 +23,7 @@ const getScores = async (gameweekId, managers, cup = false) => {
   return scores
 }
 
-const getScorers = async (goals) => {
+async function getScorers (goals) {
   const scorers = []
   goals.reduce((x, y) => {
     if (!x[y.playerId]) {
@@ -39,5 +39,3 @@ const getScorers = async (goals) => {
   }
   return scorers
 }
-
-export { getScores }

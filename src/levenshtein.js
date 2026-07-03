@@ -1,4 +1,4 @@
-const calculateDistance = (a, b) => {
+export function calculateDistance (a, b) {
   if (a.length === 0) { return b.length }
   if (b.length === 0) { return a.length }
 
@@ -31,5 +31,3 @@ const calculateDistance = (a, b) => {
 
   return matrix[b.length][a.length]
 }
-
-export { calculateDistance }

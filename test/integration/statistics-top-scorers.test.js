@@ -1,5 +1,5 @@
 import db from '../../src/data/index.js'
-import { getTopScorers } from '../../src/statistics/index.js'
+import { getTopScorers } from '../../src/statistics/get-top-scorers.js'
 import testData from '../data/index.js'
 
 describe('get top goalscorers', () => {

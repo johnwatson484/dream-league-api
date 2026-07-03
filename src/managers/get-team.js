@@ -4,7 +4,7 @@ import { mapPlayer } from './map-player.js'
 import { orderKeepers } from '../utils/order-keepers.js'
 import { orderPlayers } from '../utils/order-players.js'
 
-const getTeam = async (managerId) => {
+export async function getTeam (managerId) {
   const manager = await db.Manager.findOne({
     where: { managerId },
     include: [
@@ -37,5 +37,3 @@ const getTeam = async (managerId) => {
     players: orderPlayers(manager.players.map(mapPlayer)),
   }
 }
-
-export { getTeam }

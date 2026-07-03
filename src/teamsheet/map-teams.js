@@ -3,7 +3,7 @@ import { mapKeeper } from './map-keeper.js'
 import { orderKeepers } from '../utils/order-keepers.js'
 import { orderPlayers } from '../utils/order-players.js'
 
-const mapTeams = (team) => {
+export function mapTeams (team) {
   return {
     managerId: team.managerId,
     name: team.name,
@@ -11,5 +11,3 @@ const mapTeams = (team) => {
     players: orderPlayers(team.players.map(x => mapPlayer(x, team.teamsheet))),
   }
 }
-
-export { mapTeams }

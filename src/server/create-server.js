@@ -8,7 +8,7 @@ import errors from './plugins/errors.js'
 import router from './plugins/router.js'
 import logging from './plugins/logging.js'
 
-const createServer = async () => {
+export async function createServer () {
   const server = Hapi.server({
     port: config.port,
     routes: {
@@ -35,5 +35,3 @@ const createServer = async () => {
 
   return server
 }
-
-export { createServer }

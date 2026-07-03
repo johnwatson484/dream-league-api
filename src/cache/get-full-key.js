@@ -1,8 +1,6 @@
 import { getKeyPrefix } from './get-key-prefix.js'
 
-const getFullKey = (cache, key) => {
+export function getFullKey (cache, key) {
   const prefix = getKeyPrefix(cache)
   return `${prefix}:${key}`
 }
-
-export { getFullKey }

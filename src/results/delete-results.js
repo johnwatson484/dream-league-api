@@ -1,6 +1,6 @@
 import db from '../data/index.js'
 
-const deleteResults = async (gameweekId) => {
+export async function deleteResults (gameweekId) {
   const transaction = await db.sequelize.transaction()
   try {
     await db.Concede.destroy({ where: { gameweekId }, transaction })
@@ -12,5 +12,3 @@ const deleteResults = async (gameweekId) => {
     throw error
   }
 }
-
-export { deleteResults }

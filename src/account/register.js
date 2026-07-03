@@ -1,8 +1,8 @@
 import config from '../config/index.js'
-import { create } from '../token/index.js'
+import { create } from '../token/create.js'
 import { userExists, createUser, isMember } from './user-manager.js'
 
-const register = async (email, password) => {
+export async function register (email, password) {
   if (await userExists(email)) {
     return false
   }
@@ -17,5 +17,3 @@ const register = async (email, password) => {
     token: create(user),
   }
 }
-
-export { register }

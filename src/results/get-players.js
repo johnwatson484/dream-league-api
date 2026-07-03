@@ -1,6 +1,6 @@
 import db from '../data/index.js'
 
-const getPlayers = async () => {
+export async function getPlayers () {
   return db.ManagerPlayer.findAll({
     where: { substitute: false },
     include: [{
@@ -13,5 +13,3 @@ const getPlayers = async () => {
     attributes: ['managerId', 'playerId', [db.Sequelize.col('Player.firstName'), 'firstName'], [db.Sequelize.col('Player.lastName'), 'lastName'], [db.Sequelize.col('Player.team.name'), 'team'], [db.Sequelize.col('Player.team.division.name'), 'division'], [db.Sequelize.col('Player.team.division.shortName'), 'divisionShortName'], [db.Sequelize.col('Manager.name'), 'manager']],
   })
 }
-
-export { getPlayers }

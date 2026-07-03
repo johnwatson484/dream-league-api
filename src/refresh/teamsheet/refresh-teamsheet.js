@@ -2,7 +2,7 @@ import { getManager } from './get-league-data.js'
 import { deleteCurrentTeam } from './delete-team.js'
 import { matchTeam } from './match-team.js'
 
-const refresh = async (teams) => {
+export async function refreshTeamsheet (teams) {
   for (const team of teams) {
     const manager = await getManager(team.manager)
     if (manager) {
@@ -14,9 +14,7 @@ const refresh = async (teams) => {
   }
 }
 
-const updateTeam = async (managerId, players) => {
+async function updateTeam (managerId, players) {
   await deleteCurrentTeam(managerId)
   await matchTeam(managerId, players)
 }
-
-export { refresh }

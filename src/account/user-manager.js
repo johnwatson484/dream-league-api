@@ -2,16 +2,16 @@ import db from '../data/index.js'
 import bcrypt from 'bcrypt'
 import { addUserToRole, getUserRoles } from './role-manager.js'
 
-const userExists = async (email) => {
+export async function userExists (email) {
   return await getUser(email) !== null
 }
 
-const isMember = async (email) => {
+export async function isMember (email) {
   const memberEmail = await db.Email.findOne({ where: { address: email } })
   return memberEmail !== null
 }
 
-const getUser = async (email) => {
+export async function getUser (email) {
   const user = await db.User.findOne({
     where: { email },
     raw: true,
@@ -24,7 +24,7 @@ const getUser = async (email) => {
   return user
 }
 
-const createUser = async (email, password) => {
+export async function createUser (email, password) {
   const passwordHash = await bcrypt.hash(password, 10)
 
   const user = await db.User.create({
@@ -35,5 +35,3 @@ const createUser = async (email, password) => {
   await addUserToRole(user.userId, 'user')
   return getUser(email)
 }
-
-export { userExists, getUser, createUser, isMember }
