@@ -31,8 +31,8 @@ describe('get points', () => {
     expect(result).toBe('L')
   })
 
-  test('should work with negative goals', () => {
+  test('goals greater than conceded is a win even with negative values', () => {
     const result = getResult(-1, -2)
-    expect(result).toBe('L')
+    expect(result).toBe('W')
   })
 })
