@@ -11,7 +11,7 @@
     "start": "NODE_ENV=production node src/index.js",
     "dev": "NODE_ENV=development node --env-file-if-exists=.env --watch --watch-path=./src src/index.js",
     "dev:debug": "NODE_ENV=development node --env-file-if-exists=.env --watch --watch-path=./src --inspect src/index.js",
-    "local": "npm run services:up && npm run migrate && npm run dev",
+    "local": "npm run services:up && npm run migrate && npm run seed && npm run dev",
     "services:up": "docker compose up -d",
     "services:down": "docker compose down",
     "docker:build": "docker compose --profile app build",
