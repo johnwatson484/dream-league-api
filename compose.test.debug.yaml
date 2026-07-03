@@ -1,9 +1,0 @@
-services:
-  dream-league-api:
-    command: >
-      sh -c "
-        npm run migrate &&
-        npm run seed &&
-        npm run test:debug"
-    ports:
-      - "9230:9229"

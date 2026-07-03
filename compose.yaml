@@ -1,29 +1,50 @@
 services:
   dream-league-api:
-    build: .
-    image: dream-league-api
-    container_name: dream-league-api
-    environment: 
-      JWT_SECRET: secret
+    profiles:
+      - app
+    build:
+      context: .
+      target: development
+    ports:
+      - '3001:3001'
+      - '9230:9229'
+    volumes:
+      - ./app:/home/node/app
+      - ./package.json:/home/node/package.json
+    env_file:
+      - .env
+    environment:
       POSTGRES_HOST: dream-league-api-postgres
-      POSTGRES_USERNAME: postgres
-      POSTGRES_PASSWORD: postgres
-      SMTP_HOST: ${SMTP_HOST}
-      SMTP_USER: ${SMTP_USER}
-      SMTP_PASSWORD: ${SMTP_PASSWORD}
-      WEB_URL: http://localhost:3000
-      ALLOW_NON_MEMBER_REGISTRATION: "true"
       REDIS_HOST: dream-league-api-redis
+      WEB_URL: http://dream-league-web:3000
+    command: >
+      sh -c "
+        npm run migrate &&
+        npm run seed &&
+        node app"
+    depends_on:
+      dream-league-api-postgres:
+        condition: service_healthy
+      dream-league-api-redis:
+        condition: service_healthy
+    networks:
+      - dream-league
 
   dream-league-api-postgres:
     image: postgres:12.8-alpine
     container_name: dream-league-api-postgres
     environment:
       POSTGRES_DB: dream_league_api
-      POSTGRES_USERNAME: postgres
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - dream-league
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d dream_league_api']
       interval: 10s
       retries: 5
       start_period: 1s
@@ -31,4 +52,25 @@ services:
 
   dream-league-api-redis:
     image: redis:6
+    container_name: dream-league-api-redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    command: redis-server --dir /data --save 5 1
+    networks:
+      - dream-league
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 3s
+      retries: 5
 
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  dream-league:
+    driver: bridge
+    name: dream-league

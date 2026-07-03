@@ -1,6 +1,6 @@
-const db = require('../../app/data')
-const { getTable } = require('../../app/results/get-table')
-const testData = require('../data')
+import db from '../../src/data/index.js'
+import { getTable } from '../../src/results/get-table.js'
+import testData from '../data/index.js'
 let managers
 
 describe('get table', () => {
@@ -159,7 +159,7 @@ describe('get table', () => {
     expect(result.find(x => x.managerId === 11).played).toBe(1)
   })
 
-  test('should return matches played for first gameweek with conceded', async () => {
+  test('should return matches played for first gameweek with goals and conceded', async () => {
     const result = await getTable(1, managers)
     await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
     await db.Concede.create({ playerId: 60, managerId: 11, gameweekId: 2, cup: false })

@@ -1,3 +1,12 @@
-'use strict'
+import neostandard from 'neostandard'
 
-module.exports = require('neostandard')({ globals: ['describe', 'beforeEach', 'expect', 'test', 'afterEach', 'jest', 'beforeAll', 'afterAll'] })
+export default [
+  ...neostandard({
+    globals: ['describe', 'beforeEach', 'expect', 'test', 'afterEach', 'vi', 'beforeAll', 'afterAll'],
+  }),
+  {
+    rules: {
+      curly: ['error', 'all'],
+    },
+  },
+]

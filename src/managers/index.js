@@ -1,0 +1,6 @@
+export { getManagers } from './get-managers.js'
+export { getManager } from './get-manager.js'
+export { createManager } from './create-manager.js'
+export { editManager } from './edit-manager.js'
+export { deleteManager } from './delete-manager.js'
+export { getTeam } from './get-team.js'

@@ -1,6 +1,6 @@
-const db = require('../../app/data')
-const { update } = require('../../app/results')
-const testData = require('../data')
+import db from '../../src/data/index.js'
+import { update } from '../../src/results/index.js'
+import testData from '../data/index.js'
 
 describe('get results input', () => {
   beforeAll(async () => {

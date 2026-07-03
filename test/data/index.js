@@ -1,4 +1,8 @@
-module.exports = {
+import { createRequire } from 'node:module'
+
+const require = createRequire(import.meta.url)
+
+export default {
   managers: require('./managers.json'),
   teams: require('./teams.json'),
   players: require('./players.json'),
@@ -7,5 +11,5 @@ module.exports = {
   teamsheet: require('./teamsheet.json'),
   teamsheetPayload: require('./teamsheet-payload.json'),
   gameweeks: require('./gameweeks.json'),
-  summaries: require('./summaries'),
+  summaries: require('./summaries.json'),
 }

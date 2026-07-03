@@ -1,6 +1,6 @@
-const db = require('../../app/data')
-const { getTopScorers } = require('../../app/statistics')
-const testData = require('../data')
+import db from '../../src/data/index.js'
+import { getTopScorers } from '../../src/statistics/index.js'
+import testData from '../data/index.js'
 
 describe('get top goalscorers', () => {
   beforeAll(async () => {

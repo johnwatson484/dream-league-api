@@ -1,6 +1,7 @@
-const fs = require('fs')
-const path = require('path')
-const { Client } = require('pg')
+import fs from 'node:fs'
+import path from 'node:path'
+import pg from 'pg'
+const { Client } = pg
 
 async function loadSqlFiles (folderPath, dbConfig) {
   const client = new Client(dbConfig)
@@ -26,7 +27,7 @@ async function loadSqlFiles (folderPath, dbConfig) {
   }
 }
 
-const folderPath = path.join(__dirname, 'sql', 'local')
+const folderPath = path.join(import.meta.dirname, 'sql', 'local')
 const dbConfig = {
   host: 'localhost',
   database: 'dream_league_api',
