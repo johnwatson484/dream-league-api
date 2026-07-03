@@ -1,7 +1,7 @@
 import nunjucks from 'nunjucks'
 
 const getHtmlStringFromFile = (file, context) => {
-  nunjucks.configure('app/notifications/views', { autoescape: true })
+  nunjucks.configure('src/notifications/views', { autoescape: true })
   return nunjucks.render(file, context)
 }
 
