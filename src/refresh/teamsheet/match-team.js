@@ -4,14 +4,14 @@ import { mapPosition } from '../map-position.js'
 import { addTeamsheetMatch, addPlayer, addKeeper } from './add-team.js'
 import { getLeagueTeams, getLeaguePlayers } from './get-league-data.js'
 
-const matchTeam = async (managerId, players) => {
+export async function matchTeam (managerId, players) {
   for (const player of players) {
     const position = mapPosition(player.position)
     await matchPlayers(player, position, managerId)
   }
 }
 
-const matchPlayers = async (player, position, managerId) => {
+async function matchPlayers (player, position, managerId) {
   const leagueTeams = await getLeagueTeams()
   const leaguePlayers = await getLeaguePlayers()
 
@@ -26,8 +26,6 @@ const matchPlayers = async (player, position, managerId) => {
   }
 }
 
-const isKeeper = (position) => {
+function isKeeper (position) {
   return position === 'Goalkeeper'
 }
-
-export { matchTeam }

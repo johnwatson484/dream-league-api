@@ -1,6 +1,6 @@
 import db from '../data/index.js'
 
-const update = async (payload) => {
+export async function updateKeeper (payload) {
   const manager = await getManager(payload.managerId)
   await updateTeams(payload.teamIds, manager)
   await updateSubs(payload.teamSubs, payload.managerId)
@@ -9,7 +9,7 @@ const update = async (payload) => {
   }
 }
 
-const updateSubs = async (teamSubs, managerId) => {
+async function updateSubs (teamSubs, managerId) {
   const selectedSubIds = getSelectedSubIds(teamSubs)
   const currentSubs = await getCurrentSubs(managerId)
 
@@ -17,7 +17,7 @@ const updateSubs = async (teamSubs, managerId) => {
   await addNewSubs(selectedSubIds, currentSubs, managerId)
 }
 
-const updateTeams = async (teamIds, manager) => {
+async function updateTeams (teamIds, manager) {
   const selectedTeamIds = getSelectedTeamIds(teamIds)
   const currentTeamIds = getCurrentTeamIds(manager.dataValues.keepers)
 
@@ -25,7 +25,7 @@ const updateTeams = async (teamIds, manager) => {
   await addNewKeepers(selectedTeamIds, currentTeamIds, manager.managerId)
 }
 
-const addNewSubs = async (selectedSubIds, currentSubs, managerId) => {
+async function addNewSubs (selectedSubIds, currentSubs, managerId) {
   for (const selectedSubId of selectedSubIds) {
     if (!currentSubs.includes(selectedSubId)) {
       const managerKeeper = await db.ManagerKeeper.findOne({ where: { managerId, teamId: selectedSubId } })
@@ -35,7 +35,7 @@ const addNewSubs = async (selectedSubIds, currentSubs, managerId) => {
   }
 }
 
-const deleteOldSubs = async (currentSubs, selectedSubIds) => {
+async function deleteOldSubs (currentSubs, selectedSubIds) {
   for (const currentSub of currentSubs) {
     if (!selectedSubIds.includes(currentSub.teamId)) {
       currentSub.substitute = false
@@ -44,16 +44,16 @@ const deleteOldSubs = async (currentSubs, selectedSubIds) => {
   }
 }
 
-const getCurrentSubs = async (managerId) => {
+async function getCurrentSubs (managerId) {
   return db.ManagerKeeper.findAll({ where: { managerId, substitute: true } })
 }
 
-const getSelectedSubIds = (teamSubs) => {
+function getSelectedSubIds (teamSubs) {
   teamSubs = Array.isArray(teamSubs) ? teamSubs : [teamSubs]
   return teamSubs.filter(x => x !== 0 && x !== undefined)
 }
 
-const addNewKeepers = async (selectedTeamIds, currentTeamIds, managerId) => {
+async function addNewKeepers (selectedTeamIds, currentTeamIds, managerId) {
   for (const selectedTeam of selectedTeamIds) {
     if (!currentTeamIds.includes(selectedTeam)) {
       await db.ManagerKeeper.create({ managerId, teamId: selectedTeam, substitute: false })
@@ -61,7 +61,7 @@ const addNewKeepers = async (selectedTeamIds, currentTeamIds, managerId) => {
   }
 }
 
-const deleteOldKeepers = async (currentTeamIds, selectedTeamIds, managerId) => {
+async function deleteOldKeepers (currentTeamIds, selectedTeamIds, managerId) {
   for (const currentTeamId of currentTeamIds) {
     const currentCount = currentTeamIds.filter(x => x.teamId === currentTeamId).length
     const selectedCount = selectedTeamIds.filter(x => x === currentTeamId).length
@@ -73,16 +73,16 @@ const deleteOldKeepers = async (currentTeamIds, selectedTeamIds, managerId) => {
   }
 }
 
-const getCurrentTeamIds = (teams) => {
+function getCurrentTeamIds (teams) {
   return teams.map(x => x.teamId)
 }
 
-const getSelectedTeamIds = (teamIds) => {
+function getSelectedTeamIds (teamIds) {
   teamIds = Array.isArray(teamIds) ? teamIds : [teamIds]
   return teamIds.filter(x => x !== 0 && x !== undefined)
 }
 
-const getManager = async (managerId) => {
+async function getManager (managerId) {
   return db.Manager.findOne({
     where: { managerId },
     include: [
@@ -96,5 +96,3 @@ const getManager = async (managerId) => {
     nest: true,
   })
 }
-
-export { update }

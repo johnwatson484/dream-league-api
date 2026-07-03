@@ -13,7 +13,7 @@ vi.mock('../../src/data/index.js', () => ({
   },
 }))
 
-import { refresh } from '../../src/refresh/players/index.js'
+import { refreshPlayers } from '../../src/refresh/players/refresh-players.js'
 
 const players = [{
   firstName: 'Ian',
@@ -35,7 +35,7 @@ describe('refreshing player list unit', () => {
   test('should return success if list valid', async () => {
     db.Team.findOne.mockResolvedValue(1)
 
-    const result = await refresh(players)
+    const result = await refreshPlayers(players)
 
     expect(result.success).toBeTruthy()
   })
@@ -43,7 +43,7 @@ describe('refreshing player list unit', () => {
   test('should return failure if all teams invalid', async () => {
     db.Team.findOne.mockResolvedValue(null)
 
-    const result = await refresh(players)
+    const result = await refreshPlayers(players)
 
     expect(result.success).toBeFalsy()
     expect(result.unmappedPlayers.length).toBe(2)
@@ -53,7 +53,7 @@ describe('refreshing player list unit', () => {
     db.Team.findOne.mockResolvedValue(null)
       .mockResolvedValueOnce(1)
 
-    const result = await refresh(players)
+    const result = await refreshPlayers(players)
 
     expect(result.success).toBeFalsy()
     expect(result.unmappedPlayers.length).toBe(1)
@@ -63,7 +63,7 @@ describe('refreshing player list unit', () => {
     db.Team.findOne.mockResolvedValue(null)
       .mockResolvedValueOnce(1)
 
-    await refresh(players)
+    await refreshPlayers(players)
 
     expect(db.Player.truncate.mock.calls.length).toBe(0)
     expect(db.Player.bulkCreate.mock.calls.length).toBe(0)
@@ -72,7 +72,7 @@ describe('refreshing player list unit', () => {
   test('should return failure if position invalid', async () => {
     db.Team.findOne.mockResolvedValue(null)
 
-    const result = await refresh([{
+    const result = await refreshPlayers([{
       firstName: 'Ian',
       lastName: 'Henderson',
       position: 'ST',

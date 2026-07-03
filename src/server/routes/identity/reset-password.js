@@ -1,6 +1,6 @@
 import boom from '@hapi/boom'
 import Joi from 'joi'
-import { setNewPassword } from '../../../account/index.js'
+import { setNewPassword } from '../../../account/reset-password.js'
 import { POST } from '../../../constants/verbs.js'
 import { OK } from '../../../constants/ok.js'
 

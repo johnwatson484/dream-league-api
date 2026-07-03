@@ -1,4 +1,4 @@
-const mapPlayer = (player, teamsheet) => {
+export function mapPlayer (player, teamsheet) {
   const teamsheetEntry = teamsheet.find(x => x.dataValues.bestMatchId === player.dataValues.playerId && x.dataValues.position === player.dataValues.position)
   return {
     playerId: player.dataValues.playerId,
@@ -13,4 +13,3 @@ const mapPlayer = (player, teamsheet) => {
   }
 }
 
-export { mapPlayer }

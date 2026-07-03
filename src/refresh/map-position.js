@@ -1,7 +1,7 @@
 import { GK, DEF, MID, FWD } from '../constants/position-codes.js'
 import { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } from '../constants/positions.js'
 
-const mapPosition = (position) => {
+export function mapPosition (position) {
   switch (position) {
     case GK:
       return GOALKEEPER
@@ -16,4 +16,3 @@ const mapPosition = (position) => {
   }
 }
 
-export { mapPosition }

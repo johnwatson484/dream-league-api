@@ -1,6 +1,6 @@
 import db from '../data/index.js'
 
-const search = async (prefix) => {
+export async function search (prefix) {
   const result = []
 
   // Search players
@@ -119,5 +119,3 @@ const search = async (prefix) => {
 
   return result
 }
-
-export { search }

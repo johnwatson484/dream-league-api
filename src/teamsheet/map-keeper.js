@@ -1,4 +1,4 @@
-const mapKeeper = (keeper, teamsheet) => {
+export function mapKeeper (keeper, teamsheet) {
   const teamsheetEntry = teamsheet.find(x => x.bestMatchId === keeper.teamId && x.position === 'Goalkeeper')
   return {
     playerId: keeper.teamId,
@@ -9,5 +9,3 @@ const mapKeeper = (keeper, teamsheet) => {
     substitute: keeper.managerKeepers.dataValues.substitute,
   }
 }
-
-export { mapKeeper }

@@ -1,6 +1,6 @@
 import db from '../data/index.js'
 
-const editManager = async (manager) => {
+export async function editManager (manager) {
   const updatedManager = await db.Manager.upsert(manager)
   const currentEmails = await db.Email.findAll({ where: { managerId: manager.managerId } })
   for (const email of manager.emails) {
@@ -17,5 +17,3 @@ const editManager = async (manager) => {
   }
   return updatedManager
 }
-
-export { editManager }

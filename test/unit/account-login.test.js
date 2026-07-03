@@ -12,7 +12,7 @@ vi.mock('bcrypt', () => ({
   default: { compare: mockCompare },
 }))
 
-vi.mock('../../src/token/index.js', () => ({
+vi.mock('../../src/token/create.js', () => ({
   create: mockCreate,
 }))
 

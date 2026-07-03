@@ -1,6 +1,6 @@
 import db from '../../data/index.js'
 
-const addTeamsheetMatch = async (managerId, player, position, bestMatchId, distance) => {
+export async function addTeamsheetMatch (managerId, player, position, bestMatchId, distance) {
   await db.Teamsheet.create({
     managerId,
     player: player.player,
@@ -11,7 +11,7 @@ const addTeamsheetMatch = async (managerId, player, position, bestMatchId, dista
   })
 }
 
-const addPlayer = async (managerId, playerId, substitute) => {
+export async function addPlayer (managerId, playerId, substitute) {
   return db.ManagerPlayer.create({
     managerId,
     playerId,
@@ -19,12 +19,10 @@ const addPlayer = async (managerId, playerId, substitute) => {
   })
 }
 
-const addKeeper = async (managerId, teamId, substitute) => {
+export async function addKeeper (managerId, teamId, substitute) {
   return db.ManagerKeeper.create({
     managerId,
     teamId,
     substitute,
   })
 }
-
-export { addTeamsheetMatch, addPlayer, addKeeper }

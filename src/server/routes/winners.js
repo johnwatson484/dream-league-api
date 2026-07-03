@@ -1,4 +1,4 @@
-import { getAllWinners } from '../../results/index.js'
+import { getAllWinners } from '../../results/get-all-winners.js'
 import { GET } from '../../constants/verbs.js'
 
 export default [{

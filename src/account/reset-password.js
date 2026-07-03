@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt'
 import crypto from 'node:crypto'
 import db from '../data/index.js'
-import { sendResetPassword } from '../notifications/index.js'
+import { sendResetPassword } from '../notifications/send-reset-password.js'
 
-const resetPassword = async (email) => {
+export async function resetPassword (email) {
   const user = await db.User.findOne({
     where: { email },
   })
@@ -24,7 +24,7 @@ const resetPassword = async (email) => {
   await sendResetPassword(email, resetToken, user.userId)
 }
 
-const setNewPassword = async (userId, password, token) => {
+export async function setNewPassword (userId, password, token) {
   const user = await db.User.findByPk(userId)
 
   if (user === null) {
@@ -41,5 +41,3 @@ const setNewPassword = async (userId, password, token) => {
   user.resetExpiresAt = null
   await user.save()
 }
-
-export { resetPassword, setNewPassword }

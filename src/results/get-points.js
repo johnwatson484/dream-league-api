@@ -1,6 +1,6 @@
 import { W, D } from '../constants/results.js'
 
-const getPoints = (result) => {
+export function getPoints (result) {
   switch (result) {
     case W:
       return 3
@@ -10,5 +10,3 @@ const getPoints = (result) => {
       return 0
   }
 }
-
-export { getPoints }

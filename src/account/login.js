@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt'
 import { getUser } from './user-manager.js'
-import { create } from '../token/index.js'
+import { create } from '../token/create.js'
 
-const login = async (email, password) => {
+export async function login (email, password) {
   const user = await getUser(email)
 
   if (user === null || !await bcrypt.compare(password, user.passwordHash)) {
@@ -13,5 +13,3 @@ const login = async (email, password) => {
     token: create(user),
   }
 }
-
-export { login }

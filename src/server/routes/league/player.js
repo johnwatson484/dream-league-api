@@ -1,7 +1,7 @@
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import db from '../../../data/index.js'
-import { refresh } from '../../../refresh/players/index.js'
+import { refreshPlayers } from '../../../refresh/players/refresh-players.js'
 import { GET, POST } from '../../../constants/verbs.js'
 import { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } from '../../../constants/positions.js'
 
@@ -168,7 +168,7 @@ export default [{
       },
     },
     handler: async (request, h) => {
-      return h.response(await refresh(request.payload.players))
+      return h.response(await refreshPlayers(request.payload.players))
     },
   },
 }]

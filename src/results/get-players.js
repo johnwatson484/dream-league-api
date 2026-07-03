@@ -1,6 +1,6 @@
 import db from '../data/index.js'
 
-const getPlayers = async () => {
+export async function getPlayers () {
   return db.ManagerPlayer.findAll({
     where: { substitute: false },
     include: [{
@@ -14,4 +14,3 @@ const getPlayers = async () => {
   })
 }
 
-export { getPlayers }

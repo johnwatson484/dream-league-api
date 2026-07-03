@@ -3,7 +3,7 @@ import boom from '@hapi/boom'
 import db from '../../data/index.js'
 import { GET, POST } from '../../constants/verbs.js'
 import { OK } from '../../constants/ok.js'
-import { update } from '../../results/index.js'
+import { update } from '../../results/update.js'
 
 export default [{
   method: GET,

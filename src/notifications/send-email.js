@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 import config from '../config/index.js'
 
-const sendEmail = async (recipients, subject, body) => {
+export async function sendEmail (recipients, subject, body) {
   if (config.smtp.host) {
     const transporter = nodemailer.createTransport(config.smtp)
 
@@ -14,4 +14,3 @@ const sendEmail = async (recipients, subject, body) => {
   }
 }
 
-export { sendEmail }

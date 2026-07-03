@@ -1,4 +1,4 @@
-const rankPosition = (position) => {
+export function rankPosition (position) {
   switch (position) {
     case 'Defender':
       return 0
@@ -8,5 +8,3 @@ const rankPosition = (position) => {
       return 2
   }
 }
-
-export { rankPosition }

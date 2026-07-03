@@ -1,5 +1,5 @@
 import db from '../../src/data/index.js'
-import { update } from '../../src/results/index.js'
+import { update } from '../../src/results/update.js'
 import testData from '../data/index.js'
 
 describe('get results input', () => {

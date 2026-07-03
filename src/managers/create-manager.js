@@ -1,6 +1,6 @@
 import db from '../data/index.js'
 
-const createManager = async (manager) => {
+export async function createManager (manager) {
   const createdManager = await db.Manager.create(manager)
   for (const email of manager.emails) {
     if (email.length) {
@@ -9,5 +9,3 @@ const createManager = async (manager) => {
   }
   return createdManager
 }
-
-export { createManager }

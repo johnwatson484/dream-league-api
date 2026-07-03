@@ -1,7 +1,10 @@
 import Joi from 'joi'
 import boom from '@hapi/boom'
-import { getSummary, getInput, update, deleteResults } from '../../results/index.js'
-import { sendResults } from '../../notifications/index.js'
+import { getSummary } from '../../results/get-summary.js'
+import { getInput } from '../../results/get-input.js'
+import { update } from '../../results/update.js'
+import { deleteResults } from '../../results/delete-results.js'
+import { sendResults } from '../../notifications/send-results.js'
 import { GET, POST, DELETE } from '../../constants/verbs.js'
 
 export default [{

@@ -1,4 +1,4 @@
-const mapPlayer = (player) => {
+export function mapPlayer (player) {
   return {
     playerId: player.dataValues.playerId,
     fullName: player.fullName,
@@ -12,4 +12,3 @@ const mapPlayer = (player) => {
   }
 }
 
-export { mapPlayer }

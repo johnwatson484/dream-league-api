@@ -1,6 +1,6 @@
 import Joi from 'joi'
 import boom from '@hapi/boom'
-import { validate } from '../../token/index.js'
+import { validate } from '../../token/validate.js'
 import { POST } from '../../constants/verbs.js'
 
 export default [{

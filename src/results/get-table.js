@@ -2,7 +2,7 @@ import { getGameweekResults } from './get-gameweek-results.js'
 import { orderTable } from './order-table.js'
 import { W, D, L } from '../constants/results.js'
 
-const getTable = async (gameweekId, managers) => {
+export async function getTable (gameweekId, managers) {
   const rows = []
   for (const manager of managers) {
     const gameweekResults = await getGameweekResults(gameweekId, manager.managerId)
@@ -29,4 +29,3 @@ const getTable = async (gameweekId, managers) => {
   return orderTable(rows)
 }
 
-export { getTable }

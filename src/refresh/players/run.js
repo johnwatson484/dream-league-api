@@ -1,8 +1,6 @@
 import db from '../../data/index.js'
 
-const run = async (players) => {
+export async function run (players) {
   await db.Player.truncate()
   await db.Player.bulkCreate(players)
 }
-
-export { run }

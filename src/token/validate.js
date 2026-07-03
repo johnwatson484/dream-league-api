@@ -1,6 +1,6 @@
 import db from '../data/index.js'
 
-const validate = async (decoded, _request, _h) => {
+export async function validate (decoded, _request, _h) {
   const user = await db.User.findOne({
     raw: true,
     where: { userId: decoded.userId },
@@ -10,5 +10,3 @@ const validate = async (decoded, _request, _h) => {
   }
   return { isValid: true }
 }
-
-export { validate }

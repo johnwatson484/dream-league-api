@@ -1,15 +1,15 @@
 import db from '../data/index.js'
 
-const getRole = async (roleName) => {
+async function getRole (roleName) {
   return db.Role.findOne({ where: { name: roleName } })
 }
 
-const addUserToRole = async (userId, roleName) => {
+export async function addUserToRole (userId, roleName) {
   const role = await getRole(roleName)
   await db.UserRole.create({ userId, roleId: role.roleId })
 }
 
-const getUserRoles = async (userId) => {
+export async function getUserRoles (userId) {
   return db.UserRole.findAll({
     where: { userId },
     raw: true,
@@ -18,5 +18,3 @@ const getUserRoles = async (userId) => {
     include: [db.Role],
   })
 }
-
-export { addUserToRole, getUserRoles }

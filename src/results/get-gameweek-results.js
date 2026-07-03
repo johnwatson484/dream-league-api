@@ -3,7 +3,7 @@ import { getConceded, getGoals } from './get-goals.js'
 import { getPoints } from './get-points.js'
 import { getResult } from './get-result.js'
 
-const getGameweekResults = async (gameweekId, managerId) => {
+export async function getGameweekResults (gameweekId, managerId) {
   const gameweeks = await db.Gameweek.findAll({ where: { gameweekId: { [db.Sequelize.Op.lte]: gameweekId } } })
   const gameweekResults = []
   for (const gameweek of gameweeks) {
@@ -16,4 +16,3 @@ const getGameweekResults = async (gameweekId, managerId) => {
   return gameweekResults
 }
 
-export { getGameweekResults }

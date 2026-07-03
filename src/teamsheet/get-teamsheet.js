@@ -1,7 +1,7 @@
 import db from '../data/index.js'
 import { mapTeams } from './map-teams.js'
 
-const getTeamsheet = async () => {
+export async function getTeamsheet () {
   const managers = await db.Manager.findAll({
     include: [
       {
@@ -20,5 +20,3 @@ const getTeamsheet = async () => {
 
   return managers.map(x => mapTeams(x.dataValues))
 }
-
-export { getTeamsheet }

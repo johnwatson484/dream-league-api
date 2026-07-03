@@ -1,7 +1,7 @@
 import db from '../data/index.js'
 import { getSummary } from './get-summary.js'
 
-const getAllWinners = async () => {
+export async function getAllWinners () {
   const gameweeks = await db.Gameweek.findAll({ include: { model: db.Summary, as: 'summary', attributes: [], required: true } })
   const winners = []
   for (const gameweek of gameweeks) {
@@ -12,5 +12,3 @@ const getAllWinners = async () => {
   }
   return winners
 }
-
-export { getAllWinners }

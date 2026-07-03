@@ -1,6 +1,6 @@
 import { calculateDistance } from '../../levenshtein.js'
 
-const mapTeam = (teams, matchTeam) => {
+export function mapTeam (teams, matchTeam) {
   const matchText = matchTeam.replace(/' '/g, '').toUpperCase()
   let bestDistance = -1
   let bestTeamId = -1
@@ -19,4 +19,3 @@ const mapTeam = (teams, matchTeam) => {
   }
 }
 
-export { mapTeam }

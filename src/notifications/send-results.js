@@ -1,9 +1,9 @@
 import db from '../data/index.js'
-import { getSummary } from '../results/index.js'
+import { getSummary } from '../results/get-summary.js'
 import { getHtmlStringFromFile } from './get-html-string.js'
 import { sendEmail } from './send-email.js'
 
-const sendResults = async (gameweekId) => {
+export async function sendResults (gameweekId) {
   const summary = await getSummary(gameweekId)
   const emails = await db.Email.findAll({ raw: true, attributes: ['address'] })
   if (emails.length) {
@@ -12,5 +12,3 @@ const sendResults = async (gameweekId) => {
     await sendEmail(addresses, `Dream League Results - Game Week ${gameweekId}`, body)
   }
 }
-
-export { sendResults }
