@@ -1,8 +1,6 @@
-import { getManagers } from './get-managers.js'
-import { getManager } from './get-manager.js'
-import { createManager } from './create-manager.js'
-import { editManager } from './edit-manager.js'
-import { deleteManager } from './delete-manager.js'
-import { getTeam } from './get-team.js'
-
-export { getManagers, getManager, createManager, editManager, deleteManager, getTeam }
+export { getManagers } from './get-managers.js'
+export { getManager } from './get-manager.js'
+export { createManager } from './create-manager.js'
+export { editManager } from './edit-manager.js'
+export { deleteManager } from './delete-manager.js'
+export { getTeam } from './get-team.js'

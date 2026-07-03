@@ -1,3 +1,1 @@
-import { start } from './start.js'
-
-export { start }
+export { start } from './start.js'

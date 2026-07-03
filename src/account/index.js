@@ -1,6 +1,4 @@
-import { register } from './register.js'
-import { login } from './login.js'
-import { resetPassword, setNewPassword } from './reset-password.js'
-import { getUser } from './user-manager.js'
-
-export { register, login, resetPassword, setNewPassword, getUser }
+export { register } from './register.js'
+export { login } from './login.js'
+export { resetPassword, setNewPassword } from './reset-password.js'
+export { getUser } from './user-manager.js'
