@@ -1,25 +1,15 @@
-const { mockSign, mockHash, mockUpdate } = vi.hoisted(() => ({
+const { mockSign } = vi.hoisted(() => ({
   mockSign: vi.fn().mockReturnValue('mock-jwt-token'),
-  mockHash: vi.fn().mockResolvedValue('hashed-refresh-token'),
-  mockUpdate: vi.fn().mockResolvedValue([1]),
 }))
 
 vi.mock('jsonwebtoken', () => ({
   default: { sign: mockSign },
 }))
 
-vi.mock('bcrypt', () => ({
-  default: { hash: mockHash },
-}))
-
 vi.mock('../../src/config/index.js', () => ({
   default: {
     jwtConfig: { secret: 'test-secret', expiryInMinutes: 60 },
   },
-}))
-
-vi.mock('../../src/data/index.js', () => ({
-  default: { User: { update: mockUpdate } },
 }))
 
 import { create } from '../../src/token/create.js'
@@ -37,14 +27,12 @@ describe('authentication token creation', () => {
     )
   })
 
-  test('the signed JWT and refresh token are returned', async () => {
+  test('the signed JWT is returned', async () => {
     const user = { userId: 1, roles: [{ Role: { name: 'user' } }] }
 
     const result = await create(user)
 
     expect(result.token).toBe('mock-jwt-token')
-    expect(result.userId).toBe(1)
-    expect(typeof result.refreshToken).toBe('string')
   })
 
   test('a user with a single role receives only that scope', async () => {
