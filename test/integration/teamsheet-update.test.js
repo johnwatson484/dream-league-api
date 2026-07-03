@@ -1,5 +1,5 @@
-import db from '../../app/data/index.js'
-import { updatePlayer, updateKeeper } from '../../app/teamsheet/index.js'
+import db from '../../src/data/index.js'
+import { updatePlayer, updateKeeper } from '../../src/teamsheet/index.js'
 import testData from '../data/index.js'
 
 describe('update teamsheet', () => {

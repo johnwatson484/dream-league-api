@@ -9,13 +9,13 @@ Dream League API is a Hapi.js-based fantasy football backend service that manage
 1. **Cache (Redis)** - Must start first, provides caching layer
 2. **Server (Hapi)** - HTTP API server on port 3001
 
-See [app/index.js](../app/index.js) for initialization sequence. All services must start successfully; graceful shutdown via `SIGTERM`/`SIGINT` handlers.
+See [src/index.js](../src/index.js) for initialization sequence. All services must start successfully; graceful shutdown via `SIGTERM`/`SIGINT` handlers.
 
 ### Layer Architecture
-- **Routes** (`app/server/routes/`) - Hapi route definitions, exports arrays of route objects
-- **Business Logic** (`app/managers/`, `app/results/`, `app/teamsheet/`) - Domain logic modules
-- **Data** (`app/data/models/`) - Sequelize ORM models
-- **Infrastructure** (`app/cache/`) - Redis cache integration
+- **Routes** (`src/server/routes/`) - Hapi route definitions, exports arrays of route objects
+- **Business Logic** (`src/managers/`, `src/results/`, `src/teamsheet/`) - Domain logic modules
+- **Data** (`src/data/models/`) - Sequelize ORM models
+- **Infrastructure** (`src/cache/`) - Redis cache integration
 
 ## Critical Patterns & Conventions
 
@@ -25,7 +25,7 @@ This project uses **ESM** (`"type": "module"` in package.json). All imports use 
 ### Module Exports Pattern
 All modules export via `index.js` barrel files:
 ```javascript
-// app/managers/index.js
+// src/managers/index.js
 import { getManagers } from './get-managers.js'
 import { createManager } from './create-manager.js'
 export { getManagers, createManager }
@@ -34,7 +34,7 @@ export { getManagers, createManager }
 ### Route Structure
 Routes are simple arrays, registered via plugin system:
 ```javascript
-// app/server/routes/managers.js
+// src/server/routes/managers.js
 export default [{
   method: GET,
   path: '/managers',
@@ -46,24 +46,24 @@ export default [{
 }]
 ```
 
-All routes are concatenated in [app/server/plugins/router.js](../app/server/plugins/router.js).
+All routes are concatenated in [src/server/plugins/router.js](../src/server/plugins/router.js).
 
 ### Authentication
 - JWT via `hapi-auth-jwt2` with `try` mode (auth optional by default)
-- Token validation in [app/token/validate.js](../app/token/validate.js)
-- Auth configured in [app/server/plugins/auth.js](../app/server/plugins/auth.js)
+- Token validation in [src/token/validate.js](../src/token/validate.js)
+- Auth configured in [src/server/plugins/auth.js](../src/server/plugins/auth.js)
 
 ### Configuration
-Environment-driven config validated with Joi schemas in [app/config/index.js](../app/config/index.js). Never hardcode credentials.
+Environment-driven config validated with Joi schemas in [src/config/index.js](../src/config/index.js). Never hardcode credentials.
 
 ### Database Patterns
-- **Sequelize ORM** with models in `app/data/models/`
-- Migrations in `app/data/migrations/`, seeders in `app/data/seeders/`
-- Configured via `.sequelizerc` pointing to `app/config/database.cjs`
+- **Sequelize ORM** with models in `src/data/models/`
+- Migrations in `src/data/migrations/`, seeders in `src/data/seeders/`
+- Configured via `.sequelizerc` pointing to `src/config/database.cjs`
 - Run migrations: `npm run migrate`, seed: `npm run seed`
 
 ### Cache Strategy
-Redis-backed caching via `app/cache/`. All cache operations use:
+Redis-backed caching via `src/cache/`. All cache operations use:
 - `cache.get(prefix, key)` - Retrieve cached data
 - `cache.set(prefix, key, value)` - Store with TTL from config
 - `cache.update(prefix, key, value)` - Update cached entries
@@ -116,8 +116,8 @@ Key variables (see `.env.example`):
 Shares Docker network `dream-league` with Dream League Web. API exposes endpoints consumed by the frontend at `http://localhost:3001`.
 
 ## Key Files to Reference
-- [app/index.js](../app/index.js) - Application entry point, service startup
-- [app/config/index.js](../app/config/index.js) - Configuration schema
-- [app/server/plugins/router.js](../app/server/plugins/router.js) - Route registration
+- [src/index.js](../src/index.js) - Application entry point, service startup
+- [src/config/index.js](../src/config/index.js) - Configuration schema
+- [src/server/plugins/router.js](../src/server/plugins/router.js) - Route registration
 - [Dockerfile](../Dockerfile) - Multi-stage build (development/production targets)
 - [vitest.config.js](../vitest.config.js) - Test configuration with unit/integration split

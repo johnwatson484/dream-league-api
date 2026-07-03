@@ -1,5 +1,5 @@
-import db from '../../app/data/index.js'
-import { getScores } from '../../app/results/get-scores.js'
+import db from '../../src/data/index.js'
+import { getScores } from '../../src/results/get-scores.js'
 import testData from '../data/index.js'
 let managers
 

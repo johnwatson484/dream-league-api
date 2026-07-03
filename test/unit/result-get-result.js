@@ -1,4 +1,4 @@
-import { getResult } from '../../app/results/get-result.js'
+import { getResult } from '../../src/results/get-result.js'
 
 describe('get points', () => {
   test('returns W for a win to nil', () => {

@@ -1,5 +1,5 @@
-import db from '../../app/data/index.js'
-import { createSummary } from '../../app/results/create-summary.js'
+import db from '../../src/data/index.js'
+import { createSummary } from '../../src/results/create-summary.js'
 import testData from '../data/index.js'
 
 describe('get table', () => {

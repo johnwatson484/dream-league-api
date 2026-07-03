@@ -1,4 +1,4 @@
-import { calculateDistance } from '../../app/levenshtein.js'
+import { calculateDistance } from '../../src/levenshtein.js'
 
 describe('levenshtein distance', () => {
   test('calculates distance', () => {

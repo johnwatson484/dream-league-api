@@ -19,7 +19,7 @@ COPY --chown=node:node .sequelizerc ./
 RUN npm ci
 COPY --chown=node:node . .
 
-CMD ["node", "app"]
+CMD ["node", "src"]
 
 # Production
 FROM node:24-alpine AS production
@@ -31,7 +31,7 @@ USER root
 RUN apk add --no-cache curl
 
 COPY --from=development --chown=root:root /home/node/package*.json ./
-COPY --from=development --chown=root:root /home/node/app ./app/
+COPY --from=development --chown=root:root /home/node/src ./src/
 COPY --from=development --chown=root:root /home/node/.sequelizerc ./.sequelizerc
 
 RUN npm ci --omit=dev
@@ -44,4 +44,4 @@ ARG PORT=3001
 ENV PORT=${PORT}
 EXPOSE ${PORT}
 
-CMD ["node", "app"]
+CMD ["node", "src"]

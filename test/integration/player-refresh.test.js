@@ -1,5 +1,5 @@
-import db from '../../app/data/index.js'
-import { refresh } from '../../app/refresh/players/index.js'
+import db from '../../src/data/index.js'
+import { refresh } from '../../src/refresh/players/index.js'
 import testData from '../data/index.js'
 
 describe('refreshing player list', () => {

@@ -1,5 +1,5 @@
-import db from '../../app/data/index.js'
-import { getForm } from '../../app/statistics/index.js'
+import db from '../../src/data/index.js'
+import { getForm } from '../../src/statistics/index.js'
 import testData from '../data/index.js'
 
 describe('get form', () => {

@@ -1,11 +1,11 @@
-import db from '../../app/data/index.js'
+import db from '../../src/data/index.js'
 
 const { mockTeam, mockPlayer } = vi.hoisted(() => ({
   mockTeam: { findOne: vi.fn() },
   mockPlayer: { truncate: vi.fn(), bulkCreate: vi.fn() },
 }))
 
-vi.mock('../../app/data/index.js', () => ({
+vi.mock('../../src/data/index.js', () => ({
   default: {
     Team: mockTeam,
     Player: mockPlayer,
@@ -13,7 +13,7 @@ vi.mock('../../app/data/index.js', () => ({
   },
 }))
 
-import { refresh } from '../../app/refresh/players/index.js'
+import { refresh } from '../../src/refresh/players/index.js'
 
 const players = [{
   firstName: 'Ian',
