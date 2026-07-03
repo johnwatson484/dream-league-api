@@ -10,7 +10,7 @@ export default [{
     validate: {
       payload: Joi.object({
         email: Joi.string().email().required(),
-        password: Joi.string().required(),
+        password: Joi.string().min(12).required(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)

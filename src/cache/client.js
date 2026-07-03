@@ -34,6 +34,5 @@ export async function get (cache, key) {
 export async function set (cache, key, value) {
   const fullKey = getFullKey(cache, key)
   const serializedValue = JSON.stringify(value)
-  console.log(`Setting cache key ${fullKey} with expiry ${config.cache.ttl} as ${serializedValue}`)
   await client.set(fullKey, serializedValue, { EX: config.cache.ttl })
 }

@@ -31,12 +31,12 @@ services:
       - dream-league
 
   dream-league-api-postgres:
-    image: postgres:12.8-alpine
+    image: postgres:17-alpine
     container_name: dream-league-api-postgres
     environment:
       POSTGRES_DB: dream_league_api
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - '5432:5432'
     volumes:
@@ -44,24 +44,24 @@ services:
     networks:
       - dream-league
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U postgres -d dream_league_api']
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d dream_league_api']
       interval: 10s
       retries: 5
       start_period: 1s
       timeout: 10s
 
   dream-league-api-redis:
-    image: redis:6
+    image: redis:7-alpine
     container_name: dream-league-api-redis
     ports:
       - '6379:6379'
     volumes:
       - redis_data:/data
-    command: redis-server --dir /data --save 5 1
+    command: redis-server --dir /data --save 5 1 --requirepass ${REDIS_PASSWORD}
     networks:
       - dream-league
     healthcheck:
-      test: ['CMD', 'redis-cli', 'ping']
+      test: ['CMD', 'redis-cli', '-a', '${REDIS_PASSWORD}', 'ping']
       interval: 10s
       timeout: 3s
       retries: 5

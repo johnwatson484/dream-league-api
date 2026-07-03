@@ -14,8 +14,18 @@ export default [{
 }, {
   method: GET,
   path: '/meeting',
-  handler: async (request, h) => {
-    return h.response(await db.Meeting.findOne({ where: { meetingId: request.query.meetingId } }))
+  options: {
+    validate: {
+      query: Joi.object({
+        meetingId: Joi.number().integer().required(),
+      }),
+      failAction: async (_request, _h, error) => {
+        return boom.badRequest(error)
+      },
+    },
+    handler: async (request, h) => {
+      return h.response(await db.Meeting.findOne({ where: { meetingId: request.query.meetingId } }))
+    },
   },
 }, {
   method: GET,

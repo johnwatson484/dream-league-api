@@ -30,13 +30,15 @@ ENV NODE_ENV=production
 USER root
 RUN apk add --no-cache curl
 
+WORKDIR /home/node/app
+
 COPY --from=development --chown=root:root /home/node/package*.json ./
 COPY --from=development --chown=root:root /home/node/src ./src/
 COPY --from=development --chown=root:root /home/node/.sequelizerc ./.sequelizerc
 
 RUN npm ci --omit=dev
 
-RUN chmod -R a-w /home/node
+RUN chmod -R a-w /home/node/app
 
 USER node
 

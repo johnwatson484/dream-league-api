@@ -21,8 +21,19 @@ export default [{
 }, {
   method: GET,
   path: '/manager',
-  handler: async (request, h) => {
-    return h.response(await getManager(request.query.managerId))
+  options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
+    validate: {
+      query: Joi.object({
+        managerId: Joi.number().integer().required(),
+      }),
+      failAction: async (_request, _h, error) => {
+        return boom.badRequest(error)
+      },
+    },
+    handler: async (request, h) => {
+      return h.response(await getManager(request.query.managerId, true))
+    },
   },
 }, {
   method: GET,

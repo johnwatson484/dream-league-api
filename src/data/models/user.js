@@ -9,6 +9,8 @@ export default (sequelize, DataTypes) => {
     passwordHash: DataTypes.STRING,
     resetToken: DataTypes.STRING,
     resetExpiresAt: DataTypes.DATE,
+    refreshToken: DataTypes.STRING,
+    refreshTokenExpiresAt: DataTypes.DATE,
   }, {
     tableName: 'users',
     freezeTableName: true,

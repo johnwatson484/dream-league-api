@@ -1,5 +1,3 @@
-import moment from 'moment'
-
 export default (sequelize, DataTypes) => {
   const Gameweek = sequelize.define('Gameweek', {
     gameweekId: {
@@ -26,7 +24,7 @@ export default (sequelize, DataTypes) => {
     shortDate: {
       type: DataTypes.VIRTUAL,
       get () {
-        return moment(this.startDate).format('DD[/]MM[/]YYYY')
+        return new Date(this.startDate).toLocaleDateString('en-GB')
       },
     },
   }, {

@@ -32,6 +32,16 @@ export default [{
 }, {
   method: GET,
   path: '/league/team',
+  options: {
+    validate: {
+      query: Joi.object({
+        teamId: Joi.number().integer().required(),
+      }),
+      failAction: async (_request, _h, error) => {
+        return boom.badRequest(error)
+      },
+    },
+  },
   handler: async (request, h) => {
     const team = await db.Team.findOne({
       where: { teamId: request.query.teamId },

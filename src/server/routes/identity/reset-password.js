@@ -12,7 +12,7 @@ export default [{
       payload: Joi.object({
         userId: Joi.number().required(),
         token: Joi.string().required(),
-        password: Joi.string().required(),
+        password: Joi.string().min(12).required(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)

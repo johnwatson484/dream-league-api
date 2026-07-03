@@ -24,6 +24,17 @@ export async function getUser (email) {
   return user
 }
 
+export async function getUserById (userId) {
+  const user = await db.User.findOne({
+    where: { userId },
+    raw: true,
+  })
+  if (user !== null) {
+    user.roles = await getUserRoles(user.userId)
+  }
+  return user
+}
+
 export async function createUser (email, password) {
   const passwordHash = await bcrypt.hash(password, 10)
 

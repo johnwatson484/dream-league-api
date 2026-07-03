@@ -1,5 +1,3 @@
-import moment from 'moment'
-
 export default (sequelize, DataTypes) => {
   return sequelize.define('Meeting', {
     meetingId: {
@@ -11,7 +9,7 @@ export default (sequelize, DataTypes) => {
     shortDate: {
       type: DataTypes.VIRTUAL,
       get () {
-        return moment(this.startDate).format('DD[/]MM[/]YYYY HH:mm')
+        return new Date(this.startDate).toLocaleString('en-GB', { dateStyle: 'short', timeStyle: 'short' })
       },
     },
   }, {

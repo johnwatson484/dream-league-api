@@ -12,7 +12,7 @@ export async function addTeamsheetMatch (managerId, player, position, bestMatchI
 }
 
 export async function addPlayer (managerId, playerId, substitute) {
-  return db.ManagerPlayer.create({
+  return db.ManagerPlayer.upsert({
     managerId,
     playerId,
     substitute,
@@ -20,7 +20,7 @@ export async function addPlayer (managerId, playerId, substitute) {
 }
 
 export async function addKeeper (managerId, teamId, substitute) {
-  return db.ManagerKeeper.create({
+  return db.ManagerKeeper.upsert({
     managerId,
     teamId,
     substitute,

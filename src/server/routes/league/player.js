@@ -154,6 +154,7 @@ export default [{
   method: POST,
   path: '/league/players/refresh',
   options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: Joi.object({
         players: Joi.array().items(Joi.object({

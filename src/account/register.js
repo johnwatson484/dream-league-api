@@ -13,7 +13,5 @@ export async function register (email, password) {
 
   const user = await createUser(email, password)
 
-  return {
-    token: create(user),
-  }
+  return create(user)
 }

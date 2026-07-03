@@ -1,5 +1,7 @@
 import Joi from 'joi'
 import boom from '@hapi/boom'
+import jwt from 'jsonwebtoken'
+import config from '../../config/index.js'
 import { validate } from '../../token/validate.js'
 import { POST } from '../../constants/verbs.js'
 
@@ -9,14 +11,20 @@ export default [{
   options: {
     validate: {
       payload: Joi.object({
-        token: Joi.object().required(),
+        token: Joi.string().required(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       },
     },
     handler: async (request, h) => {
-      return h.response(await validate(request.payload.token))
+      let decoded
+      try {
+        decoded = jwt.verify(request.payload.token, config.jwtConfig.secret)
+      } catch {
+        return h.response({ isValid: false })
+      }
+      return h.response(await validate(decoded, request, h))
     },
   },
 }]
