@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import crypto from 'crypto'
+import crypto from 'node:crypto'
 import db from '../data/index.js'
 import { sendResetPassword } from '../notifications/index.js'
 

@@ -1,6 +1,6 @@
-import { readdirSync } from 'fs'
-import { join } from 'path'
-import { pathToFileURL } from 'url'
+import { readdirSync } from 'node:fs'
+import { join } from 'node:path'
+import { pathToFileURL } from 'node:url'
 import { Sequelize, DataTypes } from 'sequelize'
 import config from '../config/index.js'
 
