@@ -43,6 +43,7 @@ export default defineConfig({
           clearMocks: true,
           environment: 'node',
           env: sharedEnv,
+          fileParallelism: false,
           globalSetup: ['./test/setup/global-db.js', './test/setup/global-redis.js'],
         },
       },
