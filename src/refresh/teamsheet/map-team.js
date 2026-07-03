@@ -18,4 +18,3 @@ export function mapTeam (teams, matchTeam) {
     distance: bestDistance,
   }
 }
-

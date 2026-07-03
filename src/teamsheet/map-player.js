@@ -12,4 +12,3 @@ export function mapPlayer (player, teamsheet) {
     substitute: player.managerPlayers.dataValues.substitute,
   }
 }
-

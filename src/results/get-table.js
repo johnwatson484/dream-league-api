@@ -28,4 +28,3 @@ export async function getTable (gameweekId, managers) {
   }
   return orderTable(rows)
 }
-

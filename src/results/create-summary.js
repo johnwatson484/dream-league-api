@@ -27,4 +27,3 @@ async function getSummary (gameweekId) {
     groups,
   }
 }
-

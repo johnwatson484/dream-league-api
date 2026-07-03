@@ -15,4 +15,3 @@ export function mapPosition (position) {
       return undefined
   }
 }
-

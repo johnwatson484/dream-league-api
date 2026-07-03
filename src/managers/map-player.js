@@ -11,4 +11,3 @@ export function mapPlayer (player) {
     cupGoals: player.goals?.filter(x => x.cup).length ?? 0,
   }
 }
-

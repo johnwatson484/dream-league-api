@@ -8,4 +8,3 @@ export function mapKeeper (keeper) {
     cupConceded: keeper.conceded?.filter(x => x.cup).length ?? 0,
   }
 }
-

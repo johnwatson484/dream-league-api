@@ -70,4 +70,3 @@ export async function getGroups (gameweekId) {
   }
   return groupTables
 }
-

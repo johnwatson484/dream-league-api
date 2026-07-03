@@ -13,4 +13,3 @@ export async function sendEmail (recipients, subject, body) {
     })
   }
 }
-
