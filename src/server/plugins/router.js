@@ -20,7 +20,6 @@ import fixtures from '../routes/fixtures.js'
 import winners from '../routes/winners.js'
 import search from '../routes/search.js'
 import validate from '../routes/validate.js'
-import token from '../routes/token.js'
 
 const routes = [
   ...login,
@@ -45,7 +44,6 @@ const routes = [
   ...winners,
   ...search,
   ...validate,
-  ...token,
 ]
 
 export default {
