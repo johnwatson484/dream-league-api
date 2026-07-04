@@ -10,6 +10,7 @@ export default [{
   method: GET,
   path: '/teamsheet',
   options: {
+    auth: false,
     handler: async (_request, h) => {
       return h.response(await getTeamsheet())
     },

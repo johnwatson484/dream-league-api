@@ -6,8 +6,10 @@ const schema = Joi.object().keys({
   port: Joi.number().default(3001),
   env: Joi.string().valid(DEVELOPMENT, TEST, PRODUCTION).default(DEVELOPMENT),
   jwtConfig: Joi.object({
-    secret: Joi.string().min(32).required(),
-    expiryInMinutes: Joi.number().default(60),
+    secret: Joi.string().min(32).allow('').default(''),
+    expiryInMinutes: Joi.number().default(15),
+    refreshTokenExpiryDays: Joi.number().default(7),
+    refreshTokenMaxAgeDays: Joi.number().default(30),
   }),
   smtp: Joi.object({
     host: Joi.string().allow(''),
@@ -40,6 +42,8 @@ const config = {
   jwtConfig: {
     secret: process.env.JWT_SECRET,
     expiryInMinutes: process.env.JWT_EXPIRY_IN_MINUTES,
+    refreshTokenExpiryDays: process.env.JWT_REFRESH_TOKEN_EXPIRY_DAYS,
+    refreshTokenMaxAgeDays: process.env.JWT_REFRESH_TOKEN_MAX_AGE_DAYS,
   },
   smtp: {
     host: process.env.SMTP_HOST,

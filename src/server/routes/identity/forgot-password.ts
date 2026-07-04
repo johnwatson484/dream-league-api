@@ -8,6 +8,7 @@ export default [{
   method: POST,
   path: '/forgot-password',
   options: {
+    auth: false,
     validate: {
       payload: Joi.object({
         email: Joi.string().email().required(),

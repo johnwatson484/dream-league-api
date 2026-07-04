@@ -7,6 +7,7 @@ export default [{
   method: POST,
   path: '/search/autocomplete',
   options: {
+    auth: false,
     validate: {
       payload: Joi.object({
         prefix: Joi.string().required(),

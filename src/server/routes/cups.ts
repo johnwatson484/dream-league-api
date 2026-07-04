@@ -7,6 +7,7 @@ export default [{
   method: GET,
   path: '/cups',
   options: {
+    auth: false,
     handler: async (_request, h) => {
       return h.response(await db.Cup.findAll({ order: [['name']] }))
     },
@@ -15,6 +16,7 @@ export default [{
   method: GET,
   path: '/cup',
   options: {
+    auth: false,
     handler: async (request, h) => {
       return h.response(await db.Cup.findOne({ where: { cupId: request.query.cupId } }))
     },

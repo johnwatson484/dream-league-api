@@ -11,6 +11,11 @@ export default (sequelize, DataTypes) => {
     resetExpiresAt: DataTypes.DATE,
     refreshToken: DataTypes.STRING,
     refreshTokenExpiresAt: DataTypes.DATE,
+    tokenVersion: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
   }, {
     tableName: 'users',
     freezeTableName: true,
@@ -22,6 +27,10 @@ export default (sequelize, DataTypes) => {
       foreignKey: 'userId',
       as: 'roles',
       onDelete: 'CASCADE',
+    })
+    User.hasMany(models.RefreshToken, {
+      foreignKey: 'userId',
+      as: 'refreshTokens',
     })
   }
   return User

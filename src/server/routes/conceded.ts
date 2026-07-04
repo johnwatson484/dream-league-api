@@ -9,6 +9,7 @@ export default [{
   method: GET,
   path: '/conceded',
   options: {
+    auth: false,
     handler: async (_request, h) => {
       return h.response(await db.Concede.findAll({
         include: [{ model: db.Team, as: 'team' }],
@@ -20,6 +21,7 @@ export default [{
   method: GET,
   path: '/concede',
   options: {
+    auth: false,
     handler: async (request, h) => {
       return h.response(await db.Concede.findOne({
         where: { concedeId: request.query.concedeId },

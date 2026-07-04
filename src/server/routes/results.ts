@@ -11,6 +11,7 @@ export default [{
   method: GET,
   path: '/results',
   options: {
+    auth: false,
     validate: {
       query: Joi.object({
         gameweekId: Joi.number().optional(),

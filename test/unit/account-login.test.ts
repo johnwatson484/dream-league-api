@@ -23,11 +23,11 @@ describe('user login', () => {
     const user = { userId: 1, passwordHash: 'hashed' }
     mockGetUser.mockResolvedValue(user)
     mockCompare.mockResolvedValue(true)
-    mockCreate.mockResolvedValue({ token: 'jwt-token', refreshToken: 'raw-token', userId: 1 })
+    mockCreate.mockResolvedValue({ accessToken: 'jwt-token', refreshToken: 'raw-token' })
 
     const result = await login('user@example.com', 'password123')
 
-    expect(result).toEqual({ token: 'jwt-token', refreshToken: 'raw-token', userId: 1 })
+    expect(result).toEqual({ accessToken: 'jwt-token', refreshToken: 'raw-token' })
   })
 
   test('an unrecognised email address is rejected', async () => {
@@ -51,7 +51,7 @@ describe('user login', () => {
     const user = { userId: 1, passwordHash: 'stored-hash' }
     mockGetUser.mockResolvedValue(user)
     mockCompare.mockResolvedValue(true)
-    mockCreate.mockResolvedValue({ token: 'token', refreshToken: 'raw', userId: 1 })
+    mockCreate.mockResolvedValue({ accessToken: 'token', refreshToken: 'raw' })
 
     await login('user@example.com', 'my-password')
 
@@ -62,7 +62,7 @@ describe('user login', () => {
     const user = { userId: 1, passwordHash: 'hashed' }
     mockGetUser.mockResolvedValue(user)
     mockCompare.mockResolvedValue(true)
-    mockCreate.mockResolvedValue({ token: 'token', refreshToken: 'raw', userId: 1 })
+    mockCreate.mockResolvedValue({ accessToken: 'token', refreshToken: 'raw' })
 
     await login('user@example.com', 'password')
 

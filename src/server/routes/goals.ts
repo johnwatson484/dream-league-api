@@ -9,6 +9,7 @@ export default [{
   method: GET,
   path: '/goals',
   options: {
+    auth: false,
     handler: async (_request, h) => {
       return h.response(await db.Goal.findAll({
         include: [{ model: db.Player, as: 'player', include: [{ model: db.Team, as: 'team' }] }],
@@ -20,6 +21,7 @@ export default [{
   method: GET,
   path: '/goal',
   options: {
+    auth: false,
     handler: async (request, h) => {
       return h.response(await db.Goal.findOne({
         where: { goalId: request.query.goalId },

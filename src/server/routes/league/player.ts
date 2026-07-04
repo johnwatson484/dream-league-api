@@ -9,6 +9,7 @@ export default [{
   method: GET,
   path: '/league/players',
   options: {
+    auth: false,
     handler: async (request, h) => {
       const search = request.query.search !== 'undefined' ? `${request.query.search}%` : '%'
       const position = request.query.position
@@ -48,6 +49,9 @@ export default [{
 }, {
   method: GET,
   path: '/league/player',
+  options: {
+    auth: false,
+  },
   handler: async (request, h) => {
     const player = await db.Player.findOne({
       where: { playerId: request.query.playerId },
@@ -133,6 +137,7 @@ export default [{
   method: POST,
   path: '/league/players/autocomplete',
   options: {
+    auth: false,
     validate: {
       payload: Joi.object({
         prefix: Joi.string(),
