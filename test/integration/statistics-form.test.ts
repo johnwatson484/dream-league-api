@@ -1,0 +1,26 @@
+import db from '../../src/data/index.ts'
+import { getForm } from '../../src/statistics/get-form.ts'
+import testData from '../data/index.ts'
+
+describe('get form', () => {
+  beforeAll(async () => {
+    await db.Summary.destroy({ truncate: true })
+    await db.Gameweek.destroy({ truncate: true })
+    await db.Manager.destroy({ truncate: true })
+    await db.Gameweek.bulkCreate(testData.gameweeks)
+    await db.Summary.bulkCreate(testData.summaries)
+    await db.Manager.bulkCreate(testData.managers)
+  })
+
+  afterAll(async () => {
+    await db.Summary.destroy({ truncate: true })
+    await db.Gameweek.destroy({ truncate: true })
+    await db.Manager.destroy({ truncate: true })
+    await db.sequelize.close()
+  })
+
+  test('should return all managers', async () => {
+    const result = await getForm()
+    expect(result.length).toBe(13)
+  })
+})

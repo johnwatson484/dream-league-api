@@ -1,0 +1,15 @@
+import 'log-timestamp'
+import { start as startCache, stop as stopCache } from './cache/client.ts'
+import { start as startServer } from './server/start.ts'
+import { SIGINT, SIGTERM } from './constants/signals.ts'
+
+const shutdown = async () => {
+  await stopCache()
+  process.exit(0)
+}
+
+process.on(SIGTERM, shutdown)
+process.on(SIGINT, shutdown)
+
+await startCache()
+await startServer()
