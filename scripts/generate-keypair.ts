@@ -1,6 +1,6 @@
 import { generateKeyPairSync } from 'node:crypto'
 import { writeFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 
 const { privateKey, publicKey } = generateKeyPairSync('rsa', {
   modulusLength: 2048,
@@ -8,7 +8,12 @@ const { privateKey, publicKey } = generateKeyPairSync('rsa', {
   privateKeyEncoding: { type: 'pkcs8', format: 'pem' },
 })
 
-const outputDir = process.argv[2] || '.'
+const projectRoot = resolve(import.meta.dirname, '..')
+const outputDir = resolve(process.argv[2] || '.')
+
+if (!outputDir.startsWith(projectRoot)) {
+  throw new Error(`Output directory must be within the project root: ${projectRoot}`)
+}
 
 writeFileSync(join(outputDir, 'jwt-private.pem'), privateKey)
 writeFileSync(join(outputDir, 'jwt-public.pem'), publicKey)
