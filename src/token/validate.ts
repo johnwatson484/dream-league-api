@@ -7,7 +7,7 @@ export async function validate (decoded, _request, _h) {
     return { isValid: false }
   }
 
-  if (decoded.tokenVersion !== undefined && decoded.tokenVersion !== user.tokenVersion) {
+  if (decoded.tokenVersion === undefined || decoded.tokenVersion !== user.tokenVersion) {
     return { isValid: false }
   }
 

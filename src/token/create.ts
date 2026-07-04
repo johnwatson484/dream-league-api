@@ -18,6 +18,7 @@ export async function create (user) {
     tokenHash,
     family,
     expiresAt,
+    familyCreatedAt: new Date(),
   })
 
   const roles = user.roles.map(x => x.Role ? x.Role.name : x.name)

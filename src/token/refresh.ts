@@ -26,6 +26,12 @@ export async function refresh (rawRefreshToken) {
     return null
   }
 
+  const maxAgeMs = config.jwtConfig.refreshTokenMaxAgeDays * 24 * 60 * 60 * 1000
+  if (new Date(storedToken.familyCreatedAt).getTime() + maxAgeMs < Date.now()) {
+    await revokeFamily(storedToken.family)
+    return null
+  }
+
   const user = await getUserById(storedToken.userId)
 
   if (!user) {
@@ -52,6 +58,7 @@ export async function refresh (rawRefreshToken) {
     tokenHash: newTokenHash,
     family: storedToken.family,
     expiresAt,
+    familyCreatedAt: storedToken.familyCreatedAt,
   })
 
   return { accessToken, refreshToken: newRawToken }
