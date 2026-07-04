@@ -1,5 +1,4 @@
-import { randomBytes, createHash } from 'node:crypto'
-import { randomUUID } from 'node:crypto'
+import { randomBytes, createHash, randomUUID } from 'node:crypto'
 import jwt from 'jsonwebtoken'
 import config from '../config/index.ts'
 import { privateKey } from '../config/keys.ts'
