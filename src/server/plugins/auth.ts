@@ -1,4 +1,4 @@
-import config from '../../config/index.ts'
+import { publicKey } from '../../config/keys.ts'
 import { validate } from '../../token/validate.ts'
 
 export default {
@@ -6,11 +6,11 @@ export default {
     name: 'auth',
     register: (server, _options) => {
       server.auth.strategy('jwt', 'jwt', {
-        key: config.jwtConfig.secret,
+        key: publicKey,
         validate,
-        verifyOptions: { algorithms: ['HS256'] },
+        verifyOptions: { algorithms: ['RS256'] },
       })
-      server.auth.default({ strategy: 'jwt', mode: 'try' })
+      server.auth.default({ strategy: 'jwt', mode: 'required' })
     },
   },
 }

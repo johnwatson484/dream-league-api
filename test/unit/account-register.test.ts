@@ -27,11 +27,11 @@ describe('user registration', () => {
     mockIsMember.mockResolvedValue(true)
     const user = { userId: 1, roles: [] }
     mockCreateUser.mockResolvedValue(user)
-    mockCreate.mockResolvedValue({ token: 'new-token', refreshToken: 'raw-token', userId: 1 })
+    mockCreate.mockResolvedValue({ accessToken: 'new-token', refreshToken: 'raw-token' })
 
     const result = await register('new@example.com', 'password123')
 
-    expect(result).toEqual({ token: 'new-token', refreshToken: 'raw-token', userId: 1 })
+    expect(result).toEqual({ accessToken: 'new-token', refreshToken: 'raw-token' })
   })
 
   test('registration is rejected if the email is already registered', async () => {
@@ -57,7 +57,7 @@ describe('user registration', () => {
     mockUserExists.mockResolvedValue(false)
     mockIsMember.mockResolvedValue(true)
     mockCreateUser.mockResolvedValue({ userId: 1 })
-    mockCreate.mockResolvedValue({ token: 'token', refreshToken: 'raw', userId: 1 })
+    mockCreate.mockResolvedValue({ accessToken: 'token', refreshToken: 'raw' })
 
     await register('new@example.com', 'secure-password')
 

@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import crypto from 'node:crypto'
 import db from '../data/index.ts'
 import { sendResetPassword } from '../notifications/send-reset-password.ts'
+import { revokeAllSessions } from './revoke-all-sessions.ts'
 
 export async function resetPassword (email) {
   const user = await db.User.findOne({
@@ -40,4 +41,6 @@ export async function setNewPassword (userId, password, token) {
   user.resetToken = null
   user.resetExpiresAt = null
   await user.save()
+
+  await revokeAllSessions(user.userId)
 }

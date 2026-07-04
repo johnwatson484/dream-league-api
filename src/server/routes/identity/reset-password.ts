@@ -8,6 +8,7 @@ export default [{
   method: POST,
   path: '/reset-password',
   options: {
+    auth: false,
     validate: {
       payload: Joi.object({
         userId: Joi.number().required(),

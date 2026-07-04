@@ -7,6 +7,7 @@ export default [{
   method: GET,
   path: '/league/divisions',
   options: {
+    auth: false,
     handler: async (_request, h) => {
       return h.response(await db.Division.findAll({
         order: [['rank']],
@@ -17,6 +18,7 @@ export default [{
   method: POST,
   path: '/league/divisions/autocomplete',
   options: {
+    auth: false,
     validate: {
       payload: Joi.object({
         prefix: Joi.string(),

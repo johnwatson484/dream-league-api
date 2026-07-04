@@ -7,6 +7,7 @@ export default [{
   method: GET,
   path: '/meetings',
   options: {
+    auth: false,
     handler: async (_request, h) => {
       return h.response(await db.Meeting.findAll({ order: ['date'] }))
     },
@@ -15,6 +16,7 @@ export default [{
   method: GET,
   path: '/meeting',
   options: {
+    auth: false,
     validate: {
       query: Joi.object({
         meetingId: Joi.number().integer().required(),
@@ -30,6 +32,9 @@ export default [{
 }, {
   method: GET,
   path: '/meetings/next',
+  options: {
+    auth: false,
+  },
   handler: async (_request, h) => {
     return h.response(await db.Meeting.findOne({ where: { date: { [db.Sequelize.Op.gt]: new Date() } }, raw: true }))
   },

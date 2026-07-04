@@ -8,6 +8,7 @@ export default [{
   method: GET,
   path: '/league/teams',
   options: {
+    auth: false,
     validate: {
       query: Joi.object({
         search: Joi.string().allow('').optional(),
@@ -42,6 +43,7 @@ export default [{
   method: GET,
   path: '/league/team',
   options: {
+    auth: false,
     validate: {
       query: Joi.object({
         teamId: Joi.number().integer().required(),
@@ -118,6 +120,7 @@ export default [{
   method: POST,
   path: '/league/teams/autocomplete',
   options: {
+    auth: false,
     validate: {
       payload: Joi.object({
         prefix: Joi.string(),

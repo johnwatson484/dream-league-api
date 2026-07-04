@@ -14,6 +14,7 @@ export default [{
   method: GET,
   path: '/managers',
   options: {
+    auth: false,
     handler: async (_request, h) => {
       return h.response(await getManagers())
     },
@@ -39,6 +40,7 @@ export default [{
   method: GET,
   path: '/manager/detail',
   options: {
+    auth: false,
     validate: {
       query: Joi.object({
         managerId: Joi.number().required(),
@@ -114,6 +116,7 @@ export default [{
   method: POST,
   path: '/manager/autocomplete',
   options: {
+    auth: false,
     validate: {
       payload: Joi.object({
         prefix: Joi.string(),

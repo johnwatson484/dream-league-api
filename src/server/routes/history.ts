@@ -7,6 +7,7 @@ export default [{
   method: GET,
   path: '/history',
   options: {
+    auth: false,
     handler: async (request, h) => {
       if (request.query.historyId) {
         return h.response(await db.History.findOne({ where: { historyId: request.query.historyId } }))

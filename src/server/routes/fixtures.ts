@@ -7,6 +7,7 @@ export default [{
   method: GET,
   path: '/fixtures',
   options: {
+    auth: false,
     handler: async (_request, h) => {
       return h.response(await db.Fixture.findAll({
         include: [
@@ -34,6 +35,7 @@ export default [{
   method: GET,
   path: '/fixture',
   options: {
+    auth: false,
     handler: async (request, h) => {
       return h.response(await db.Fixture.findOne({ where: { fixtureId: request.query.fixtureId } }))
     },

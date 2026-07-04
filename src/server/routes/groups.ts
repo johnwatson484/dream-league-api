@@ -7,6 +7,7 @@ export default [{
   method: GET,
   path: '/groups',
   options: {
+    auth: false,
     handler: async (_request, h) => {
       return h.response(await db.Group.findAll({
         include: [
@@ -21,6 +22,7 @@ export default [{
   method: GET,
   path: '/group',
   options: {
+    auth: false,
     handler: async (request, h) => {
       return h.response(await db.Group.findOne({
         where: { groupId: request.query.groupId },

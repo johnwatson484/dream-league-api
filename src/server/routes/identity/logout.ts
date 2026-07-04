@@ -1,24 +1,24 @@
 import boom from '@hapi/boom'
 import Joi from 'joi'
-import { register } from '../../../account/register.ts'
+import { revokeToken } from '../../../token/refresh.ts'
 import { POST } from '../../../constants/verbs.ts'
 
 export default [{
   method: POST,
-  path: '/register',
+  path: '/logout',
   options: {
-    auth: false,
+    auth: { strategy: 'jwt', mode: 'required' },
     validate: {
       payload: Joi.object({
-        email: Joi.string().email().required(),
-        password: Joi.string().min(12).required(),
+        refreshToken: Joi.string().required(),
       }),
       failAction: async (_request, _h, error) => {
         return boom.badRequest(error)
       },
     },
     handler: async (request, h) => {
-      return h.response(await register(request.payload.email, request.payload.password))
+      await revokeToken(request.payload.refreshToken)
+      return h.response().code(204)
     },
   },
 }]

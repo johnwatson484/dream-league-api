@@ -13,3 +13,5 @@ coverage
 tsconfig.tsbuildinfo
 .env
 .sonarlint/
+jwt-private.pem
+jwt-public.pem

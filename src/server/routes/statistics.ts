@@ -8,6 +8,7 @@ export default [{
   method: GET,
   path: '/statistics/form',
   options: {
+    auth: false,
     validate: {
       query: Joi.object({
         weeksToInclude: Joi.number().optional(),
@@ -26,6 +27,7 @@ export default [{
   method: GET,
   path: '/statistics/top-scorers',
   options: {
+    auth: false,
     handler: async (_request, h) => {
       const scorers = await getTopScorers()
       return h.response(scorers)

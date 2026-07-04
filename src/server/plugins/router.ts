@@ -1,7 +1,9 @@
 import login from '../routes/identity/login.ts'
+import logout from '../routes/identity/logout.ts'
 import register from '../routes/identity/register.ts'
 import forgotPassword from '../routes/identity/forgot-password.ts'
 import resetPassword from '../routes/identity/reset-password.ts'
+import tokenRefresh from '../routes/token/refresh.ts'
 import division from '../routes/league/division.ts'
 import team from '../routes/league/team.ts'
 import player from '../routes/league/player.ts'
@@ -19,13 +21,13 @@ import groups from '../routes/groups.ts'
 import fixtures from '../routes/fixtures.ts'
 import winners from '../routes/winners.ts'
 import search from '../routes/search.ts'
-import validate from '../routes/validate.ts'
-
 const routes = [
   ...login,
+  ...logout,
   ...register,
   ...forgotPassword,
   ...resetPassword,
+  ...tokenRefresh,
   ...division,
   ...team,
   ...player,
@@ -43,7 +45,6 @@ const routes = [
   ...fixtures,
   ...winners,
   ...search,
-  ...validate,
 ]
 
 export default {
