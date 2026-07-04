@@ -20,7 +20,8 @@ export async function create (user) {
     expiresAt,
   })
 
-  return { accessToken, refreshToken: rawToken }
+  const roles = user.roles.map(x => x.Role ? x.Role.name : x.name)
+  return { accessToken, refreshToken: rawToken, userId: user.userId, roles }
 }
 
 function mapUserToBody (user) {
