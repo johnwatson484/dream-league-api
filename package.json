@@ -1,16 +1,16 @@
 {
   "name": "dream-league-api",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "description": "Dream League backend service",
   "type": "module",
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "engines": {
     "node": ">=24.0.0"
   },
   "scripts": {
-    "start": "NODE_ENV=production node src/index.js",
-    "dev": "NODE_ENV=development node --env-file-if-exists=.env --watch --watch-path=./src src/index.js",
-    "dev:debug": "NODE_ENV=development node --env-file-if-exists=.env --watch --watch-path=./src --inspect src/index.js",
+    "start": "NODE_ENV=production node src/index.ts",
+    "dev": "NODE_ENV=development node --env-file-if-exists=.env --watch --watch-path=./src src/index.ts",
+    "dev:debug": "NODE_ENV=development node --env-file-if-exists=.env --watch --watch-path=./src --inspect src/index.ts",
     "local": "npm run services:up && npm run migrate && npm run seed && npm run dev",
     "services:up": "docker compose up -d",
     "services:down": "docker compose down",
@@ -18,7 +18,8 @@
     "docker:dev": "docker compose --profile app up",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",
-    "test": "cross-env TZ=UTC vitest run --coverage",
+    "typecheck": "tsc",
+    "test": "npm run typecheck && cross-env TZ=UTC vitest run --coverage",
     "test:unit": "cross-env TZ=UTC vitest run --coverage --project unit",
     "test:integration": "cross-env TZ=UTC vitest run --coverage --project integration",
     "test:watch": "cross-env TZ=UTC vitest",
@@ -49,11 +50,13 @@
   },
   "devDependencies": {
     "@testcontainers/postgresql": "12.0.3",
+    "@types/node": "26.0.1",
     "@vitest/coverage-v8": "4.1.9",
     "cross-env": "10.1.0",
     "eslint": "9.7.0",
     "neostandard": "0.11.1",
     "testcontainers": "12.0.3",
+    "typescript": "6.0.3",
     "vitest": "4.1.9"
   }
 }

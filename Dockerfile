@@ -19,7 +19,7 @@ COPY --chown=node:node .sequelizerc ./
 RUN npm ci
 COPY --chown=node:node . .
 
-CMD ["node", "src"]
+CMD ["node", "src/index.ts"]
 
 # Production
 FROM node:24-alpine AS production
@@ -46,4 +46,4 @@ ARG PORT=3001
 ENV PORT=${PORT}
 EXPOSE ${PORT}
 
-CMD ["node", "src"]
+CMD ["node", "src/index.ts"]
