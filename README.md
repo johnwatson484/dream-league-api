@@ -1,4 +1,10 @@
 [![Build Status](https://github.com/johnwatson484/dream-league-api/actions/workflows/build.yaml/badge.svg)](https://github.com/johnwatson484/dream-league-api/actions/workflows/build.yaml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=johnwatson484_dream-league-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=johnwatson484_dream-league-api)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=johnwatson484_dream-league-api&metric=bugs)](https://sonarcloud.io/summary/new_code?id=johnwatson484_dream-league-api)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=johnwatson484_dream-league-api&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=johnwatson484_dream-league-api)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=johnwatson484_dream-league-api&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=johnwatson484_dream-league-api)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=johnwatson484_dream-league-api&metric=coverage)](https://sonarcloud.io/summary/new_code?id=johnwatson484_dream-league-api)
+[![Dependabot](https://badgen.net/github/dependabot/johnwatson484/dream-league-api)](https://github.com/johnwatson484/dream-league-api/security/dependabot)
 
 # Dream League API
 
