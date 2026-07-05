@@ -10,7 +10,7 @@ import headers from './plugins/headers.ts'
 
 export async function createServer () {
   const server = Hapi.server({
-    port: config.port,
+    port: config.get('port'),
     routes: {
       validate: {
         options: {

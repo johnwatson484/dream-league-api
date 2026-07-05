@@ -7,7 +7,7 @@ import db from '../data/index.ts'
 export async function create (user) {
   const accessToken = jwt.sign(mapUserToBody(user), privateKey, {
     algorithm: 'RS256',
-    expiresIn: `${config.jwtConfig.expiryInMinutes}m`,
+    expiresIn: `${config.get('jwt.expiryInMinutes')}m`,
   })
 
   const { rawToken, tokenHash, family, expiresAt } = generateRefreshToken()
@@ -36,7 +36,7 @@ function generateRefreshToken () {
   const rawToken = randomBytes(32).toString('hex')
   const tokenHash = createHash('sha256').update(rawToken).digest('hex')
   const family = randomUUID()
-  const expiresAt = new Date(Date.now() + config.jwtConfig.refreshTokenExpiryDays * 24 * 60 * 60 * 1000)
+  const expiresAt = new Date(Date.now() + config.get('jwt.refreshTokenExpiryDays') * 24 * 60 * 60 * 1000)
 
   return { rawToken, tokenHash, family, expiresAt }
 }

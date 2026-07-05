@@ -6,7 +6,11 @@ const { mockUserExists, mockCreateUser, mockIsMember, mockCreate } = vi.hoisted(
 }))
 
 vi.mock('../../src/config/index.ts', () => ({
-  default: { allowNonMemberRegistration: false },
+  default: {
+    get: (key) => ({
+      allowNonMemberRegistration: false,
+    })[key],
+  },
 }))
 
 vi.mock('../../src/account/user-manager.ts', () => ({

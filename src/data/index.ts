@@ -1,16 +1,24 @@
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { Sequelize, DataTypes } from 'sequelize'
+import { Sequelize, DataTypes, type Dialect } from 'sequelize'
 import config from '../config/index.ts'
 
 const db: any = {}
 
 const sequelize = new Sequelize(
-  config.database.database,
-  config.database.username,
-  config.database.password,
-  config.database
+  config.get('database.database'),
+  config.get('database.username'),
+  config.get('database.password'),
+  {
+    host: config.get('database.host'),
+    port: config.get('database.port'),
+    dialect: config.get('database.dialect') as Dialect,
+    logging: config.get('database.logging'),
+    define: {
+      timestamps: false,
+    },
+  }
 )
 
 const modelPath = join(import.meta.dirname, 'models')

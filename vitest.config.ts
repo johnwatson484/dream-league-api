@@ -2,7 +2,6 @@ import { defineConfig, configDefaults } from 'vitest/config'
 
 const sharedEnv = {
   NODE_ENV: 'test',
-  JWT_SECRET: 'test-secret-at-least-32-characters!!',
   WEB_URL: 'http://localhost:3000',
 }
 

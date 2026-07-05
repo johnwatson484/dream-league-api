@@ -1,5 +1,9 @@
 vi.mock('../../src/config/index.ts', () => ({
-  default: { cache: { partition: 'dream-league' } },
+  default: {
+    get: (key) => ({
+      'cache.partition': 'dream-league',
+    })[key],
+  },
 }))
 
 import { getKeyPrefix } from '../../src/cache/get-key-prefix.ts'
