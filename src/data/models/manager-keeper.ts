@@ -1,7 +1,7 @@
 import type { Sequelize } from 'sequelize'
 import type { DataTypesStatic, Db } from '../types.ts'
 
-export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
+export default function defineManagerKeeperModel (sequelize: Sequelize, DataTypes: DataTypesStatic) {
   const ManagerKeeper = sequelize.define('ManagerKeeper', {
     managerId: { type: DataTypes.INTEGER, primaryKey: true },
     teamId: { type: DataTypes.INTEGER, primaryKey: true },

@@ -1,13 +1,11 @@
+import { failAction } from './fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
-import boom from '@hapi/boom'
 import db from '../../data/index.ts'
-import { GET, POST } from '../../constants/verbs.ts'
-import { OK } from '../../constants/ok.ts'
 import { update } from '../../results/update.ts'
 
 export default [{
-  method: GET,
+  method: 'GET',
   path: '/goals',
   options: {
     auth: false,
@@ -19,7 +17,7 @@ export default [{
     },
   },
 }, {
-  method: GET,
+  method: 'GET',
   path: '/goal',
   options: {
     auth: false,
@@ -31,7 +29,7 @@ export default [{
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/goal/delete',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -39,15 +37,13 @@ export default [{
       payload: Joi.object({
         goalId: Joi.number(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       const goal: any = await db.Goal.findOne({ where: { goalId: (request.payload as any).goalId } })
       await db.Goal.destroy({ where: { goalId: (request.payload as any).goalId } })
       await update({ gameweekId: goal.gameweekId })
-      return h.response(OK)
+      return h.response('ok')
     },
   },
 }] satisfies ServerRoute[]

@@ -1,14 +1,13 @@
+import { failAction } from '../fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import { Op } from 'sequelize'
 import Joi from 'joi'
-import boom from '@hapi/boom'
 import db from '../../../data/index.ts'
 import { refreshPlayers } from '../../../refresh/players/refresh-players.ts'
-import { GET, POST } from '../../../constants/verbs.ts'
 import { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } from '../../../constants/positions.ts'
 
 export default [{
-  method: GET,
+  method: 'GET',
   path: '/league/players',
   options: {
     auth: false,
@@ -48,7 +47,7 @@ export default [{
     },
   },
 }, {
-  method: GET,
+  method: 'GET',
   path: '/league/player',
   options: {
     auth: false,
@@ -77,7 +76,7 @@ export default [{
     return h.response(player as any)
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/league/player/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -85,19 +84,17 @@ export default [{
       payload: Joi.object({
         firstName: Joi.string().allow(''),
         lastName: Joi.string(),
-        position: Joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
+        position: Joi.string().valid('Defender', 'Midfielder', 'Forward'),
         teamId: Joi.number(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.Player.create(request.payload as any))
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/league/player/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -106,19 +103,17 @@ export default [{
         playerId: Joi.number(),
         firstName: Joi.string().allow(''),
         lastName: Joi.string(),
-        position: Joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
+        position: Joi.string().valid('Defender', 'Midfielder', 'Forward'),
         teamId: Joi.number(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.Player.upsert(request.payload as any) as any)
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/league/player/delete',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -126,16 +121,14 @@ export default [{
       payload: Joi.object({
         playerId: Joi.number(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.Player.destroy({ where: { playerId: (request.payload as any).playerId } }) as any)
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/league/players/autocomplete',
   options: {
     auth: false,
@@ -143,9 +136,7 @@ export default [{
       payload: Joi.object({
         prefix: Joi.string(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       const players = await db.Player.findAll({
@@ -157,7 +148,7 @@ export default [{
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/league/players/refresh',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -170,9 +161,7 @@ export default [{
           team: Joi.string().allow(''),
         })),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await refreshPlayers((request.payload as any).players))

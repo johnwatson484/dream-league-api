@@ -1,7 +1,7 @@
 import type { Sequelize } from 'sequelize'
 import type { DataTypesStatic, Db } from '../types.ts'
 
-export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
+export default function defineGroupModel (sequelize: Sequelize, DataTypes: DataTypesStatic) {
   const Group = sequelize.define('Group', {
     groupId: {
       type: DataTypes.INTEGER,

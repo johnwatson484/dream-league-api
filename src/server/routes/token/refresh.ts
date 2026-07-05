@@ -1,11 +1,11 @@
+import { failAction } from '../fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import boom from '@hapi/boom'
 import Joi from 'joi'
 import { refresh } from '../../../token/refresh.ts'
-import { POST } from '../../../constants/verbs.ts'
 
 export default [{
-  method: POST,
+  method: 'POST',
   path: '/token/refresh',
   options: {
     auth: false,
@@ -13,9 +13,7 @@ export default [{
       payload: Joi.object({
         refreshToken: Joi.string().required(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       const result = await refresh((request.payload as any).refreshToken)

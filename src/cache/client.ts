@@ -1,9 +1,15 @@
 import { createClient } from 'redis'
 import config from '../config/index.ts'
-import { getFullKey } from './get-full-key.ts'
-import { getKeyPrefix } from './get-key-prefix.ts'
 
 let client: ReturnType<typeof createClient>
+
+function getKeyPrefix (cache: string): string {
+  return `${config.get('cache.partition')}:${cache}`
+}
+
+function getFullKey (cache: string, key: string): string {
+  return `${getKeyPrefix(cache)}:${key}`
+}
 
 export async function start (): Promise<void> {
   const password = config.get('cache.password')

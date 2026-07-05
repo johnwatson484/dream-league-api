@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import config from '../config/index.ts'
 import { privateKey } from '../config/keys.ts'
 import db from '../data/index.ts'
+import { mapRoles } from './map-roles.ts'
 
 export async function create (user: any) {
   const accessToken = jwt.sign(mapUserToBody(user), privateKey, {
@@ -20,14 +21,14 @@ export async function create (user: any) {
     familyCreatedAt: new Date(),
   })
 
-  const roles = user.roles.map((x: any) => x.Role ? x.Role.name : x.name)
+  const roles = mapRoles(user.roles)
   return { accessToken, refreshToken: rawToken, userId: user.userId, roles }
 }
 
 function mapUserToBody (user: any): object {
   return {
     userId: user.userId,
-    scope: user.roles.map((x: any) => x.Role ? x.Role.name : x.name),
+    scope: mapRoles(user.roles),
     tokenVersion: user.tokenVersion ?? 0,
   }
 }

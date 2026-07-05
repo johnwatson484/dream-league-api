@@ -1,11 +1,10 @@
+import { failAction } from './fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
-import boom from '@hapi/boom'
 import db from '../../data/index.ts'
-import { GET, POST } from '../../constants/verbs.ts'
 
 export default [{
-  method: GET,
+  method: 'GET',
   path: '/history',
   options: {
     auth: false,
@@ -17,7 +16,7 @@ export default [{
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/history/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -31,16 +30,14 @@ export default [{
         leagueCup: Joi.string().allow(''),
         plate: Joi.string().allow(''),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.History.create(request.payload as any))
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/history/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -55,16 +52,14 @@ export default [{
         leagueCup: Joi.string().allow(''),
         plate: Joi.string().allow(''),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.History.upsert(request.payload as any) as any)
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/history/delete',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -72,9 +67,7 @@ export default [{
       payload: Joi.object({
         historyId: Joi.number(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.History.destroy({ where: { historyId: (request.payload as any).historyId } }) as any)

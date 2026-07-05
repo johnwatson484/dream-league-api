@@ -1,4 +1,5 @@
 import { getUserById } from '../account/user-manager.ts'
+import { mapRoles } from './map-roles.ts'
 
 export async function validate (decoded: any, _request: any, _h: any) {
   const user = await getUserById(decoded.userId)
@@ -15,7 +16,7 @@ export async function validate (decoded: any, _request: any, _h: any) {
     isValid: true,
     credentials: {
       userId: user.userId,
-      scope: user.roles.map((x: any) => x.Role ? x.Role.name : x.name),
+      scope: mapRoles(user.roles),
     },
   }
 }

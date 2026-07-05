@@ -1,5 +1,5 @@
-import { sortArray } from './sort-array.ts'
+import { compare } from './compare.ts'
 
 export function orderKeepers (keepers: any[]): any[] {
-  return keepers.sort((a, b) => { return sortArray(a.substitute, b.substitute) || sortArray(a.name, b.name) })
+  return keepers.sort((a, b) => { return compare(a.substitute, b.substitute) || compare(a.name, b.name) })
 }

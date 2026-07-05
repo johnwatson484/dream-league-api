@@ -1,7 +1,7 @@
 import type { Sequelize } from 'sequelize'
 import type { DataTypesStatic, Db } from '../types.ts'
 
-export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
+export default function defineFixtureModel (sequelize: Sequelize, DataTypes: DataTypesStatic) {
   const Fixture = sequelize.define('Fixture', {
     fixtureId: {
       type: DataTypes.INTEGER,

@@ -1,11 +1,10 @@
+import { failAction } from './fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
-import boom from '@hapi/boom'
 import { search } from '../../search/search.ts'
-import { POST } from '../../constants/verbs.ts'
 
 export default [{
-  method: POST,
+  method: 'POST',
   path: '/search/autocomplete',
   options: {
     auth: false,
@@ -13,9 +12,7 @@ export default [{
       payload: Joi.object({
         prefix: Joi.string().required(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       const results = await search((request.payload as any).prefix)

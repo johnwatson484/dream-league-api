@@ -1,7 +1,7 @@
 import { Op } from 'sequelize'
 import db from '../../data/index.ts'
 import { mapPosition } from '../map-position.ts'
-const positions = ['GK', 'DEF', 'MID', 'FWD']
+const positions = new Set(['GK', 'DEF', 'MID', 'FWD'])
 
 export async function mapPlayer (player: any) {
   const team: any = await db.Team.findOne({ attributes: ['teamId'], where: { alias: { [Op.iLike]: player.team } }, raw: true })
@@ -20,14 +20,14 @@ export async function mapPlayer (player: any) {
 }
 
 function mapFirstName (player: any): string | undefined {
-  if (!player.firstName || positions.includes(player.lastName) || !player.lastName) {
+  if (!player.firstName || positions.has(player.lastName) || !player.lastName) {
     return undefined
   }
   return player.firstName
 }
 
 function mapLastName (player: any): string {
-  if (player.firstName && (!player.lastName || positions.includes(player.lastName))) {
+  if (player.firstName && (!player.lastName || positions.has(player.lastName))) {
     return player.firstName
   }
   return player.lastName

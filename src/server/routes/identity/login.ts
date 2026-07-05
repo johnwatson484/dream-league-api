@@ -1,11 +1,11 @@
+import { failAction } from '../fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import boom from '@hapi/boom'
 import Joi from 'joi'
 import { login } from '../../../account/login.ts'
-import { POST } from '../../../constants/verbs.ts'
 
 export default [{
-  method: POST,
+  method: 'POST',
   path: '/login',
   options: {
     auth: false,
@@ -14,9 +14,7 @@ export default [{
         email: Joi.string().email().required(),
         password: Joi.string().required(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       const authenticated = await login((request.payload as any).email, (request.payload as any).password)

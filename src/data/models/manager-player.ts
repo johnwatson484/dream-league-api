@@ -1,7 +1,7 @@
 import type { Sequelize } from 'sequelize'
 import type { DataTypesStatic, Db } from '../types.ts'
 
-export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
+export default function defineManagerPlayerModel (sequelize: Sequelize, DataTypes: DataTypesStatic) {
   const ManagerPlayer = sequelize.define('ManagerPlayer', {
     managerId: { type: DataTypes.INTEGER, primaryKey: true },
     playerId: { type: DataTypes.INTEGER, primaryKey: true },

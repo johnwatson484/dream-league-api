@@ -1,12 +1,10 @@
+import { failAction } from '../fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
-import boom from '@hapi/boom'
 import Joi from 'joi'
 import { resetPassword } from '../../../account/reset-password.ts'
-import { POST } from '../../../constants/verbs.ts'
-import { OK } from '../../../constants/ok.ts'
 
 export default [{
-  method: POST,
+  method: 'POST',
   path: '/forgot-password',
   options: {
     auth: false,
@@ -14,14 +12,12 @@ export default [{
       payload: Joi.object({
         email: Joi.string().email().required(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       const { email } = request.payload as any
       await resetPassword(email)
-      return h.response(OK)
+      return h.response('ok')
     },
   },
 }] satisfies ServerRoute[]

@@ -1,7 +1,7 @@
 import type { Sequelize } from 'sequelize'
 import type { DataTypesStatic, Db } from '../types.ts'
 
-export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
+export default function defineRoleModel (sequelize: Sequelize, DataTypes: DataTypesStatic) {
   const Role = sequelize.define('Role', {
     roleId: {
       type: DataTypes.INTEGER,
