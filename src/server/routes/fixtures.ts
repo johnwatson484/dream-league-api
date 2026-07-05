@@ -2,6 +2,8 @@ import { failAction } from './fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import db from '../../data/index.ts'
+import { generateFixtures } from '../../fixtures/generate.ts'
+import { rescheduleFixtures } from '../../fixtures/reschedule.ts'
 
 export default [{
   method: 'GET',
@@ -92,6 +94,44 @@ export default [{
     },
     handler: async (request, h) => {
       return h.response(await db.Fixture.destroy({ where: { fixtureId: (request.payload as any).fixtureId } }) as any)
+    },
+  },
+}, {
+  method: 'POST',
+  path: '/fixtures/generate',
+  options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
+    validate: {
+      payload: Joi.object({
+        cupId: Joi.number().integer().required(),
+        gameweekIds: Joi.array().items(Joi.number().integer()).min(1).required(),
+      }),
+      failAction,
+    },
+    handler: async (request, h) => {
+      const { cupId, gameweekIds } = request.payload as { cupId: number; gameweekIds: number[] }
+      const fixtures = await generateFixtures(cupId, gameweekIds)
+      return h.response(fixtures)
+    },
+  },
+}, {
+  method: 'POST',
+  path: '/fixtures/reschedule',
+  options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
+    validate: {
+      payload: Joi.object({
+        fixtures: Joi.array().items(Joi.object({
+          fixtureId: Joi.number().integer().required(),
+          gameweekId: Joi.number().integer().required(),
+        })).min(1).required(),
+      }),
+      failAction,
+    },
+    handler: async (request, h) => {
+      const { fixtures } = request.payload as { fixtures: { fixtureId: number; gameweekId: number }[] }
+      await rescheduleFixtures(fixtures)
+      return h.response(true as any)
     },
   },
 }] satisfies ServerRoute[]

@@ -14,6 +14,7 @@ export default function defineGoalModel (sequelize: Sequelize, DataTypes: DataTy
     cup: DataTypes.BOOLEAN,
     created: DataTypes.DATE,
     createdBy: DataTypes.STRING,
+    matchTime: { type: DataTypes.DATE, allowNull: true },
   }, {
     tableName: 'goals',
     freezeTableName: true,
