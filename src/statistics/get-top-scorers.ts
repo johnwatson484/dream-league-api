@@ -1,5 +1,5 @@
 import db from '../data/index.ts'
-import { sortArray } from '../utils/sort-array.ts'
+import { compare } from '../utils/compare.ts'
 
 export async function getTopScorers (): Promise<any[]> {
   const playersToInclude = await db.Manager.count()
@@ -34,6 +34,6 @@ export async function getTopScorers (): Promise<any[]> {
 }
 
 function orderScorers (scorers: any[]): any[] {
-  return scorers.sort((a, b) => { return sortArray(b.goals, a.goals) || sortArray(a.lastName, b.lastName) || sortArray(a.firstName, b.firstName) })
+  return scorers.sort((a, b) => { return compare(b.goals, a.goals) || compare(a.lastName, b.lastName) || compare(a.firstName, b.firstName) })
     .map((x, i) => ({ position: i + 1, ...x }))
 }

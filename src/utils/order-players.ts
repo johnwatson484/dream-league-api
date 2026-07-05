@@ -1,6 +1,6 @@
-import { sortArray } from './sort-array.ts'
+import { compare } from './compare.ts'
 import { rankPosition } from './rank-position.ts'
 
 export function orderPlayers (players: any[]): any[] {
-  return players.sort((a, b) => { return sortArray(rankPosition(a.position), rankPosition(b.position)) || sortArray(a.substitute, b.substitute) || sortArray(a.lastNameFirstName, b.lastNameFirstName) })
+  return players.sort((a, b) => { return compare(rankPosition(a.position), rankPosition(b.position)) || compare(a.substitute, b.substitute) || compare(a.lastNameFirstName, b.lastNameFirstName) })
 }

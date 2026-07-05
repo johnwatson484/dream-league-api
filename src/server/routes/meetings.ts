@@ -1,12 +1,11 @@
+import { failAction } from './fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import { Op } from 'sequelize'
 import Joi from 'joi'
-import boom from '@hapi/boom'
 import db from '../../data/index.ts'
-import { GET, POST } from '../../constants/verbs.ts'
 
 export default [{
-  method: GET,
+  method: 'GET',
   path: '/meetings',
   options: {
     auth: false,
@@ -15,7 +14,7 @@ export default [{
     },
   },
 }, {
-  method: GET,
+  method: 'GET',
   path: '/meeting',
   options: {
     auth: false,
@@ -23,16 +22,14 @@ export default [{
       query: Joi.object({
         meetingId: Joi.number().integer().required(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.Meeting.findOne({ where: { meetingId: request.query.meetingId } }) as any)
     },
   },
 }, {
-  method: GET,
+  method: 'GET',
   path: '/meetings/next',
   options: {
     auth: false,
@@ -41,7 +38,7 @@ export default [{
     return h.response(await db.Meeting.findOne({ where: { date: { [Op.gt]: new Date() } }, raw: true }) as any)
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/meeting/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -49,16 +46,14 @@ export default [{
       payload: Joi.object({
         date: Joi.date(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.Meeting.create(request.payload as any))
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/meeting/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -67,16 +62,14 @@ export default [{
         meetingId: Joi.number(),
         date: Joi.date(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.Meeting.upsert(request.payload as any) as any)
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/meeting/delete',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -84,16 +77,14 @@ export default [{
       payload: Joi.object({
         meetingId: Joi.number(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.Meeting.destroy({ where: { meetingId: (request.payload as any).meetingId } }) as any)
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/meeting/refresh',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -102,9 +93,7 @@ export default [{
         startDate: Joi.date(),
         meetings: Joi.number(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (_request, h) => {
       return h.response(undefined as any)

@@ -1,9 +1,8 @@
 import type { ServerRoute } from '@hapi/hapi'
 import db from '../../data/index.ts'
-import { GET } from '../../constants/verbs.ts'
 
 export default [{
-  method: GET,
+  method: 'GET',
   path: '/gameweeks',
   options: {
     auth: false,

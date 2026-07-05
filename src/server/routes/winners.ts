@@ -1,9 +1,8 @@
 import type { ServerRoute } from '@hapi/hapi'
 import { getAllWinners } from '../../results/get-all-winners.ts'
-import { GET } from '../../constants/verbs.ts'
 
 export default [{
-  method: GET,
+  method: 'GET',
   path: '/winners',
   options: {
     auth: false,

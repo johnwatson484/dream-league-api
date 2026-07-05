@@ -1,13 +1,12 @@
+import { failAction } from '../fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import { Op } from 'sequelize'
 import db from '../../../data/index.ts'
 import Joi from 'joi'
-import boom from '@hapi/boom'
-import { GET, POST } from '../../../constants/verbs.ts'
 import { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } from '../../../constants/positions.ts'
 
 export default [{
-  method: GET,
+  method: 'GET',
   path: '/league/teams',
   options: {
     auth: false,
@@ -16,9 +15,7 @@ export default [{
         search: Joi.string().allow('').optional(),
         division: Joi.string().allow('').optional(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       const search = request.query.search || ''
@@ -42,7 +39,7 @@ export default [{
     },
   },
 }, {
-  method: GET,
+  method: 'GET',
   path: '/league/team',
   options: {
     auth: false,
@@ -50,9 +47,7 @@ export default [{
       query: Joi.object({
         teamId: Joi.number().integer().required(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
   },
   handler: async (request, h) => {
@@ -80,7 +75,7 @@ export default [{
     return h.response(team as any)
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/league/team/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -90,16 +85,14 @@ export default [{
         alias: Joi.string(),
         divisionId: Joi.number(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.Team.create(request.payload as any))
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/league/team/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -110,16 +103,14 @@ export default [{
         alias: Joi.string(),
         divisionId: Joi.number(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.Team.upsert(request.payload as any) as any)
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/league/teams/autocomplete',
   options: {
     auth: false,
@@ -127,9 +118,7 @@ export default [{
       payload: Joi.object({
         prefix: Joi.string(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       const teams = await db.Team.findAll({

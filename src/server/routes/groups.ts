@@ -1,11 +1,10 @@
+import { failAction } from './fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
-import boom from '@hapi/boom'
 import db from '../../data/index.ts'
-import { GET, POST } from '../../constants/verbs.ts'
 
 export default [{
-  method: GET,
+  method: 'GET',
   path: '/groups',
   options: {
     auth: false,
@@ -20,7 +19,7 @@ export default [{
     },
   },
 }, {
-  method: GET,
+  method: 'GET',
   path: '/group',
   options: {
     auth: false,
@@ -36,7 +35,7 @@ export default [{
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/group/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -48,9 +47,7 @@ export default [{
         teamsAdvancing: Joi.number(),
         managers: Joi.array().items(Joi.number()).single(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       const group: any = await db.Group.create(request.payload as any)
@@ -63,7 +60,7 @@ export default [{
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/group/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -76,9 +73,7 @@ export default [{
         teamsAdvancing: Joi.number(),
         managers: Joi.array().items(Joi.number()).single(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       const payload = request.payload as any
@@ -103,7 +98,7 @@ export default [{
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/group/delete',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -111,9 +106,7 @@ export default [{
       payload: Joi.object({
         groupId: Joi.number(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       await db.ManagerGroup.destroy({ where: { groupId: (request.payload as any).groupId } })

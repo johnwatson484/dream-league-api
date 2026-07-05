@@ -1,11 +1,10 @@
+import { failAction } from './fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
-import boom from '@hapi/boom'
 import db from '../../data/index.ts'
-import { GET, POST } from '../../constants/verbs.ts'
 
 export default [{
-  method: GET,
+  method: 'GET',
   path: '/fixtures',
   options: {
     auth: false,
@@ -33,7 +32,7 @@ export default [{
     },
   },
 }, {
-  method: GET,
+  method: 'GET',
   path: '/fixture',
   options: {
     auth: false,
@@ -42,7 +41,7 @@ export default [{
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/fixture/create',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -54,16 +53,14 @@ export default [{
         awayManagerId: Joi.number().integer().required(),
         round: Joi.number().integer().required(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.Fixture.create(request.payload as any))
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/fixture/edit',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -76,16 +73,14 @@ export default [{
         awayManagerId: Joi.number().integer().required(),
         round: Joi.number().integer().required(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.Fixture.upsert(request.payload as any) as any)
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/fixture/delete',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
@@ -93,9 +88,7 @@ export default [{
       payload: Joi.object({
         fixtureId: Joi.number(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       return h.response(await db.Fixture.destroy({ where: { fixtureId: (request.payload as any).fixtureId } }) as any)

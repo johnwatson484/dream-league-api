@@ -5,6 +5,7 @@ import config from '../config/index.ts'
 import { privateKey } from '../config/keys.ts'
 import { getUserById } from '../account/user-manager.ts'
 import db from '../data/index.ts'
+import { mapRoles } from './map-roles.ts'
 
 export async function refresh (rawRefreshToken: string) {
   const tokenHash = createHash('sha256').update(rawRefreshToken).digest('hex')
@@ -42,7 +43,7 @@ export async function refresh (rawRefreshToken: string) {
 
   const accessToken = jwt.sign({
     userId: user.userId,
-    scope: user.roles.map((x: any) => x.Role ? x.Role.name : x.name),
+    scope: mapRoles(user.roles),
     tokenVersion: user.tokenVersion,
   }, privateKey, {
     algorithm: 'RS256',

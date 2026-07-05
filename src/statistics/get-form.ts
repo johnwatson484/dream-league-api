@@ -1,6 +1,6 @@
 import db from '../data/index.ts'
 import { getPoints } from '../results/get-points.ts'
-import { sortArray } from '../utils/sort-array.ts'
+import { compare } from '../utils/compare.ts'
 
 export async function getForm (weeksToInclude: number = 6): Promise<any[]> {
   const managers = await db.Manager.findAll({ raw: true })
@@ -26,6 +26,6 @@ export async function getForm (weeksToInclude: number = 6): Promise<any[]> {
 }
 
 function orderForm (form: any[]): any[] {
-  return form.sort((a, b) => { return sortArray(b.points, a.points) || sortArray(a.manager, b.manager) })
+  return form.sort((a, b) => { return compare(b.points, a.points) || compare(a.manager, b.manager) })
     .map((x, i) => ({ position: i + 1, ...x }))
 }

@@ -1,12 +1,11 @@
+import { failAction } from '../fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import { Op } from 'sequelize'
 import Joi from 'joi'
-import boom from '@hapi/boom'
 import db from '../../../data/index.ts'
-import { GET, POST } from '../../../constants/verbs.ts'
 
 export default [{
-  method: GET,
+  method: 'GET',
   path: '/league/divisions',
   options: {
     auth: false,
@@ -17,7 +16,7 @@ export default [{
     },
   },
 }, {
-  method: POST,
+  method: 'POST',
   path: '/league/divisions/autocomplete',
   options: {
     auth: false,
@@ -25,9 +24,7 @@ export default [{
       payload: Joi.object({
         prefix: Joi.string(),
       }),
-      failAction: async (_request, _h, error) => {
-        return boom.badRequest(error?.message)
-      },
+      failAction,
     },
     handler: async (request, h) => {
       const divisions = await db.Division.findAll({
