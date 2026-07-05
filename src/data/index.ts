@@ -1,7 +1,7 @@
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { Sequelize, DataTypes } from 'sequelize'
+import { Sequelize, DataTypes, type Dialect } from 'sequelize'
 import config from '../config/index.ts'
 
 const db: any = {}
@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
   {
     host: config.get('database.host'),
     port: config.get('database.port'),
-    dialect: config.get('database.dialect'),
+    dialect: config.get('database.dialect') as Dialect,
     logging: config.get('database.logging'),
     define: {
       timestamps: false,
