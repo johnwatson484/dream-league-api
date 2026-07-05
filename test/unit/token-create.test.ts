@@ -46,7 +46,7 @@ describe('authentication token creation', () => {
     expect(mockSign).toHaveBeenCalledWith(
       { userId: 42, scope: ['admin', 'user'], tokenVersion: 3 },
       'test-private-key',
-      { algorithm: 'RS256', expiresIn: '15m' },
+      { algorithm: 'RS256', expiresIn: '15m' }
     )
   })
 
@@ -79,7 +79,7 @@ describe('authentication token creation', () => {
     expect(mockSign).toHaveBeenCalledWith(
       expect.objectContaining({ tokenVersion: 0 }),
       'test-private-key',
-      expect.any(Object),
+      expect.any(Object)
     )
   })
 })

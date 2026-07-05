@@ -1,5 +1,4 @@
-import { DataTypes } from 'sequelize'
-import type { Sequelize, ModelStatic, Model } from 'sequelize'
+import type { Sequelize, ModelStatic, Model, DataTypes } from 'sequelize'
 
 export type DataTypesStatic = typeof DataTypes
 
