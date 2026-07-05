@@ -1,8 +1,8 @@
 vi.mock('../../src/config/index.ts', () => ({
   default: {
-    get: (key) => ({
+    get: (key: string) => ({
       'cache.partition': 'dream-league',
-    })[key],
+    } as Record<string, unknown>)[key],
   },
 }))
 

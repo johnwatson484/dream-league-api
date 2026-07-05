@@ -2,7 +2,7 @@ import db from '../data/index.ts'
 import { getConceded, getGoals } from './get-goals.ts'
 import { getResult } from './get-result.ts'
 
-export async function getScores (gameweekId, managers, cup = false) {
+export async function getScores (gameweekId: number, managers: any[], cup = false): Promise<any[]> {
   const scores = []
   for (const manager of managers) {
     const goals = await getGoals(gameweekId, manager.managerId, cup)
@@ -23,8 +23,8 @@ export async function getScores (gameweekId, managers, cup = false) {
   return scores
 }
 
-async function getScorers (goals) {
-  const scorers = []
+async function getScorers (goals: any[]): Promise<any[]> {
+  const scorers: any[] = []
   goals.reduce((x, y) => {
     if (!x[y.playerId]) {
       x[y.playerId] = { playerId: y.playerId, goals: 0 }
@@ -34,7 +34,7 @@ async function getScorers (goals) {
     return x
   }, {})
   for (const scorer of scorers) {
-    const player = await db.Player.findOne({ where: { playerId: scorer.playerId } })
+    const player: any = await db.Player.findOne({ where: { playerId: scorer.playerId } })
     scorer.name = player.lastNameInitial
   }
   return scorers

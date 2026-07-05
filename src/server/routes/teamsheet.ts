@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import { getTeamsheet } from '../../teamsheet/get-teamsheet.ts'
@@ -27,11 +28,11 @@ export default [{
         playerSubs: Joi.alternatives().try(Joi.array().items(Joi.number()), Joi.number()),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, _h) => {
-      return updatePlayer(request.payload)
+      return updatePlayer(request.payload as any)
     },
   },
 }, {
@@ -46,11 +47,11 @@ export default [{
         teamSubs: Joi.alternatives().try(Joi.array().items(Joi.string()), Joi.string()),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, _h) => {
-      return updateKeeper(request.payload)
+      return updateKeeper(request.payload as any)
     },
   },
 }, {
@@ -70,11 +71,11 @@ export default [{
         })),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await refreshTeamsheet(request.payload.teams))
+      return h.response(await refreshTeamsheet((request.payload as any).teams))
     },
   },
-}]
+}] satisfies ServerRoute[]

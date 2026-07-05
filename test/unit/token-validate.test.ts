@@ -53,7 +53,7 @@ describe('authentication token validation', () => {
 
     const result = await validate({ userId: 42, tokenVersion: 0 }, {}, {})
 
-    expect(result.credentials.scope).toEqual(['user'])
+    expect(result.credentials!.scope).toEqual(['user'])
   })
 
   test('the user is looked up by the decoded user ID', async () => {

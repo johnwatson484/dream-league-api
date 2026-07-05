@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import boom from '@hapi/boom'
 import Joi from 'joi'
 import { register } from '../../../account/register.ts'
@@ -14,11 +15,11 @@ export default [{
         password: Joi.string().min(12).required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await register(request.payload.email, request.payload.password))
+      return h.response(await register((request.payload as any).email, (request.payload as any).password) as any)
     },
   },
-}]
+}] satisfies ServerRoute[]

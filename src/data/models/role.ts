@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic, Db } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   const Role = sequelize.define('Role', {
     roleId: {
       type: DataTypes.INTEGER,
@@ -11,7 +14,7 @@ export default (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false,
   })
-  Role.associate = function (models) {
+  ;(Role as any).associate = function (models: Db) {
     Role.belongsToMany(models.User, {
       through: 'userRole',
       foreignKey: 'roleId',

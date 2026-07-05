@@ -1,7 +1,7 @@
 import db from '../../src/data/index.ts'
 import { getScores } from '../../src/results/get-scores.ts'
 import testData from '../data/index.ts'
-let managers
+let managers: any[]
 
 describe('get scores', () => {
   beforeAll(async () => {
@@ -164,15 +164,15 @@ describe('get scores', () => {
     await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
     await db.Goal.create({ playerId: 369, managerId: 11, gameweekId: 1, cup: false })
     const result = await getScores(1, managers)
-    expect(result.find(x => x.managerId === 11).scorers.find(x => x.playerId === 773).goals).toBe(1)
-    expect(result.find(x => x.managerId === 11).scorers.find(x => x.playerId === 369).goals).toBe(1)
+    expect(result.find((x: any) => x.managerId === 11).scorers.find((x: any) => x.playerId === 773).goals).toBe(1)
+    expect(result.find((x: any) => x.managerId === 11).scorers.find((x: any) => x.playerId === 369).goals).toBe(1)
   })
 
   test('should return correct number of scorer goals when multiple goals', async () => {
     await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
     await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
     const result = await getScores(1, managers)
-    expect(result.find(x => x.managerId === 11).scorers[0].goals).toBe(2)
+    expect(result.find((x: any) => x.managerId === 11).scorers[0].goals).toBe(2)
   })
 
   test('should return correct number of scorer goals when multiple scorers and goals', async () => {
@@ -181,7 +181,7 @@ describe('get scores', () => {
     await db.Goal.create({ playerId: 369, managerId: 11, gameweekId: 1, cup: false })
     await db.Goal.create({ playerId: 369, managerId: 11, gameweekId: 1, cup: false })
     const result = await getScores(1, managers)
-    expect(result.find(x => x.managerId === 11).scorers.find(x => x.playerId === 773).goals).toBe(2)
-    expect(result.find(x => x.managerId === 11).scorers.find(x => x.playerId === 369).goals).toBe(2)
+    expect(result.find((x: any) => x.managerId === 11).scorers.find((x: any) => x.playerId === 773).goals).toBe(2)
+    expect(result.find((x: any) => x.managerId === 11).scorers.find((x: any) => x.playerId === 369).goals).toBe(2)
   })
 })

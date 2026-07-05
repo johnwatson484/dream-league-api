@@ -1,4 +1,4 @@
-export function mapKeeper (keeper, teamsheet) {
+export function mapKeeper (keeper: any, teamsheet: any[]): any {
   const teamsheetEntry = teamsheet.find(x => x.bestMatchId === keeper.teamId && x.position === 'Goalkeeper')
   return {
     playerId: keeper.teamId,

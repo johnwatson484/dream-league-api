@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import db from '../../data/index.ts'
@@ -10,7 +11,7 @@ export default [{
     auth: false,
     handler: async (request, h) => {
       if (request.query.historyId) {
-        return h.response(await db.History.findOne({ where: { historyId: request.query.historyId } }))
+        return h.response(await db.History.findOne({ where: { historyId: request.query.historyId } }) as any)
       }
       return h.response(await db.History.findAll({ order: [['year', 'DESC']] }))
     },
@@ -31,11 +32,11 @@ export default [{
         plate: Joi.string().allow(''),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.History.create(request.payload))
+      return h.response(await db.History.create(request.payload as any))
     },
   },
 }, {
@@ -55,11 +56,11 @@ export default [{
         plate: Joi.string().allow(''),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.History.upsert(request.payload))
+      return h.response(await db.History.upsert(request.payload as any) as any)
     },
   },
 }, {
@@ -72,11 +73,11 @@ export default [{
         historyId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.History.destroy({ where: { historyId: request.payload.historyId } }))
+      return h.response(await db.History.destroy({ where: { historyId: (request.payload as any).historyId } }) as any)
     },
   },
-}]
+}] satisfies ServerRoute[]

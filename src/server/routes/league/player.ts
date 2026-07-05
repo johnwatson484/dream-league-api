@@ -1,3 +1,5 @@
+import type { ServerRoute } from '@hapi/hapi'
+import { Op } from 'sequelize'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import db from '../../../data/index.ts'
@@ -12,20 +14,19 @@ export default [{
     auth: false,
     handler: async (request, h) => {
       const search = request.query.search !== 'undefined' ? `${request.query.search}%` : '%'
-      const position = request.query.position
+      const position = request.query.position as string | undefined
 
-      const whereClause = {
-        position: { [db.Sequelize.Op.ne]: GOALKEEPER },
-        [db.Sequelize.Op.or]: [{
-          lastName: { [db.Sequelize.Op.iLike]: search },
+      const whereClause: any = {
+        position: { [Op.ne]: GOALKEEPER },
+        [Op.or]: [{
+          lastName: { [Op.iLike]: search },
         }, {
-          firstName: { [db.Sequelize.Op.iLike]: search },
+          firstName: { [Op.iLike]: search },
         }, {
-          '$team.name$': { [db.Sequelize.Op.iLike]: search },
+          '$team.name$': { [Op.iLike]: search },
         }],
       }
 
-      // Add position filter if specified
       if (position && [DEFENDER, MIDFIELDER, FORWARD].includes(position)) {
         whereClause.position = position
       }
@@ -40,9 +41,9 @@ export default [{
         order: [
           ['team', 'name'],
           [db.Sequelize.literal(`CASE position WHEN '${DEFENDER}' THEN 1 WHEN '${MIDFIELDER}' THEN 2 WHEN '${FORWARD}' THEN 3 ELSE 4 END`)],
-          ['lastName'],
-          ['firstName'],
-        ],
+          ['lastName', 'ASC'],
+          ['firstName', 'ASC'],
+        ] as any,
       }))
     },
   },
@@ -73,7 +74,7 @@ export default [{
         attributes: ['goalId', 'gameweekId', 'cup'],
       }],
     })
-    return h.response(player)
+    return h.response(player as any)
   },
 }, {
   method: POST,
@@ -88,11 +89,11 @@ export default [{
         teamId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Player.create(request.payload))
+      return h.response(await db.Player.create(request.payload as any))
     },
   },
 }, {
@@ -109,11 +110,11 @@ export default [{
         teamId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Player.upsert(request.payload))
+      return h.response(await db.Player.upsert(request.payload as any) as any)
     },
   },
 }, {
@@ -126,11 +127,11 @@ export default [{
         playerId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Player.destroy({ where: { playerId: request.payload.playerId } }))
+      return h.response(await db.Player.destroy({ where: { playerId: (request.payload as any).playerId } }) as any)
     },
   },
 }, {
@@ -143,14 +144,14 @@ export default [{
         prefix: Joi.string(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
       const players = await db.Player.findAll({
-        where: { lastName: { [db.Sequelize.Op.iLike]: request.payload.prefix + '%' } },
+        where: { lastName: { [Op.iLike]: (request.payload as any).prefix + '%' } },
         include: [{ model: db.Team, as: 'team', attributes: ['name'] }],
-        order: [['lastName'], ['firstName']],
+        order: [['lastName', 'ASC'], ['firstName', 'ASC']],
       })
       return h.response(players || [])
     },
@@ -170,11 +171,11 @@ export default [{
         })),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await refreshPlayers(request.payload.players))
+      return h.response(await refreshPlayers((request.payload as any).players))
     },
   },
-}]
+}] satisfies ServerRoute[]

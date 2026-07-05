@@ -4,7 +4,7 @@ import config from '../config/index.ts'
 import { privateKey } from '../config/keys.ts'
 import db from '../data/index.ts'
 
-export async function create (user) {
+export async function create (user: any) {
   const accessToken = jwt.sign(mapUserToBody(user), privateKey, {
     algorithm: 'RS256',
     expiresIn: `${config.get('jwt.expiryInMinutes')}m`,
@@ -20,14 +20,14 @@ export async function create (user) {
     familyCreatedAt: new Date(),
   })
 
-  const roles = user.roles.map(x => x.Role ? x.Role.name : x.name)
+  const roles = user.roles.map((x: any) => x.Role ? x.Role.name : x.name)
   return { accessToken, refreshToken: rawToken, userId: user.userId, roles }
 }
 
-function mapUserToBody (user) {
+function mapUserToBody (user: any): object {
   return {
     userId: user.userId,
-    scope: user.roles.map(x => x.Role ? x.Role.name : x.name),
+    scope: user.roles.map((x: any) => x.Role ? x.Role.name : x.name),
     tokenVersion: user.tokenVersion ?? 0,
   }
 }
@@ -41,6 +41,6 @@ function generateRefreshToken () {
   return { rawToken, tokenHash, family, expiresAt }
 }
 
-export function hashToken (token) {
+export function hashToken (token: string): string {
   return createHash('sha256').update(token).digest('hex')
 }

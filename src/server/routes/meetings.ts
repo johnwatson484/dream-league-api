@@ -1,3 +1,5 @@
+import type { ServerRoute } from '@hapi/hapi'
+import { Op } from 'sequelize'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import db from '../../data/index.ts'
@@ -22,11 +24,11 @@ export default [{
         meetingId: Joi.number().integer().required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Meeting.findOne({ where: { meetingId: request.query.meetingId } }))
+      return h.response(await db.Meeting.findOne({ where: { meetingId: request.query.meetingId } }) as any)
     },
   },
 }, {
@@ -36,7 +38,7 @@ export default [{
     auth: false,
   },
   handler: async (_request, h) => {
-    return h.response(await db.Meeting.findOne({ where: { date: { [db.Sequelize.Op.gt]: new Date() } }, raw: true }))
+    return h.response(await db.Meeting.findOne({ where: { date: { [Op.gt]: new Date() } }, raw: true }) as any)
   },
 }, {
   method: POST,
@@ -48,11 +50,11 @@ export default [{
         date: Joi.date(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Meeting.create(request.payload))
+      return h.response(await db.Meeting.create(request.payload as any))
     },
   },
 }, {
@@ -66,11 +68,11 @@ export default [{
         date: Joi.date(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Meeting.upsert(request.payload))
+      return h.response(await db.Meeting.upsert(request.payload as any) as any)
     },
   },
 }, {
@@ -83,11 +85,11 @@ export default [{
         meetingId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Meeting.destroy({ where: { meetingId: request.payload.meetingId } }))
+      return h.response(await db.Meeting.destroy({ where: { meetingId: (request.payload as any).meetingId } }) as any)
     },
   },
 }, {
@@ -101,11 +103,11 @@ export default [{
         meetings: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (_request, h) => {
-      return h.response()
+      return h.response(undefined as any)
     },
   },
-}]
+}] satisfies ServerRoute[]

@@ -1,10 +1,11 @@
+import type { Plugin } from '@hapi/hapi'
 import { publicKey } from '../../config/keys.ts'
 import { validate } from '../../token/validate.ts'
 
 export default {
   plugin: {
     name: 'auth',
-    register: (server, _options) => {
+    register: (server: any) => {
       server.auth.strategy('jwt', 'jwt', {
         key: publicKey,
         validate,
@@ -12,5 +13,5 @@ export default {
       })
       server.auth.default({ strategy: 'jwt', mode: 'required' })
     },
-  },
+  } satisfies Plugin<any>,
 }

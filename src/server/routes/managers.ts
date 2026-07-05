@@ -1,3 +1,5 @@
+import type { ServerRoute } from '@hapi/hapi'
+import { Op } from 'sequelize'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import db from '../../data/index.ts'
@@ -29,11 +31,11 @@ export default [{
         managerId: Joi.number().integer().required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await getManager(request.query.managerId, true))
+      return h.response(await getManager(Number(request.query.managerId), true) as any)
     },
   },
 }, {
@@ -46,12 +48,12 @@ export default [{
         managerId: Joi.number().required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      const manager = await getManager(request.query.managerId)
-      const team = await getTeam(request.query.managerId)
+      const manager = await getManager(Number(request.query.managerId))
+      const team = await getTeam(Number(request.query.managerId))
       const results = await getSummary()
       return h.response({ manager, team, results })
     },
@@ -68,11 +70,11 @@ export default [{
         emails: Joi.array().items(Joi.string().email().allow('')).single(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await createManager(request.payload))
+      return h.response(await createManager(request.payload as any))
     },
   },
 }, {
@@ -88,11 +90,11 @@ export default [{
         emails: Joi.array().items(Joi.string().email().allow('')).single(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await editManager(request.payload))
+      return h.response(await editManager(request.payload as any))
     },
   },
 }, {
@@ -105,11 +107,11 @@ export default [{
         managerId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await deleteManager(request.payload.managerId))
+      return h.response(await deleteManager((request.payload as any).managerId) as any)
     },
   },
 }, {
@@ -122,15 +124,15 @@ export default [{
         prefix: Joi.string(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
       const managers = await db.Manager.findAll({
-        where: { name: { [db.Sequelize.Op.iLike]: request.payload.prefix + '%' } },
-        order: [['name']],
+        where: { name: { [Op.iLike]: (request.payload as any).prefix + '%' } },
+        order: [['name', 'ASC']],
       })
       return h.response(managers || [])
     },
   },
-}]
+}] satisfies ServerRoute[]

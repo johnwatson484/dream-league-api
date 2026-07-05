@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import db from '../../data/index.ts'
@@ -9,7 +10,7 @@ export default [{
   options: {
     auth: false,
     handler: async (_request, h) => {
-      return h.response(await db.Cup.findAll({ order: [['name']] }))
+      return h.response(await db.Cup.findAll({ order: [['name', 'ASC']] }))
     },
   },
 }, {
@@ -18,7 +19,7 @@ export default [{
   options: {
     auth: false,
     handler: async (request, h) => {
-      return h.response(await db.Cup.findOne({ where: { cupId: request.query.cupId } }))
+      return h.response(await db.Cup.findOne({ where: { cupId: request.query.cupId } }) as any)
     },
   },
 }, {
@@ -33,11 +34,11 @@ export default [{
         knockoutLegs: Joi.number().default(1),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Cup.create(request.payload))
+      return h.response(await db.Cup.create(request.payload as any))
     },
   },
 }, {
@@ -53,11 +54,11 @@ export default [{
         knockoutLegs: Joi.number().required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Cup.upsert(request.payload))
+      return h.response(await db.Cup.upsert(request.payload as any) as any)
     },
   },
 }, {
@@ -70,11 +71,11 @@ export default [{
         cupId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Cup.destroy({ where: { cupId: request.payload.cupId } }))
+      return h.response(await db.Cup.destroy({ where: { cupId: (request.payload as any).cupId } }) as any)
     },
   },
-}]
+}] satisfies ServerRoute[]

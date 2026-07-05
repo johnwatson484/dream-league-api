@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import { getForm } from '../../statistics/get-form.ts'
@@ -14,11 +15,11 @@ export default [{
         weeksToInclude: Joi.number().optional(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      const weeksToInclude = request.query.weeksToInclude || 6
+      const weeksToInclude = Number(request.query.weeksToInclude) || 6
       const form = await getForm(weeksToInclude)
       return h.response(form)
     },
@@ -33,4 +34,4 @@ export default [{
       return h.response(scorers)
     },
   },
-}]
+}] satisfies ServerRoute[]

@@ -6,7 +6,7 @@ import { privateKey } from '../config/keys.ts'
 import { getUserById } from '../account/user-manager.ts'
 import db from '../data/index.ts'
 
-export async function refresh (rawRefreshToken) {
+export async function refresh (rawRefreshToken: string) {
   const tokenHash = createHash('sha256').update(rawRefreshToken).digest('hex')
 
   const storedToken = await db.RefreshToken.findOne({
@@ -17,32 +17,32 @@ export async function refresh (rawRefreshToken) {
     return null
   }
 
-  if (storedToken.revokedAt) {
-    await revokeFamily(storedToken.family)
+  if ((storedToken as any).revokedAt) {
+    await revokeFamily((storedToken as any).family)
     return null
   }
 
-  if (new Date(storedToken.expiresAt) < new Date()) {
+  if (new Date((storedToken as any).expiresAt) < new Date()) {
     return null
   }
 
   const maxAgeMs = config.get('jwt.refreshTokenMaxAgeDays') * 24 * 60 * 60 * 1000
-  if (new Date(storedToken.familyCreatedAt).getTime() + maxAgeMs < Date.now()) {
-    await revokeFamily(storedToken.family)
+  if (new Date((storedToken as any).familyCreatedAt).getTime() + maxAgeMs < Date.now()) {
+    await revokeFamily((storedToken as any).family)
     return null
   }
 
-  const user = await getUserById(storedToken.userId)
+  const user = await getUserById((storedToken as any).userId)
 
   if (!user) {
     return null
   }
 
-  await storedToken.update({ revokedAt: new Date() })
+  await (storedToken as any).update({ revokedAt: new Date() })
 
   const accessToken = jwt.sign({
     userId: user.userId,
-    scope: user.roles.map(x => x.Role ? x.Role.name : x.name),
+    scope: user.roles.map((x: any) => x.Role ? x.Role.name : x.name),
     tokenVersion: user.tokenVersion,
   }, privateKey, {
     algorithm: 'RS256',
@@ -54,17 +54,17 @@ export async function refresh (rawRefreshToken) {
   const expiresAt = new Date(Date.now() + config.get('jwt.refreshTokenExpiryDays') * 24 * 60 * 60 * 1000)
 
   await db.RefreshToken.create({
-    userId: user.userId,
+    userId: (storedToken as any).userId,
     tokenHash: newTokenHash,
-    family: storedToken.family,
+    family: (storedToken as any).family,
     expiresAt,
-    familyCreatedAt: storedToken.familyCreatedAt,
+    familyCreatedAt: (storedToken as any).familyCreatedAt,
   })
 
   return { accessToken, refreshToken: newRawToken }
 }
 
-export async function revokeToken (rawRefreshToken) {
+export async function revokeToken (rawRefreshToken: string): Promise<void> {
   const tokenHash = createHash('sha256').update(rawRefreshToken).digest('hex')
 
   const storedToken = await db.RefreshToken.findOne({
@@ -72,11 +72,11 @@ export async function revokeToken (rawRefreshToken) {
   })
 
   if (storedToken) {
-    await revokeFamily(storedToken.family)
+    await revokeFamily((storedToken as any).family)
   }
 }
 
-async function revokeFamily (family) {
+async function revokeFamily (family: string): Promise<void> {
   await db.RefreshToken.update(
     { revokedAt: new Date() },
     { where: { family, revokedAt: { [Op.is]: null } } }

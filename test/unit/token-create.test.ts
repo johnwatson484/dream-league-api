@@ -17,10 +17,10 @@ vi.mock('node:crypto', () => ({
 
 vi.mock('../../src/config/index.ts', () => ({
   default: {
-    get: (key) => ({
+    get: (key: string) => ({
       'jwt.expiryInMinutes': 15,
       'jwt.refreshTokenExpiryDays': 7,
-    })[key],
+    } as Record<string, unknown>)[key],
   },
 }))
 

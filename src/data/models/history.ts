@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   return sequelize.define('History', {
     historyId: {
       type: DataTypes.INTEGER,

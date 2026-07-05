@@ -4,8 +4,8 @@ import { mapPlayer } from './map-player.ts'
 import { orderKeepers } from '../utils/order-keepers.ts'
 import { orderPlayers } from '../utils/order-players.ts'
 
-export async function getTeam (managerId) {
-  const manager = await db.Manager.findOne({
+export async function getTeam (managerId: number) {
+  const manager: any = await db.Manager.findOne({
     where: { managerId },
     include: [
       {
@@ -24,16 +24,16 @@ export async function getTeam (managerId) {
         as: 'keepers',
         attributes: ['teamId', 'name'],
         through: { attributes: ['substitute'] },
-        include: { model: db.Concede, as: 'conceded', attributes: ['concedeId', 'teamId', 'cup'] },
+        include: [{ model: db.Concede, as: 'conceded', attributes: ['concedeId', 'teamId', 'cup'] }],
       },
     ],
     nest: true,
-  })
+  } as any)
 
   return {
     managerId: manager.managerId,
     name: manager.name,
-    keepers: orderKeepers(manager.keepers.map(x => mapKeeper(x.dataValues))),
+    keepers: orderKeepers(manager.keepers.map((x: any) => mapKeeper(x.dataValues))),
     players: orderPlayers(manager.players.map(mapPlayer)),
   }
 }

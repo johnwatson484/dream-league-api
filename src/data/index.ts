@@ -3,8 +3,9 @@ import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { Sequelize, DataTypes, type Dialect } from 'sequelize'
 import config from '../config/index.ts'
+import type { Db } from './types.ts'
 
-const db: any = {}
+const db = {} as Db
 
 const sequelize = new Sequelize(
   config.get('database.database'),
@@ -26,12 +27,13 @@ const modelPath = join(import.meta.dirname, 'models')
 for (const file of readdirSync(modelPath).filter(f => !f.startsWith('.') && f !== 'index.ts' && f.endsWith('.ts'))) {
   const { default: modelFactory } = await import(pathToFileURL(join(modelPath, file)).href)
   const model = modelFactory(sequelize, DataTypes)
-  db[model.name] = model
+  ;(db as any)[model.name] = model
 }
 
 for (const modelName of Object.keys(db)) {
-  if (db[modelName].associate) {
-    db[modelName].associate(db)
+  const entry = (db as any)[modelName]
+  if (entry.associate) {
+    entry.associate(db)
   }
 }
 

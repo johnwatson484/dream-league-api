@@ -1,8 +1,10 @@
+import type { Plugin } from '@hapi/hapi'
+
 export default {
   plugin: {
     name: 'errors',
-    register: (server, _options) => {
-      server.ext('onPreResponse', (request, h) => {
+    register: (server: any) => {
+      server.ext('onPreResponse', (request: any, h: any) => {
         const response = request.response
 
         if (response.isBoom) {
@@ -16,5 +18,5 @@ export default {
         return h.continue
       })
     },
-  },
+  } satisfies Plugin<any>,
 }

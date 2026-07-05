@@ -48,24 +48,24 @@ describe('get table', () => {
   test('should include gameweekId', async () => {
     await createSummary(1)
     const result = await db.Summary.findAll({ where: { gameweekId: 1 } })
-    expect(result[0].gameweekId).toBe(1)
+    expect((result as any[])[0]!.gameweekId).toBe(1)
   })
 
   test('should include scores', async () => {
     await createSummary(1)
     const result = await db.Summary.findAll({ where: { gameweekId: 1 } })
-    expect(Array.isArray(result[0].summary.scores)).toBe(true)
+    expect(Array.isArray((result as any[])[0]!.summary.scores)).toBe(true)
   })
 
   test('should include scorers', async () => {
     await createSummary(1)
     const result = await db.Summary.findAll({ where: { gameweekId: 1 } })
-    expect(Array.isArray(result[0].summary.scores[0].scorers)).toBe(true)
+    expect(Array.isArray((result as any[])[0]!.summary.scores[0].scorers)).toBe(true)
   })
 
   test('should include table', async () => {
     await createSummary(1)
     const result = await db.Summary.findAll({ where: { gameweekId: 1 } })
-    expect(Array.isArray(result[0].summary.table)).toBe(true)
+    expect(Array.isArray((result as any[])[0]!.summary.table)).toBe(true)
   })
 })

@@ -1,15 +1,16 @@
+import { Op } from 'sequelize'
 import db from '../data/index.ts'
 
-export async function search (prefix) {
-  const result = []
+export async function search (prefix: string): Promise<any[]> {
+  const result: any[] = []
 
   // Search players
   const players = await db.Player.findAll({
     where: {
-      [db.Sequelize.Op.or]: [{
-        lastName: { [db.Sequelize.Op.iLike]: `${prefix}%` },
+      [Op.or]: [{
+        lastName: { [Op.iLike]: `${prefix}%` },
       }, {
-        firstName: { [db.Sequelize.Op.iLike]: `${prefix}%` },
+        firstName: { [Op.iLike]: `${prefix}%` },
       }],
     },
     include: [{
@@ -20,7 +21,7 @@ export async function search (prefix) {
     limit: 10,
   })
 
-  players.forEach((player) => {
+  players.forEach((player: any) => {
     result.push({
       type: 'player',
       label: `${player.firstName} ${player.lastName} - ${player.team.name}`,
@@ -36,7 +37,7 @@ export async function search (prefix) {
   // Search teams
   const teams = await db.Team.findAll({
     where: {
-      name: { [db.Sequelize.Op.iLike]: `${prefix}%` },
+      name: { [Op.iLike]: `${prefix}%` },
     },
     include: [{
       model: db.Division,
@@ -46,7 +47,7 @@ export async function search (prefix) {
     limit: 10,
   })
 
-  teams.forEach((team) => {
+  teams.forEach((team: any) => {
     result.push({
       type: 'team',
       label: team.name,
@@ -61,12 +62,12 @@ export async function search (prefix) {
   // Search managers
   const managers = await db.Manager.findAll({
     where: {
-      name: { [db.Sequelize.Op.iLike]: `%${prefix}%` },
+      name: { [Op.iLike]: `%${prefix}%` },
     },
     limit: 10,
   })
 
-  managers.forEach((manager) => {
+  managers.forEach((manager: any) => {
     result.push({
       type: 'manager',
       label: manager.name,
@@ -80,12 +81,12 @@ export async function search (prefix) {
   // Search divisions
   const divisions = await db.Division.findAll({
     where: {
-      name: { [db.Sequelize.Op.iLike]: `${prefix}%` },
+      name: { [Op.iLike]: `${prefix}%` },
     },
     limit: 5,
   })
 
-  divisions.forEach((division) => {
+  divisions.forEach((division: any) => {
     result.push({
       type: 'division',
       label: division.name,

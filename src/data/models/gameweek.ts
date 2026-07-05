@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic, Db } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   const Gameweek = sequelize.define('Gameweek', {
     gameweekId: {
       type: DataTypes.INTEGER,
@@ -8,7 +11,7 @@ export default (sequelize, DataTypes) => {
     startDate: DataTypes.DATE,
     endDate: {
       type: DataTypes.VIRTUAL,
-      get () {
+      get (this: any) {
         const endDate = new Date(this.startDate)
         endDate.setDate(endDate.getDate() + 6)
         return endDate
@@ -16,14 +19,14 @@ export default (sequelize, DataTypes) => {
     },
     isActive: {
       type: DataTypes.VIRTUAL,
-      get () {
+      get (this: any) {
         const currentDate = new Date()
         return currentDate >= this.startDate
       },
     },
     shortDate: {
       type: DataTypes.VIRTUAL,
-      get () {
+      get (this: any) {
         return new Date(this.startDate).toLocaleDateString('en-GB')
       },
     },
@@ -32,7 +35,7 @@ export default (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false,
   })
-  Gameweek.associate = function (models) {
+  ;(Gameweek as any).associate = function (models: Db) {
     Gameweek.hasMany(models.Goal, {
       foreignKey: 'gameweekId',
       as: 'goals',

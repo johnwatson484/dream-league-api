@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic, Db } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   const Cup = sequelize.define('Cup', {
     cupId: {
       type: DataTypes.INTEGER,
@@ -13,7 +16,7 @@ export default (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false,
   })
-  Cup.associate = function (models) {
+  ;(Cup as any).associate = function (models: Db) {
     Cup.hasMany(models.Group, {
       foreignKey: 'cupId',
       as: 'groups',

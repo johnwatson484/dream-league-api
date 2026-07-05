@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import db from '../../data/index.ts'
 import { GET } from '../../constants/verbs.ts'
 
@@ -13,4 +14,4 @@ export default [{
       return h.response(await db.Gameweek.findAll({ order: ['gameweekId'] }))
     },
   },
-}]
+}] satisfies ServerRoute[]

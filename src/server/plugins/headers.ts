@@ -1,8 +1,10 @@
+import type { Plugin } from '@hapi/hapi'
+
 export default {
   plugin: {
     name: 'headers',
-    register: (server, _options) => {
-      server.ext('onPreResponse', (request, h) => {
+    register: (server: any) => {
+      server.ext('onPreResponse', (request: any, h: any) => {
         const headers = request.response.isBoom ? request.response.output.headers : request.response?.headers
 
         if (headers) {
@@ -20,5 +22,5 @@ export default {
         return h.continue
       })
     },
-  },
+  } satisfies Plugin<any>,
 }

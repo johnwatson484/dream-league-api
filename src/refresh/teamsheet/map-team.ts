@@ -1,6 +1,6 @@
 import { calculateDistance } from '../../levenshtein.ts'
 
-export function mapTeam (teams, matchTeam) {
+export function mapTeam (teams: any[], matchTeam: string) {
   const matchText = matchTeam.replace(/' '/g, '').toUpperCase()
   let bestDistance = -1
   let bestTeamId = -1

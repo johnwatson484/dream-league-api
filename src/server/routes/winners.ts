@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import { getAllWinners } from '../../results/get-all-winners.ts'
 import { GET } from '../../constants/verbs.ts'
 
@@ -11,4 +12,4 @@ export default [{
       return h.response(winners)
     },
   },
-}]
+}] satisfies ServerRoute[]

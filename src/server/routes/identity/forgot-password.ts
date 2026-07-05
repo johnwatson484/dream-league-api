@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import boom from '@hapi/boom'
 import Joi from 'joi'
 import { resetPassword } from '../../../account/reset-password.ts'
@@ -14,13 +15,13 @@ export default [{
         email: Joi.string().email().required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      const { email } = request.payload
+      const { email } = request.payload as any
       await resetPassword(email)
       return h.response(OK)
     },
   },
-}]
+}] satisfies ServerRoute[]

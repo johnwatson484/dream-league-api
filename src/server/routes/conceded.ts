@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import db from '../../data/index.ts'
@@ -26,7 +27,7 @@ export default [{
       return h.response(await db.Concede.findOne({
         where: { concedeId: request.query.concedeId },
         include: [{ model: db.Team, as: 'team' }],
-      }))
+      }) as any)
     },
   },
 }, {
@@ -39,14 +40,14 @@ export default [{
         concedeId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      const concede = await db.Concede.findOne({ where: { concedeId: request.payload.concedeId } })
-      await db.Concede.destroy({ where: { concedeId: request.payload.concedeId } })
+      const concede: any = await db.Concede.findOne({ where: { concedeId: (request.payload as any).concedeId } })
+      await db.Concede.destroy({ where: { concedeId: (request.payload as any).concedeId } })
       await update({ gameweekId: concede.gameweekId })
       return h.response(OK)
     },
   },
-}]
+}] satisfies ServerRoute[]

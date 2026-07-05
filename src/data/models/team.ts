@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic, Db } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   const Team = sequelize.define('Team', {
     teamId: {
       type: DataTypes.INTEGER,
@@ -13,7 +16,7 @@ export default (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false,
   })
-  Team.associate = function (models) {
+  ;(Team as any).associate = function (models: Db) {
     Team.belongsTo(models.Division, {
       foreignKey: 'divisionId',
       as: 'division',

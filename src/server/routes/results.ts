@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import { getSummary } from '../../results/get-summary.ts'
@@ -17,11 +18,11 @@ export default [{
         gameweekId: Joi.number().optional(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      const summary = await getSummary(request.query.gameweekId)
+      const summary = await getSummary(request.query.gameweekId ? Number(request.query.gameweekId) : undefined)
       return h.response(summary)
     },
   },
@@ -48,12 +49,12 @@ export default [{
         goalsCup: Joi.array().items(Joi.object({ playerId: Joi.number(), goals: Joi.number() })).single(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      await update(request.payload)
-      return h.response(true)
+      await update(request.payload as any)
+      return h.response(true as any)
     },
   },
 }, {
@@ -66,12 +67,12 @@ export default [{
         gameweekId: Joi.number().required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      await deleteResults(request.payload.gameweekId)
-      return h.response(true)
+      await deleteResults((request.payload as any).gameweekId)
+      return h.response(true as any)
     },
   },
 }, {
@@ -84,12 +85,12 @@ export default [{
         gameweekId: Joi.number().required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      await sendResults(request.payload.gameweekId)
-      return h.response(true)
+      await sendResults((request.payload as any).gameweekId)
+      return h.response(true as any)
     },
   },
-}]
+}] satisfies ServerRoute[]

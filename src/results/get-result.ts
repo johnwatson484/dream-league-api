@@ -1,6 +1,6 @@
 import { W, D, L } from '../constants/results.ts'
 
-export function getResult (goals, conceded) {
+export function getResult (goals: number, conceded: number): string {
   if (goals > conceded) {
     return W
   }

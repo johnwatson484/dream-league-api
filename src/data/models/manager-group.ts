@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic, Db } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   const ManagerGroup = sequelize.define('ManagerGroup', {
     managerId: { type: DataTypes.INTEGER, primaryKey: true },
     groupId: { type: DataTypes.INTEGER, primaryKey: true },
@@ -7,7 +10,7 @@ export default (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false,
   })
-  ManagerGroup.associate = function (models) {
+  ;(ManagerGroup as any).associate = function (models: Db) {
     ManagerGroup.belongsTo(models.Manager, { foreignKey: 'managerId' })
     ManagerGroup.belongsTo(models.Group, { foreignKey: 'groupId' })
   }

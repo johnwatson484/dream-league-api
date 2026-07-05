@@ -1,6 +1,6 @@
 import db from '../../data/index.ts'
 
-export async function addTeamsheetMatch (managerId, player, position, bestMatchId, distance) {
+export async function addTeamsheetMatch (managerId: number, player: any, position: string | undefined, bestMatchId: number, distance: number): Promise<void> {
   await db.Teamsheet.create({
     managerId,
     player: player.player,
@@ -11,7 +11,7 @@ export async function addTeamsheetMatch (managerId, player, position, bestMatchI
   })
 }
 
-export async function addPlayer (managerId, playerId, substitute) {
+export async function addPlayer (managerId: number, playerId: number, substitute: boolean) {
   return db.ManagerPlayer.upsert({
     managerId,
     playerId,
@@ -19,7 +19,7 @@ export async function addPlayer (managerId, playerId, substitute) {
   })
 }
 
-export async function addKeeper (managerId, teamId, substitute) {
+export async function addKeeper (managerId: number, teamId: number, substitute: boolean) {
   return db.ManagerKeeper.upsert({
     managerId,
     teamId,
