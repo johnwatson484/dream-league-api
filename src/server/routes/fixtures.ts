@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import db from '../../data/index.ts'
@@ -27,7 +28,7 @@ export default [{
           [db.Sequelize.col('homeManager.name'), 'homeManagerName'],
           [db.Sequelize.col('awayManager.name'), 'awayManagerName'],
         ],
-        order: [['gameweekId']],
+        order: [['gameweekId', 'ASC']],
       }))
     },
   },
@@ -37,7 +38,7 @@ export default [{
   options: {
     auth: false,
     handler: async (request, h) => {
-      return h.response(await db.Fixture.findOne({ where: { fixtureId: request.query.fixtureId } }))
+      return h.response(await db.Fixture.findOne({ where: { fixtureId: request.query.fixtureId } }) as any)
     },
   },
 }, {
@@ -54,11 +55,11 @@ export default [{
         round: Joi.number().integer().required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Fixture.create(request.payload))
+      return h.response(await db.Fixture.create(request.payload as any))
     },
   },
 }, {
@@ -76,11 +77,11 @@ export default [{
         round: Joi.number().integer().required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Fixture.upsert(request.payload))
+      return h.response(await db.Fixture.upsert(request.payload as any) as any)
     },
   },
 }, {
@@ -93,11 +94,11 @@ export default [{
         fixtureId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Fixture.destroy({ where: { fixtureId: request.payload.fixtureId } }))
+      return h.response(await db.Fixture.destroy({ where: { fixtureId: (request.payload as any).fixtureId } }) as any)
     },
   },
-}]
+}] satisfies ServerRoute[]

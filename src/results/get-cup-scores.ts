@@ -1,13 +1,13 @@
 import db from '../data/index.ts'
 import { getScores } from './get-scores.ts'
 
-export async function getCupScores (gameweekId, managers) {
+export async function getCupScores (gameweekId: number, managers: any[]): Promise<any[]> {
   const cupScores = []
   const scores = await getScores(gameweekId, managers, true)
 
   const fixtures = await db.Fixture.findAll({ where: { gameweekId }, include: [{ model: db.Cup, as: 'cup', attributes: ['name'] }] })
 
-  for (const fixture of fixtures) {
+  for (const fixture of fixtures as any[]) {
     if (scores.some(x => x.managerId === fixture.homeManagerId || x.managerId === fixture.awayManagerId)) {
       const homeScore = scores.find(x => x.managerId === fixture.homeManagerId)
       const homeMargin = homeScore.goals - homeScore.conceded
@@ -35,7 +35,7 @@ export async function getCupScores (gameweekId, managers) {
   return cupScores
 }
 
-function getCupResult (homeMargin, awayMargin) {
+function getCupResult (homeMargin: number, awayMargin: number): string {
   if (homeMargin > awayMargin) {
     return 'H'
   }

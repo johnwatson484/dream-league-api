@@ -1,3 +1,4 @@
+import type { Plugin, ServerRoute } from '@hapi/hapi'
 import login from '../routes/identity/login.ts'
 import logout from '../routes/identity/logout.ts'
 import register from '../routes/identity/register.ts'
@@ -21,7 +22,8 @@ import groups from '../routes/groups.ts'
 import fixtures from '../routes/fixtures.ts'
 import winners from '../routes/winners.ts'
 import search from '../routes/search.ts'
-const routes = [
+
+const routes: ServerRoute[] = [
   ...login,
   ...logout,
   ...register,
@@ -50,8 +52,8 @@ const routes = [
 export default {
   plugin: {
     name: 'router',
-    register: (server, _options) => {
+    register: (server: any) => {
       server.route(routes)
     },
-  },
+  } satisfies Plugin<any>,
 }

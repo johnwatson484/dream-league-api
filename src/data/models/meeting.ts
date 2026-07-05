@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   return sequelize.define('Meeting', {
     meetingId: {
       type: DataTypes.INTEGER,
@@ -8,7 +11,7 @@ export default (sequelize, DataTypes) => {
     date: DataTypes.DATE,
     shortDate: {
       type: DataTypes.VIRTUAL,
-      get () {
+      get (this: any) {
         return new Date(this.startDate).toLocaleString('en-GB', { dateStyle: 'short', timeStyle: 'short' })
       },
     },

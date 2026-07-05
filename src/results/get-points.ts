@@ -1,6 +1,6 @@
 import { W, D } from '../constants/results.ts'
 
-export function getPoints (result) {
+export function getPoints (result: string): number {
   switch (result) {
     case W:
       return 3

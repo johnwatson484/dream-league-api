@@ -3,7 +3,7 @@ import { start as startCache, stop as stopCache } from './cache/client.ts'
 import { start as startServer } from './server/start.ts'
 import { SIGINT, SIGTERM } from './constants/signals.ts'
 
-const shutdown = async () => {
+const shutdown = async (): Promise<void> => {
   await stopCache()
   process.exit(0)
 }

@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import boom from '@hapi/boom'
 import Joi from 'joi'
 import { login } from '../../../account/login.ts'
@@ -14,15 +15,15 @@ export default [{
         password: Joi.string().required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      const authenticated = await login(request.payload.email, request.payload.password)
+      const authenticated = await login((request.payload as any).email, (request.payload as any).password)
       if (!authenticated) {
         return boom.unauthorized()
       }
       return h.response(authenticated)
     },
   },
-}]
+}] satisfies ServerRoute[]

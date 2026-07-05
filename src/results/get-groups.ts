@@ -1,30 +1,31 @@
+import { Op } from 'sequelize'
 import db from '../data/index.ts'
 import { getCupScores } from './get-cup-scores.ts'
 import { orderTable } from './order-table.ts'
 
-export async function getGroups (gameweekId) {
+export async function getGroups (gameweekId: number): Promise<any[]> {
   const cups = await db.Cup.findAll({ where: { hasGroupStage: true } })
 
   const groupTables = []
-  for (const cup of cups) {
+  for (const cup of cups as any[]) {
     const fixtures = await db.Fixture.findAll({
       where: {
         cupId: cup.cupId,
-        gameweekId: { [db.Sequelize.Op.lte]: gameweekId },
+        gameweekId: { [Op.lte]: gameweekId },
         round: 1,
       },
     })
 
     // if no fixtures this gameweek no need to add groups
-    if (!fixtures.some(x => x.gameweekId === gameweekId)) {
+    if (!fixtures.some((x: any) => x.gameweekId === gameweekId)) {
       continue
     }
 
-    const gameweekIds = [...new Set(fixtures.map(x => x.gameweekId))]
-    const groups = await db.Group.findAll({ where: { cupId: cup.cupId }, include: { model: db.Manager, as: 'managers' } })
-    for (const group of groups) {
+    const gameweekIds = [...new Set((fixtures as any[]).map((x: any) => x.gameweekId))]
+    const groups = await db.Group.findAll({ where: { cupId: cup.cupId }, include: { model: db.Manager, as: 'managers' } } as any)
+    for (const group of groups as any[]) {
       if (group.managers.length) {
-        const scores = []
+        const scores: any[] = []
         for (const gameweek of gameweekIds) {
           const cupScores = await getCupScores(gameweek, group.managers)
           Array.prototype.push.apply(scores, cupScores)

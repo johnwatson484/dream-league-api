@@ -29,7 +29,7 @@ describe('teamsheet keeper mapping', () => {
       name: 'Liverpool',
       managerKeepers: { dataValues: { substitute: true } },
     }
-    const teamsheet = []
+    const teamsheet: any[] = []
 
     const result = mapKeeper(keeper, teamsheet)
 

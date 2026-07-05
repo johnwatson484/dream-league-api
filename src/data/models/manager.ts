@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic, Db } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   const Manager = sequelize.define('Manager', {
     managerId: {
       type: DataTypes.INTEGER,
@@ -12,7 +15,7 @@ export default (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false,
   })
-  Manager.associate = function (models) {
+  ;(Manager as any).associate = function (models: Db) {
     Manager.belongsToMany(models.Player, {
       through: 'managerPlayers',
       foreignKey: 'managerId',

@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic, Db } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   const RefreshToken = sequelize.define('RefreshToken', {
     id: {
       type: DataTypes.UUID,
@@ -37,7 +40,7 @@ export default (sequelize, DataTypes) => {
     updatedAt: false,
   })
 
-  RefreshToken.associate = function (models) {
+  ;(RefreshToken as any).associate = function (models: Db) {
     RefreshToken.belongsTo(models.User, {
       foreignKey: 'userId',
       as: 'user',

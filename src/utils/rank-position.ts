@@ -1,4 +1,4 @@
-export function rankPosition (position) {
+export function rankPosition (position: string | undefined): number {
   switch (position) {
     case 'Defender':
       return 0

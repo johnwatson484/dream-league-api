@@ -2,7 +2,7 @@ import config from '../config/index.ts'
 import { create } from '../token/create.ts'
 import { userExists, createUser, isMember } from './user-manager.ts'
 
-export async function register (email, password) {
+export async function register (email: string, password: string) {
   if (await userExists(email)) {
     return false
   }

@@ -1,3 +1,5 @@
+import type { ServerRoute } from '@hapi/hapi'
+import { Op } from 'sequelize'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import db from '../../../data/index.ts'
@@ -10,7 +12,7 @@ export default [{
     auth: false,
     handler: async (_request, h) => {
       return h.response(await db.Division.findAll({
-        order: [['rank']],
+        order: [['rank', 'ASC']],
       }))
     },
   },
@@ -24,15 +26,15 @@ export default [{
         prefix: Joi.string(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
       const divisions = await db.Division.findAll({
-        where: { name: { [db.Sequelize.Op.iLike]: request.payload.prefix + '%' } },
-        order: [['name']],
+        where: { name: { [Op.iLike]: (request.payload as any).prefix + '%' } },
+        order: [['name', 'ASC']],
       })
       return h.response(divisions || [])
     },
   },
-}]
+}] satisfies ServerRoute[]

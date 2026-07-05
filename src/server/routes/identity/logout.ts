@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import boom from '@hapi/boom'
 import Joi from 'joi'
 import { revokeToken } from '../../../token/refresh.ts'
@@ -13,12 +14,12 @@ export default [{
         refreshToken: Joi.string().required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      await revokeToken(request.payload.refreshToken)
+      await revokeToken((request.payload as any).refreshToken)
       return h.response().code(204)
     },
   },
-}]
+}] satisfies ServerRoute[]

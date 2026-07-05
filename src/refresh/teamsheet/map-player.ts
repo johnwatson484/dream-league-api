@@ -1,6 +1,6 @@
 import { calculateDistance } from '../../levenshtein.ts'
 
-export function mapPlayer (players, matchPlayer, position) {
+export function mapPlayer (players: any[], matchPlayer: string, position: string | undefined | null) {
   const matchText = matchPlayer.replace(/\s/g, '').toUpperCase()
   let bestDistance = -1
   let bestPlayerId = -1

@@ -1,4 +1,4 @@
-export function mapPlayer (player) {
+export function mapPlayer (player: any) {
   return {
     playerId: player.dataValues.playerId,
     fullName: player.fullName,
@@ -7,7 +7,7 @@ export function mapPlayer (player) {
     team: player.dataValues.team.dataValues.name,
     teamId: player.dataValues.team.dataValues.teamId,
     substitute: player.managerPlayers.dataValues.substitute,
-    goals: player.goals?.filter(x => !x.cup).length ?? 0,
-    cupGoals: player.goals?.filter(x => x.cup).length ?? 0,
+    goals: player.goals?.filter((x: any) => !x.cup).length ?? 0,
+    cupGoals: player.goals?.filter((x: any) => x.cup).length ?? 0,
   }
 }

@@ -1,3 +1,5 @@
+import type { ServerRoute } from '@hapi/hapi'
+import { Op } from 'sequelize'
 import db from '../../../data/index.ts'
 import Joi from 'joi'
 import boom from '@hapi/boom'
@@ -15,7 +17,7 @@ export default [{
         division: Joi.string().allow('').optional(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
@@ -25,17 +27,17 @@ export default [{
       const whereClause: any = {}
 
       if (search) {
-        whereClause.name = { [db.Sequelize.Op.iLike]: `%${search}%` }
+        whereClause.name = { [Op.iLike]: `%${search}%` }
       }
 
       if (division) {
-        whereClause['$division.name$'] = { [db.Sequelize.Op.iLike]: `%${division}%` }
+        whereClause['$division.name$'] = { [Op.iLike]: `%${division}%` }
       }
 
       return h.response(await db.Team.findAll({
         where: whereClause,
         include: [{ model: db.Division, as: 'division', attributes: ['name', 'divisionId'] }],
-        order: [['division', 'rank'], ['name']],
+        order: [['division', 'rank', 'ASC'], ['name', 'ASC']] as any,
       }))
     },
   },
@@ -49,7 +51,7 @@ export default [{
         teamId: Joi.number().integer().required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
   },
@@ -73,9 +75,9 @@ export default [{
         [db.Sequelize.literal(`CASE "players"."position" WHEN '${GOALKEEPER}' THEN 1 WHEN '${DEFENDER}' THEN 2 WHEN '${MIDFIELDER}' THEN 3 WHEN '${FORWARD}' THEN 4 ELSE 5 END`)],
         [db.Sequelize.literal('"players"."lastName"')],
         [db.Sequelize.literal('"players"."firstName"')],
-      ],
+      ] as any,
     })
-    return h.response(team)
+    return h.response(team as any)
   },
 }, {
   method: POST,
@@ -89,11 +91,11 @@ export default [{
         divisionId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Team.create(request.payload))
+      return h.response(await db.Team.create(request.payload as any))
     },
   },
 }, {
@@ -109,11 +111,11 @@ export default [{
         divisionId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      return h.response(await db.Team.upsert(request.payload))
+      return h.response(await db.Team.upsert(request.payload as any) as any)
     },
   },
 }, {
@@ -126,15 +128,15 @@ export default [{
         prefix: Joi.string(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
       const teams = await db.Team.findAll({
-        where: { name: { [db.Sequelize.Op.iLike]: request.payload.prefix + '%' } },
-        order: [['name']],
+        where: { name: { [Op.iLike]: (request.payload as any).prefix + '%' } },
+        order: [['name', 'ASC']],
       })
       return h.response(teams ?? [])
     },
   },
-}]
+}] satisfies ServerRoute[]

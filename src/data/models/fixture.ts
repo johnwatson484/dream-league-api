@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic, Db } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   const Fixture = sequelize.define('Fixture', {
     fixtureId: {
       type: DataTypes.INTEGER,
@@ -15,7 +18,7 @@ export default (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false,
   })
-  Fixture.associate = function (models) {
+  ;(Fixture as any).associate = function (models: Db) {
     Fixture.belongsTo(models.Cup, {
       foreignKey: 'cupId',
       as: 'cup',

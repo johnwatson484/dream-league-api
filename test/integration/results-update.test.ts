@@ -100,7 +100,7 @@ describe('get results input', () => {
   test('should add gameweek for conceded', async () => {
     await update(results)
     const result = await db.Concede.findAll()
-    expect(result.filter(x => x.gameweekId === 1).length).toBe(result.length)
+    expect((result as any[]).filter((x: any) => x.gameweekId === 1).length).toBe(result.length)
   })
 
   test('should add manager for conceded', async () => {
@@ -136,7 +136,7 @@ describe('get results input', () => {
   test('should add gameweek for goal', async () => {
     await update(results)
     const result = await db.Goal.findAll()
-    expect(result.filter(x => x.gameweekId === 1).length).toBe(result.length)
+    expect((result as any[]).filter((x: any) => x.gameweekId === 1).length).toBe(result.length)
   })
 
   test('should add manager for goal', async () => {

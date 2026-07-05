@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic, Db } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   const Group = sequelize.define('Group', {
     groupId: {
       type: DataTypes.INTEGER,
@@ -14,7 +17,7 @@ export default (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false,
   })
-  Group.associate = function (models) {
+  ;(Group as any).associate = function (models: Db) {
     Group.belongsTo(models.Cup, {
       foreignKey: 'cupId',
       as: 'cup',

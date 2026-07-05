@@ -1,4 +1,5 @@
 import Hapi from '@hapi/hapi'
+import type { Server } from '@hapi/hapi'
 import inert from '@hapi/inert'
 import hapiAuthJwt2 from 'hapi-auth-jwt2'
 import config from '../config/index.ts'
@@ -8,7 +9,7 @@ import router from './plugins/router.ts'
 import logging from './plugins/logging.ts'
 import headers from './plugins/headers.ts'
 
-export async function createServer () {
+export async function createServer (): Promise<Server> {
   const server = Hapi.server({
     port: config.get('port'),
     routes: {

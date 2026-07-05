@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import db from '../../data/index.ts'
@@ -26,7 +27,7 @@ export default [{
       return h.response(await db.Goal.findOne({
         where: { goalId: request.query.goalId },
         include: [{ model: db.Player, as: 'player', include: [{ model: db.Team, as: 'team' }] }],
-      }))
+      }) as any)
     },
   },
 }, {
@@ -39,14 +40,14 @@ export default [{
         goalId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      const goal = await db.Goal.findOne({ where: { goalId: request.payload.goalId } })
-      await db.Goal.destroy({ where: { goalId: request.payload.goalId } })
+      const goal: any = await db.Goal.findOne({ where: { goalId: (request.payload as any).goalId } })
+      await db.Goal.destroy({ where: { goalId: (request.payload as any).goalId } })
       await update({ gameweekId: goal.gameweekId })
       return h.response(OK)
     },
   },
-}]
+}] satisfies ServerRoute[]

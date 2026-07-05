@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import db from '../../data/index.ts'
@@ -14,7 +15,7 @@ export default [{
           { model: db.Cup, as: 'cup' },
           { model: db.Manager, as: 'managers' },
         ],
-        order: [['name']],
+        order: [['name', 'ASC']],
       }))
     },
   },
@@ -31,7 +32,7 @@ export default [{
           { model: db.Manager, as: 'managers', attributes: [] },
         ],
         attributes: ['groupId', 'cupId', 'name', 'groupLegs', 'teamsAdvancing', [db.Sequelize.col('cup.name'), 'cupName']],
-      }))
+      }) as any)
     },
   },
 }, {
@@ -48,13 +49,13 @@ export default [{
         managers: Joi.array().items(Joi.number()).single(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      const group = await db.Group.create(request.payload)
-      if (request.payload.managers) {
-        for (const managerId of request.payload.managers) {
+      const group: any = await db.Group.create(request.payload as any)
+      if ((request.payload as any).managers) {
+        for (const managerId of (request.payload as any).managers) {
           await db.ManagerGroup.create({ managerId, groupId: group.groupId })
         }
       }
@@ -76,26 +77,27 @@ export default [{
         managers: Joi.array().items(Joi.number()).single(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      await db.Group.upsert(request.payload)
-      const managerGroup = await db.ManagerGroup.findAll({ where: { groupId: request.payload.groupId } })
+      const payload = request.payload as any
+      await db.Group.upsert(payload)
+      const managerGroup: any[] = await db.ManagerGroup.findAll({ where: { groupId: payload.groupId } })
 
-      if (request.payload.managers) {
-        for (const managerId of request.payload.managers) {
-          if (!managerGroup.some(x => x.managerId === managerId)) {
-            await db.ManagerGroup.create({ managerId, groupId: request.payload.groupId })
+      if (payload.managers) {
+        for (const managerId of payload.managers) {
+          if (!managerGroup.some((x: any) => x.managerId === managerId)) {
+            await db.ManagerGroup.create({ managerId, groupId: payload.groupId })
           }
         }
         for (const currentManager of managerGroup) {
-          if (!request.payload.managers.some(x => x === currentManager.managerId)) {
-            await db.ManagerGroup.destroy({ where: { managerId: currentManager.managerId, groupId: request.payload.groupId } })
+          if (!payload.managers.some((x: any) => x === (currentManager as any).managerId)) {
+            await db.ManagerGroup.destroy({ where: { managerId: (currentManager as any).managerId, groupId: payload.groupId } })
           }
         }
       } else {
-        await db.ManagerGroup.destroy({ where: { groupId: request.payload.groupId } })
+        await db.ManagerGroup.destroy({ where: { groupId: payload.groupId } })
       }
       return h.response()
     },
@@ -110,13 +112,13 @@ export default [{
         groupId: Joi.number(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      await db.ManagerGroup.destroy({ where: { groupId: request.payload.groupId } })
-      await db.Group.destroy({ where: { groupId: request.payload.groupId } })
+      await db.ManagerGroup.destroy({ where: { groupId: (request.payload as any).groupId } })
+      await db.Group.destroy({ where: { groupId: (request.payload as any).groupId } })
       return h.response()
     },
   },
-}]
+}] satisfies ServerRoute[]

@@ -1,7 +1,7 @@
 import { GK, DEF, MID, FWD } from '../constants/position-codes.ts'
 import { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } from '../constants/positions.ts'
 
-export function mapPosition (position) {
+export function mapPosition (position: string): string | undefined {
   switch (position) {
     case GK:
       return GOALKEEPER

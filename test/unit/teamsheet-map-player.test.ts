@@ -42,7 +42,7 @@ describe('teamsheet player mapping', () => {
       lastNameFirstName: 'Salah, Mohamed',
       managerPlayers: { dataValues: { substitute: false } },
     }
-    const teamsheet = []
+    const teamsheet: any[] = []
 
     const result = mapPlayer(player, teamsheet)
 

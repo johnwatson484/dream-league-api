@@ -2,17 +2,17 @@ import db from '../data/index.ts'
 import bcrypt from 'bcrypt'
 import { addUserToRole, getUserRoles } from './role-manager.ts'
 
-export async function userExists (email) {
+export async function userExists (email: string): Promise<boolean> {
   return await getUser(email) !== null
 }
 
-export async function isMember (email) {
+export async function isMember (email: string): Promise<boolean> {
   const memberEmail = await db.Email.findOne({ where: { address: email } })
   return memberEmail !== null
 }
 
-export async function getUser (email) {
-  const user = await db.User.findOne({
+export async function getUser (email: string): Promise<any> {
+  const user: any = await db.User.findOne({
     where: { email },
     raw: true,
   })
@@ -24,8 +24,8 @@ export async function getUser (email) {
   return user
 }
 
-export async function getUserById (userId) {
-  const user = await db.User.findOne({
+export async function getUserById (userId: number): Promise<any> {
+  const user: any = await db.User.findOne({
     where: { userId },
     raw: true,
   })
@@ -35,7 +35,7 @@ export async function getUserById (userId) {
   return user
 }
 
-export async function createUser (email, password) {
+export async function createUser (email: string, password: string) {
   const passwordHash = await bcrypt.hash(password, 10)
 
   const user = await db.User.create({
@@ -43,6 +43,6 @@ export async function createUser (email, password) {
     passwordHash,
   })
 
-  await addUserToRole(user.userId, 'user')
+  await addUserToRole((user as any).userId, 'user')
   return getUser(email)
 }

@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic, Db } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   const Teamsheet = sequelize.define('Teamsheet', {
     teamsheetId: {
       type: DataTypes.INTEGER,
@@ -16,7 +19,7 @@ export default (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false,
   })
-  Teamsheet.associate = function (models) {
+  ;(Teamsheet as any).associate = function (models: Db) {
     Teamsheet.belongsTo(models.Manager, {
       foreignKey: 'managerId',
       as: 'manager',

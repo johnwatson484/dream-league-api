@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 import config from '../config/index.ts'
 
-export async function sendEmail (recipients, subject, body) {
+export async function sendEmail (recipients: string | string[], subject: string, body: string): Promise<void> {
   if (config.get('smtp.host')) {
     const transporter = nodemailer.createTransport({
       host: config.get('smtp.host'),

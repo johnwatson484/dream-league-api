@@ -1,3 +1,4 @@
+import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import boom from '@hapi/boom'
 import { search } from '../../search/search.ts'
@@ -13,12 +14,12 @@ export default [{
         prefix: Joi.string().required(),
       }),
       failAction: async (_request, _h, error) => {
-        return boom.badRequest(error)
+        return boom.badRequest(error?.message)
       },
     },
     handler: async (request, h) => {
-      const results = await search(request.payload.prefix)
+      const results = await search((request.payload as any).prefix)
       return h.response(results)
     },
   },
-}]
+}] satisfies ServerRoute[]

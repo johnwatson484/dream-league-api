@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { generateKeyPairSync } from 'node:crypto'
 import config from './index.ts'
 
-function loadKeys () {
+function loadKeys (): { privateKey: string; publicKey: string } {
   const privateKeyEnv = config.get('jwt.privateKey')
   const publicKeyEnv = config.get('jwt.publicKey')
   const privateKeyPath = config.get('jwt.privateKeyPath')

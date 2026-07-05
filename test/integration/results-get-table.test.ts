@@ -1,7 +1,7 @@
 import db from '../../src/data/index.ts'
 import { getTable } from '../../src/results/get-table.ts'
 import testData from '../data/index.ts'
-let managers
+let managers: any[]
 
 describe('get table', () => {
   beforeAll(async () => {

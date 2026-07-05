@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic, Db } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   const UserRole = sequelize.define('UserRole', {
     userId: { type: DataTypes.INTEGER, primaryKey: true },
     roleId: { type: DataTypes.INTEGER, primaryKey: true },
@@ -7,7 +10,7 @@ export default (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false,
   })
-  UserRole.associate = function (models) {
+  ;(UserRole as any).associate = function (models: Db) {
     UserRole.belongsTo(models.User, { foreignKey: 'userId' })
     UserRole.belongsTo(models.Role, { foreignKey: 'roleId' })
   }

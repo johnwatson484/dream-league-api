@@ -4,14 +4,14 @@ import { mapPosition } from '../map-position.ts'
 import { addTeamsheetMatch, addPlayer, addKeeper } from './add-team.ts'
 import { getLeagueTeams, getLeaguePlayers } from './get-league-data.ts'
 
-export async function matchTeam (managerId, players) {
+export async function matchTeam (managerId: number, players: any[]): Promise<void> {
   for (const player of players) {
     const position = mapPosition(player.position)
     await matchPlayers(player, position, managerId)
   }
 }
 
-async function matchPlayers (player, position, managerId) {
+async function matchPlayers (player: any, position: string | undefined, managerId: number): Promise<void> {
   const leagueTeams = await getLeagueTeams()
   const leaguePlayers = await getLeaguePlayers()
 
@@ -26,6 +26,6 @@ async function matchPlayers (player, position, managerId) {
   }
 }
 
-function isKeeper (position) {
+function isKeeper (position: string | undefined): boolean {
   return position === 'Goalkeeper'
 }

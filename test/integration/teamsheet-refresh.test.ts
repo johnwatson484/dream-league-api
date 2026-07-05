@@ -59,7 +59,7 @@ describe('refreshing teamsheet', () => {
     await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(1)
   })
 
   test('should save keepers if list valid', async () => {
@@ -75,7 +75,7 @@ describe('refreshing teamsheet', () => {
     await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerKeeper.findAll({ include: [{ model: db.Team }], raw: true, nest: true })
 
-    expect(savedPlayers.filter(x => x.Team.name === 'Rochdale').length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.Team.name === 'Rochdale').length).toBe(1)
   })
 
   test('should replace existing players if list valid', async () => {
@@ -99,7 +99,7 @@ describe('refreshing teamsheet', () => {
     await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(1)
     expect(savedPlayers.length).toBe(1)
   })
 
@@ -116,7 +116,7 @@ describe('refreshing teamsheet', () => {
     await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(1)
   })
 
   test('should not save players if invalid manager', async () => {
@@ -132,7 +132,7 @@ describe('refreshing teamsheet', () => {
     await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(0)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.Player.team.name === 'Rochdale').length).toBe(0)
   })
 
   test('should update teamsheet player data', async () => {
@@ -147,7 +147,7 @@ describe('refreshing teamsheet', () => {
 
     await refreshTeamsheet(teams)
     const teamsheet = await db.Teamsheet.findAll({ raw: true })
-    expect(teamsheet.filter(x => x.managerId === 1 && x.player === teams[0].players[0].player && x.position === 'Forward').length).toBe(1)
+    expect(teamsheet.filter((x: any) => x.managerId === 1 && x.player === teams[0]!.players[0]!.player && x.position === 'Forward').length).toBe(1)
     expect(teamsheet.length).toBe(1)
   })
 
@@ -163,7 +163,7 @@ describe('refreshing teamsheet', () => {
 
     await refreshTeamsheet(teams)
     const teamsheet = await db.Teamsheet.findAll({ raw: true })
-    expect(teamsheet.filter(x => x.managerId === 1 && x.player === teams[0].players[0].player && x.position === 'Goalkeeper').length).toBe(1)
+    expect(teamsheet.filter((x: any) => x.managerId === 1 && x.player === teams[0]!.players[0]!.player && x.position === 'Goalkeeper').length).toBe(1)
     expect(teamsheet.length).toBe(1)
   })
 
@@ -252,8 +252,8 @@ describe('refreshing teamsheet', () => {
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player }], raw: true, nest: true })
 
     expect(savedPlayers.length).toBe(2)
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.substitute).length).toBe(0)
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Adebayo' && x.Player.lastName === 'Akinfenwa' && x.substitute).length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Ian' && x.Player.lastName === 'Henderson' && x.substitute).length).toBe(0)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Adebayo' && x.Player.lastName === 'Akinfenwa' && x.substitute).length).toBe(1)
   })
 
   test('should save substitute keeper data', async () => {
@@ -274,8 +274,8 @@ describe('refreshing teamsheet', () => {
     const savedPlayers = await db.ManagerKeeper.findAll({ include: [{ model: db.Team }], raw: true, nest: true })
 
     expect(savedPlayers.length).toBe(2)
-    expect(savedPlayers.filter(x => x.Team.name === 'Rochdale' && x.substitute).length).toBe(0)
-    expect(savedPlayers.filter(x => x.Team.name === 'Wycombe' && x.substitute).length).toBe(0)
+    expect(savedPlayers.filter((x: any) => x.Team.name === 'Rochdale' && x.substitute).length).toBe(0)
+    expect(savedPlayers.filter((x: any) => x.Team.name === 'Wycombe' && x.substitute).length).toBe(0)
   })
 
   test('should save substitute player teamsheet data', async () => {
@@ -296,8 +296,8 @@ describe('refreshing teamsheet', () => {
     const savedPlayers = await db.Teamsheet.findAll({ raw: true })
 
     expect(savedPlayers.length).toBe(2)
-    expect(savedPlayers.filter(x => x.substitute).length).toBe(1)
-    expect(savedPlayers.filter(x => !x.substitute).length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.substitute).length).toBe(1)
+    expect(savedPlayers.filter((x: any) => !x.substitute).length).toBe(1)
   })
 
   test('should save substitute keeper teamsheet data', async () => {
@@ -318,8 +318,8 @@ describe('refreshing teamsheet', () => {
     const savedPlayers = await db.Teamsheet.findAll({ raw: true })
 
     expect(savedPlayers.length).toBe(2)
-    expect(savedPlayers.filter(x => x.substitute).length).toBe(1)
-    expect(savedPlayers.filter(x => !x.substitute).length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.substitute).length).toBe(1)
+    expect(savedPlayers.filter((x: any) => !x.substitute).length).toBe(1)
   })
 
   test('should match team when duplicate in position', async () => {
@@ -334,8 +334,8 @@ describe('refreshing teamsheet', () => {
 
     await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Ebou' && x.Player.lastName === 'Adams' && x.Player.team.name === 'Forest Green Rovers').length).toBe(1)
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Joe' && x.Player.lastName === 'Adams' && x.Player.team.name === 'Bury').length).toBe(0)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Ebou' && x.Player.lastName === 'Adams' && x.Player.team.name === 'Forest Green Rovers').length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Joe' && x.Player.lastName === 'Adams' && x.Player.team.name === 'Bury').length).toBe(0)
   })
 
   test('should not insert duplicates', async () => {
@@ -355,7 +355,7 @@ describe('refreshing teamsheet', () => {
     await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Ebou' && x.Player.lastName === 'Adams' && x.Player.team.name === 'Forest Green Rovers').length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Ebou' && x.Player.lastName === 'Adams' && x.Player.team.name === 'Forest Green Rovers').length).toBe(1)
   })
 
   test('should match Daniel Ayala', async () => {
@@ -371,7 +371,7 @@ describe('refreshing teamsheet', () => {
     await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Daniel' && x.Player.lastName === 'Sanchez Ayala' && x.Player.team.name === 'Middlesbrough').length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Daniel' && x.Player.lastName === 'Sanchez Ayala' && x.Player.team.name === 'Middlesbrough').length).toBe(1)
   })
 
   test('should match Sarpeng-Wiredu', async () => {
@@ -387,7 +387,7 @@ describe('refreshing teamsheet', () => {
     await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
 
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Brendan' && x.Player.lastName === 'Sarpeng-Wiredu' && x.Player.team.name === 'Charlton Athletic').length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Brendan' && x.Player.lastName === 'Sarpeng-Wiredu' && x.Player.team.name === 'Charlton Athletic').length).toBe(1)
   })
 
   test('should match Segbe Azankpo as duplicate on player list', async () => {
@@ -402,7 +402,7 @@ describe('refreshing teamsheet', () => {
 
     await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Desire' && x.Player.lastName === 'Segbe Azankpo' && x.Player.team.name === 'Oldham Athletic').length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Desire' && x.Player.lastName === 'Segbe Azankpo' && x.Player.team.name === 'Oldham Athletic').length).toBe(1)
   })
 
   test('should match Segbe Azankpo as partial name', async () => {
@@ -417,7 +417,7 @@ describe('refreshing teamsheet', () => {
 
     await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Desire' && x.Player.lastName === 'Segbe Azankpo' && x.Player.team.name === 'Oldham Athletic').length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Desire' && x.Player.lastName === 'Segbe Azankpo' && x.Player.team.name === 'Oldham Athletic').length).toBe(1)
   })
 
   test('should match Segbe Azankpo as second partial name', async () => {
@@ -432,7 +432,7 @@ describe('refreshing teamsheet', () => {
 
     await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Desire' && x.Player.lastName === 'Segbe Azankpo' && x.Player.team.name === 'Oldham Athletic').length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Desire' && x.Player.lastName === 'Segbe Azankpo' && x.Player.team.name === 'Oldham Athletic').length).toBe(1)
   })
 
   test('should match West Bromich Albion alias', async () => {
@@ -447,6 +447,6 @@ describe('refreshing teamsheet', () => {
 
     await refreshTeamsheet(teams)
     const savedPlayers = await db.ManagerPlayer.findAll({ include: [{ model: db.Player, include: [{ model: db.Team, as: 'team' }] }], raw: true, nest: true })
-    expect(savedPlayers.filter(x => x.Player.firstName === 'Matt' && x.Player.lastName === 'Phillips' && x.Player.team.name === 'West Bromich Albion').length).toBe(1)
+    expect(savedPlayers.filter((x: any) => x.Player.firstName === 'Matt' && x.Player.lastName === 'Phillips' && x.Player.team.name === 'West Bromich Albion').length).toBe(1)
   })
 })

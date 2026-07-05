@@ -51,8 +51,8 @@ describe('refreshing player list', () => {
     await refreshPlayers(players)
     const savedPlayers = await db.Player.findAll()
 
-    expect(savedPlayers.filter(x => x.firstName === players[0].firstName && x.lastName === players[0].lastName).length).toBe(1)
-    expect(savedPlayers.filter(x => x.firstName === players[1].firstName && x.lastName === players[1].lastName).length).toBe(1)
+    expect((savedPlayers as any[]).filter((x: any) => x.firstName === players[0]!.firstName && x.lastName === players[0]!.lastName).length).toBe(1)
+    expect((savedPlayers as any[]).filter((x: any) => x.firstName === players[1]!.firstName && x.lastName === players[1]!.lastName).length).toBe(1)
   })
 
   test('should replace existing players if list valid', async () => {
@@ -80,9 +80,9 @@ describe('refreshing player list', () => {
     await refreshPlayers(players)
     const savedPlayers = await db.Player.findAll()
 
-    expect(savedPlayers.filter(x => x.firstName === players[0].firstName && x.lastName === players[0].lastName).length).toBe(1)
-    expect(savedPlayers.filter(x => x.firstName === players[1].firstName && x.lastName === players[1].lastName).length).toBe(1)
-    expect(savedPlayers.filter(x => x.firstName === originalPlayer.firstName && x.lastName === originalPlayer.lastName).length).toBe(0)
+    expect((savedPlayers as any[]).filter((x: any) => x.firstName === players[0]!.firstName && x.lastName === players[0]!.lastName).length).toBe(1)
+    expect((savedPlayers as any[]).filter((x: any) => x.firstName === players[1]!.firstName && x.lastName === players[1]!.lastName).length).toBe(1)
+    expect((savedPlayers as any[]).filter((x: any) => x.firstName === originalPlayer.firstName && x.lastName === originalPlayer.lastName).length).toBe(0)
   })
 
   test('should not be case sensitive', async () => {

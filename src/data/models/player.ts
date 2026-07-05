@@ -1,4 +1,7 @@
-export default (sequelize, DataTypes) => {
+import type { Sequelize } from 'sequelize'
+import type { DataTypesStatic, Db } from '../types.ts'
+
+export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
   const Player = sequelize.define('Player', {
     playerId: {
       type: DataTypes.INTEGER,
@@ -12,13 +15,13 @@ export default (sequelize, DataTypes) => {
     alias: DataTypes.STRING,
     fullName: {
       type: DataTypes.VIRTUAL,
-      get () {
+      get (this: any) {
         return `${this.firstName} ${this.lastName}`.trim()
       },
     },
     lastNameFirstName: {
       type: DataTypes.VIRTUAL,
-      get () {
+      get (this: any) {
         if (this.hasFirstName) {
           return `${this.lastName}, ${this.firstName}`.trim()
         }
@@ -27,7 +30,7 @@ export default (sequelize, DataTypes) => {
     },
     lastNameInitial: {
       type: DataTypes.VIRTUAL,
-      get () {
+      get (this: any) {
         if (this.hasFirstName) {
           return `${this.lastName}, ${this.firstName[0]}`.trim()
         }
@@ -36,7 +39,7 @@ export default (sequelize, DataTypes) => {
     },
     hasFirstName: {
       type: DataTypes.VIRTUAL,
-      get () {
+      get (this: any) {
         return this.firstName != null
       },
     },
@@ -45,7 +48,7 @@ export default (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false,
   })
-  Player.associate = function (models) {
+  ;(Player as any).associate = function (models: Db) {
     Player.belongsTo(models.Team, {
       foreignKey: 'teamId',
       as: 'team',

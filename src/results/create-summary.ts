@@ -5,12 +5,12 @@ import { getTable } from './get-table.ts'
 import { getWinners } from './get-winners.ts'
 import { getGroups } from './get-groups.ts'
 
-export async function createSummary (gameweekId) {
+export async function createSummary (gameweekId: number): Promise<void> {
   const summary = await getSummary(gameweekId)
   await db.Summary.upsert({ gameweekId, summary })
 }
 
-async function getSummary (gameweekId) {
+async function getSummary (gameweekId: number): Promise<any> {
   const managers = await db.Manager.findAll()
   const scores = await getScores(gameweekId, managers)
   const winners = getWinners(scores)
