@@ -1,7 +1,7 @@
 import type { Sequelize } from 'sequelize'
 import type { DataTypesStatic, Db } from '../types.ts'
 
-export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
+export default function defineEmailModel (sequelize: Sequelize, DataTypes: DataTypesStatic) {
   const Email = sequelize.define('Email', {
     emailId: {
       type: DataTypes.INTEGER,

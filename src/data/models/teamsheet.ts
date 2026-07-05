@@ -1,7 +1,7 @@
 import type { Sequelize } from 'sequelize'
 import type { DataTypesStatic, Db } from '../types.ts'
 
-export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
+export default function defineTeamsheetModel (sequelize: Sequelize, DataTypes: DataTypesStatic) {
   const Teamsheet = sequelize.define('Teamsheet', {
     teamsheetId: {
       type: DataTypes.INTEGER,

@@ -24,15 +24,16 @@ export async function getScores (gameweekId: number, managers: any[], cup = fals
 }
 
 async function getScorers (goals: any[]): Promise<any[]> {
-  const scorers: any[] = []
-  goals.reduce((x, y) => {
-    if (!x[y.playerId]) {
-      x[y.playerId] = { playerId: y.playerId, goals: 0 }
-      scorers.push(x[y.playerId])
+  const goalsPerPlayer = new Map<number, any>()
+  for (const goal of goals) {
+    const entry = goalsPerPlayer.get(goal.playerId)
+    if (entry) {
+      entry.goals += 1
+    } else {
+      goalsPerPlayer.set(goal.playerId, { playerId: goal.playerId, goals: 1 })
     }
-    x[y.playerId].goals += 1
-    return x
-  }, {})
+  }
+  const scorers = [...goalsPerPlayer.values()]
   for (const scorer of scorers) {
     const player: any = await db.Player.findOne({ where: { playerId: scorer.playerId } })
     scorer.name = player.lastNameInitial

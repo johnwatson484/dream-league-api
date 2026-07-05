@@ -1,7 +1,7 @@
 import type { Sequelize } from 'sequelize'
 import type { DataTypesStatic, Db } from '../types.ts'
 
-export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
+export default function defineManagerGroupModel (sequelize: Sequelize, DataTypes: DataTypesStatic) {
   const ManagerGroup = sequelize.define('ManagerGroup', {
     managerId: { type: DataTypes.INTEGER, primaryKey: true },
     groupId: { type: DataTypes.INTEGER, primaryKey: true },

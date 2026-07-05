@@ -34,6 +34,6 @@ export async function getTopScorers (): Promise<any[]> {
 }
 
 function orderScorers (scorers: any[]): any[] {
-  return scorers.sort((a, b) => { return compare(b.goals, a.goals) || compare(a.lastName, b.lastName) || compare(a.firstName, b.firstName) })
+  return scorers.toSorted((a, b) => { return compare(b.goals, a.goals) || compare(a.lastName, b.lastName) || compare(a.firstName, b.firstName) })
     .map((x, i) => ({ position: i + 1, ...x }))
 }

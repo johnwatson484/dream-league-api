@@ -26,6 +26,6 @@ export async function getForm (weeksToInclude: number = 6): Promise<any[]> {
 }
 
 function orderForm (form: any[]): any[] {
-  return form.sort((a, b) => { return compare(b.points, a.points) || compare(a.manager, b.manager) })
+  return form.toSorted((a, b) => { return compare(b.points, a.points) || compare(a.manager, b.manager) })
     .map((x, i) => ({ position: i + 1, ...x }))
 }

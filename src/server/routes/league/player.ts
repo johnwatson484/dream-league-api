@@ -84,7 +84,7 @@ export default [{
       payload: Joi.object({
         firstName: Joi.string().allow(''),
         lastName: Joi.string(),
-        position: Joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
+        position: Joi.string().valid('Defender', 'Midfielder', 'Forward'),
         teamId: Joi.number(),
       }),
       failAction,
@@ -103,7 +103,7 @@ export default [{
         playerId: Joi.number(),
         firstName: Joi.string().allow(''),
         lastName: Joi.string(),
-        position: Joi.string().valid(...['Defender', 'Midfielder', 'Forward']),
+        position: Joi.string().valid('Defender', 'Midfielder', 'Forward'),
         teamId: Joi.number(),
       }),
       failAction,

@@ -1,7 +1,7 @@
 import type { Sequelize } from 'sequelize'
 import type { DataTypesStatic, Db } from '../types.ts'
 
-export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
+export default function defineSummaryModel (sequelize: Sequelize, DataTypes: DataTypesStatic) {
   const Summary = sequelize.define('Summary', {
     gameweekId: {
       type: DataTypes.INTEGER,

@@ -1,7 +1,7 @@
 import type { Sequelize } from 'sequelize'
 import type { DataTypesStatic } from '../types.ts'
 
-export default (sequelize: Sequelize, DataTypes: DataTypesStatic) => {
+export default function defineMeetingModel (sequelize: Sequelize, DataTypes: DataTypesStatic) {
   return sequelize.define('Meeting', {
     meetingId: {
       type: DataTypes.INTEGER,

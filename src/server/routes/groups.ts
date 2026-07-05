@@ -87,7 +87,7 @@ export default [{
           }
         }
         for (const currentManager of managerGroup) {
-          if (!payload.managers.some((x: any) => x === (currentManager as any).managerId)) {
+          if (!payload.managers.includes((currentManager as any).managerId)) {
             await db.ManagerGroup.destroy({ where: { managerId: (currentManager as any).managerId, groupId: payload.groupId } })
           }
         }
