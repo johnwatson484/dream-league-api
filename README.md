@@ -53,3 +53,41 @@ docker compose --profile app up    # starts app + Postgres + Redis in containers
 ## Multi-service development
 
 For running the full stack (API + Web), see the [dream-league-core](https://github.com/johnwatson484/dream-league-core) orchestration repo.
+
+## Environment variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `NODE_ENV` | Application environment (`development`, `test`, `production`) | `development` |
+| `PORT` | Server port | `3001` |
+| `WEB_URL` | Frontend URL (used in password reset emails) | `http://localhost:3000` |
+| `ALLOW_NON_MEMBER_REGISTRATION` | Allow registration for non-league-members | `false` |
+| `JWT_SECRET` | Legacy JWT secret (unused with RS256 signing) | `''` |
+| `JWT_EXPIRY_IN_MINUTES` | Access token lifetime in minutes | `15` |
+| `JWT_REFRESH_TOKEN_EXPIRY_DAYS` | Refresh token rolling expiry in days | `7` |
+| `JWT_REFRESH_TOKEN_MAX_AGE_DAYS` | Absolute max session age in days | `30` |
+| `JWT_PRIVATE_KEY` | RSA private key PEM string | `''` |
+| `JWT_PUBLIC_KEY` | RSA public key PEM string | `''` |
+| `JWT_PRIVATE_KEY_PATH` | Path to RSA private key file | `''` |
+| `JWT_PUBLIC_KEY_PATH` | Path to RSA public key file | `''` |
+| `SMTP_HOST` | SMTP server hostname | `''` |
+| `SMTP_PORT` | SMTP server port | `587` |
+| `SMTP_SECURE` | Use TLS for SMTP | `false` |
+| `SMTP_TLS` | Require STARTTLS | `true` |
+| `SMTP_USER` | SMTP username | `''` |
+| `SMTP_PASSWORD` | SMTP password | `''` |
+| `REDIS_HOST` | Redis host | `localhost` |
+| `REDIS_PORT` | Redis port | `6379` |
+| `REDIS_TLS` | Use TLS for Redis | `false` |
+| `REDIS_PASSWORD` | Redis password | `''` |
+| `REDIS_PARTITION` | Redis key namespace prefix | `dream-league-api` |
+| `REDIS_TTL` | Cache TTL in seconds | `1468800` (17 days) |
+| `POSTGRES_USERNAME` | PostgreSQL username | `postgres` |
+| `POSTGRES_PASSWORD` | PostgreSQL password | `postgres` |
+| `POSTGRES_DB` | PostgreSQL database name | `dream_league_api` |
+| `POSTGRES_HOST` | PostgreSQL host | `localhost` |
+| `POSTGRES_PORT` | PostgreSQL port | `5432` |
+| `POSTGRES_DIALECT` | Sequelize dialect | `postgres` |
+| `POSTGRES_LOGGING` | Enable SQL query logging | `false` |
+
+In development, JWT keys are auto-generated if none are configured. In production, either `JWT_PRIVATE_KEY`/`JWT_PUBLIC_KEY` or `JWT_PRIVATE_KEY_PATH`/`JWT_PUBLIC_KEY_PATH` must be set.

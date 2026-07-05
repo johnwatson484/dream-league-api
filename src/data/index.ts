@@ -7,10 +7,18 @@ import config from '../config/index.ts'
 const db: any = {}
 
 const sequelize = new Sequelize(
-  config.database.database,
-  config.database.username,
-  config.database.password,
-  config.database
+  config.get('database.database'),
+  config.get('database.username'),
+  config.get('database.password'),
+  {
+    host: config.get('database.host'),
+    port: config.get('database.port'),
+    dialect: config.get('database.dialect'),
+    logging: config.get('database.logging'),
+    define: {
+      timestamps: false,
+    },
+  }
 )
 
 const modelPath = join(import.meta.dirname, 'models')

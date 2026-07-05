@@ -26,7 +26,7 @@ export async function refresh (rawRefreshToken) {
     return null
   }
 
-  const maxAgeMs = config.jwtConfig.refreshTokenMaxAgeDays * 24 * 60 * 60 * 1000
+  const maxAgeMs = config.get('jwt.refreshTokenMaxAgeDays') * 24 * 60 * 60 * 1000
   if (new Date(storedToken.familyCreatedAt).getTime() + maxAgeMs < Date.now()) {
     await revokeFamily(storedToken.family)
     return null
@@ -46,12 +46,12 @@ export async function refresh (rawRefreshToken) {
     tokenVersion: user.tokenVersion,
   }, privateKey, {
     algorithm: 'RS256',
-    expiresIn: `${config.jwtConfig.expiryInMinutes}m`,
+    expiresIn: `${config.get('jwt.expiryInMinutes')}m`,
   })
 
   const newRawToken = randomBytes(32).toString('hex')
   const newTokenHash = createHash('sha256').update(newRawToken).digest('hex')
-  const expiresAt = new Date(Date.now() + config.jwtConfig.refreshTokenExpiryDays * 24 * 60 * 60 * 1000)
+  const expiresAt = new Date(Date.now() + config.get('jwt.refreshTokenExpiryDays') * 24 * 60 * 60 * 1000)
 
   await db.RefreshToken.create({
     userId: user.userId,

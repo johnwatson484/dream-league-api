@@ -1,35 +1,55 @@
-const joi = require('joi')
+const convict = require('convict')
 
-const schema = joi.object().keys({
-  username: joi.string().default('postgres'),
-  password: joi.string().default('postgres'),
-  database: joi.string().default('dream_league_api'),
-  host: joi.string().default('localhost'),
-  port: joi.number().default(5432),
-  dialect: joi.string().default('postgres'),
-  logging: joi.string().default(false),
-  define: joi.object().keys({
-    timestamps: joi.bool().valid(false),
-  }),
+const config = convict({
+  username: {
+    doc: 'PostgreSQL username.',
+    format: String,
+    default: 'postgres',
+    env: 'POSTGRES_USERNAME',
+  },
+  password: {
+    doc: 'PostgreSQL password.',
+    format: String,
+    default: 'postgres',
+    env: 'POSTGRES_PASSWORD',
+  },
+  database: {
+    doc: 'PostgreSQL database name.',
+    format: String,
+    default: 'dream_league_api',
+    env: 'POSTGRES_DB',
+  },
+  host: {
+    doc: 'PostgreSQL host.',
+    format: String,
+    default: 'localhost',
+    env: 'POSTGRES_HOST',
+  },
+  port: {
+    doc: 'PostgreSQL port.',
+    format: 'port',
+    default: 5432,
+    env: 'POSTGRES_PORT',
+  },
+  dialect: {
+    doc: 'Sequelize dialect.',
+    format: String,
+    default: 'postgres',
+    env: 'POSTGRES_DIALECT',
+  },
+  logging: {
+    doc: 'Enable Sequelize query logging.',
+    format: Boolean,
+    default: false,
+    env: 'POSTGRES_LOGGING',
+  },
 })
 
-const config = {
-  username: process.env.POSTGRES_USERNAME,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DB,
-  host: process.env.POSTGRES_HOST,
-  port: process.env.POSTGRES_PORT,
-  dialect: process.env.POSTGRES_DIALECT,
-  logging: process.env.POSTGRES_LOGGING,
+config.validate({ allowed: 'strict' })
+
+module.exports = {
+  ...config.getProperties(),
   define: {
     timestamps: false,
   },
 }
-
-const { error, value } = schema.validate(config)
-
-if (error) {
-  throw new Error(`The database config is invalid. ${error.message}`)
-}
-
-module.exports = value

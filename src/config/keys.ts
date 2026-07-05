@@ -3,10 +3,10 @@ import { generateKeyPairSync } from 'node:crypto'
 import config from './index.ts'
 
 function loadKeys () {
-  const privateKeyEnv = process.env.JWT_PRIVATE_KEY
-  const publicKeyEnv = process.env.JWT_PUBLIC_KEY
-  const privateKeyPath = process.env.JWT_PRIVATE_KEY_PATH
-  const publicKeyPath = process.env.JWT_PUBLIC_KEY_PATH
+  const privateKeyEnv = config.get('jwt.privateKey')
+  const publicKeyEnv = config.get('jwt.publicKey')
+  const privateKeyPath = config.get('jwt.privateKeyPath')
+  const publicKeyPath = config.get('jwt.publicKeyPath')
 
   if (privateKeyEnv && publicKeyEnv) {
     return {
@@ -22,7 +22,7 @@ function loadKeys () {
     }
   }
 
-  if (config.isDev) {
+  if (config.get('isDev')) {
     const { privateKey, publicKey } = generateKeyPairSync('rsa', {
       modulusLength: 2048,
       publicKeyEncoding: { type: 'spki', format: 'pem' },

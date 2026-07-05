@@ -7,7 +7,7 @@ export async function register (email, password) {
     return false
   }
 
-  if (!config.allowNonMemberRegistration && !await isMember(email)) {
+  if (!config.get('allowNonMemberRegistration') && !await isMember(email)) {
     return false
   }
 

@@ -6,7 +6,14 @@ import { getKeyPrefix } from './get-key-prefix.ts'
 let client
 
 export async function start () {
-  client = createClient({ socket: config.cache.socket, password: config.cache.password })
+  client = createClient({
+    socket: {
+      host: config.get('cache.host'),
+      port: config.get('cache.port'),
+      tls: config.get('cache.tls'),
+    },
+    password: config.get('cache.password') || undefined,
+  })
   client.on('error', (err) => console.log(`Redis error: ${err}`))
   client.on('reconnecting', () => console.log('Redis reconnecting...'))
   client.on('ready', () => console.log('Redis connected'))
@@ -34,5 +41,5 @@ export async function get (cache, key) {
 export async function set (cache, key, value) {
   const fullKey = getFullKey(cache, key)
   const serializedValue = JSON.stringify(value)
-  await client.set(fullKey, serializedValue, { EX: config.cache.ttl })
+  await client.set(fullKey, serializedValue, { EX: config.get('cache.ttl') })
 }
