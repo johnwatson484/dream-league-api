@@ -11,6 +11,7 @@ interface GeneratedFixture {
 interface GroupData {
   groupId: number
   managerIds: number[]
+  groupLegs: number
 }
 
 export async function generateFixtures (cupId: number, gameweekIds: number[]): Promise<GeneratedFixture[]> {
@@ -22,12 +23,18 @@ export async function generateFixtures (cupId: number, gameweekIds: number[]): P
   const groupsData: GroupData[] = groups.map((group: any) => ({
     groupId: group.groupId,
     managerIds: group.managers.map((m: any) => m.managerId),
+    groupLegs: group.groupLegs || 1,
   }))
+
+  const requiredWeeks = calculateRequiredWeeks(groupsData)
+  if (gameweekIds.length < requiredWeeks) {
+    throw new Error(`Not enough gameweeks selected. Need at least ${requiredWeeks}, got ${gameweekIds.length}.`)
+  }
 
   const allFixtures: GeneratedFixture[] = []
 
   for (const group of groupsData) {
-    const fixtures = generateGroupFixtures(group.managerIds, gameweekIds, cupId)
+    const fixtures = generateGroupFixtures(group.managerIds, group.groupLegs, gameweekIds, cupId)
     allFixtures.push(...fixtures)
   }
 
@@ -45,7 +52,18 @@ export async function generateFixtures (cupId: number, gameweekIds: number[]): P
   return allFixtures
 }
 
-function generateGroupFixtures (managerIds: number[], gameweekIds: number[], cupId: number): GeneratedFixture[] {
+export function calculateRequiredWeeks (groupsData: { managerIds: number[]; groupLegs: number }[]): number {
+  let max = 0
+  for (const group of groupsData) {
+    const n = group.managerIds.length
+    const roundsPerLeg = n % 2 === 0 ? n - 1 : n
+    const totalRounds = roundsPerLeg * group.groupLegs
+    if (totalRounds > max) { max = totalRounds }
+  }
+  return max
+}
+
+function generateGroupFixtures (managerIds: number[], groupLegs: number, gameweekIds: number[], cupId: number): GeneratedFixture[] {
   const managers = [...managerIds]
   let totalManagers = managers.length
 
@@ -54,10 +72,19 @@ function generateGroupFixtures (managerIds: number[], gameweekIds: number[], cup
     totalManagers++
   }
 
-  const managerFixtures = calculateManagerFixtures(totalManagers)
-  const initialFixtures = calculateFixtureProperties(managerFixtures, managers)
-  const confirmedFixtures = calculateFixtureWeeks(initialFixtures, totalManagers)
+  const allRawFixtures: RawFixture[] = []
 
+  for (let leg = 0; leg < groupLegs; leg++) {
+    const managerFixtures = calculateManagerFixtures(totalManagers)
+    const legFixtures = calculateFixtureProperties(managerFixtures, managers, leg)
+    const offsetFixtures = legFixtures.map(f => ({
+      ...f,
+      weekIndex: f.weekIndex + (leg * (totalManagers - 1)),
+    }))
+    allRawFixtures.push(...offsetFixtures)
+  }
+
+  const confirmedFixtures = calculateFixtureWeeks(allRawFixtures, totalManagers)
   confirmedFixtures.sort((a, b) => a.weekIndex - b.weekIndex)
 
   return confirmedFixtures
@@ -98,14 +125,17 @@ function calculateRound (numberOfTeams: number, j: number): number[] {
   return round
 }
 
-function calculateFixtureProperties (managerFixtures: ManagerMatch[], managers: number[]): RawFixture[] {
+function calculateFixtureProperties (managerFixtures: ManagerMatch[], managers: number[], leg: number): RawFixture[] {
   const fixtures: RawFixture[] = []
+  const swap = leg % 2 === 1
   for (const manager of managerFixtures) {
     for (let i = 0; i < manager.matches.length; i++) {
+      const home = managers[manager.managerIndex]!
+      const away = managers[manager.matches[i]!]!
       fixtures.push({
         weekIndex: i,
-        homeManagerId: managers[manager.managerIndex]!,
-        awayManagerId: managers[manager.matches[i]!]!,
+        homeManagerId: swap ? away : home,
+        awayManagerId: swap ? home : away,
       })
     }
   }

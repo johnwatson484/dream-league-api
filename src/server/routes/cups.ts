@@ -2,7 +2,7 @@ import { failAction } from './fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import db from '../../data/index.ts'
-import { resolveFixture, manuallyResolve, saveResolution } from '../../cups/resolve-fixture.ts'
+import { resolveFixture, manuallyResolve, saveResolution, getGroupQualifiers } from '../../cups/resolve-fixture.ts'
 
 export default [{
   method: 'GET',
@@ -101,6 +101,17 @@ export default [{
       }))
 
       return h.response(progression)
+    },
+  },
+}, {
+  method: 'GET',
+  path: '/cups/{cupId}/qualifiers',
+  options: {
+    auth: false,
+    handler: async (request, h) => {
+      const cupId = Number(request.params.cupId)
+      const qualifiers = await getGroupQualifiers(cupId)
+      return h.response(qualifiers)
     },
   },
 }, {
