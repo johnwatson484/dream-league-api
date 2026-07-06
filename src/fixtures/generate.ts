@@ -91,7 +91,7 @@ function generateGroupFixtures (managerIds: number[], groupLegs: number, gamewee
     .filter(f => f.homeManagerId !== -1 && f.awayManagerId !== -1)
     .map(f => ({
       cupId,
-      gameweekId: gameweekIds[f.weekIndex] || gameweekIds[gameweekIds.length - 1]!,
+      gameweekId: gameweekIds[f.weekIndex] || gameweekIds.at(-1)!,
       homeManagerId: f.homeManagerId,
       awayManagerId: f.awayManagerId,
       round: 1,
@@ -127,11 +127,15 @@ function calculateRound (numberOfTeams: number, j: number): number[] {
 
 function calculateFixtureProperties (managerFixtures: ManagerMatch[], managers: number[], leg: number): RawFixture[] {
   const fixtures: RawFixture[] = []
+  const seen = new Set<string>()
   const swap = leg % 2 === 1
   for (const manager of managerFixtures) {
     for (let i = 0; i < manager.matches.length; i++) {
       const home = managers[manager.managerIndex]!
       const away = managers[manager.matches[i]!]!
+      const key = `${i}-${Math.min(home, away)}-${Math.max(home, away)}`
+      if (seen.has(key)) { continue }
+      seen.add(key)
       fixtures.push({
         weekIndex: i,
         homeManagerId: swap ? away : home,
