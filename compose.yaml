@@ -20,7 +20,6 @@ services:
     command: >
       sh -c "
         npm run migrate &&
-        npm run seed &&
         node app"
     depends_on:
       dream-league-api-postgres:

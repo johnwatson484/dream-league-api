@@ -16,7 +16,7 @@ export default function defineRoleModel (sequelize: Sequelize, DataTypes: DataTy
   })
   ;(Role as any).associate = function (models: Db) {
     Role.belongsToMany(models.User, {
-      through: 'userRole',
+      through: 'UserRole',
       foreignKey: 'roleId',
       as: 'users',
       onDelete: 'CASCADE',
