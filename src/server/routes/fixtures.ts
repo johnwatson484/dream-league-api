@@ -1,6 +1,7 @@
 import { failAction } from './fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
+import boom from '@hapi/boom'
 import db from '../../data/index.ts'
 import { generateFixtures } from '../../fixtures/generate.ts'
 import { rescheduleFixtures } from '../../fixtures/reschedule.ts'
@@ -110,8 +111,12 @@ export default [{
     },
     handler: async (request, h) => {
       const { cupId, gameweekIds } = request.payload as { cupId: number; gameweekIds: number[] }
-      const fixtures = await generateFixtures(cupId, gameweekIds)
-      return h.response(fixtures)
+      try {
+        const fixtures = await generateFixtures(cupId, gameweekIds)
+        return h.response(fixtures)
+      } catch (err: any) {
+        return boom.badRequest(err.message)
+      }
     },
   },
 }, {
