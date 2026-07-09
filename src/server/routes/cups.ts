@@ -3,6 +3,7 @@ import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import db from '../../data/index.ts'
 import { resolveFixture, manuallyResolve, saveResolution, getGroupQualifiers } from '../../cups/resolve-fixture.ts'
+import { getGroupStandings } from '../../cups/get-group-standings.ts'
 
 export default [{
   method: 'GET',
@@ -115,6 +116,17 @@ export default [{
     },
   },
 }, {
+  method: 'GET',
+  path: '/cups/{cupId}/standings',
+  options: {
+    auth: false,
+    handler: async (request, h) => {
+      const cupId = Number(request.params.cupId)
+      const standings = await getGroupStandings(cupId)
+      return h.response(standings)
+    },
+  },
+}, {
   method: 'POST',
   path: '/cups/{cupId}/resolve',
   options: {
@@ -139,6 +151,23 @@ export default [{
         await saveResolution(fixtureId, result)
       }
       return h.response(result)
+    },
+  },
+}, {
+  method: 'POST',
+  path: '/cups/{cupId}/unresolve',
+  options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
+    validate: {
+      payload: Joi.object({
+        fixtureId: Joi.number().integer().required(),
+      }),
+      failAction,
+    },
+    handler: async (request, h) => {
+      const { fixtureId } = request.payload as { fixtureId: number }
+      await db.CupResult.destroy({ where: { fixtureId } })
+      return h.response({ status: 'unresolved' })
     },
   },
 }] satisfies ServerRoute[]

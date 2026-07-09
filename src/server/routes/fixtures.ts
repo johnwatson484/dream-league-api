@@ -121,6 +121,23 @@ export default [{
   },
 }, {
   method: 'POST',
+  path: '/fixtures/clear',
+  options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
+    validate: {
+      payload: Joi.object({
+        cupId: Joi.number().integer().required(),
+      }),
+      failAction,
+    },
+    handler: async (request, h) => {
+      const { cupId } = request.payload as { cupId: number }
+      const deleted = await db.Fixture.destroy({ where: { cupId } })
+      return h.response({ deleted })
+    },
+  },
+}, {
+  method: 'POST',
   path: '/fixtures/reschedule',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },

@@ -183,57 +183,11 @@ export async function saveResolution (fixtureId: number, result: ResolutionResul
 }
 
 export async function getGroupQualifiers (cupId: number): Promise<{ groupName: string; qualifiers: { managerId: number; name: string }[] }[]> {
-  const groups = await db.Group.findAll({
-    where: { cupId },
-    include: [{ model: db.Manager, as: 'managers' }],
-  } as any)
+  const { getGroupStandings } = await import('./get-group-standings.ts')
+  const standings = await getGroupStandings(cupId)
 
-  const results: { groupName: string; qualifiers: { managerId: number; name: string }[] }[] = []
-
-  for (const group of groups as any[]) {
-    if (!group.managers.length) { continue }
-
-    const fixtures = await db.Fixture.findAll({
-      where: { cupId, round: 1 },
-    })
-
-    const gameweekIds = [...new Set((fixtures as any[]).map((x: any) => x.gameweekId))]
-
-    const { getCupScores } = await import('../results/get-cup-scores.ts')
-    const { orderTable } = await import('../results/order-table.ts')
-
-    const scores: any[] = []
-    for (const gameweekId of gameweekIds) {
-      const cupScores = await getCupScores(gameweekId, group.managers)
-      scores.push(...cupScores)
-    }
-
-    let table: any[] = []
-    for (const manager of group.managers) {
-      const managerScores = scores.filter((x: any) => x.homeManagerId === manager.managerId || x.awayManagerId === manager.managerId)
-      const homeWon = managerScores.filter((x: any) => x.homeManagerId === manager.managerId && x.result === 'H').length
-      const awayWon = managerScores.filter((x: any) => x.awayManagerId === manager.managerId && x.result === 'A').length
-      const won = homeWon + awayWon
-      const homeDrawn = managerScores.filter((x: any) => x.homeManagerId === manager.managerId && x.result === 'D').length
-      const awayDrawn = managerScores.filter((x: any) => x.awayManagerId === manager.managerId && x.result === 'D').length
-      const drawn = homeDrawn + awayDrawn
-      const lost = managerScores.length - won - drawn
-      const homeGF = managerScores.filter((x: any) => x.homeManagerId === manager.managerId).reduce((acc: number, x: any) => acc + x.homeMargin, 0)
-      const awayGF = managerScores.filter((x: any) => x.awayManagerId === manager.managerId).reduce((acc: number, x: any) => acc + x.awayMargin, 0)
-      const gf = homeGF + awayGF
-      const homeGA = managerScores.filter((x: any) => x.homeManagerId === manager.managerId).reduce((acc: number, x: any) => acc + x.awayMargin, 0)
-      const awayGA = managerScores.filter((x: any) => x.awayManagerId === manager.managerId).reduce((acc: number, x: any) => acc + x.homeMargin, 0)
-      const ga = homeGA + awayGA
-      const gd = gf - ga
-      const points = (won * 3) + drawn
-      table.push({ managerId: manager.managerId, manager: manager.name, points, gd, gf, won, drawn, lost, played: won + drawn + lost })
-    }
-
-    table = orderTable(table)
-    const teamsAdvancing = group.teamsAdvancing || 2
-    const qualifiers = table.slice(0, teamsAdvancing).map((row: any) => ({ managerId: row.managerId, name: row.manager }))
-    results.push({ groupName: group.name, qualifiers })
-  }
-
-  return results
+  return standings.map(group => ({
+    groupName: group.groupName,
+    qualifiers: group.table.slice(0, group.teamsAdvancing).map((row: any) => ({ managerId: row.managerId, name: row.manager })),
+  }))
 }
