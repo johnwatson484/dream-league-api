@@ -144,13 +144,13 @@ async function assignSquads (client: pg.Client, rng: () => number): Promise<{
   `)
 
   const { rows: defenders } = await client.query<{ playerId: number }>(
-    `SELECT "playerId" FROM "players" WHERE "position" = 'Defender' ORDER BY "playerId"`
+    'SELECT "playerId" FROM "players" WHERE "position" = \'Defender\' ORDER BY "playerId"'
   )
   const { rows: midfielders } = await client.query<{ playerId: number }>(
-    `SELECT "playerId" FROM "players" WHERE "position" = 'Midfielder' ORDER BY "playerId"`
+    'SELECT "playerId" FROM "players" WHERE "position" = \'Midfielder\' ORDER BY "playerId"'
   )
   const { rows: forwards } = await client.query<{ playerId: number }>(
-    `SELECT "playerId" FROM "players" WHERE "position" = 'Forward' ORDER BY "playerId"`
+    'SELECT "playerId" FROM "players" WHERE "position" = \'Forward\' ORDER BY "playerId"'
   )
 
   const shuffledDef = shuffle(defenders, rng)
