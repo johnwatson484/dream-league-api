@@ -124,6 +124,12 @@ const config = convict({
       },
     },
   },
+  logLevel: {
+    doc: 'Pino log level.',
+    format: ['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent'],
+    default: 'info',
+    env: 'LOG_LEVEL',
+  },
   cache: {
     host: {
       doc: 'Redis host.',

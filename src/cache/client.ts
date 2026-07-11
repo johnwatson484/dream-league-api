@@ -1,5 +1,6 @@
 import { createClient } from 'redis'
 import config from '../config/index.ts'
+import logger from '../logger.ts'
 
 let client: ReturnType<typeof createClient>
 
@@ -21,9 +22,9 @@ export async function start (): Promise<void> {
     },
     ...(password ? { password } : {}),
   })
-  client.on('error', (err: unknown) => console.log(`Redis error: ${err}`))
-  client.on('reconnecting', () => console.log('Redis reconnecting...'))
-  client.on('ready', () => console.log('Redis connected'))
+  client.on('error', (err: unknown) => logger.error(`Redis error: ${err}`))
+  client.on('reconnecting', () => logger.info('Redis reconnecting...'))
+  client.on('ready', () => logger.info('Redis connected'))
   await client.connect()
 }
 

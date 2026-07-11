@@ -1,4 +1,3 @@
-import 'log-timestamp'
 import { start as startCache, stop as stopCache } from './cache/client.ts'
 import { start as startServer } from './server/start.ts'
 
