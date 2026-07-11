@@ -10,22 +10,14 @@ const teams = [
 ]
 
 describe('fuzzyMatchTeam', () => {
-  test('should match exact team name', () => {
-    const result = fuzzyMatchTeam(teams, 'Rochdale')
+  test.each([
+    ['Rochdale', 1],
+    ['Brighton', 3],
+    ['Forest Green', 4],
+  ])('should confidently match "%s" to team %i', (input, expectedTeamId) => {
+    const result = fuzzyMatchTeam(teams, input)
     expect(result.category).toBe('confident')
-    expect(result.bestMatch?.teamId).toBe(1)
-  })
-
-  test('should match team alias', () => {
-    const result = fuzzyMatchTeam(teams, 'Brighton')
-    expect(result.category).toBe('confident')
-    expect(result.bestMatch?.teamId).toBe(3)
-  })
-
-  test('should match partial team name', () => {
-    const result = fuzzyMatchTeam(teams, 'Forest Green')
-    expect(result.category).toBe('confident')
-    expect(result.bestMatch?.teamId).toBe(4)
+    expect(result.bestMatch?.teamId).toBe(expectedTeamId)
   })
 
   test('should return unrecognized for no match', () => {

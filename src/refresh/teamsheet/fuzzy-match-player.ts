@@ -58,6 +58,76 @@ export function buildPlayerIndex (players: any[]): { indexed: IndexedPlayer[]; f
   return { indexed, fuse }
 }
 
+function searchCandidates (fuse: Fuse<IndexedPlayer>, searchName: string): PlayerCandidate[] {
+  const results = fuse.search(searchName)
+  const searchNormalized = normalizePlayerName(searchName)
+  const searchWords = searchNormalized.split(' ').filter(w => w.length > 1)
+
+  return results
+    .filter(r => {
+      const confidence = 1 - (r.score ?? 0)
+      if (confidence <= 0.4) { return false }
+
+      const playerWords = new Set(r.item.normalizedName.split(' ').filter(w => w.length > 1))
+      const hasCommonWord = searchWords.some(w => playerWords.has(w))
+
+      return hasCommonWord || confidence > 0.8
+    })
+    .slice(0, 5)
+    .map(r => ({
+      playerId: r.item.playerId,
+      firstName: r.item.firstName,
+      lastName: r.item.lastName,
+      position: r.item.position,
+      teamId: r.item.teamId,
+      teamName: r.item.teamName,
+      confidence: 1 - (r.score ?? 0),
+    }))
+}
+
+function selectBestCandidate (candidates: PlayerCandidate[], parsedTeam: string): PlayerCandidate {
+  let best = candidates[0]!
+
+  if (parsedTeam && !isTeamMatch(best.teamName, parsedTeam)) {
+    const teamMatchCandidate = candidates.find(c => isTeamMatch(c.teamName, parsedTeam))
+    if (teamMatchCandidate) {
+      best = teamMatchCandidate
+    }
+  }
+
+  return best
+}
+
+function categorise (best: PlayerCandidate, parsedTeam: string, candidates: PlayerCandidate[], baseResult: Omit<MatchResult, 'category' | 'confidence' | 'bestMatch' | 'candidates'>): MatchResult {
+  const teamMatches = parsedTeam ? isTeamMatch(best.teamName, parsedTeam) : true
+  const topCandidates = candidates.slice(0, 3)
+
+  if (best.confidence >= 0.5 && teamMatches) {
+    return { ...baseResult, category: 'confident', confidence: best.confidence, bestMatch: best, candidates: topCandidates }
+  }
+
+  if (best.confidence >= 0.7 && !teamMatches && parsedTeam) {
+    return {
+      ...baseResult,
+      category: 'transfer',
+      confidence: best.confidence,
+      bestMatch: best,
+      candidates: topCandidates,
+      transferInfo: {
+        currentTeamId: best.teamId,
+        currentTeamName: best.teamName,
+        spreadsheetTeamName: parsedTeam,
+      },
+    }
+  }
+
+  if (best.confidence >= 0.5) {
+    return { ...baseResult, category: 'low_confidence', confidence: best.confidence, bestMatch: best, candidates: topCandidates }
+  }
+
+  return { ...baseResult, category: 'unrecognized', confidence: best.confidence, bestMatch: null, candidates: topCandidates }
+}
+
 export function fuzzyMatchPlayer (players: any[], sourceText: string, position: string | null, prebuiltIndex?: { indexed: IndexedPlayer[]; fuse: Fuse<IndexedPlayer> }): MatchResult {
   const parsed = parseSourceText(sourceText)
   const baseResult = {
@@ -73,10 +143,7 @@ export function fuzzyMatchPlayer (players: any[], sourceText: string, position: 
     return { ...baseResult, category: 'unrecognized', confidence: 0, bestMatch: null, candidates: [] }
   }
 
-  let index = prebuiltIndex
-  if (!index) {
-    index = buildPlayerIndex(players)
-  }
+  const index = prebuiltIndex ?? buildPlayerIndex(players)
 
   let fuse = index.fuse
   if (position) {
@@ -84,75 +151,12 @@ export function fuzzyMatchPlayer (players: any[], sourceText: string, position: 
     fuse = new Fuse(filtered, FUSE_OPTIONS)
   }
 
-  const results = fuse.search(parsed.name)
-
-  const candidates: PlayerCandidate[] = results
-    .filter(r => {
-      const confidence = 1 - (r.score ?? 0)
-      if (confidence <= 0.4) { return false }
-
-      const searchNormalized = normalizePlayerName(parsed.name)
-      const playerNormalized = r.item.normalizedName
-      const searchWords = searchNormalized.split(' ').filter(w => w.length > 1)
-      const playerWords = playerNormalized.split(' ').filter(w => w.length > 1)
-      const commonWords = searchWords.filter(w => playerWords.includes(w))
-
-      return commonWords.length > 0 || confidence > 0.8
-    })
-    .slice(0, 5)
-    .map(r => ({
-      playerId: r.item.playerId,
-      firstName: r.item.firstName,
-      lastName: r.item.lastName,
-      position: r.item.position,
-      teamId: r.item.teamId,
-      teamName: r.item.teamName,
-      confidence: 1 - (r.score ?? 0),
-    }))
+  const candidates = searchCandidates(fuse, parsed.name)
 
   if (candidates.length === 0) {
     return { ...baseResult, category: 'unrecognized', confidence: 0, bestMatch: null, candidates: [] }
   }
 
-  let best = candidates[0]!
-
-  // If the top candidate's team doesn't match but another candidate's does, prefer that one
-  if (parsed.team && !isTeamMatch(best.teamName, parsed.team)) {
-    const teamMatchCandidate = candidates.find(c => isTeamMatch(c.teamName, parsed.team))
-    if (teamMatchCandidate) {
-      best = teamMatchCandidate
-    }
-  }
-
-  const teamMatches = parsed.team ? isTeamMatch(best.teamName, parsed.team) : true
-
-  if (best.confidence >= 0.8 && teamMatches) {
-    return { ...baseResult, category: 'confident', confidence: best.confidence, bestMatch: best, candidates: candidates.slice(0, 3) }
-  }
-
-  // Also mark as confident if team matches and confidence is reasonable (handles same-surname cases)
-  if (best.confidence >= 0.5 && teamMatches) {
-    return { ...baseResult, category: 'confident', confidence: best.confidence, bestMatch: best, candidates: candidates.slice(0, 3) }
-  }
-
-  if (best.confidence >= 0.7 && !teamMatches && parsed.team) {
-    return {
-      ...baseResult,
-      category: 'transfer',
-      confidence: best.confidence,
-      bestMatch: best,
-      candidates: candidates.slice(0, 3),
-      transferInfo: {
-        currentTeamId: best.teamId,
-        currentTeamName: best.teamName,
-        spreadsheetTeamName: parsed.team,
-      },
-    }
-  }
-
-  if (best.confidence >= 0.5) {
-    return { ...baseResult, category: 'low_confidence', confidence: best.confidence, bestMatch: best, candidates: candidates.slice(0, 3) }
-  }
-
-  return { ...baseResult, category: 'unrecognized', confidence: best.confidence, bestMatch: null, candidates: candidates.slice(0, 3) }
+  const best = selectBestCandidate(candidates, parsed.team)
+  return categorise(best, parsed.team, candidates, baseResult)
 }
