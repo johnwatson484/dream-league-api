@@ -3,6 +3,29 @@ import db from '../data/index.ts'
 import { getCupScores } from './get-cup-scores.ts'
 import { orderTable } from './order-table.ts'
 
+function calculateManagerStats (manager: any, scores: any[]) {
+  const managerScores = scores.filter(x => x.homeManagerId === manager.managerId || x.awayManagerId === manager.managerId)
+  const homeWon = managerScores.filter(x => x.homeManagerId === manager.managerId && x.result === 'H').length
+  const awayWon = managerScores.filter(x => x.awayManagerId === manager.managerId && x.result === 'A').length
+  const won = homeWon + awayWon
+  const homeDrawn = managerScores.filter(x => x.homeManagerId === manager.managerId && x.result === 'D').length
+  const awayDrawn = managerScores.filter(x => x.awayManagerId === manager.managerId && x.result === 'D').length
+  const drawn = homeDrawn + awayDrawn
+  const homeLost = managerScores.filter(x => x.homeManagerId === manager.managerId && x.result === 'A').length
+  const awayLost = managerScores.filter(x => x.awayManagerId === manager.managerId && x.result === 'H').length
+  const lost = homeLost + awayLost
+  const homeGF = managerScores.filter(x => x.homeManagerId === manager.managerId).reduce((x, y) => x + y.homeMargin, 0)
+  const awayGF = managerScores.filter(x => x.awayManagerId === manager.managerId).reduce((x, y) => x + y.awayMargin, 0)
+  const gf = homeGF + awayGF
+  const homeGA = managerScores.filter(x => x.homeManagerId === manager.managerId).reduce((x, y) => x + y.awayMargin, 0)
+  const awayGA = managerScores.filter(x => x.awayManagerId === manager.managerId).reduce((x, y) => x + y.homeMargin, 0)
+  const ga = homeGA + awayGA
+  const gd = gf - ga
+  const points = (won * 3) + drawn
+  const played = won + drawn + lost
+  return { managerId: manager.managerId, manager: manager.name, played, won, drawn, lost, gf, ga, gd, points }
+}
+
 export async function getGroups (gameweekId: number): Promise<any[]> {
   const cups = await db.Cup.findAll({ where: { hasGroupStage: true } })
 
@@ -27,42 +50,9 @@ export async function getGroups (gameweekId: number): Promise<any[]> {
         const scores: any[] = []
         for (const gameweek of gameweekIds) {
           const cupScores = await getCupScores(gameweek, group.managers)
-          Array.prototype.push.apply(scores, cupScores)
+          scores.push(...cupScores)
         }
-        let table = []
-        for (const manager of group.managers) {
-          const managerScores = scores.filter(x => x.homeManagerId === manager.managerId || x.awayManagerId === manager.managerId)
-          const homeWon = managerScores.filter(x => x.homeManagerId === manager.managerId && x.result === 'H').length
-          const awayWon = managerScores.filter(x => x.awayManagerId === manager.managerId && x.result === 'A').length
-          const won = homeWon + awayWon
-          const homeDrawn = managerScores.filter(x => x.homeManagerId === manager.managerId && x.result === 'D').length
-          const awayDrawn = managerScores.filter(x => x.awayManagerId === manager.managerId && x.result === 'D').length
-          const drawn = homeDrawn + awayDrawn
-          const homeLost = managerScores.filter(x => x.homeManagerId === manager.managerId && x.result === 'A').length
-          const awayLost = managerScores.filter(x => x.awayManagerId === manager.managerId && x.result === 'H').length
-          const lost = homeLost + awayLost
-          const homeGF = managerScores.filter(x => x.homeManagerId === manager.managerId).reduce((x, y) => x + y.homeMargin, 0)
-          const awayGF = managerScores.filter(x => x.awayManagerId === manager.managerId).reduce((x, y) => x + y.awayMargin, 0)
-          const gf = homeGF + awayGF
-          const homeGA = managerScores.filter(x => x.homeManagerId === manager.managerId).reduce((x, y) => x + y.awayMargin, 0)
-          const awayGA = managerScores.filter(x => x.awayManagerId === manager.managerId).reduce((x, y) => x + y.homeMargin, 0)
-          const ga = homeGA + awayGA
-          const gd = gf - ga
-          const points = (won * 3) + drawn
-          const played = won + drawn + lost
-          table.push({
-            managerId: manager.managerId,
-            manager: manager.name,
-            played,
-            won,
-            drawn,
-            lost,
-            gf,
-            ga,
-            gd,
-            points,
-          })
-        }
+        let table = group.managers.map((manager: any) => calculateManagerStats(manager, scores))
         table = orderTable(table)
         groupTables.push(table)
       }
