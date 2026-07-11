@@ -103,10 +103,24 @@ export function fuzzyMatchPlayer (players: any[], sourceText: string, position: 
     return { ...baseResult, category: 'unrecognized', confidence: 0, bestMatch: null, candidates: [] }
   }
 
-  const best = candidates[0]!
+  let best = candidates[0]!
+
+  // If the top candidate's team doesn't match but another candidate's does, prefer that one
+  if (parsed.team && !isTeamMatch(best.teamName, parsed.team)) {
+    const teamMatchCandidate = candidates.find(c => isTeamMatch(c.teamName, parsed.team))
+    if (teamMatchCandidate) {
+      best = teamMatchCandidate
+    }
+  }
+
   const teamMatches = parsed.team ? isTeamMatch(best.teamName, parsed.team) : true
 
   if (best.confidence >= 0.8 && teamMatches) {
+    return { ...baseResult, category: 'confident', confidence: best.confidence, bestMatch: best, candidates: candidates.slice(0, 3) }
+  }
+
+  // Also mark as confident if team matches and confidence is reasonable (handles same-surname cases)
+  if (best.confidence >= 0.5 && teamMatches) {
     return { ...baseResult, category: 'confident', confidence: best.confidence, bestMatch: best, candidates: candidates.slice(0, 3) }
   }
 
