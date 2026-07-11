@@ -11,7 +11,7 @@ export async function editManager (manager: any) {
     }
   }
   for (const currentEmail of currentEmails) {
-    if (!manager.emails.some((x: any) => x === (currentEmail as any).address)) {
+    if (!manager.emails.includes((currentEmail as any).address)) {
       await db.Email.destroy({ where: { emailId: (currentEmail as any).emailId } })
     }
   }
