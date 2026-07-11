@@ -111,6 +111,21 @@ export default [{
   },
 }, {
   method: 'POST',
+  path: '/league/team/delete',
+  options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
+    validate: {
+      payload: Joi.object({
+        teamId: Joi.number(),
+      }),
+      failAction,
+    },
+    handler: async (request, h) => {
+      return h.response(await db.Team.destroy({ where: { teamId: (request.payload as any).teamId } }) as any)
+    },
+  },
+}, {
+  method: 'POST',
   path: '/league/teams/autocomplete',
   options: {
     auth: false,
