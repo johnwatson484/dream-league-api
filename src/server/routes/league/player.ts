@@ -90,7 +90,14 @@ export default [{
       failAction,
     },
     handler: async (request, h) => {
-      return h.response(await db.Player.create(request.payload as any))
+      try {
+        const player = await db.Player.create(request.payload as any)
+        return h.response(player)
+      } catch (err: any) {
+        const details = err?.errors?.map((e: any) => `${e.path}: ${e.message}`)?.join(', ') || ''
+        const message = details || err?.message || 'Failed to create player'
+        return h.response({ error: true, message }).code(400)
+      }
     },
   },
 }, {
@@ -125,6 +132,28 @@ export default [{
     },
     handler: async (request, h) => {
       return h.response(await db.Player.destroy({ where: { playerId: (request.payload as any).playerId } }) as any)
+    },
+  },
+}, {
+  method: 'POST',
+  path: '/league/player/transfer',
+  options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
+    validate: {
+      payload: Joi.object({
+        playerId: Joi.number().required(),
+        teamId: Joi.number().required(),
+      }),
+      failAction,
+    },
+    handler: async (request, h) => {
+      const { playerId, teamId } = request.payload as any
+      await db.Player.update({ teamId }, { where: { playerId } })
+      const player = await db.Player.findOne({
+        where: { playerId },
+        include: [{ model: db.Team, as: 'team', attributes: ['teamId', 'name'] }],
+      })
+      return h.response(player as any)
     },
   },
 }, {
