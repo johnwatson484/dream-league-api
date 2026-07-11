@@ -1,7 +1,7 @@
 import { getManager, getLeaguePlayers, getLeagueTeams } from './get-league-data.ts'
 import { mapPosition } from '../map-position.ts'
-import { fuzzyMatchPlayer, type MatchResult } from './fuzzy-match-player.ts'
-import { fuzzyMatchTeam, type TeamMatchResult } from './fuzzy-match-team.ts'
+import { fuzzyMatchPlayer, buildPlayerIndex, type MatchResult } from './fuzzy-match-player.ts'
+import { fuzzyMatchTeam, buildTeamIndex, type TeamMatchResult } from './fuzzy-match-team.ts'
 import { GOALKEEPER } from '../../constants/positions.ts'
 
 export interface PreviewTeam {
@@ -25,6 +25,9 @@ export async function previewMatches (teams: any[]): Promise<PreviewResponse> {
   const allPlayers = await getLeaguePlayers()
   const allTeams = await getLeagueTeams()
 
+  const playerIndex = buildPlayerIndex(allPlayers)
+  const teamFuse = buildTeamIndex(allTeams)
+
   const result: PreviewTeam[] = []
   const summary = { total: 0, confident: 0, transfers: 0, lowConfidence: 0, unrecognized: 0 }
 
@@ -40,9 +43,9 @@ export async function previewMatches (teams: any[]): Promise<PreviewResponse> {
 
       let match: MatchResult | TeamMatchResult
       if (position === GOALKEEPER) {
-        match = fuzzyMatchTeam(allTeams, player.player)
+        match = fuzzyMatchTeam(allTeams, player.player, teamFuse)
       } else {
-        match = fuzzyMatchPlayer(allPlayers, player.player, position || null)
+        match = fuzzyMatchPlayer(allPlayers, player.player, position || null, playerIndex)
       }
 
       match.substitute = player.substitute

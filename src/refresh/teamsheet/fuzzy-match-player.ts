@@ -1,5 +1,5 @@
 import Fuse from 'fuse.js'
-import { normalizeName, isTeamMatch } from './normalize.ts'
+import { normalizePlayerName, isTeamMatch } from './normalize.ts'
 import { parseSourceText } from './parse-source-text.ts'
 
 export type MatchCategory = 'confident' | 'transfer' | 'low_confidence' | 'unrecognized'
@@ -27,7 +27,7 @@ export interface MatchResult {
   transferInfo: { currentTeamId: number; currentTeamName: string; spreadsheetTeamName: string } | null
 }
 
-interface IndexedPlayer {
+export interface IndexedPlayer {
   playerId: number
   firstName: string
   lastName: string
@@ -37,7 +37,28 @@ interface IndexedPlayer {
   normalizedName: string
 }
 
-export function fuzzyMatchPlayer (players: any[], sourceText: string, position: string | null): MatchResult {
+const FUSE_OPTIONS = {
+  includeScore: true,
+  threshold: 0.6,
+  keys: ['lastName', 'normalizedName'] as string[],
+}
+
+export function buildPlayerIndex (players: any[]): { indexed: IndexedPlayer[]; fuse: Fuse<IndexedPlayer> } {
+  const indexed: IndexedPlayer[] = players.map((p: any) => ({
+    playerId: p.playerId,
+    firstName: p.firstName || '',
+    lastName: p.lastName,
+    position: p.position,
+    teamId: p.team?.teamId ?? p.teamId,
+    teamName: p.team?.name ?? p.team?.alias ?? '',
+    normalizedName: normalizePlayerName(p.lastName),
+  }))
+
+  const fuse = new Fuse(indexed, FUSE_OPTIONS)
+  return { indexed, fuse }
+}
+
+export function fuzzyMatchPlayer (players: any[], sourceText: string, position: string | null, prebuiltIndex?: { indexed: IndexedPlayer[]; fuse: Fuse<IndexedPlayer> }): MatchResult {
   const parsed = parseSourceText(sourceText)
   const baseResult = {
     sourceText,
@@ -52,26 +73,16 @@ export function fuzzyMatchPlayer (players: any[], sourceText: string, position: 
     return { ...baseResult, category: 'unrecognized', confidence: 0, bestMatch: null, candidates: [] }
   }
 
-  let filteredPlayers = players
-  if (position) {
-    filteredPlayers = players.filter((p: any) => p.position === position)
+  let index = prebuiltIndex
+  if (!index) {
+    index = buildPlayerIndex(players)
   }
 
-  const indexed: IndexedPlayer[] = filteredPlayers.map((p: any) => ({
-    playerId: p.playerId,
-    firstName: p.firstName || '',
-    lastName: p.lastName,
-    position: p.position,
-    teamId: p.team?.teamId ?? p.teamId,
-    teamName: p.team?.name ?? p.team?.alias ?? '',
-    normalizedName: normalizeName(p.lastName),
-  }))
-
-  const fuse = new Fuse(indexed, {
-    includeScore: true,
-    threshold: 0.6,
-    keys: ['lastName', 'normalizedName'],
-  })
+  let fuse = index.fuse
+  if (position) {
+    const filtered = index.indexed.filter(p => p.position === position)
+    fuse = new Fuse(filtered, FUSE_OPTIONS)
+  }
 
   const results = fuse.search(parsed.name)
 
@@ -80,7 +91,7 @@ export function fuzzyMatchPlayer (players: any[], sourceText: string, position: 
       const confidence = 1 - (r.score ?? 0)
       if (confidence <= 0.4) { return false }
 
-      const searchNormalized = normalizeName(parsed.name)
+      const searchNormalized = normalizePlayerName(parsed.name)
       const playerNormalized = r.item.normalizedName
       const searchWords = searchNormalized.split(' ').filter(w => w.length > 1)
       const playerWords = playerNormalized.split(' ').filter(w => w.length > 1)

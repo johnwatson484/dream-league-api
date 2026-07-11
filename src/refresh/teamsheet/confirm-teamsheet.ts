@@ -1,5 +1,4 @@
 import db from '../../data/index.ts'
-import { deleteCurrentTeam } from './delete-team.ts'
 
 interface PlayerAssignment {
   managerId: number
@@ -38,28 +37,42 @@ export async function confirmTeamsheet (payload: ConfirmPayload): Promise<{ succ
     ...payload.keeperAssignments.map(a => a.managerId),
   ])
 
-  for (const managerId of managerIds) {
-    await deleteCurrentTeam(managerId)
+  if (managerIds.size === 0) {
+    return { success: true }
   }
 
-  for (const assignment of payload.assignments) {
-    await db.ManagerPlayer.upsert({
-      managerId: assignment.managerId,
-      playerId: assignment.playerId,
-      substitute: assignment.substitute,
-    })
-  }
+  const transaction = await db.sequelize.transaction()
+  try {
+    for (const managerId of managerIds) {
+      await db.ManagerKeeper.destroy({ where: { managerId }, transaction })
+      await db.ManagerPlayer.destroy({ where: { managerId }, transaction })
+      await db.Teamsheet.destroy({ where: { managerId }, transaction })
+    }
 
-  for (const assignment of payload.keeperAssignments) {
-    await db.ManagerKeeper.upsert({
-      managerId: assignment.managerId,
-      teamId: assignment.teamId,
-      substitute: assignment.substitute,
-    })
-  }
+    for (const assignment of payload.assignments) {
+      await db.ManagerPlayer.upsert({
+        managerId: assignment.managerId,
+        playerId: assignment.playerId,
+        substitute: assignment.substitute,
+      }, { transaction })
+    }
 
-  for (const record of payload.teamsheetRecords) {
-    await db.Teamsheet.create(record as any)
+    for (const assignment of payload.keeperAssignments) {
+      await db.ManagerKeeper.upsert({
+        managerId: assignment.managerId,
+        teamId: assignment.teamId,
+        substitute: assignment.substitute,
+      }, { transaction })
+    }
+
+    for (const record of payload.teamsheetRecords) {
+      await db.Teamsheet.create(record as any, { transaction })
+    }
+
+    await transaction.commit()
+  } catch (error) {
+    await transaction.rollback()
+    throw error
   }
 
   return { success: true }

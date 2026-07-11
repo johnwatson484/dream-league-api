@@ -1,5 +1,5 @@
 import Fuse from 'fuse.js'
-import { normalizeName } from './normalize.ts'
+import { normalizeTeamName } from './normalize.ts'
 import { parseSourceText } from './parse-source-text.ts'
 import type { MatchCategory } from './fuzzy-match-player.ts'
 
@@ -22,14 +22,31 @@ export interface TeamMatchResult {
   transferInfo: null
 }
 
-interface IndexedTeam {
+export interface IndexedTeam {
   teamId: number
   name: string
   alias: string
   normalizedName: string
 }
 
-export function fuzzyMatchTeam (teams: any[], sourceText: string): TeamMatchResult {
+const FUSE_OPTIONS = {
+  includeScore: true,
+  threshold: 0.3,
+  keys: ['name', 'alias', 'normalizedName'] as string[],
+}
+
+export function buildTeamIndex (teams: any[]): Fuse<IndexedTeam> {
+  const indexed: IndexedTeam[] = teams.map((t: any) => ({
+    teamId: t.teamId,
+    name: t.name,
+    alias: t.alias || t.name,
+    normalizedName: normalizeTeamName(t.alias || t.name),
+  }))
+
+  return new Fuse(indexed, FUSE_OPTIONS)
+}
+
+export function fuzzyMatchTeam (teams: any[], sourceText: string, prebuiltFuse?: Fuse<IndexedTeam>): TeamMatchResult {
   const parsed = parseSourceText(sourceText)
   const searchTerm = parsed.team || parsed.name
 
@@ -46,18 +63,7 @@ export function fuzzyMatchTeam (teams: any[], sourceText: string): TeamMatchResu
     return { ...baseResult, category: 'unrecognized', confidence: 0, bestMatch: null, candidates: [] }
   }
 
-  const indexed: IndexedTeam[] = teams.map((t: any) => ({
-    teamId: t.teamId,
-    name: t.name,
-    alias: t.alias || t.name,
-    normalizedName: normalizeName(t.alias || t.name),
-  }))
-
-  const fuse = new Fuse(indexed, {
-    includeScore: true,
-    threshold: 0.3,
-    keys: ['name', 'alias', 'normalizedName'],
-  })
+  const fuse = prebuiltFuse || buildTeamIndex(teams)
 
   const results = fuse.search(searchTerm)
 

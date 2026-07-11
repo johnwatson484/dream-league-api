@@ -1,4 +1,15 @@
-export function normalizeName (name: string): string {
+export function normalizePlayerName (name: string): string {
+  if (!name) { return '' }
+
+  return name
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .replace(/[^\w\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+export function normalizeTeamName (name: string): string {
   if (!name) { return '' }
 
   return name
@@ -13,8 +24,8 @@ export function normalizeName (name: string): string {
 export function isTeamMatch (team1: string, team2: string): boolean {
   if (!team1 || !team2) { return false }
 
-  const normalized1 = normalizeName(team1)
-  const normalized2 = normalizeName(team2)
+  const normalized1 = normalizeTeamName(team1)
+  const normalized2 = normalizeTeamName(team2)
 
   if (normalized1.length < 4 || normalized2.length < 4) {
     return normalized1 === normalized2

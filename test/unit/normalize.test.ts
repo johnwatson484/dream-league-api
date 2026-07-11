@@ -1,29 +1,53 @@
 import { describe, test, expect } from 'vitest'
-import { normalizeName, isTeamMatch } from '../../src/refresh/teamsheet/normalize.ts'
+import { normalizePlayerName, normalizeTeamName, isTeamMatch } from '../../src/refresh/teamsheet/normalize.ts'
 
-describe('normalizeName', () => {
+describe('normalizePlayerName', () => {
   test('should lowercase', () => {
-    expect(normalizeName('Henderson')).toBe('henderson')
+    expect(normalizePlayerName('Henderson')).toBe('henderson')
   })
 
-  test('should strip football suffixes', () => {
-    expect(normalizeName('Forest Green Rovers')).toBe('forest green')
-    expect(normalizeName('Brighton & Hove Albion')).toBe('brighton hove')
-    expect(normalizeName('Charlton Athletic')).toBe('charlton')
-    expect(normalizeName('Manchester United')).toBe('manchester')
-    expect(normalizeName('Manchester City')).toBe('manchester')
+  test('should not strip football suffixes from player names', () => {
+    expect(normalizePlayerName('Town')).toBe('town')
+    expect(normalizePlayerName('County')).toBe('county')
+    expect(normalizePlayerName('Townsend')).toBe('townsend')
   })
 
   test('should collapse whitespace', () => {
-    expect(normalizeName('  multiple   spaces  ')).toBe('multiple spaces')
+    expect(normalizePlayerName('  multiple   spaces  ')).toBe('multiple spaces')
   })
 
   test('should replace non-word characters with spaces', () => {
-    expect(normalizeName("O'Brien")).toBe('o brien')
+    expect(normalizePlayerName("O'Brien")).toBe('o brien')
   })
 
   test('should return empty for falsy input', () => {
-    expect(normalizeName('')).toBe('')
+    expect(normalizePlayerName('')).toBe('')
+  })
+})
+
+describe('normalizeTeamName', () => {
+  test('should lowercase', () => {
+    expect(normalizeTeamName('Henderson')).toBe('henderson')
+  })
+
+  test('should strip football suffixes', () => {
+    expect(normalizeTeamName('Forest Green Rovers')).toBe('forest green')
+    expect(normalizeTeamName('Brighton & Hove Albion')).toBe('brighton hove')
+    expect(normalizeTeamName('Charlton Athletic')).toBe('charlton')
+    expect(normalizeTeamName('Manchester United')).toBe('manchester')
+    expect(normalizeTeamName('Manchester City')).toBe('manchester')
+  })
+
+  test('should collapse whitespace', () => {
+    expect(normalizeTeamName('  multiple   spaces  ')).toBe('multiple spaces')
+  })
+
+  test('should replace non-word characters with spaces', () => {
+    expect(normalizeTeamName("O'Brien")).toBe('o brien')
+  })
+
+  test('should return empty for falsy input', () => {
+    expect(normalizeTeamName('')).toBe('')
   })
 })
 

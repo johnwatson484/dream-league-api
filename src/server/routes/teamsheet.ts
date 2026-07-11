@@ -83,12 +83,12 @@ export default [{
           managerId: Joi.number().required(),
           playerId: Joi.number().required(),
           substitute: Joi.bool().required(),
-        })),
+        })).required(),
         keeperAssignments: Joi.array().items(Joi.object({
           managerId: Joi.number().required(),
           teamId: Joi.number().required(),
           substitute: Joi.bool().required(),
-        })),
+        })).required(),
         teamsheetRecords: Joi.array().items(Joi.object({
           managerId: Joi.number().required(),
           player: Joi.string().required(),
@@ -100,7 +100,7 @@ export default [{
           category: Joi.string().required(),
           parsedName: Joi.string().allow('').required(),
           parsedTeam: Joi.string().allow('').required(),
-        })),
+        })).min(1).required(),
       }),
       failAction,
     },
