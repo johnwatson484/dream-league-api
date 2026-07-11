@@ -4,7 +4,8 @@ import Joi from 'joi'
 import { getTeamsheet } from '../../teamsheet/get-teamsheet.ts'
 import { updatePlayer } from '../../teamsheet/update-player.ts'
 import { updateKeeper } from '../../teamsheet/update-keeper.ts'
-import { refreshTeamsheet } from '../../refresh/teamsheet/refresh-teamsheet.ts'
+import { previewMatches } from '../../refresh/teamsheet/preview-matches.ts'
+import { confirmTeamsheet } from '../../refresh/teamsheet/confirm-teamsheet.ts'
 
 export default [{
   method: 'GET',
@@ -51,7 +52,7 @@ export default [{
   },
 }, {
   method: 'POST',
-  path: '/teamsheet/refresh',
+  path: '/teamsheet/match-preview',
   options: {
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
@@ -68,7 +69,43 @@ export default [{
       failAction,
     },
     handler: async (request, h) => {
-      return h.response(await refreshTeamsheet((request.payload as any).teams))
+      return h.response(await previewMatches((request.payload as any).teams))
+    },
+  },
+}, {
+  method: 'POST',
+  path: '/teamsheet/confirm',
+  options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
+    validate: {
+      payload: Joi.object({
+        assignments: Joi.array().items(Joi.object({
+          managerId: Joi.number().required(),
+          playerId: Joi.number().required(),
+          substitute: Joi.bool().required(),
+        })),
+        keeperAssignments: Joi.array().items(Joi.object({
+          managerId: Joi.number().required(),
+          teamId: Joi.number().required(),
+          substitute: Joi.bool().required(),
+        })),
+        teamsheetRecords: Joi.array().items(Joi.object({
+          managerId: Joi.number().required(),
+          player: Joi.string().required(),
+          position: Joi.string().allow('').required(),
+          substitute: Joi.bool().required(),
+          bestMatchId: Joi.number().required(),
+          distance: Joi.number().required(),
+          confidence: Joi.number().required(),
+          category: Joi.string().required(),
+          parsedName: Joi.string().allow('').required(),
+          parsedTeam: Joi.string().allow('').required(),
+        })),
+      }),
+      failAction,
+    },
+    handler: async (request, h) => {
+      return h.response(await confirmTeamsheet(request.payload as any))
     },
   },
 }] satisfies ServerRoute[]

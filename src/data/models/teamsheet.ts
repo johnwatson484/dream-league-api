@@ -14,6 +14,10 @@ export default function defineTeamsheetModel (sequelize: Sequelize, DataTypes: D
     substitute: DataTypes.BOOLEAN,
     bestMatchId: DataTypes.INTEGER,
     distance: DataTypes.INTEGER,
+    confidence: DataTypes.FLOAT,
+    category: DataTypes.STRING,
+    parsedName: DataTypes.STRING,
+    parsedTeam: DataTypes.STRING,
   }, {
     tableName: 'teamsheet',
     freezeTableName: true,
