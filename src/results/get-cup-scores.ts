@@ -8,10 +8,10 @@ export async function getCupScores (gameweekId: number, managers: any[]): Promis
   const fixtures = await db.Fixture.findAll({ where: { gameweekId }, include: [{ model: db.Cup, as: 'cup', attributes: ['name'] }] })
 
   for (const fixture of fixtures as any[]) {
-    if (scores.some(x => x.managerId === fixture.homeManagerId || x.managerId === fixture.awayManagerId)) {
-      const homeScore = scores.find(x => x.managerId === fixture.homeManagerId)
+    const homeScore = scores.find(x => x.managerId === fixture.homeManagerId)
+    const awayScore = scores.find(x => x.managerId === fixture.awayManagerId)
+    if (homeScore && awayScore) {
       const homeMargin = homeScore.goals - homeScore.conceded
-      const awayScore = scores.find(x => x.managerId === fixture.awayManagerId)
       const awayMargin = awayScore.goals - awayScore.conceded
       const result = getCupResult(homeMargin, awayMargin)
 

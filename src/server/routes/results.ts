@@ -6,6 +6,7 @@ import { getInput } from '../../results/get-input.ts'
 import { update } from '../../results/update.ts'
 import { deleteResults } from '../../results/delete-results.ts'
 import { sendResults } from '../../notifications/send-results.ts'
+import { getExisting } from '../../results/get-existing.ts'
 
 export default [{
   method: 'GET',
@@ -30,6 +31,22 @@ export default [{
     auth: { strategy: 'jwt', scope: ['admin'] },
     handler: async (_request, h) => {
       return h.response(await getInput())
+    },
+  },
+}, {
+  method: 'GET',
+  path: '/results-edit/existing',
+  options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
+    validate: {
+      query: Joi.object({
+        gameweekId: Joi.number().required(),
+      }),
+      failAction,
+    },
+    handler: async (request, h) => {
+      const existing = await getExisting(Number(request.query.gameweekId))
+      return h.response(existing)
     },
   },
 }, {

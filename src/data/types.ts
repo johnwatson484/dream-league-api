@@ -14,6 +14,7 @@ export interface Db {
   Goal: ModelStatic<Model>
   Concede: ModelStatic<Model>
   Cup: ModelStatic<Model>
+  CupResult: ModelStatic<Model>
   Fixture: ModelStatic<Model>
   Gameweek: ModelStatic<Model>
   Group: ModelStatic<Model>

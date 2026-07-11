@@ -16,8 +16,7 @@ export async function getGroups (gameweekId: number): Promise<any[]> {
       },
     })
 
-    // if no fixtures this gameweek no need to add groups
-    if (!fixtures.some((x: any) => x.gameweekId === gameweekId)) {
+    if (!fixtures.length) {
       continue
     }
 
