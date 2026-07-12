@@ -83,19 +83,19 @@ async function truncateAll (client: pg.Client): Promise<void> {
 
 async function insertManagers (client: pg.Client): Promise<void> {
   await client.query(`
-    INSERT INTO "managers" ("managerId", "name", "alias") VALUES
-      (1, 'John Watson', 'John'),
-      (2, 'Lee Gordon', 'Lee'),
-      (3, 'Scott Dormand', 'Scott'),
-      (4, 'Billy Gordon', 'Billy'),
-      (5, 'Tommy Gordon', 'Tommy'),
-      (6, 'David Brown', 'David'),
-      (7, 'Bob Brown', 'Bob'),
-      (8, 'Darren Brown', 'Darren'),
-      (9, 'Michael Richardson', 'Michael'),
-      (10, 'Rob Doloughan', 'Rob'),
-      (11, 'Ben Scott', 'Ben'),
-      (12, 'Tucker Brazier', 'Tucker')
+    INSERT INTO "managers" ("name", "alias") VALUES
+      ('John Watson', 'John'),
+      ('Lee Gordon', 'Lee'),
+      ('Scott Dormand', 'Scott'),
+      ('Billy Gordon', 'Billy'),
+      ('Tommy Gordon', 'Tommy'),
+      ('David Brown', 'David'),
+      ('Bob Brown', 'Bob'),
+      ('Darren Brown', 'Darren'),
+      ('Michael Richardson', 'Michael'),
+      ('Rob Doloughan', 'Rob'),
+      ('Ben Scott', 'Ben'),
+      ('Tucker Brazier', 'Tucker')
   `)
 }
 
@@ -312,6 +312,15 @@ async function main () {
     console.log(`Generating results for gameweeks 1-${currentGameweek - 1}...`)
     await generateResults(client, currentGameweek, managerActivePlayers, managerKeeperTeams, gw1Start, rng)
   }
+
+  console.log('Resetting sequences...')
+  await client.query(`
+    SELECT setval(pg_get_serial_sequence('"managers"', 'managerId'), (SELECT COALESCE(MAX("managerId"), 1) FROM "managers"));
+    SELECT setval(pg_get_serial_sequence('"teams"', 'teamId'), (SELECT COALESCE(MAX("teamId"), 1) FROM "teams"));
+    SELECT setval(pg_get_serial_sequence('"players"', 'playerId'), (SELECT COALESCE(MAX("playerId"), 1) FROM "players"));
+    SELECT setval(pg_get_serial_sequence('"users"', 'userId'), (SELECT COALESCE(MAX("userId"), 1) FROM "users"));
+    SELECT setval(pg_get_serial_sequence('"gameweeks"', 'gameweekId'), (SELECT COALESCE(MAX("gameweekId"), 1) FROM "gameweeks"));
+  `)
 
   await client.end()
 
