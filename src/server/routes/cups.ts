@@ -19,8 +19,14 @@ export default [{
   path: '/cup',
   options: {
     auth: false,
+    validate: {
+      query: Joi.object({
+        cupId: Joi.number().integer().required(),
+      }),
+      failAction,
+    },
     handler: async (request, h) => {
-      return h.response(await db.Cup.findOne({ where: { cupId: request.query.cupId } }) as any)
+      return h.response(await db.Cup.findOne({ where: { cupId: (request.query as unknown as { cupId: number }).cupId } }) as any)
     },
   },
 }, {

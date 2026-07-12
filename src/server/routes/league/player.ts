@@ -1,3 +1,4 @@
+import { constants as httpConstants } from 'node:http2'
 import { failAction } from '../fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import { Op } from 'sequelize'
@@ -8,14 +9,24 @@ import { previewPlayers } from '../../../refresh/players/preview-players.ts'
 import { confirmPlayers } from '../../../refresh/players/confirm-players.ts'
 import { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } from '../../../constants/positions.ts'
 
+const { HTTP_STATUS_BAD_REQUEST } = httpConstants
+
 export default [{
   method: 'GET',
   path: '/league/players',
   options: {
     auth: false,
+    validate: {
+      query: Joi.object({
+        search: Joi.string().allow('').default(''),
+        position: Joi.string().valid(DEFENDER, MIDFIELDER, FORWARD).optional(),
+      }),
+      failAction,
+    },
     handler: async (request, h) => {
-      const search = request.query.search !== 'undefined' ? `${request.query.search}%` : '%'
-      const position = request.query.position as string | undefined
+      const query = request.query as { search: string; position?: string }
+      const search = query.search ? `${query.search}%` : '%'
+      const position = query.position
 
       const whereClause: any = {
         position: { [Op.ne]: GOALKEEPER },
@@ -53,10 +64,16 @@ export default [{
   path: '/league/player',
   options: {
     auth: false,
+    validate: {
+      query: Joi.object({
+        playerId: Joi.number().integer().required(),
+      }),
+      failAction,
+    },
   },
   handler: async (request, h) => {
     const player = await db.Player.findOne({
-      where: { playerId: request.query.playerId },
+      where: { playerId: (request.query as unknown as { playerId: number }).playerId },
       include: [{
         model: db.Team,
         as: 'team',
@@ -98,7 +115,7 @@ export default [{
       } catch (err: any) {
         const details = err?.errors?.map((e: any) => `${e.path}: ${e.message}`)?.join(', ') || ''
         const message = details || err?.message || 'Failed to create player'
-        return h.response({ error: true, message }).code(400)
+        return h.response({ error: true, message }).code(HTTP_STATUS_BAD_REQUEST)
       }
     },
   },
