@@ -12,6 +12,7 @@ export interface Db {
   UserRole: ModelStatic<Model>
   RefreshToken: ModelStatic<Model>
   Goal: ModelStatic<Model>
+  GoalReport: ModelStatic<Model>
   Concede: ModelStatic<Model>
   Cup: ModelStatic<Model>
   CupResult: ModelStatic<Model>
@@ -26,6 +27,7 @@ export interface Db {
   Email: ModelStatic<Model>
   Summary: ModelStatic<Model>
   Teamsheet: ModelStatic<Model>
+  Transfer: ModelStatic<Model>
   sequelize: Sequelize
   Sequelize: typeof import('sequelize').Sequelize
 }
