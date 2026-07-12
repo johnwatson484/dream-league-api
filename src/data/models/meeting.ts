@@ -12,7 +12,7 @@ export default function defineMeetingModel (sequelize: Sequelize, DataTypes: Dat
     shortDate: {
       type: DataTypes.VIRTUAL,
       get (this: any) {
-        return new Date(this.startDate).toLocaleString('en-GB', { dateStyle: 'short', timeStyle: 'short' })
+        return new Date(this.date).toLocaleString('en-GB', { dateStyle: 'short', timeStyle: 'short' })
       },
     },
   }, {
