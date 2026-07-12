@@ -321,6 +321,8 @@ async function main () {
     SELECT setval(pg_get_serial_sequence('"users"', 'userId'), (SELECT COALESCE(MAX("userId"), 1) FROM "users"));
     SELECT setval(pg_get_serial_sequence('"gameweeks"', 'gameweekId'), (SELECT COALESCE(MAX("gameweekId"), 1) FROM "gameweeks"));
     SELECT setval(pg_get_serial_sequence('"history"', 'historyId'), (SELECT COALESCE(MAX("historyId"), 1) FROM "history"));
+    SELECT setval(pg_get_serial_sequence('"cups"', 'cupId'), (SELECT COALESCE(MAX("cupId"), 1) FROM "cups"));
+    SELECT setval(pg_get_serial_sequence('"meetings"', 'meetingId'), (SELECT COALESCE(MAX("meetingId"), 1) FROM "meetings"));
   `)
 
   await client.end()
