@@ -22,6 +22,7 @@ import groups from '../routes/groups.ts'
 import fixtures from '../routes/fixtures.ts'
 import winners from '../routes/winners.ts'
 import search from '../routes/search.ts'
+import emailPreview from '../routes/dev/email-preview.ts'
 
 const routes: ServerRoute[] = [
   ...login,
@@ -47,6 +48,7 @@ const routes: ServerRoute[] = [
   ...fixtures,
   ...winners,
   ...search,
+  ...emailPreview,
 ]
 
 export default {
