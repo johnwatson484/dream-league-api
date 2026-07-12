@@ -4,6 +4,8 @@ import { Op } from 'sequelize'
 import Joi from 'joi'
 import db from '../../../data/index.ts'
 import { refreshPlayers } from '../../../refresh/players/refresh-players.ts'
+import { previewPlayers } from '../../../refresh/players/preview-players.ts'
+import { confirmPlayers } from '../../../refresh/players/confirm-players.ts'
 import { GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD } from '../../../constants/positions.ts'
 
 export default [{
@@ -194,6 +196,46 @@ export default [{
     },
     handler: async (request, h) => {
       return h.response(await refreshPlayers((request.payload as any).players))
+    },
+  },
+}, {
+  method: 'POST',
+  path: '/league/players/refresh/preview',
+  options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
+    validate: {
+      payload: Joi.object({
+        players: Joi.array().items(Joi.object({
+          firstName: Joi.string().allow('', null),
+          lastName: Joi.string().allow('', null),
+          position: Joi.string().allow('', null),
+          team: Joi.string().allow('', null),
+        })),
+      }),
+      failAction,
+    },
+    handler: async (request, h) => {
+      return h.response(await previewPlayers((request.payload as any).players))
+    },
+  },
+}, {
+  method: 'POST',
+  path: '/league/players/refresh/confirm',
+  options: {
+    auth: { strategy: 'jwt', scope: ['admin'] },
+    validate: {
+      payload: Joi.object({
+        players: Joi.array().items(Joi.object({
+          firstName: Joi.string().allow('', null),
+          lastName: Joi.string().allow('', null),
+          position: Joi.string().required(),
+          teamId: Joi.number().integer().required(),
+        })),
+      }),
+      failAction,
+    },
+    handler: async (request, h) => {
+      return h.response(await confirmPlayers((request.payload as any).players))
     },
   },
 }] satisfies ServerRoute[]
