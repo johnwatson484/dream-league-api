@@ -25,7 +25,8 @@
     "test:watch": "cross-env TZ=UTC vitest",
     "test:debug": "cross-env TZ=UTC vitest --inspect --no-file-parallelism",
     "test:lint": "eslint",
-    "test:lint:fix": "eslint --fix"
+    "test:lint:fix": "eslint --fix",
+    "preview:email": "node --env-file-if-exists=.env scripts/preview-email.ts"
   },
   "author": "John Watson",
   "license": "MIT",

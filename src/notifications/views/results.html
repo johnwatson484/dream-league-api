@@ -1,200 +1,263 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <meta name="viewport" content="width=device-width" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <title>Dream League</title>
-
-  <style type="text/css">
-    body,
-    table,
-    td,
-    h3,
-    h4,
-    h5,
-    h6,
-    p {
-      font-family: Arial, Helvetica, sans-serif !important;
-    }
-
-    .table-email {
-      border-collapse: collapse;
-      border-spacing: 0;
-    }
-
-    .table-email th {
-      font-size: 1em;
-      text-align: left;
-      border: none;
-      padding-left: 5px;
-      padding-right: 5px;
-    }
-
-    .table-email td {
-      padding-left: 5px;
-      padding-right: 5px;
-      vertical-align: top;
-      white-space: nowrap;
-      padding-bottom: 5px;
-      padding-top: 5px;
-    }
-
-    .table-email th a {
-      display: block;
-      position: relative;
-    }
-
-    .body-content {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-
-    td.numeric,
-    th.numeric {
-      text-align: right;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-modes" content="light dark">
+  <title>Dream League Results - Game Week {{ gameweekId }}</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
 </head>
 
-<body>
-  <div class="container body-content">
-    <h3>Dream League Results - Game Week {{ gameweekId }}</h3>
-    <hr />
+{% set brandBg = "background-color:#505160;" %}
+{% set sectionHeader = "background-color:#505160; color:#ffffff; font-family:Arial,Helvetica,sans-serif; font-size:14px; font-weight:bold; padding:10px 16px; margin:0;" %}
+{% set cellBase = "font-family:Arial,Helvetica,sans-serif; font-size:13px; color:#212529; padding:6px 8px; border-bottom:1px solid #dee2e6;" %}
+{% set cellNumeric = cellBase + " text-align:right;" %}
+{% set thBase = "font-family:Arial,Helvetica,sans-serif; font-size:12px; color:#495057; font-weight:bold; padding:8px 8px 6px; border-bottom:2px solid #dee2e6;" %}
+{% set thNumeric = thBase + " text-align:right;" %}
+{% set stripedBg = "background-color:#f8f9fa;" %}
+{% set winBadge = "background-color:#598234; color:#ffffff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:bold; display:inline-block;" %}
+{% set drawBadge = "background-color:#505160; color:#ffffff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:bold; display:inline-block;" %}
+{% set lossBadge = "background-color:#B34744; color:#ffffff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:bold; display:inline-block;" %}
 
-    <h4>Scores</h4>
+<body style="margin:0; padding:0; background-color:#f4f4f7; font-family:Arial,Helvetica,sans-serif; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;">
 
-    <table class="table-email small" style="background-color: #dcdcdc;">
-      {% for score in scores %}
-      <tr>
-        <td>{{ score.manager }}</td>
-        <td>
-          <strong>{{ score.goals }} - {{ score.conceded }}</strong>
+  <!-- Outer wrapper -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f4f7;">
+    <tr>
+      <td align="center" style="padding:24px 16px;">
 
-          {% for scorer in score.scorers %}
-          <p style="margin:0">
-            <em>
-              {{ scorer.name }}
+        <!-- Inner container -->
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:1px solid #dee2e6; border-radius:4px;">
 
-              {% if scorer.goals > 1 %}
-              ({{ scorer.goals }})
-              {% endif %}
-            </em>
-          </p>
+          <!-- Brand header -->
+          <tr>
+            <td style="background-color:#505160; padding:20px 24px; border-radius:4px 4px 0 0;">
+              <h1 style="margin:0; font-family:Arial,Helvetica,sans-serif; font-size:22px; font-weight:bold; color:#ffffff;">Dream League</h1>
+            </td>
+          </tr>
+
+          <!-- Title -->
+          <tr>
+            <td style="padding:20px 24px 16px; font-family:Arial,Helvetica,sans-serif;">
+              <h2 style="margin:0; font-size:18px; font-weight:bold; color:#212529;">Results - Game Week {{ gameweekId }}</h2>
+            </td>
+          </tr>
+
+          <!-- ===== SCORES SECTION ===== -->
+          <tr>
+            <td style="padding:0 24px 16px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <!-- Section header -->
+                <tr>
+                  <td colspan="3" style="{{ sectionHeader }}">Scores</td>
+                </tr>
+                <!-- Score rows -->
+                {% for score in scores %}
+                <tr{% if loop.index is odd %} style="{{ stripedBg }}"{% endif %}>
+                  <td style="{{ cellBase }} vertical-align:top; width:40%;">
+                    <strong style="font-family:Arial,Helvetica,sans-serif; font-size:14px;">{{ score.manager }}</strong>
+                  </td>
+                  <td style="{{ cellBase }} vertical-align:top; width:auto; text-align:center;">
+                    {% if score.result === 'W' %}
+                    <span style="{{ winBadge }}">{{ score.goals }} - {{ score.conceded }}</span>
+                    {% elif score.result === 'L' %}
+                    <span style="{{ lossBadge }}">{{ score.goals }} - {{ score.conceded }}</span>
+                    {% else %}
+                    <span style="{{ drawBadge }}">{{ score.goals }} - {{ score.conceded }}</span>
+                    {% endif %}
+                  </td>
+                  <td style="{{ cellBase }} vertical-align:top; width:40%;">
+                    {% for scorer in score.scorers %}
+                    <span style="font-family:Arial,Helvetica,sans-serif; font-size:12px; color:#495057; display:block; line-height:1.6;">{{ scorer.name }}{% if scorer.goals > 1 %} ({{ scorer.goals }}){% endif %}</span>
+                    {% endfor %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
+            </td>
+          </tr>
+
+          <!-- ===== TABLE SECTION ===== -->
+          <tr>
+            <td style="padding:0 24px 16px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <!-- Section header -->
+                <tr>
+                  <td colspan="10" style="{{ sectionHeader }}">Table</td>
+                </tr>
+                <!-- Column headers -->
+                <tr style="background-color:#f8f9fa;">
+                  <th style="{{ thNumeric }}" scope="col">Pos</th>
+                  <th style="{{ thBase }} text-align:left;" scope="col">Manager</th>
+                  <th style="{{ thNumeric }}" scope="col">Pld</th>
+                  <th style="{{ thNumeric }}" scope="col">W</th>
+                  <th style="{{ thNumeric }}" scope="col">D</th>
+                  <th style="{{ thNumeric }}" scope="col">L</th>
+                  <th style="{{ thNumeric }}" scope="col">GF</th>
+                  <th style="{{ thNumeric }}" scope="col">GA</th>
+                  <th style="{{ thNumeric }}" scope="col">GD</th>
+                  <th style="{{ thNumeric }}" scope="col">Pts</th>
+                </tr>
+                <!-- Data rows -->
+                {% for row in table %}
+                <tr{% if loop.index is even %} style="{{ stripedBg }}"{% endif %}>
+                  <td style="{{ cellNumeric }}">{{ row.position }}</td>
+                  <td style="{{ cellBase }}">{{ row.manager }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.played }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.won }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.drawn }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.lost }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.gf }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.ga }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.gd }}</td>
+                  <td style="{{ cellNumeric }}"><strong>{{ row.points }}</strong></td>
+                </tr>
+                {% endfor %}
+              </table>
+            </td>
+          </tr>
+
+          <!-- ===== WINNERS SECTION ===== -->
+          <tr>
+            <td style="padding:0 24px 16px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <!-- Section header -->
+                <tr>
+                  <td style="{{ sectionHeader }}">Winners</td>
+                </tr>
+                {% for winner in winners %}
+                <tr{% if loop.index is odd %} style="{{ stripedBg }}"{% endif %}>
+                  <td style="{{ cellBase }} font-size:14px;">
+                    <strong style="font-family:Arial,Helvetica,sans-serif;">{{ winner.manager }}</strong>
+                    {% if winner.goals >= 10 %}
+                    <span style="background-color:#FBCD48; color:#212529; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:bold; display:inline-block; margin-left:8px;">JACKPOT!</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
+            </td>
+          </tr>
+
+          <!-- ===== CUP SCORES SECTION (conditional) ===== -->
+          {% if cupScores.length %}
+          <tr>
+            <td style="padding:0 24px 16px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <!-- Section header -->
+                <tr>
+                  <td colspan="5" style="{{ sectionHeader }}">Cup Scores</td>
+                </tr>
+                {% for score in cupScores %}
+                <tr{% if loop.index is odd %} style="{{ stripedBg }}"{% endif %}>
+                  <td style="{{ cellBase }} text-align:right; width:35%;">
+                    <strong style="font-family:Arial,Helvetica,sans-serif;">{{ score.homeManager }}</strong>
+                  </td>
+                  <td style="{{ cellBase }} text-align:center; width:10%;">
+                    {% if score.result === 'H' %}
+                    <span style="{{ winBadge }}">{{ score.homeMargin }}</span>
+                    {% elif score.result === 'A' %}
+                    <span style="{{ lossBadge }}">{{ score.homeMargin }}</span>
+                    {% else %}
+                    <span style="{{ drawBadge }}">{{ score.homeMargin }}</span>
+                    {% endif %}
+                  </td>
+                  <td style="{{ cellBase }} text-align:center; width:10%; font-size:12px; color:#6c757d;">v</td>
+                  <td style="{{ cellBase }} text-align:center; width:10%;">
+                    {% if score.result === 'A' %}
+                    <span style="{{ winBadge }}">{{ score.awayMargin }}</span>
+                    {% elif score.result === 'H' %}
+                    <span style="{{ lossBadge }}">{{ score.awayMargin }}</span>
+                    {% else %}
+                    <span style="{{ drawBadge }}">{{ score.awayMargin }}</span>
+                    {% endif %}
+                  </td>
+                  <td style="{{ cellBase }} text-align:left; width:35%;">
+                    <strong style="font-family:Arial,Helvetica,sans-serif;">{{ score.awayManager }}</strong>
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
+            </td>
+          </tr>
+
+          <!-- ===== CUP GROUPS SECTION (conditional) ===== -->
+          {% if groups %}
+          {% for group in groups %}
+          <tr>
+            <td style="padding:0 24px 16px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <!-- Section header -->
+                <tr>
+                  <td colspan="10" style="{{ sectionHeader }}">Group {{ loop.index }}</td>
+                </tr>
+                <!-- Column headers -->
+                <tr style="background-color:#f8f9fa;">
+                  <th style="{{ thNumeric }}" scope="col">Pos</th>
+                  <th style="{{ thBase }} text-align:left;" scope="col">Manager</th>
+                  <th style="{{ thNumeric }}" scope="col">Pld</th>
+                  <th style="{{ thNumeric }}" scope="col">W</th>
+                  <th style="{{ thNumeric }}" scope="col">D</th>
+                  <th style="{{ thNumeric }}" scope="col">L</th>
+                  <th style="{{ thNumeric }}" scope="col">GF</th>
+                  <th style="{{ thNumeric }}" scope="col">GA</th>
+                  <th style="{{ thNumeric }}" scope="col">GD</th>
+                  <th style="{{ thNumeric }}" scope="col">Pts</th>
+                </tr>
+                <!-- Data rows -->
+                {% for row in group %}
+                <tr{% if loop.index is even %} style="{{ stripedBg }}"{% endif %}>
+                  <td style="{{ cellNumeric }}">{{ row.position }}</td>
+                  <td style="{{ cellBase }}">{{ row.manager }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.played }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.won }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.drawn }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.lost }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.gf }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.ga }}</td>
+                  <td style="{{ cellNumeric }}">{{ row.gd }}</td>
+                  <td style="{{ cellNumeric }}"><strong>{{ row.points }}</strong></td>
+                </tr>
+                {% endfor %}
+              </table>
+            </td>
+          </tr>
           {% endfor %}
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
-
-    <h4>Table</h4>
-
-    <table class="table-email small" style="background-color: #dcdcdc;">
-      <tr>
-        <th class="numeric">Pos</th>
-        <th>Manager</th>
-        <th class="numeric">Pld</th>
-        <th class="numeric">W</th>
-        <th class="numeric">D</th>
-        <th class="numeric">L</th>
-        <th class="numeric">GF</th>
-        <th class="numeric">GA</th>
-        <th class="numeric">GD</th>
-        <th class="numeric">Pts</th>
-      </tr>
-      {% for row in table %}
-      <tr>
-        <td class="numeric">{{ row.position }}</td>
-        <td>{{ row.manager }}</td>
-        <td class="numeric">{{ row.played }}</td>
-        <td class="numeric">{{ row.won }}</td>
-        <td class="numeric">{{ row.drawn }}</td>
-        <td class="numeric">{{ row.lost }}</td>
-        <td class="numeric">{{ row.gf }}</td>
-        <td class="numeric">{{ row.ga }}</td>
-        <td class="numeric">{{ row.gd }}</td>
-        <td class="numeric">{{ row.points }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-
-    <h4>Winners</h4>
-
-    <table class="table-email small" style="background-color: #dcdcdc;">
-      {% for winner in winners %}
-      <tr>
-        <td>
-          {{ winner.manager }}
-          {% if winner.goals >= 10 %}
-          - JACKPOT!
           {% endif %}
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
+          {% endif %}
 
-    {% if cupScores.length %}
-    <h4>Cup scores</h4>
+          <!-- ===== FOOTER ===== -->
+          <tr>
+            <td style="padding:16px 24px; border-top:1px solid #dee2e6;">
+              <p style="margin:0 0 8px; font-family:Arial,Helvetica,sans-serif; font-size:13px; color:#212529; text-align:center;">
+                For more league statistics and information, visit<br>
+                <a href="https://dreamleaguefantasyfootball.co.uk/" style="color:#505160; font-weight:bold; text-decoration:underline;">dreamleaguefantasyfootball.co.uk</a>
+              </p>
+              <p style="margin:0; font-family:Arial,Helvetica,sans-serif; font-size:12px; color:#6c757d; text-align:center;">
+                &copy; 2025 Dream League
+              </p>
+            </td>
+          </tr>
 
-    <table class="table-email small" style="background-color: #dcdcdc;">
-      {% for score in cupScores %}
-      <tr>
-        <td class="numeric">{{ score.round }}</td>
-        <td>{{ score.homeManager }}</td>
-        <td>{{ score.homeMargin }}</td>
-        <td>
-          v
-        </td>
-        <td>{{ score.awayMargin }}</td>
-        <td>{{ score.awayManager }}</td>
-      </tr>
-      {% endfor %}
-    </table>
+        </table>
+        <!-- /Inner container -->
 
-    {% if groups %}
-    {% for group in groups %}
-    <table class="table-email small" style="background-color: #dcdcdc;">
-      <tr>
-        <th class="numeric">Pos</th>
-        <th>Manager</th>
-        <th class="numeric">Pld</th>
-        <th class="numeric">W</th>
-        <th class="numeric">D</th>
-        <th class="numeric">L</th>
-        <th class="numeric">GF</th>
-        <th class="numeric">GA</th>
-        <th class="numeric">GD</th>
-        <th class="numeric">Pts</th>
-      </tr>
-      {% for row in group %}
-      <tr>
-        <td class="numeric">{{ row.position }}</td>
-        <td>{{ row.manager }}</td>
-        <td class="numeric">{{ row.played }}</td>
-        <td class="numeric">{{ row.won }}</td>
-        <td class="numeric">{{ row.drawn }}</td>
-        <td class="numeric">{{ row.lost }}</td>
-        <td class="numeric">{{ row.gf }}</td>
-        <td class="numeric">{{ row.ga }}</td>
-        <td class="numeric">{{ row.gd }}</td>
-        <td class="numeric">{{ row.points }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-    {% endfor %}
-    {% endif %}
-    {% endif %}
+      </td>
+    </tr>
+  </table>
+  <!-- /Outer wrapper -->
 
-    <hr />
-
-    <p>For more league statistics and information, visit the Dream League website at <a
-        href="https://dreamleaguefantasyfootball.co.uk/">dreamleaguefantasyfootball.co.uk</a>.</p>
-
-    <footer>
-      <p>Copyright 2021 John Watson</p>
-    </footer>
-  </div>
 </body>
 
 </html>

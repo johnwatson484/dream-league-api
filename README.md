@@ -50,6 +50,34 @@ npm run test:lint      # ESLint
 
 Tests are self-contained via [Testcontainers](https://testcontainers.com/) -- `npm test` spins up ephemeral Postgres and Redis containers automatically.
 
+## Email preview
+
+The weekly results email can be previewed locally without sending real emails.
+
+### Standalone preview server
+
+```bash
+npm run preview:email   # serves rendered email at http://localhost:3003
+```
+
+Edit `src/notifications/views/results.html` and refresh the browser to see changes.
+
+### Dev server route
+
+When running in development mode (`npm run dev` or `npm run local`), the email preview is also available at:
+
+```
+GET http://localhost:3001/dev/email-preview
+```
+
+### Testing in email clients
+
+To verify rendering across email clients (Gmail, Outlook, Apple Mail):
+
+1. Open the preview in a browser and copy the page source
+2. Paste into [Mailtrap](https://mailtrap.io), [PutsMail](https://putsmail.com), or [Litmus](https://litmus.com) to see how it renders in real email clients
+3. Alternatively, configure SMTP env vars to point at a Mailtrap inbox and trigger a real send via `POST /results-send`
+
 ## Docker (full containerised mode)
 
 ```bash
