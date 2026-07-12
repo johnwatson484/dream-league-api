@@ -16,11 +16,11 @@ const currentGameweek = parseInt(values.gameweek!, 10)
 const includeResults = values.results!
 
 const dbConfig = {
-  host: 'localhost',
-  database: 'dream_league_api',
-  user: 'postgres',
-  password: 'postgres',
-  port: 5432
+  host: process.env.POSTGRES_HOST || 'localhost',
+  database: process.env.POSTGRES_DB || 'dream_league_api',
+  user: process.env.POSTGRES_USERNAME || 'postgres',
+  password: process.env.POSTGRES_PASSWORD || 'postgres',
+  port: Number(process.env.POSTGRES_PORT) || 5432
 }
 
 function mulberry32 (seed: number): () => number {
