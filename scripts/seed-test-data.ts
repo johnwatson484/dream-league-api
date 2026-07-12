@@ -314,7 +314,18 @@ async function main () {
   }
 
   await client.end()
+
+  if (includeResults && currentGameweek > 1) {
+    console.log('Generating summaries...')
+    const { createSummary } = await import('../src/results/create-summary.ts')
+    for (let gw = 1; gw < currentGameweek; gw++) {
+      await createSummary(gw)
+      console.log(`  Summary generated for gameweek ${gw}`)
+    }
+  }
+
   console.log('Done.')
+  process.exit(0)
 }
 
 main().catch(err => {
