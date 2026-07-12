@@ -1,3 +1,4 @@
+import { constants as httpConstants } from 'node:http2'
 import { failAction } from './fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
@@ -7,6 +8,8 @@ import { getGoalReports } from '../../goal-reports/get-goal-reports.ts'
 import { getFormData } from '../../goal-reports/get-form-data.ts'
 import { acceptGoalReport } from '../../goal-reports/accept-goal-report.ts'
 import { rejectGoalReport } from '../../goal-reports/reject-goal-report.ts'
+
+const { HTTP_STATUS_CREATED } = httpConstants
 
 export default [{
   method: 'POST',
@@ -29,7 +32,7 @@ export default [{
       const userId = (request.auth.credentials as any).userId
       try {
         const goalReport = await createGoalReport({ ...payload, submittedBy: userId })
-        return h.response(goalReport).code(201)
+        return h.response(goalReport).code(HTTP_STATUS_CREATED)
       } catch (error: any) {
         return boom.badRequest(error.message)
       }

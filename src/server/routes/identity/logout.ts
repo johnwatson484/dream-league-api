@@ -1,7 +1,10 @@
+import { constants as httpConstants } from 'node:http2'
 import { failAction } from '../fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import { revokeToken } from '../../../token/refresh.ts'
+
+const { HTTP_STATUS_NO_CONTENT } = httpConstants
 
 export default [{
   method: 'POST',
@@ -16,7 +19,7 @@ export default [{
     },
     handler: async (request, h) => {
       await revokeToken((request.payload as any).refreshToken)
-      return h.response().code(204)
+      return h.response().code(HTTP_STATUS_NO_CONTENT)
     },
   },
 }] satisfies ServerRoute[]
