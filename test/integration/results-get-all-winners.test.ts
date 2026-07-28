@@ -23,23 +23,35 @@ describe('get all winners', () => {
     await db.Summary.destroy({ truncate: true })
   })
 
-  test('returns winners with gameweek, name, managerId, and goals', async () => {
+  test('returns winners with full score data', async () => {
     await db.Summary.bulkCreate(testData.summaries)
 
     const result = await getAllWinners()
+    const alice = result.find(w => w.name === 'Alice')
 
-    expect(result).toContainEqual({ gameweek: 1, name: 'Alice', managerId: 1, goals: 7 })
+    expect(alice).toEqual({
+      gameweek: 1,
+      name: 'Alice',
+      managerId: 1,
+      goals: 7,
+      conceded: 2,
+      margin: 5,
+      result: 'W',
+      scorers: [{ playerId: 10, name: 'Smith A', goals: 4 }, { playerId: 11, name: 'Jones B', goals: 3 }],
+    })
   })
 
-  test('returns multiple winners for a single gameweek', async () => {
+  test('returns multiple winners for a single gameweek with scorers', async () => {
     await db.Summary.bulkCreate(testData.summaries)
 
     const result = await getAllWinners()
     const gameweek2Winners = result.filter(w => w.gameweek === 2)
 
     expect(gameweek2Winners).toHaveLength(2)
-    expect(gameweek2Winners).toContainEqual({ gameweek: 2, name: 'Bob', managerId: 2, goals: 11 })
-    expect(gameweek2Winners).toContainEqual({ gameweek: 2, name: 'Charlie', managerId: 3, goals: 11 })
+    expect(gameweek2Winners[0].margin).toBe(8)
+    expect(gameweek2Winners[1].margin).toBe(8)
+    expect(gameweek2Winners[0].scorers.length).toBeGreaterThan(0)
+    expect(gameweek2Winners[1].scorers.length).toBeGreaterThan(0)
   })
 
   test('returns winners across multiple gameweeks', async () => {
