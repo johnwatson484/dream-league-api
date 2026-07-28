@@ -3,16 +3,29 @@
     "gameweekId": 1,
     "summary": {
       "gameweekId": 1,
-      "scores": [],
-      "table": []
+      "scores": [
+        { "managerId": 1, "manager": "Alice", "goals": 7, "conceded": 2, "margin": 5, "result": "W", "scorers": [{ "playerId": 10, "name": "Smith A", "goals": 4 }, { "playerId": 11, "name": "Jones B", "goals": 3 }] },
+        { "managerId": 2, "manager": "Bob", "goals": 3, "conceded": 4, "margin": -1, "result": "L", "scorers": [{ "playerId": 20, "name": "Brown C", "goals": 3 }] }
+      ],
+      "table": [],
+      "winners": [
+        { "managerId": 1, "manager": "Alice", "goals": 7 }
+      ]
     }
   },
   {
     "gameweekId": 2,
     "summary": {
       "gameweekId": 2,
-      "scores": [],
-      "table": []
+      "scores": [
+        { "managerId": 2, "manager": "Bob", "goals": 11, "conceded": 3, "margin": 8, "result": "W", "scorers": [{ "playerId": 20, "name": "Brown C", "goals": 7 }, { "playerId": 21, "name": "Davis D", "goals": 4 }] },
+        { "managerId": 3, "manager": "Charlie", "goals": 11, "conceded": 3, "margin": 8, "result": "W", "scorers": [{ "playerId": 30, "name": "Wilson E", "goals": 11 }] }
+      ],
+      "table": [],
+      "winners": [
+        { "managerId": 2, "manager": "Bob", "goals": 11 },
+        { "managerId": 3, "manager": "Charlie", "goals": 11 }
+      ]
     }
   }
 ]

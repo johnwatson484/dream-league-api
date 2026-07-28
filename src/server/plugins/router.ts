@@ -23,7 +23,6 @@ import fixtures from '../routes/fixtures.ts'
 import winners from '../routes/winners.ts'
 import search from '../routes/search.ts'
 import goalReports from '../routes/goal-reports.ts'
-import transfers from '../routes/transfers.ts'
 import seasonSetup from '../routes/season-setup.ts'
 import emailPreview from '../routes/dev/email-preview.ts'
 
@@ -52,7 +51,6 @@ const routes: ServerRoute[] = [
   ...winners,
   ...search,
   ...goalReports,
-  ...transfers,
   ...seasonSetup,
   ...emailPreview,
 ]
