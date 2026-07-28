@@ -7,7 +7,7 @@ export async function getAllWinners (): Promise<any[]> {
   for (const gameweek of gameweeks as any[]) {
     const summary = await getSummary(gameweek.gameweekId)
     for (const winner of summary.winners) {
-      winners.push({ gameweek: gameweek.gameweekId, name: winner.manager })
+      winners.push({ gameweek: gameweek.gameweekId, name: winner.manager, managerId: winner.managerId, goals: winner.goals })
     }
   }
   return winners
