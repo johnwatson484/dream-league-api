@@ -28,9 +28,33 @@ The `local` script runs `docker compose up -d` (Postgres + Redis only), then `np
 
 ### Seeding
 
+#### Sequelize seeds
 ```bash
 npm run seed           # runs sequelize db:seed:all against local Postgres
 ```
+
+#### Test data generation
+```bash
+npm run db:reset       # seed complete test dataset with results (gameweek 2 current)
+```
+
+The `db:reset` script populates the database with realistic test data:
+- 12 managers with full squad assignments (goalkeepers, defenders, midfielders, forwards)
+- 40 gameweeks of fixture data
+- Complete match results (goals, assists, clean sheets, etc.)
+
+You can customize the seeding:
+- `node scripts/seed-test-data.ts --gameweek 5` sets gameweek 5 as current
+- `node scripts/seed-test-data.ts -g 10` shorthand for gameweek
+- `node scripts/seed-test-data.ts` defaults to gameweek 2 without results
+- `node scripts/seed-test-data.ts --results` includes all results data
+
+Database connection uses these env vars (with defaults):
+- `POSTGRES_HOST` (default: `localhost`)
+- `POSTGRES_DB` (default: `dream_league_api`)
+- `POSTGRES_USERNAME` (default: `postgres`)
+- `POSTGRES_PASSWORD` (default: `postgres`)
+- `POSTGRES_PORT` (default: `5432`)
 
 ### Debug mode
 
