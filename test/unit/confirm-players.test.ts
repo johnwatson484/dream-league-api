@@ -64,4 +64,37 @@ describe('confirm players', () => {
     expect(result.success).toBe(false)
     expect(mockPlayer.truncate).not.toHaveBeenCalled()
   })
+
+  test('should normalise position codes before saving', async () => {
+    const players = [{
+      firstName: 'Ian',
+      lastName: 'Henderson',
+      position: 'MID',
+      teamId: 1,
+    }]
+
+    const result = await confirmPlayers(players)
+
+    expect(result.success).toBe(true)
+    expect(mockPlayer.bulkCreate).toHaveBeenCalledWith([{
+      firstName: 'Ian',
+      lastName: 'Henderson',
+      position: 'Midfielder',
+      teamId: 1,
+    }])
+  })
+
+  test('should reject invalid position values', async () => {
+    const players = [{
+      firstName: 'Ian',
+      lastName: 'Henderson',
+      position: 'ST',
+      teamId: 1,
+    }]
+
+    const result = await confirmPlayers(players)
+
+    expect(result.success).toBe(false)
+    expect(mockPlayer.truncate).not.toHaveBeenCalled()
+  })
 })
