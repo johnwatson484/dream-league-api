@@ -67,7 +67,7 @@ describe('preview players', () => {
     expect(result.unmappedTeams[1]!.team).toBe('Wycombe')
   })
 
-  test('should include player details in unmapped teams', async () => {
+  test('should include player details in unmapped teams with mapped position', async () => {
     mockTeam.findOne.mockResolvedValue(null)
 
     const result = await previewPlayers(players)
@@ -76,8 +76,39 @@ describe('preview players', () => {
     expect(rochdale!.players[0]).toEqual({
       firstName: 'Ian',
       lastName: 'Henderson',
-      position: 'FWD',
+      position: 'Forward',
     })
+  })
+
+  test('should map all position codes in unmapped team players', async () => {
+    mockTeam.findOne.mockResolvedValue(null)
+
+    const result = await previewPlayers([
+      { firstName: 'A', lastName: 'Keeper', position: 'GK', team: 'TestFC' },
+      { firstName: 'B', lastName: 'Back', position: 'DEF', team: 'TestFC' },
+      { firstName: 'C', lastName: 'Middle', position: 'MID', team: 'TestFC' },
+      { firstName: 'D', lastName: 'Striker', position: 'FWD', team: 'TestFC' },
+    ])
+
+    const team = result.unmappedTeams[0]!
+    expect(team.players[0]!.position).toBe('Goalkeeper')
+    expect(team.players[1]!.position).toBe('Defender')
+    expect(team.players[2]!.position).toBe('Midfielder')
+    expect(team.players[3]!.position).toBe('Forward')
+  })
+
+  test('should preserve raw position if code is unrecognised', async () => {
+    mockTeam.findOne.mockResolvedValue(null)
+
+    const result = await previewPlayers([{
+      firstName: 'Joe',
+      lastName: 'Bloggs',
+      position: 'ST',
+      team: 'Rochdale',
+    }])
+
+    const rochdale = result.unmappedTeams.find(t => t.team === 'Rochdale')
+    expect(rochdale!.players[0]!.position).toBe('ST')
   })
 
   test('should handle invalid position as unmapped', async () => {

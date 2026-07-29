@@ -1,4 +1,5 @@
 import { mapPlayer } from './map-player.ts'
+import { mapPosition } from '../map-position.ts'
 
 interface UnmappedTeam {
   team: string
@@ -21,7 +22,7 @@ export async function previewPlayers (players: any[]) {
       unmappedByTeam.get(teamName)!.players.push({
         firstName: player.firstName,
         lastName: player.lastName,
-        position: player.position,
+        position: mapPosition(player.position) ?? player.position,
       })
     }
   }
