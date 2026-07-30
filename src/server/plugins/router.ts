@@ -24,6 +24,7 @@ import winners from '../routes/winners.ts'
 import search from '../routes/search.ts'
 import goalReports from '../routes/goal-reports.ts'
 import seasonSetup from '../routes/season-setup.ts'
+import seasonUpcoming from '../routes/season-upcoming.ts'
 import emailPreview from '../routes/dev/email-preview.ts'
 
 const routes: ServerRoute[] = [
@@ -52,6 +53,7 @@ const routes: ServerRoute[] = [
   ...search,
   ...goalReports,
   ...seasonSetup,
+  ...seasonUpcoming,
   ...emailPreview,
 ]
 
