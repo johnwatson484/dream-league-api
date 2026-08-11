@@ -35,7 +35,7 @@ export default [{
     auth: false,
   },
   handler: async (_request, h) => {
-    return h.response(await db.Meeting.findOne({ where: { date: { [Op.gt]: new Date() } }, raw: true }) as any)
+    return h.response(await db.Meeting.findOne({ where: { date: { [Op.gt]: new Date() } } }) as any)
   },
 }, {
   method: 'POST',
