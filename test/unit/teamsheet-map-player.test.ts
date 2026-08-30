@@ -6,7 +6,7 @@ describe('teamsheet player mapping', () => {
       dataValues: {
         playerId: 10,
         position: 'Midfielder',
-        team: { dataValues: { name: 'Arsenal', teamId: 1 } },
+        team: { dataValues: { name: 'Arsenal', alias: 'Arsenal', teamId: 1 } },
       },
       fullName: 'Martin Odegaard',
       lastNameFirstName: 'Odegaard, Martin',
@@ -24,6 +24,7 @@ describe('teamsheet player mapping', () => {
       lastNameFirstName: 'Odegaard, Martin',
       position: 'Midfielder',
       team: 'Arsenal',
+      teamAlias: 'Arsenal',
       teamId: 1,
       sourceName: 'M. Odegaard',
       matchDistance: 2,
