@@ -24,6 +24,13 @@ export default function defineGameweekModel (sequelize: Sequelize, DataTypes: Da
         return currentDate >= this.startDate
       },
     },
+    isCurrent: {
+      type: DataTypes.VIRTUAL,
+      get (this: any) {
+        const currentDate = new Date()
+        return currentDate >= this.startDate && currentDate <= this.endDate
+      },
+    },
     shortDate: {
       type: DataTypes.VIRTUAL,
       get (this: any) {
