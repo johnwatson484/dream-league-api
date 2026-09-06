@@ -1,5 +1,5 @@
 import Fuse from 'fuse.js'
-import { normalizeTeamName } from './normalize.ts'
+import { normalizeTeamName, hasConflictingDiscriminator } from './normalize.ts'
 import { parseSourceText } from './parse-source-text.ts'
 import type { MatchCategory } from './fuzzy-match-player.ts'
 
@@ -66,8 +66,12 @@ export function fuzzyMatchTeam (teams: any[], sourceText: string, prebuiltFuse?:
   const fuse = prebuiltFuse || buildTeamIndex(teams)
 
   const results = fuse.search(searchTerm)
+  const queryNormalized = normalizeTeamName(searchTerm)
 
+  // Veto candidates that share a prefix but carry a different discriminating word (e.g. don't
+  // let "Bristol Rovers" fuzzy-match "Bristol City" just because Fuse tolerates the difference).
   const candidates: TeamCandidate[] = results
+    .filter(r => !hasConflictingDiscriminator(queryNormalized, r.item.normalizedName))
     .slice(0, 3)
     .map(r => ({
       teamId: r.item.teamId,

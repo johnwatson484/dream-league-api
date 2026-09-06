@@ -32,7 +32,7 @@ function discriminatorsOf (normalized: string): Set<string> {
 
 // True only when both names carry a discriminator and none of them match - a name with no
 // discriminator at all (e.g. "Blackpool") is never treated as conflicting.
-function hasConflictingDiscriminator (normalized1: string, normalized2: string): boolean {
+export function hasConflictingDiscriminator (normalized1: string, normalized2: string): boolean {
   const tokens1 = discriminatorsOf(normalized1)
   const tokens2 = discriminatorsOf(normalized2)
   if (!tokens1.size || !tokens2.size) { return false }

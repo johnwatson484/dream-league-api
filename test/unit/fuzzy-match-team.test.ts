@@ -9,6 +9,13 @@ const teams = [
   { teamId: 5, name: 'Charlton Athletic', alias: 'Charlton' },
 ]
 
+const sameCityTeams = [
+  { teamId: 45, name: 'Sheffield United', alias: 'Sheff Utd' },
+  { teamId: 46, name: 'Sheffield Wednesday', alias: 'Sheff Wed' },
+  { teamId: 90, name: 'Bristol City', alias: 'Bristol City' },
+  { teamId: 91, name: 'Bristol Rovers', alias: 'Bristol Rovers' },
+]
+
 describe('fuzzyMatchTeam', () => {
   test.each([
     ['Rochdale', 1],
@@ -16,6 +23,17 @@ describe('fuzzyMatchTeam', () => {
     ['Forest Green', 4],
   ])('should confidently match "%s" to team %i', (input, expectedTeamId) => {
     const result = fuzzyMatchTeam(teams, input)
+    expect(result.category).toBe('confident')
+    expect(result.bestMatch?.teamId).toBe(expectedTeamId)
+  })
+
+  test.each([
+    ['Sheffield United', 45],
+    ['Sheffield Wednesday', 46],
+    ['Bristol City', 90],
+    ['Bristol Rovers', 91],
+  ])('should not confuse same-city clubs: "%s" matches team %i', (input, expectedTeamId) => {
+    const result = fuzzyMatchTeam(sameCityTeams, input)
     expect(result.category).toBe('confident')
     expect(result.bestMatch?.teamId).toBe(expectedTeamId)
   })
