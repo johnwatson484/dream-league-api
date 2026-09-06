@@ -4,6 +4,7 @@ export function mapKeeper (keeper: any, teamsheet: any[]): any {
     playerId: keeper.teamId,
     teamId: keeper.teamId,
     name: keeper.name,
+    alias: keeper.alias,
     sourceName: teamsheetEntry ? teamsheetEntry.player : '',
     matchDistance: teamsheetEntry ? teamsheetEntry.distance : '',
     substitute: keeper.managerKeepers.dataValues.substitute,

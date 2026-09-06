@@ -5,6 +5,7 @@ describe('teamsheet keeper mapping', () => {
     const keeper = {
       teamId: 5,
       name: 'Arsenal',
+      alias: 'Arsenal',
       managerKeepers: { dataValues: { substitute: false } },
     }
     const teamsheet = [
@@ -17,6 +18,7 @@ describe('teamsheet keeper mapping', () => {
       playerId: 5,
       teamId: 5,
       name: 'Arsenal',
+      alias: 'Arsenal',
       sourceName: 'Arsenal FC',
       matchDistance: 3,
       substitute: false,

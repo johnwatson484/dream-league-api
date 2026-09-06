@@ -30,12 +30,18 @@ describe('normalizeTeamName', () => {
     expect(normalizeTeamName('Henderson')).toBe('henderson')
   })
 
-  test('should strip football suffixes', () => {
-    expect(normalizeTeamName('Forest Green Rovers')).toBe('forest green')
-    expect(normalizeTeamName('Brighton & Hove Albion')).toBe('brighton hove')
-    expect(normalizeTeamName('Charlton Athletic')).toBe('charlton')
-    expect(normalizeTeamName('Manchester United')).toBe('manchester')
-    expect(normalizeTeamName('Manchester City')).toBe('manchester')
+  test('should strip only fc/afc, keeping discriminating club-name suffixes', () => {
+    expect(normalizeTeamName('Forest Green Rovers')).toBe('forest green rovers')
+    expect(normalizeTeamName('Brighton & Hove Albion')).toBe('brighton hove albion')
+    expect(normalizeTeamName('Charlton Athletic')).toBe('charlton athletic')
+    expect(normalizeTeamName('Manchester United')).toBe('manchester united')
+    expect(normalizeTeamName('Manchester City')).toBe('manchester city')
+    expect(normalizeTeamName('Arsenal FC')).toBe('arsenal')
+  })
+
+  test('should expand common abbreviations of a discriminating word', () => {
+    expect(normalizeTeamName('Manchester Utd')).toBe('manchester united')
+    expect(normalizeTeamName('Sheffield Wed')).toBe('sheffield wednesday')
   })
 
   test('should collapse whitespace', () => {
@@ -77,5 +83,10 @@ describe('isTeamMatch', () => {
   test('should return false for empty inputs', () => {
     expect(isTeamMatch('', 'Rochdale')).toBe(false)
     expect(isTeamMatch('Rochdale', '')).toBe(false)
+  })
+
+  test('should not conflate clubs that share a first word but differ in discriminator', () => {
+    expect(isTeamMatch('Sheffield United', 'Sheffield Wednesday')).toBe(false)
+    expect(isTeamMatch('Bristol City', 'Bristol Rovers')).toBe(false)
   })
 })

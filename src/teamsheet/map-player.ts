@@ -6,6 +6,7 @@ export function mapPlayer (player: any, teamsheet: any[]): any {
     lastNameFirstName: player.lastNameFirstName,
     position: player.dataValues.position,
     team: player.dataValues.team.dataValues.name,
+    teamAlias: player.dataValues.team.dataValues.alias,
     teamId: player.dataValues.team.dataValues.teamId,
     sourceName: teamsheetEntry ? teamsheetEntry.player : '',
     matchDistance: teamsheetEntry ? teamsheetEntry.distance : '',
