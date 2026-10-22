@@ -1,5 +1,5 @@
 # Development
-FROM node:24-alpine AS development
+FROM node:24.22.1-alpine AS development
 
 ENV TZ="Europe/London"
 ENV NODE_ENV=development
@@ -22,7 +22,7 @@ COPY --chown=node:node . .
 CMD ["node", "src/index.ts"]
 
 # Production
-FROM node:24-alpine AS production
+FROM node:24.22.1-alpine AS production
 
 ENV TZ="Europe/London"
 ENV NODE_ENV=production
