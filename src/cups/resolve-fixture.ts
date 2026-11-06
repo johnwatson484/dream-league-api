@@ -1,4 +1,4 @@
-import { Op } from 'sequelize'
+import { Op, type Transactionable } from 'sequelize'
 import db from '../data/index.ts'
 
 type DecidedBy = 'margin' | 'goals' | 'third_leg' | 'first_goal' | 'lots'
@@ -11,8 +11,9 @@ interface ResolutionResult {
   status: 'resolved' | 'needs_third_leg' | 'needs_manual_resolution'
 }
 
-export async function resolveFixture (fixtureId: number): Promise<ResolutionResult> {
+export async function resolveFixture (fixtureId: number, options: Transactionable = {}): Promise<ResolutionResult> {
   const fixture: any = await db.Fixture.findOne({
+    ...options,
     where: { fixtureId },
     include: [{ model: db.Cup, as: 'cup' }],
   })
@@ -23,17 +24,17 @@ export async function resolveFixture (fixtureId: number): Promise<ResolutionResu
   const knockoutLegs = cup.knockoutLegs || 1
 
   if (knockoutLegs === 1) {
-    return resolveSingleLeg(fixture)
+    return resolveSingleLeg(fixture, options)
   }
 
-  return resolveTwoLegs(fixture)
+  return resolveTwoLegs(fixture, options)
 }
 
-async function resolveSingleLeg (fixture: any): Promise<ResolutionResult> {
-  const homeGoals = await getGoalCount(fixture.homeManagerId, fixture.gameweekId)
-  const homeConceded = await getConcedeCount(fixture.homeManagerId, fixture.gameweekId)
-  const awayGoals = await getGoalCount(fixture.awayManagerId, fixture.gameweekId)
-  const awayConceded = await getConcedeCount(fixture.awayManagerId, fixture.gameweekId)
+async function resolveSingleLeg (fixture: any, options: Transactionable): Promise<ResolutionResult> {
+  const homeGoals = await getGoalCount(fixture.homeManagerId, fixture.gameweekId, options)
+  const homeConceded = await getConcedeCount(fixture.homeManagerId, fixture.gameweekId, options)
+  const awayGoals = await getGoalCount(fixture.awayManagerId, fixture.gameweekId, options)
+  const awayConceded = await getConcedeCount(fixture.awayManagerId, fixture.gameweekId, options)
 
   const homeMargin = homeGoals - homeConceded
   const awayMargin = awayGoals - awayConceded
@@ -52,7 +53,7 @@ async function resolveSingleLeg (fixture: any): Promise<ResolutionResult> {
     return { winnerManagerId: fixture.awayManagerId, homeAggregate: homeMargin, awayAggregate: awayMargin, decidedBy: 'goals', status: 'resolved' }
   }
 
-  const earliestGoal = await getEarliestGoal(fixture.homeManagerId, fixture.awayManagerId, fixture.gameweekId)
+  const earliestGoal = await getEarliestGoal(fixture.homeManagerId, fixture.awayManagerId, fixture.gameweekId, options)
   if (earliestGoal) {
     return { winnerManagerId: earliestGoal, homeAggregate: homeMargin, awayAggregate: awayMargin, decidedBy: 'first_goal', status: 'resolved' }
   }
@@ -60,8 +61,9 @@ async function resolveSingleLeg (fixture: any): Promise<ResolutionResult> {
   return { winnerManagerId: null, homeAggregate: homeMargin, awayAggregate: awayMargin, decidedBy: null, status: 'needs_manual_resolution' }
 }
 
-async function resolveTwoLegs (fixture: any): Promise<ResolutionResult> {
+async function resolveTwoLegs (fixture: any, options: Transactionable): Promise<ResolutionResult> {
   const relatedFixtures: any[] = await db.Fixture.findAll({
+    ...options,
     where: {
       cupId: fixture.cupId,
       round: fixture.round,
@@ -77,13 +79,18 @@ async function resolveTwoLegs (fixture: any): Promise<ResolutionResult> {
   let totalHomeGoals = 0
   let totalAwayGoals = 0
 
-  for (const f of relatedFixtures) {
-    const hGoals = await getGoalCount(f.homeManagerId, f.gameweekId)
-    const hConceded = await getConcedeCount(f.homeManagerId, f.gameweekId)
-    const aGoals = await getGoalCount(f.awayManagerId, f.gameweekId)
-    const aConceded = await getConcedeCount(f.awayManagerId, f.gameweekId)
+  const legScores = await Promise.all(relatedFixtures.map(async f => {
+    const [hGoals, hConceded, aGoals, aConceded] = await Promise.all([
+      getGoalCount(f.homeManagerId, f.gameweekId, options),
+      getConcedeCount(f.homeManagerId, f.gameweekId, options),
+      getGoalCount(f.awayManagerId, f.gameweekId, options),
+      getConcedeCount(f.awayManagerId, f.gameweekId, options),
+    ])
+    return { homeManagerId: f.homeManagerId, hGoals, hConceded, aGoals, aConceded }
+  }))
 
-    if (f.homeManagerId === fixture.homeManagerId) {
+  for (const { homeManagerId, hGoals, hConceded, aGoals, aConceded } of legScores) {
+    if (homeManagerId === fixture.homeManagerId) {
       totalHomeMargin += hGoals - hConceded
       totalAwayMargin += aGoals - aConceded
       totalHomeGoals += hGoals
@@ -115,7 +122,7 @@ async function resolveTwoLegs (fixture: any): Promise<ResolutionResult> {
   }
 
   const gameweekIds = relatedFixtures.map((f: any) => f.gameweekId)
-  const earliestGoal = await getEarliestGoalAcrossWeeks(fixture.homeManagerId, fixture.awayManagerId, gameweekIds)
+  const earliestGoal = await getEarliestGoalAcrossWeeks(fixture.homeManagerId, fixture.awayManagerId, gameweekIds, options)
   if (earliestGoal) {
     return { winnerManagerId: earliestGoal, homeAggregate: totalHomeMargin, awayAggregate: totalAwayMargin, decidedBy: 'first_goal', status: 'resolved' }
   }
@@ -123,20 +130,22 @@ async function resolveTwoLegs (fixture: any): Promise<ResolutionResult> {
   return { winnerManagerId: null, homeAggregate: totalHomeMargin, awayAggregate: totalAwayMargin, decidedBy: null, status: 'needs_manual_resolution' }
 }
 
-async function getGoalCount (managerId: number, gameweekId: number): Promise<number> {
-  return db.Goal.count({ where: { managerId, gameweekId, cup: true } })
+async function getGoalCount (managerId: number, gameweekId: number, options: Transactionable): Promise<number> {
+  return db.Goal.count({ ...options, where: { managerId, gameweekId, cup: true } })
 }
 
-async function getConcedeCount (managerId: number, gameweekId: number): Promise<number> {
-  return db.Concede.count({ where: { managerId, gameweekId, cup: true } })
+async function getConcedeCount (managerId: number, gameweekId: number, options: Transactionable): Promise<number> {
+  return db.Concede.count({ ...options, where: { managerId, gameweekId, cup: true } })
 }
 
-async function getEarliestGoal (homeManagerId: number, awayManagerId: number, gameweekId: number): Promise<number | null> {
+async function getEarliestGoal (homeManagerId: number, awayManagerId: number, gameweekId: number, options: Transactionable): Promise<number | null> {
   const homeEarliest: any = await db.Goal.findOne({
+    ...options,
     where: { managerId: homeManagerId, gameweekId, cup: true, matchTime: { [Op.ne]: null } },
     order: [['matchTime', 'ASC']],
   })
   const awayEarliest: any = await db.Goal.findOne({
+    ...options,
     where: { managerId: awayManagerId, gameweekId, cup: true, matchTime: { [Op.ne]: null } },
     order: [['matchTime', 'ASC']],
   })
@@ -147,12 +156,14 @@ async function getEarliestGoal (homeManagerId: number, awayManagerId: number, ga
   return homeEarliest.matchTime < awayEarliest.matchTime ? homeManagerId : awayManagerId
 }
 
-async function getEarliestGoalAcrossWeeks (homeManagerId: number, awayManagerId: number, gameweekIds: number[]): Promise<number | null> {
+async function getEarliestGoalAcrossWeeks (homeManagerId: number, awayManagerId: number, gameweekIds: number[], options: Transactionable): Promise<number | null> {
   const homeEarliest: any = await db.Goal.findOne({
+    ...options,
     where: { managerId: homeManagerId, gameweekId: gameweekIds, cup: true, matchTime: { [Op.ne]: null } },
     order: [['matchTime', 'ASC']],
   })
   const awayEarliest: any = await db.Goal.findOne({
+    ...options,
     where: { managerId: awayManagerId, gameweekId: gameweekIds, cup: true, matchTime: { [Op.ne]: null } },
     order: [['matchTime', 'ASC']],
   })
@@ -163,22 +174,22 @@ async function getEarliestGoalAcrossWeeks (homeManagerId: number, awayManagerId:
   return homeEarliest.matchTime < awayEarliest.matchTime ? homeManagerId : awayManagerId
 }
 
-export async function manuallyResolve (fixtureId: number, winnerManagerId: number): Promise<void> {
-  const existing = await db.CupResult.findOne({ where: { fixtureId } })
+export async function manuallyResolve (fixtureId: number, winnerManagerId: number, options: Transactionable = {}): Promise<void> {
+  const existing = await db.CupResult.findOne({ ...options, where: { fixtureId } })
   if (existing) {
-    await db.CupResult.update({ winnerManagerId, decidedBy: 'lots' }, { where: { fixtureId } })
+    await db.CupResult.update({ winnerManagerId, decidedBy: 'lots' }, { ...options, where: { fixtureId } })
   } else {
-    await db.CupResult.create({ fixtureId, winnerManagerId, homeAggregate: 0, awayAggregate: 0, decidedBy: 'lots' } as any)
+    await db.CupResult.create({ fixtureId, winnerManagerId, homeAggregate: 0, awayAggregate: 0, decidedBy: 'lots' } as any, options)
   }
 }
 
-export async function saveResolution (fixtureId: number, result: ResolutionResult): Promise<void> {
+export async function saveResolution (fixtureId: number, result: ResolutionResult, options: Transactionable = {}): Promise<void> {
   if (result.status !== 'resolved') { return }
-  const existing = await db.CupResult.findOne({ where: { fixtureId } })
+  const existing = await db.CupResult.findOne({ ...options, where: { fixtureId } })
   if (existing) {
-    await db.CupResult.update(result, { where: { fixtureId } })
+    await db.CupResult.update(result, { ...options, where: { fixtureId } })
   } else {
-    await db.CupResult.create({ fixtureId, ...result } as any)
+    await db.CupResult.create({ fixtureId, ...result } as any, options)
   }
 }
 

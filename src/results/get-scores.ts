@@ -1,16 +1,25 @@
 import db from '../data/index.ts'
-import { getConceded, getGoals } from './get-goals.ts'
 import { getResult } from './get-result.ts'
+import type { Transactionable } from 'sequelize'
 
-export async function getScores (gameweekId: number, managers: any[], cup = false): Promise<any[]> {
-  const scores = []
-  for (const manager of managers) {
-    const goals = await getGoals(gameweekId, manager.managerId, cup)
-    const conceded = await getConceded(gameweekId, manager.managerId, cup)
-    const scorers = await getScorers(goals)
+export async function getScores (gameweekId: number, managers: any[], cup = false, options: Transactionable = {}): Promise<any[]> {
+  const managerIds = managers.map(manager => manager.managerId)
+  const where = { gameweekId, managerId: managerIds, cup }
+  const [allGoals, allConceded] = await Promise.all([
+    db.Goal.findAll({ ...options, where }),
+    db.Concede.findAll({ ...options, where }),
+  ])
+  const playerIds = [...new Set(allGoals.map((goal: any) => goal.playerId))]
+  const players = await db.Player.findAll({ ...options, where: { playerId: playerIds } })
+  const playerNames = new Map(players.map((player: any) => [player.playerId, player.lastNameInitial]))
+
+  return managers.map(manager => {
+    const goals = allGoals.filter((goal: any) => goal.managerId === manager.managerId)
+    const conceded = allConceded.filter((concede: any) => concede.managerId === manager.managerId)
+    const scorers = getScorers(goals, playerNames)
     const result = getResult(goals.length, conceded.length)
 
-    scores.push({
+    return {
       managerId: manager.managerId,
       manager: manager.name,
       goals: goals.length,
@@ -18,12 +27,11 @@ export async function getScores (gameweekId: number, managers: any[], cup = fals
       margin: goals.length - conceded.length,
       result,
       scorers,
-    })
-  }
-  return scores
+    }
+  })
 }
 
-async function getScorers (goals: any[]): Promise<any[]> {
+function getScorers (goals: any[], playerNames: Map<number, string>): any[] {
   const goalsPerPlayer = new Map<number, any>()
   for (const goal of goals) {
     const entry = goalsPerPlayer.get(goal.playerId)
@@ -33,10 +41,8 @@ async function getScorers (goals: any[]): Promise<any[]> {
       goalsPerPlayer.set(goal.playerId, { playerId: goal.playerId, goals: 1 })
     }
   }
-  const scorers = [...goalsPerPlayer.values()]
-  for (const scorer of scorers) {
-    const player: any = await db.Player.findOne({ where: { playerId: scorer.playerId } })
-    scorer.name = player.lastNameInitial
-  }
-  return scorers
+  return [...goalsPerPlayer.values()].map(scorer => {
+    if (!playerNames.has(scorer.playerId)) { throw new Error(`Player ${scorer.playerId} not found`) }
+    return { ...scorer, name: playerNames.get(scorer.playerId) }
+  })
 }

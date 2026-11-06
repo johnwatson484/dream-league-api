@@ -1,4 +1,4 @@
-import { Op } from 'sequelize'
+import { Op, type Transactionable } from 'sequelize'
 import db from '../data/index.ts'
 import { getCupScores } from './get-cup-scores.ts'
 import { orderTable } from './order-table.ts'
@@ -26,12 +26,16 @@ function calculateManagerStats (manager: any, scores: any[]) {
   return { managerId: manager.managerId, manager: manager.name, played, won, drawn, lost, gf, ga, gd, points }
 }
 
-export async function getGroups (gameweekId: number): Promise<any[]> {
-  const cups = await db.Cup.findAll({ where: { hasGroupStage: true } })
+export async function getGroups (gameweekId: number, options: Transactionable = {}): Promise<any[]> {
+  const cups = await db.Cup.findAll({ ...options, where: { hasGroupStage: true } })
+  const summaries = await db.Summary.findAll({ ...options, attributes: ['gameweekId'] })
+  const completedWeeks = new Set(summaries.map((summary: any) => summary.gameweekId))
+  // The current results are being summarised before their summary is saved.
+  completedWeeks.add(gameweekId)
 
-  const groupTables = []
-  for (const cup of cups as any[]) {
+  const cupTables = await Promise.all((cups as any[]).map(async cup => {
     const fixtures = await db.Fixture.findAll({
+      ...options,
       where: {
         cupId: cup.cupId,
         gameweekId: { [Op.lte]: gameweekId },
@@ -39,24 +43,16 @@ export async function getGroups (gameweekId: number): Promise<any[]> {
       },
     })
 
-    if (!fixtures.length) {
-      continue
-    }
+    if (!fixtures.length) { return [] }
 
-    const gameweekIds = [...new Set((fixtures as any[]).map((x: any) => x.gameweekId))]
-    const groups = await db.Group.findAll({ where: { cupId: cup.cupId }, include: { model: db.Manager, as: 'managers' } } as any)
-    for (const group of groups as any[]) {
-      if (group.managers.length) {
-        const scores: any[] = []
-        for (const gameweek of gameweekIds) {
-          const cupScores = await getCupScores(gameweek, group.managers)
-          scores.push(...cupScores)
-        }
-        let table = group.managers.map((manager: any) => calculateManagerStats(manager, scores))
-        table = orderTable(table)
-        groupTables.push(table)
-      }
-    }
-  }
-  return groupTables
+    const gameweekIds = [...new Set((fixtures as any[]).map((fixture: any) => fixture.gameweekId))]
+      .filter(gameweek => completedWeeks.has(gameweek))
+    const groups = await db.Group.findAll({ ...options, where: { cupId: cup.cupId }, include: { model: db.Manager, as: 'managers' } } as any)
+    return Promise.all((groups as any[]).filter(group => group.managers.length).map(async group => {
+      const weeklyScores = await Promise.all(gameweekIds.map(gameweek => getCupScores(gameweek, group.managers, options)))
+      const scores = weeklyScores.flat().filter(score => score.cupId === cup.cupId && score.round === 1)
+      return orderTable(group.managers.map((manager: any) => calculateManagerStats(manager, scores)))
+    }))
+  }))
+  return cupTables.flat()
 }

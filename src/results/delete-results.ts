@@ -1,14 +1,14 @@
 import db from '../data/index.ts'
+import { rebuildLaterSummaries } from './create-summary.ts'
+import { withResultsTransaction } from './transaction.ts'
+import { invalidateCupResults } from './invalidate-cup-results.ts'
 
 export async function deleteResults (gameweekId: number): Promise<void> {
-  const transaction = await db.sequelize.transaction()
-  try {
+  await withResultsTransaction(async transaction => {
     await db.Concede.destroy({ where: { gameweekId }, transaction })
     await db.Goal.destroy({ where: { gameweekId }, transaction })
     await db.Summary.destroy({ where: { gameweekId }, transaction })
-    await transaction.commit()
-  } catch (error) {
-    await transaction.rollback()
-    throw error
-  }
+    await invalidateCupResults(gameweekId, transaction)
+    await rebuildLaterSummaries(gameweekId, transaction)
+  })
 }

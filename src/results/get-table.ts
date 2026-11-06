@@ -1,11 +1,11 @@
-import { getGameweekResults } from './get-gameweek-results.ts'
+import { getGameweekResults, type TableOptions } from './get-gameweek-results.ts'
 import { orderTable } from './order-table.ts'
 import { W, D, L } from '../constants/results.ts'
 
-export async function getTable (gameweekId: number, managers: any[]): Promise<any[]> {
+export async function getTable (gameweekId: number, managers: any[], options: TableOptions = {}): Promise<any[]> {
   const rows = []
   for (const manager of managers) {
-    const gameweekResults = await getGameweekResults(gameweekId, manager.managerId)
+    const gameweekResults = await getGameweekResults(gameweekId, manager.managerId, options)
     const won = gameweekResults.filter(x => x.result === W).length
     const drawn = gameweekResults.filter(x => x.result === D).length
     const lost = gameweekResults.filter(x => x.result === L).length
@@ -16,7 +16,7 @@ export async function getTable (gameweekId: number, managers: any[]): Promise<an
     rows.push({
       managerId: manager.managerId,
       manager: manager.name,
-      played: gameweekId,
+      played: gameweekResults.length,
       won,
       drawn,
       lost,

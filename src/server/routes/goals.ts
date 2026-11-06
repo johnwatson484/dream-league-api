@@ -2,7 +2,8 @@ import { failAction } from './fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import db from '../../data/index.ts'
-import { update } from '../../results/update.ts'
+import { deleteResultEntry } from '../../results/delete-result-entry.ts'
+import boom from '@hapi/boom'
 
 export default [{
   method: 'GET',
@@ -40,9 +41,9 @@ export default [{
       failAction,
     },
     handler: async (request, h) => {
-      const goal: any = await db.Goal.findOne({ where: { goalId: (request.payload as any).goalId } })
-      await db.Goal.destroy({ where: { goalId: (request.payload as any).goalId } })
-      await update({ gameweekId: goal.gameweekId })
+      if (!await deleteResultEntry('goal', (request.payload as any).goalId)) {
+        return boom.notFound('Goal not found')
+      }
       return h.response('ok')
     },
   },
