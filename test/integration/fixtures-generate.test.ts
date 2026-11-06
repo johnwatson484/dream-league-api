@@ -5,6 +5,7 @@ import testData from '../data/index.ts'
 describe('fixture generation', () => {
   beforeAll(async () => {
     await db.Fixture.destroy({ truncate: true })
+    await db.ManagerGroup.destroy({ truncate: true })
     await db.Group.destroy({ truncate: true, cascade: true })
     await db.Cup.destroy({ truncate: true, cascade: true })
     await db.Manager.destroy({ truncate: true })
@@ -16,6 +17,7 @@ describe('fixture generation', () => {
 
   afterAll(async () => {
     await db.Fixture.destroy({ truncate: true })
+    await db.ManagerGroup.destroy({ truncate: true })
     await db.Group.destroy({ truncate: true, cascade: true })
     await db.Cup.destroy({ truncate: true, cascade: true })
     await db.Manager.destroy({ truncate: true })
@@ -25,6 +27,7 @@ describe('fixture generation', () => {
 
   beforeEach(async () => {
     await db.Fixture.destroy({ truncate: true })
+    await db.ManagerGroup.destroy({ truncate: true })
     await db.Group.destroy({ truncate: true, cascade: true })
   })
 

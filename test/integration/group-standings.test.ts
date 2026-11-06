@@ -28,6 +28,9 @@ describe('group standings', () => {
   })
 
   afterAll(async () => {
+    for (const model of [db.Fixture, db.ManagerGroup, db.Group, db.Cup, db.Summary, db.Goal, db.Concede, db.Manager, db.Gameweek]) {
+      await model.destroy({ truncate: true })
+    }
     await db.sequelize.close()
   })
 

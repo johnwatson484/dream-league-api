@@ -1,6 +1,7 @@
 import db from '../data/index.ts'
 import { getCupScores } from '../results/get-cup-scores.ts'
 import { orderTable } from '../results/order-table.ts'
+import { Transaction } from 'sequelize'
 
 interface StandingRow {
   position: number
@@ -23,17 +24,23 @@ interface GroupStanding {
   table: StandingRow[]
 }
 
-export async function getGroupStandings (cupId: number): Promise<GroupStanding[]> {
+export async function getGroupStandings (cupId: number, transaction?: Transaction): Promise<GroupStanding[]> {
+  if (!transaction) {
+    return db.sequelize.transaction({ isolationLevel: Transaction.ISOLATION_LEVELS.REPEATABLE_READ }, transaction => getGroupStandings(cupId, transaction))
+  }
+  const options = { transaction }
   const groups = await db.Group.findAll({
+    ...options,
     where: { cupId },
     include: [{ model: db.Manager, as: 'managers' }],
   } as any)
 
   const fixtures = await db.Fixture.findAll({
+    ...options,
     where: { cupId, round: 1 },
   })
 
-  const summaries = await db.Summary.findAll({ attributes: ['gameweekId'] })
+  const summaries = await db.Summary.findAll({ ...options, attributes: ['gameweekId'] })
   const completedWeeks = new Set(summaries.map((summary: any) => summary.gameweekId))
   const gameweekIds = [...new Set((fixtures as any[]).map((x: any) => x.gameweekId))]
     .filter(gameweekId => completedWeeks.has(gameweekId))
@@ -44,7 +51,7 @@ export async function getGroupStandings (cupId: number): Promise<GroupStanding[]
 
     const scores: any[] = []
     for (const gameweekId of gameweekIds) {
-      const cupScores = await getCupScores(gameweekId, group.managers)
+      const cupScores = await getCupScores(gameweekId, group.managers, options)
       scores.push(...cupScores.filter(score => score.cupId === cupId && score.round === 1))
     }
 

@@ -112,6 +112,18 @@ docker compose --profile app up    # starts app + Postgres + Redis in containers
 
 For running the full stack (API + Web), see the [dream-league-core](https://github.com/johnwatson484/dream-league-core) orchestration repo.
 
+## Correcting results
+
+A submitted week includes its league and cup results. Cup fixtures with zero goals and conceded count as draws; scheduled weeks without submitted results stay unplayed. Corrections, approved goal reports and score deletions rebuild the affected week and all later submitted result summaries in the same transaction. Deleting a whole week's results removes that week from cumulative tables. Changed cup scores clear saved decisions for the affected ties, including other legs, so an administrator can resolve them again using the corrected scores.
+
+After deploying the group standings fix, repair existing saved tables with the target database environment configured:
+
+```bash
+npm run results:rebuild
+```
+
+This rebuilds existing submitted weeks, including goalless weeks, without adding missing weeks or changing raw goals and conceded records. It also updates the summaries used by results pages, statistics and future results emails. Emails already sent are unchanged.
+
 ## Environment variables
 
 | Variable | Description | Default |

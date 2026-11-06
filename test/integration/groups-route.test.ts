@@ -22,6 +22,9 @@ describe('group membership routes', () => {
 
   afterAll(async () => {
     await server.stop()
+    for (const model of [db.ManagerGroup, db.Group, db.Cup, db.Manager]) {
+      await model.destroy({ truncate: true })
+    }
     await db.sequelize.close()
   })
 

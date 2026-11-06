@@ -4,6 +4,7 @@ import Joi from 'joi'
 import db from '../../data/index.ts'
 import { resolveFixture, manuallyResolve, saveResolution, getGroupQualifiers } from '../../cups/resolve-fixture.ts'
 import { getGroupStandings } from '../../cups/get-group-standings.ts'
+import { withResultsTransaction } from '../../results/transaction.ts'
 
 export default [{
   method: 'GET',
@@ -148,14 +149,15 @@ export default [{
       const { fixtureId, winnerManagerId } = request.payload as { fixtureId: number; winnerManagerId?: number }
 
       if (winnerManagerId) {
-        await manuallyResolve(fixtureId, winnerManagerId)
+        await withResultsTransaction(transaction => manuallyResolve(fixtureId, winnerManagerId, { transaction }))
         return h.response({ status: 'resolved', decidedBy: 'lots' })
       }
 
-      const result = await resolveFixture(fixtureId)
-      if (result.status === 'resolved') {
-        await saveResolution(fixtureId, result)
-      }
+      const result = await withResultsTransaction(async transaction => {
+        const result = await resolveFixture(fixtureId, { transaction })
+        await saveResolution(fixtureId, result, { transaction })
+        return result
+      })
       return h.response(result)
     },
   },
@@ -172,7 +174,7 @@ export default [{
     },
     handler: async (request, h) => {
       const { fixtureId } = request.payload as { fixtureId: number }
-      await db.CupResult.destroy({ where: { fixtureId } })
+      await withResultsTransaction(transaction => db.CupResult.destroy({ where: { fixtureId }, transaction }))
       return h.response({ status: 'unresolved' })
     },
   },
