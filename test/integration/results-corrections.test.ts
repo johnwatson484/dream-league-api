@@ -2,7 +2,7 @@ import Hapi from '@hapi/hapi'
 import db from '../../src/data/index.ts'
 import { update } from '../../src/results/update.ts'
 import { deleteResults } from '../../src/results/delete-results.ts'
-import { createSummary, rebuildExistingSummaries } from '../../src/results/create-summary.ts'
+import { createSummary } from '../../src/results/create-summary.ts'
 import { getSummary } from '../../src/results/get-summary.ts'
 import { getGroupStandings } from '../../src/cups/get-group-standings.ts'
 import { acceptGoalReport } from '../../src/goal-reports/accept-goal-report.ts'
@@ -140,7 +140,7 @@ describe('result corrections remain consistent', () => {
     await assertLiveMatchesSaved(3)
   })
 
-  test.each(['goal', 'concede'] as const)('deleting one %s preserves other scores and refreshes later tables', async kind => {
+  test.each(['goal', 'concede'] as const)('deleting one %s entry preserves other recorded entries and refreshes later tables', async kind => {
     await update(scores(1, 2))
     await update(scores(3))
     const model = kind === 'goal' ? db.Goal : db.Concede
@@ -176,7 +176,7 @@ describe('result corrections remain consistent', () => {
     await assertLiveMatchesSaved(3)
   })
 
-  test('a failed single-score deletion restores that score and all snapshots', async () => {
+  test('a failed goal deletion restores that goal entry and all snapshots', async () => {
     await update(scores(1))
     await update(scores(3))
     const entry: any = await db.Goal.findOne({ where: { gameweekId: 1, cup: true } })
@@ -282,18 +282,6 @@ describe('result corrections remain consistent', () => {
     expect(await db.CupResult.count({ where: { fixtureId: fixture.fixtureId } })).toBe(1)
     await update(scores(1, 3))
     expect(await db.CupResult.count({ where: { fixtureId: fixture.fixtureId } })).toBe(0)
-  })
-
-  test('repairing existing snapshots preserves raw scores and submitted goalless weeks, without creating gaps', async () => {
-    await update({ gameweekId: 1 })
-    await update({ gameweekId: 3 })
-    await db.Summary.update({ summary: { corrupted: true } }, { where: { gameweekId: 3 } })
-    await rebuildExistingSummaries()
-    expect((await getSummary(3)).groups[0].every((row: any) => row.played === 2 && row.drawn === 2)).toBe(true)
-    expect(await db.Summary.count()).toBe(2)
-    expect(await db.Summary.findByPk(2)).toBeNull()
-    expect(await db.Goal.count()).toBe(0)
-    await assertLiveMatchesSaved(3)
   })
 
   test('standalone summary regeneration also refreshes later snapshots', async () => {

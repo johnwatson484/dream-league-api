@@ -18,7 +18,6 @@
     "docker:dev": "docker compose --profile app up",
     "migrate": "sequelize db:migrate",
     "db:reset": "node scripts/seed-test-data.ts --results",
-    "results:rebuild": "node --env-file-if-exists=.env scripts/generate-summaries.ts",
     "typecheck": "tsc",
     "test": "npm run typecheck && cross-env TZ=UTC vitest run --coverage",
     "test:unit": "cross-env TZ=UTC vitest run --coverage --project unit",

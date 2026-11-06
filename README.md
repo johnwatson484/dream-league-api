@@ -114,15 +114,9 @@ For running the full stack (API + Web), see the [dream-league-core](https://gith
 
 ## Correcting results
 
-A submitted week includes its league and cup results. Cup fixtures with zero goals and conceded count as draws; scheduled weeks without submitted results stay unplayed. Corrections, approved goal reports and score deletions rebuild the affected week and all later submitted result summaries in the same transaction. Deleting a whole week's results removes that week from cumulative tables. Changed cup scores clear saved decisions for the affected ties, including other legs, so an administrator can resolve them again using the corrected scores.
+A submitted week includes its league and cup results. Cup fixtures with zero goals scored and conceded count as draws; scheduled weeks without submitted results stay unplayed. Corrections, approved goal reports and individual goal or conceded-entry deletions rebuild the affected week and all later submitted result summaries in the same transaction. Deleting a whole week's results removes that week from cumulative tables. Changed cup goals or conceded totals clear saved decisions for the affected ties, including other legs, so an administrator can resolve them again using the corrected results.
 
-After deploying the group standings fix, repair existing saved tables with the target database environment configured:
-
-```bash
-npm run results:rebuild
-```
-
-This rebuilds existing submitted weeks, including goalless weeks, without adding missing weeks or changing raw goals and conceded records. It also updates the summaries used by results pages, statistics and future results emails. Emails already sent are unchanged.
+These fixes require only a normal code deployment. No database migration, data reset or manual rebuild command is required.
 
 ## Environment variables
 

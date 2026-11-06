@@ -44,16 +44,9 @@ export async function getGroupStandings (cupId: number, transaction?: Transactio
   const completedWeeks = new Set(summaries.map((summary: any) => summary.gameweekId))
   const gameweekIds = [...new Set((fixtures as any[]).map((x: any) => x.gameweekId))]
     .filter(gameweekId => completedWeeks.has(gameweekId))
-  const results: GroupStanding[] = []
-
-  for (const group of groups as any[]) {
-    if (!group.managers.length) { continue }
-
-    const scores: any[] = []
-    for (const gameweekId of gameweekIds) {
-      const cupScores = await getCupScores(gameweekId, group.managers, options)
-      scores.push(...cupScores.filter(score => score.cupId === cupId && score.round === 1))
-    }
+  return Promise.all((groups as any[]).filter(group => group.managers.length).map(async group => {
+    const weeklyScores = await Promise.all(gameweekIds.map(gameweekId => getCupScores(gameweekId, group.managers, options)))
+    const scores = weeklyScores.flat().filter(score => score.cupId === cupId && score.round === 1)
 
     let table: any[] = []
     for (const manager of group.managers) {
@@ -77,8 +70,6 @@ export async function getGroupStandings (cupId: number, transaction?: Transactio
     }
 
     table = orderTable(table)
-    results.push({ groupId: group.groupId, groupName: group.name, teamsAdvancing: group.teamsAdvancing || 2, table })
-  }
-
-  return results
+    return { groupId: group.groupId, groupName: group.name, teamsAdvancing: group.teamsAdvancing || 2, table }
+  }))
 }

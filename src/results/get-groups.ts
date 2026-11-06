@@ -33,8 +33,7 @@ export async function getGroups (gameweekId: number, options: Transactionable = 
   // The current results are being summarised before their summary is saved.
   completedWeeks.add(gameweekId)
 
-  const groupTables = []
-  for (const cup of cups as any[]) {
+  const cupTables = await Promise.all((cups as any[]).map(async cup => {
     const fixtures = await db.Fixture.findAll({
       ...options,
       where: {
@@ -44,25 +43,16 @@ export async function getGroups (gameweekId: number, options: Transactionable = 
       },
     })
 
-    if (!fixtures.length) {
-      continue
-    }
+    if (!fixtures.length) { return [] }
 
-    const gameweekIds = [...new Set((fixtures as any[]).map((x: any) => x.gameweekId))]
+    const gameweekIds = [...new Set((fixtures as any[]).map((fixture: any) => fixture.gameweekId))]
       .filter(gameweek => completedWeeks.has(gameweek))
     const groups = await db.Group.findAll({ ...options, where: { cupId: cup.cupId }, include: { model: db.Manager, as: 'managers' } } as any)
-    for (const group of groups as any[]) {
-      if (group.managers.length) {
-        const scores: any[] = []
-        for (const gameweek of gameweekIds) {
-          const cupScores = await getCupScores(gameweek, group.managers, options)
-          scores.push(...cupScores.filter(score => score.cupId === cup.cupId && score.round === 1))
-        }
-        let table = group.managers.map((manager: any) => calculateManagerStats(manager, scores))
-        table = orderTable(table)
-        groupTables.push(table)
-      }
-    }
-  }
-  return groupTables
+    return Promise.all((groups as any[]).filter(group => group.managers.length).map(async group => {
+      const weeklyScores = await Promise.all(gameweekIds.map(gameweek => getCupScores(gameweek, group.managers, options)))
+      const scores = weeklyScores.flat().filter(score => score.cupId === cup.cupId && score.round === 1)
+      return orderTable(group.managers.map((manager: any) => calculateManagerStats(manager, scores)))
+    }))
+  }))
+  return cupTables.flat()
 }

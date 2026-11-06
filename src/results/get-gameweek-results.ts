@@ -1,6 +1,5 @@
 import { Op, type Transactionable } from 'sequelize'
 import db from '../data/index.ts'
-import { getConceded, getGoals } from './get-goals.ts'
 import { getPoints } from './get-points.ts'
 import { getResult } from './get-result.ts'
 
@@ -14,13 +13,16 @@ export async function getGameweekResults (gameweekId: number, managerId: number,
     ...queryOptions,
     where: { gameweekId: { [Op.lte]: gameweekId, ...(completedGameweekIds ? { [Op.in]: completedGameweekIds } : {}) } },
   })
-  const gameweekResults = []
-  for (const gameweek of gameweeks as any[]) {
-    const goals = await getGoals(gameweek.gameweekId, managerId, false, queryOptions) || []
-    const conceded = await getConceded(gameweek.gameweekId, managerId, false, queryOptions) || []
+  const where = { managerId, gameweekId: gameweeks.map((gameweek: any) => gameweek.gameweekId), cup: false }
+  const [allGoals, allConceded] = await Promise.all([
+    db.Goal.findAll({ ...queryOptions, where }),
+    db.Concede.findAll({ ...queryOptions, where }),
+  ])
+  return (gameweeks as any[]).map(gameweek => {
+    const goals = allGoals.filter((goal: any) => goal.gameweekId === gameweek.gameweekId)
+    const conceded = allConceded.filter((concede: any) => concede.gameweekId === gameweek.gameweekId)
     const result = getResult(goals.length, conceded.length)
     const points = getPoints(result)
-    gameweekResults.push({ result, points, goals: goals.length, conceded: conceded.length })
-  }
-  return gameweekResults
+    return { result, points, goals: goals.length, conceded: conceded.length }
+  })
 }

@@ -2,7 +2,7 @@ import { failAction } from './fail-action.ts'
 import type { ServerRoute } from '@hapi/hapi'
 import Joi from 'joi'
 import db from '../../data/index.ts'
-import { deleteScore } from '../../results/delete-score.ts'
+import { deleteResultEntry } from '../../results/delete-result-entry.ts'
 import boom from '@hapi/boom'
 
 export default [{
@@ -41,7 +41,7 @@ export default [{
       failAction,
     },
     handler: async (request, h) => {
-      if (!await deleteScore('concede', (request.payload as any).concedeId)) {
+      if (!await deleteResultEntry('concede', (request.payload as any).concedeId)) {
         return boom.notFound('Concede entry not found')
       }
       return h.response('ok')

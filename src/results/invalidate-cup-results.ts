@@ -12,7 +12,7 @@ export async function getCupScoreState (gameweekId: number, transaction: Transac
       managers.set(row.managerId, state)
     }
   }
-  return new Map([...managers].map(([managerId, state]) => [managerId, JSON.stringify(state.sort())]))
+  return new Map([...managers].map(([managerId, state]) => [managerId, JSON.stringify(state.toSorted((a, b) => a.localeCompare(b)))]))
 }
 
 export async function invalidateCupResults (gameweekId: number, transaction: Transaction, managerIds?: number[]): Promise<void> {

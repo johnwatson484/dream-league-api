@@ -22,18 +22,11 @@ export async function rebuildLaterSummaries (gameweekId: number, transaction: Tr
     order: [['gameweekId', 'ASC']],
     transaction,
   })
-  for (const summary of summaries as any[]) {
+  // Keep dependent summary writes sequential within the correction transaction.
+  await summaries.reduce(async (previous, summary: any) => {
+    await previous
     await saveSummary(summary.gameweekId, transaction)
-  }
-}
-
-export async function rebuildExistingSummaries (): Promise<void> {
-  await withResultsTransaction(async transaction => {
-    const summaries = await db.Summary.findAll({ attributes: ['gameweekId'], order: [['gameweekId', 'ASC']], transaction })
-    for (const summary of summaries as any[]) {
-      await saveSummary(summary.gameweekId, transaction)
-    }
-  })
+  }, Promise.resolve())
 }
 
 async function saveSummary (gameweekId: number, transaction: Transaction): Promise<void> {

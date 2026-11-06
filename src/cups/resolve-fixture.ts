@@ -79,13 +79,18 @@ async function resolveTwoLegs (fixture: any, options: Transactionable): Promise<
   let totalHomeGoals = 0
   let totalAwayGoals = 0
 
-  for (const f of relatedFixtures) {
-    const hGoals = await getGoalCount(f.homeManagerId, f.gameweekId, options)
-    const hConceded = await getConcedeCount(f.homeManagerId, f.gameweekId, options)
-    const aGoals = await getGoalCount(f.awayManagerId, f.gameweekId, options)
-    const aConceded = await getConcedeCount(f.awayManagerId, f.gameweekId, options)
+  const legScores = await Promise.all(relatedFixtures.map(async f => {
+    const [hGoals, hConceded, aGoals, aConceded] = await Promise.all([
+      getGoalCount(f.homeManagerId, f.gameweekId, options),
+      getConcedeCount(f.homeManagerId, f.gameweekId, options),
+      getGoalCount(f.awayManagerId, f.gameweekId, options),
+      getConcedeCount(f.awayManagerId, f.gameweekId, options),
+    ])
+    return { homeManagerId: f.homeManagerId, hGoals, hConceded, aGoals, aConceded }
+  }))
 
-    if (f.homeManagerId === fixture.homeManagerId) {
+  for (const { homeManagerId, hGoals, hConceded, aGoals, aConceded } of legScores) {
+    if (homeManagerId === fixture.homeManagerId) {
       totalHomeMargin += hGoals - hConceded
       totalAwayMargin += aGoals - aConceded
       totalHomeGoals += hGoals
