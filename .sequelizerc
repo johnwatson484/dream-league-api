@@ -1,8 +1,13 @@
-const path = require('path')
+import path from 'node:path'
 
-module.exports = {
-  "config": path.resolve('./src/config', 'database.cjs'),
-  "models-path": path.resolve('./src/data/models'),
-  "seeders-path": path.resolve('./src/data/seeders'),
-  "migrations-path": path.resolve('./src/data/migrations')
+const config = path.resolve('./src/config', 'database.cjs')
+const modelsPath = path.resolve('./src/data/models')
+const seedersPath = path.resolve('./src/data/seeders')
+const migrationsPath = path.resolve('./src/data/migrations')
+
+export {
+  config,
+  modelsPath as 'models-path',
+  seedersPath as 'seeders-path',
+  migrationsPath as 'migrations-path'
 }
