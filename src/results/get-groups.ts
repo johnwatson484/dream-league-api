@@ -28,6 +28,10 @@ function calculateManagerStats (manager: any, scores: any[]) {
 
 export async function getGroups (gameweekId: number): Promise<any[]> {
   const cups = await db.Cup.findAll({ where: { hasGroupStage: true } })
+  const summaries = await db.Summary.findAll({ attributes: ['gameweekId'] })
+  const completedWeeks = new Set(summaries.map((summary: any) => summary.gameweekId))
+  // The current results are being summarised before their summary is saved.
+  completedWeeks.add(gameweekId)
 
   const groupTables = []
   for (const cup of cups as any[]) {
@@ -44,13 +48,14 @@ export async function getGroups (gameweekId: number): Promise<any[]> {
     }
 
     const gameweekIds = [...new Set((fixtures as any[]).map((x: any) => x.gameweekId))]
+      .filter(gameweek => completedWeeks.has(gameweek))
     const groups = await db.Group.findAll({ where: { cupId: cup.cupId }, include: { model: db.Manager, as: 'managers' } } as any)
     for (const group of groups as any[]) {
       if (group.managers.length) {
         const scores: any[] = []
         for (const gameweek of gameweekIds) {
           const cupScores = await getCupScores(gameweek, group.managers)
-          scores.push(...cupScores)
+          scores.push(...cupScores.filter(score => score.cupId === cup.cupId && score.round === 1))
         }
         let table = group.managers.map((manager: any) => calculateManagerStats(manager, scores))
         table = orderTable(table)

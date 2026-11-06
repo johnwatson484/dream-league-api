@@ -24,14 +24,15 @@ export default [{
   options: {
     auth: false,
     handler: async (request, h) => {
-      return h.response(await db.Group.findOne({
+      const group: any = await db.Group.findOne({
         where: { groupId: request.query.groupId },
         include: [
           { model: db.Cup, as: 'cup', attributes: [] },
-          { model: db.Manager, as: 'managers', attributes: [] },
+          { model: db.Manager, as: 'managers', attributes: ['managerId'], through: { attributes: [] } },
         ],
         attributes: ['groupId', 'cupId', 'name', 'groupLegs', 'teamsAdvancing', [db.Sequelize.col('cup.name'), 'cupName']],
-      }) as any)
+      })
+      return h.response(group ? { ...group.toJSON(), managers: group.managers.map((manager: any) => manager.managerId) } : null)
     },
   },
 }, {
@@ -50,12 +51,14 @@ export default [{
       failAction,
     },
     handler: async (request, h) => {
-      const group: any = await db.Group.create(request.payload as any)
-      if ((request.payload as any).managers) {
-        for (const managerId of (request.payload as any).managers) {
-          await db.ManagerGroup.create({ managerId, groupId: group.groupId })
-        }
-      }
+      const { managers = [], ...payload } = request.payload as any
+      const group = await db.sequelize.transaction(async transaction => {
+        const group: any = await db.Group.create(payload, { transaction })
+        // Older season resets could leave memberships behind when reusing IDs.
+        await db.ManagerGroup.destroy({ where: { groupId: group.groupId }, transaction })
+        await db.ManagerGroup.bulkCreate(managers.map((managerId: number) => ({ managerId, groupId: group.groupId })), { transaction })
+        return group
+      })
       return h.response(group)
     },
   },
@@ -66,7 +69,7 @@ export default [{
     auth: { strategy: 'jwt', scope: ['admin'] },
     validate: {
       payload: Joi.object({
-        groupId: Joi.number(),
+        groupId: Joi.number().integer().required(),
         cupId: Joi.number().required(),
         name: Joi.string(),
         groupLegs: Joi.number(),
@@ -76,24 +79,12 @@ export default [{
       failAction,
     },
     handler: async (request, h) => {
-      const payload = request.payload as any
-      await db.Group.upsert(payload)
-      const managerGroup: any[] = await db.ManagerGroup.findAll({ where: { groupId: payload.groupId } })
-
-      if (payload.managers) {
-        for (const managerId of payload.managers) {
-          if (!managerGroup.some((x: any) => x.managerId === managerId)) {
-            await db.ManagerGroup.create({ managerId, groupId: payload.groupId })
-          }
-        }
-        for (const currentManager of managerGroup) {
-          if (!payload.managers.includes((currentManager as any).managerId)) {
-            await db.ManagerGroup.destroy({ where: { managerId: (currentManager as any).managerId, groupId: payload.groupId } })
-          }
-        }
-      } else {
-        await db.ManagerGroup.destroy({ where: { groupId: payload.groupId } })
-      }
+      const { managers = [], ...payload } = request.payload as any
+      await db.sequelize.transaction(async transaction => {
+        await db.Group.upsert(payload, { transaction })
+        await db.ManagerGroup.destroy({ where: { groupId: payload.groupId }, transaction })
+        await db.ManagerGroup.bulkCreate(managers.map((managerId: number) => ({ managerId, groupId: payload.groupId })), { transaction })
+      })
       return h.response()
     },
   },

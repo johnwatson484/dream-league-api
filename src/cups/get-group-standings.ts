@@ -33,7 +33,10 @@ export async function getGroupStandings (cupId: number): Promise<GroupStanding[]
     where: { cupId, round: 1 },
   })
 
+  const summaries = await db.Summary.findAll({ attributes: ['gameweekId'] })
+  const completedWeeks = new Set(summaries.map((summary: any) => summary.gameweekId))
   const gameweekIds = [...new Set((fixtures as any[]).map((x: any) => x.gameweekId))]
+    .filter(gameweekId => completedWeeks.has(gameweekId))
   const results: GroupStanding[] = []
 
   for (const group of groups as any[]) {
@@ -42,7 +45,7 @@ export async function getGroupStandings (cupId: number): Promise<GroupStanding[]
     const scores: any[] = []
     for (const gameweekId of gameweekIds) {
       const cupScores = await getCupScores(gameweekId, group.managers)
-      scores.push(...cupScores)
+      scores.push(...cupScores.filter(score => score.cupId === cupId && score.round === 1))
     }
 
     let table: any[] = []
