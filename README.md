@@ -12,7 +12,7 @@ Dream League backend service.
 
 ## Prerequisites
 
-- Node.js >= 24 (see `.nvmrc`)
+- Node.js >= 26 (see `.nvmrc`)
 - Docker (for Postgres and Redis containers)
 
 ## Local development
