@@ -1,5 +1,6 @@
 import db from '../data/index.ts'
 import { getResult } from './get-result.ts'
+import { orderScores } from './order-scores.ts'
 import type { Transactionable } from 'sequelize'
 
 export async function getScores (gameweekId: number, managers: any[], cup = false, options: Transactionable = {}): Promise<any[]> {
@@ -13,7 +14,7 @@ export async function getScores (gameweekId: number, managers: any[], cup = fals
   const players = await db.Player.findAll({ ...options, where: { playerId: playerIds } })
   const playerNames = new Map(players.map((player: any) => [player.playerId, player.lastNameInitial]))
 
-  return managers.map(manager => {
+  return orderScores(managers.map(manager => {
     const goals = allGoals.filter((goal: any) => goal.managerId === manager.managerId)
     const conceded = allConceded.filter((concede: any) => concede.managerId === manager.managerId)
     const scorers = getScorers(goals, playerNames)
@@ -28,7 +29,7 @@ export async function getScores (gameweekId: number, managers: any[], cup = fals
       result,
       scorers,
     }
-  })
+  }))
 }
 
 function getScorers (goals: any[], playerNames: Map<number, string>): any[] {

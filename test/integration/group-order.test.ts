@@ -42,11 +42,14 @@ describe('alphabetical group ordering', () => {
   test('orders existing saved results on read without rewriting them or their standings', async () => {
     const groupB = [{ managerId: 2, position: 1, points: 6 }, { managerId: 1, position: 2, points: 0 }]
     const groupA = [{ managerId: 4, position: 1, points: 3 }, { managerId: 3, position: 2, points: 0 }]
-    await db.Summary.create({ gameweekId: 1, summary: { gameweekId: 1, groups: [groupB, groupA] } })
+    const scores = [{ managerId: 2, manager: 'Bob' }, { managerId: 1, manager: 'Alice' }]
+    await db.Summary.create({ gameweekId: 1, summary: { gameweekId: 1, scores, groups: [groupB, groupA] } })
 
     const summary = await getSummary(1)
     expect(summary.groups).toEqual([groupA, groupB])
+    expect(summary.scores).toEqual([scores[1], scores[0]])
     const saved: any = await db.Summary.findByPk(1)
     expect(saved.summary.groups).toEqual([groupB, groupA])
+    expect(saved.summary.scores).toEqual(scores)
   })
 })

@@ -1,6 +1,6 @@
 import { getHtmlStringFromFile } from '../../src/notifications/get-html-string.ts'
 
-test('renders emailed scores alphabetically while preserving scores and league standings', () => {
+test('renders emailed scores in API order while preserving scores and league standings', () => {
   const scores = [
     { managerId: 3, manager: 'Charlie', goals: 4, conceded: 0, result: 'W', scorers: [{ name: 'Smith', goals: 4 }] },
     { managerId: 2, manager: 'Bob', goals: 2, conceded: 1, result: 'W', scorers: [] },
@@ -12,8 +12,8 @@ test('renders emailed scores alphabetically while preserving scores and league s
   const scoreSection = html.split('<!-- ===== SCORES SECTION ===== -->')[1]!.split('<!-- ===== TABLE SECTION ===== -->')[0]!
   const tableSection = html.split('<!-- ===== TABLE SECTION ===== -->')[1]!.split('<!-- ===== WINNERS SECTION ===== -->')[0]!
 
-  expect(scoreSection.indexOf('alice')).toBeLessThan(scoreSection.indexOf('Bob'))
-  expect(scoreSection.indexOf('Bob')).toBeLessThan(scoreSection.indexOf('Charlie'))
+  expect(scoreSection.indexOf('Charlie')).toBeLessThan(scoreSection.indexOf('Bob'))
+  expect(scoreSection.indexOf('Bob')).toBeLessThan(scoreSection.indexOf('alice'))
   expect(scoreSection).toContain('4 - 0')
   expect(scoreSection).toContain('0 - 3')
   expect(scoreSection).toContain('Smith (4)')

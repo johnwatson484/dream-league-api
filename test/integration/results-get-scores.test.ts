@@ -46,6 +46,15 @@ describe('get scores', () => {
     expect(result.length).toBe(13)
   })
 
+  test('orders generated scores alphabetically regardless of manager IDs or goals', async () => {
+    await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
+    const managers = [{ managerId: 11, name: 'Charlie' }, { managerId: 10, name: 'alice' }, { managerId: 9, name: 'Bob' }]
+    const result = await getScores(1, managers)
+    expect(result.map(score => score.manager)).toEqual(['alice', 'Bob', 'Charlie'])
+    expect(result[2]).toMatchObject({ managerId: 11, goals: 1 })
+    expect(managers.map(manager => manager.managerId)).toEqual([11, 10, 9])
+  })
+
   test('should return goal for manager', async () => {
     await db.Goal.create({ playerId: 773, managerId: 11, gameweekId: 1, cup: false })
     const result = await getScores(1, managers)
