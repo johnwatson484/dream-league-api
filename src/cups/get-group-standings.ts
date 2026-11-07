@@ -33,6 +33,7 @@ export async function getGroupStandings (cupId: number, transaction?: Transactio
     ...options,
     where: { cupId },
     include: [{ model: db.Manager, as: 'managers' }],
+    order: [['name', 'ASC']],
   } as any)
 
   const fixtures = await db.Fixture.findAll({

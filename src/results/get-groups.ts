@@ -47,7 +47,7 @@ export async function getGroups (gameweekId: number, options: Transactionable = 
 
     const gameweekIds = [...new Set((fixtures as any[]).map((fixture: any) => fixture.gameweekId))]
       .filter(gameweek => completedWeeks.has(gameweek))
-    const groups = await db.Group.findAll({ ...options, where: { cupId: cup.cupId }, include: { model: db.Manager, as: 'managers' } } as any)
+    const groups = await db.Group.findAll({ ...options, where: { cupId: cup.cupId }, include: { model: db.Manager, as: 'managers' }, order: [['name', 'ASC']] } as any)
     return Promise.all((groups as any[]).filter(group => group.managers.length).map(async group => {
       const weeklyScores = await Promise.all(gameweekIds.map(gameweek => getCupScores(gameweek, group.managers, options)))
       const scores = weeklyScores.flat().filter(score => score.cupId === cup.cupId && score.round === 1)
